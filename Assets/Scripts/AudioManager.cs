@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour {
         public bool Loop = false;
 
         private AudioSource m_AudioSource;
+        private bool m_PlayerReturn = true;
 
         public void SetSource(AudioSource source)
         {
@@ -52,19 +53,24 @@ public class AudioManager : MonoBehaviour {
             }
         }
 
-        public IEnumerator FadeOut(float fadeTime = 0.5f, float increment = 0.05f)
+        public IEnumerator FadeOut(float fadeTime = 0.5f, float increment = 0.02f)
         {
-            while (m_AudioSource.volume != 0f)
+            m_PlayerReturn = false;
+            
+            while (m_AudioSource.volume != 0f & !m_PlayerReturn)
             {
                 m_AudioSource.volume -= increment;
                 yield return new WaitForSeconds(fadeTime);
             }
 
-            m_AudioSource.Stop();
+            if (!m_PlayerReturn)
+                m_AudioSource.Stop();
         }
 
-        public IEnumerator FadeIn(float fadeTime = 0.5f, float increment = 0.05f)
+        public IEnumerator FadeIn(float fadeTime = 0.5f, float increment = 0.02f)
         {
+            m_PlayerReturn = true;
+
             m_AudioSource.Play();
             ChangeMusicSettings();
 
