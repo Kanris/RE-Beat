@@ -242,7 +242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &225980108
 Transform:
   m_ObjectHideFlags: 0
@@ -4949,6 +4949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 225980108}
+  - {fileID: 2113073319}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5021,6 +5022,20 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
+  - Name: GrassRunning
+    Clip: {fileID: 8300000, guid: 126bcadb6881045c5a38ff4cf3432502, type: 3}
+    Volume: 0.15
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 1
+  - Name: WoodRunning
+    Clip: {fileID: 8300000, guid: 8a8573cbf4afb494cb62c1908bf36800, type: 3}
+    Volume: 0.15
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 1
 --- !u!4 &1041054205
 Transform:
   m_ObjectHideFlags: 0
@@ -9334,6 +9349,46 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &2113073318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2113073319}
+  - component: {fileID: 2113073320}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113073319
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2113073318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 834292260}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2113073320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2113073318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2138953905
 GameObject:
   m_ObjectHideFlags: 0

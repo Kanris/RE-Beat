@@ -36,13 +36,13 @@ GameObject:
   - component: {fileID: 4244789493701248}
   - component: {fileID: 212867329460870898}
   - component: {fileID: 95506491691971104}
-  - component: {fileID: 81504412243213940}
   - component: {fileID: 50016643965845196}
   - component: {fileID: 70613500535173504}
   - component: {fileID: 70134474164181962}
   - component: {fileID: 114110251304591286}
   - component: {fileID: 114565561385868806}
   - component: {fileID: 114480270307775108}
+  - component: {fileID: 114373477224957708}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -156,13 +156,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.007015854, y: 0.2554505}
   m_Size: {x: 0.32080382, y: 0.48823833}
   m_Direction: 0
---- !u!81 &81504412243213940
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1587882821856884}
-  m_Enabled: 0
 --- !u!95 &95506491691971104
 Animator:
   serializedVersion: 3
@@ -199,6 +192,18 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294966527
+--- !u!114 &114373477224957708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587882821856884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af6a4076daf24c77b7137ee3872ac6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sound: GrassRunning
 --- !u!114 &114480270307775108
 MonoBehaviour:
   m_ObjectHideFlags: 1

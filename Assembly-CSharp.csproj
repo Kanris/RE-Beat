@@ -59,10 +59,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PlaySoundOnTrigger.cs" />
+    <Compile Include="Assets\ChangeFootStepsSound.cs" />
+    <Compile Include="Assets\FootSound.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlaySoundOnTrigger.cs" />
     <Compile Include="Assets\Scripts\RespawnPoint.cs" />
     <Compile Include="Assets\Scripts\Stats.cs" />
     <Compile Include="Assets\Unity Waterfall\Add-Ons\2D Extras\Brushes\Tint Brush Smooth\Scripts\TintTextureGenerator.cs" />
