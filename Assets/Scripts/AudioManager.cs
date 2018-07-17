@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour {
             }
         }
 
-        public IEnumerator FadeOut(float fadeTime = 0.2f, float increment = 0.05f)
+        public IEnumerator FadeOut(float fadeTime = 0.5f, float increment = 0.05f)
         {
             while (m_AudioSource.volume != 0f)
             {
@@ -63,7 +63,7 @@ public class AudioManager : MonoBehaviour {
             m_AudioSource.Stop();
         }
 
-        public IEnumerator FadeIn(float fadeTime = 0.2f, float increment = 0.05f)
+        public IEnumerator FadeIn(float fadeTime = 0.5f, float increment = 0.05f)
         {
             m_AudioSource.Play();
             ChangeMusicSettings();
