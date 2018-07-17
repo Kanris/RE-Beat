@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio for Mac
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2D Platformer (Tile Map)", "Assembly-CSharp.csproj", "{2CCE9769-373E-3938-2793-1715EFA73BC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2D Platformer (Tile Map)", "Assembly-CSharp-firstpass.csproj", "{027D5D29-DCD0-121A-34EB-4BBBA2CDAE97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2D Platformer (Tile Map)", "Assembly-CSharp-Editor.csproj", "{3D0A1798-97E2-EA43-075B-E0ED49E2BC1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CCE9769-373E-3938-2793-1715EFA73BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCE9769-373E-3938-2793-1715EFA73BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCE9769-373E-3938-2793-1715EFA73BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCE9769-373E-3938-2793-1715EFA73BC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{027D5D29-DCD0-121A-34EB-4BBBA2CDAE97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027D5D29-DCD0-121A-34EB-4BBBA2CDAE97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027D5D29-DCD0-121A-34EB-4BBBA2CDAE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027D5D29-DCD0-121A-34EB-4BBBA2CDAE97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0A1798-97E2-EA43-075B-E0ED49E2BC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0A1798-97E2-EA43-075B-E0ED49E2BC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0A1798-97E2-EA43-075B-E0ED49E2BC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0A1798-97E2-EA43-075B-E0ED49E2BC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
