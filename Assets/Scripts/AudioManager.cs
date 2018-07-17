@@ -32,8 +32,11 @@ public class AudioManager : MonoBehaviour {
         {
             if (m_AudioSource != null)
             {
-                ChangeMusicSettings();
-                m_AudioSource.Play();
+                if (!m_AudioSource.isPlaying)
+                {
+                    ChangeMusicSettings();
+                    m_AudioSource.Play();
+                }
             }
             else
             {
