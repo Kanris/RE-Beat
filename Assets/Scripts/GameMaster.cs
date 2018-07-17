@@ -21,6 +21,16 @@ public class GameMaster : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        Initialize("EventSystem");
+
+        Initialize("AudioManager");
+
+        InitializeRespawnPoint();
+
+        InitalizePlayerToRespawn();
+
+        RespawnPlayer();
     }
 
     #endregion
@@ -32,13 +42,15 @@ public class GameMaster : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        InitializeRespawnPoint();
 
-        InitalizePlayerToRespawn();
-
-        RespawnPlayer();
 
 	}
+
+    void Initialize(string name)
+    {
+        var gameObjectToInstantiate = Resources.Load(name);
+        Instantiate(gameObjectToInstantiate);
+    }
 
     void InitializeRespawnPoint()
     {
