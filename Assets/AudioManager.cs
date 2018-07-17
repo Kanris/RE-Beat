@@ -14,15 +14,17 @@ public class AudioManager : MonoBehaviour {
         [Range(0.5f, 1.5f)] public float Pitch = 1f;
         [Range(0f, 0.5f)] public float VolumeOffset = 0.1f;
         [Range(0f, 0.5f)] public float PitchOffset = 0.1f;
-        public bool IsLoop = false;
+        public bool Loop = false;
 
         private AudioSource m_AudioSource;
 
         public void SetSource(AudioSource source)
         {
             m_AudioSource = source;
-            Clip = m_AudioSource.clip;
+            m_AudioSource.clip = Clip;
             m_AudioSource.playOnAwake = false;
+
+            ChangeMusicSettings();
         }
 
         public void PlaySound()
@@ -50,10 +52,30 @@ public class AudioManager : MonoBehaviour {
             }
         }
 
-        public override string ToString()
+        public IEnumerator FadeOut(float fadeTime = 0.2f, float increment = 0.05f)
         {
-            return Name;
+            while (m_AudioSource.volume != 0f)
+            {
+                m_AudioSource.volume -= increment;
+                yield return new WaitForSeconds(fadeTime);
+            }
+
+            m_AudioSource.Stop();
         }
+
+        public IEnumerator FadeIn(float fadeTime = 0.2f, float increment = 0.05f)
+        {
+            m_AudioSource.Play();
+            ChangeMusicSettings();
+
+            while (m_AudioSource.volume < Volume)
+            {
+                m_AudioSource.volume += increment;
+                yield return new WaitForSeconds(fadeTime);
+            }
+
+        }
+       
 
         public static implicit operator string(Audio audio)
         {
@@ -64,7 +86,7 @@ public class AudioManager : MonoBehaviour {
         {
             m_AudioSource.volume = Volume * (1 + Random.Range(-VolumeOffset / 2f, VolumeOffset / 2f));
             m_AudioSource.pitch = Pitch * (1 + Random.Range(-PitchOffset / 2f, PitchOffset / 2f)); ;
-            m_AudioSource.loop = IsLoop;
+            m_AudioSource.loop = Loop;
         }
     }
 
@@ -91,29 +113,62 @@ public class AudioManager : MonoBehaviour {
 
     public Audio[] AudioArray;
 
-    // Use this for initialization
-    void Start () {
+    private void Start()
+    {
+        InitializeAudioPlaylist();
+    }
 
+    private void InitializeAudioPlaylist()
+    {
         for (int index = 0; index < AudioArray.Length; index++)
         {
             var audioSource = new GameObject("AudioSource_" + index + "_" + AudioArray[index]);
             audioSource.transform.SetParent(transform);
             AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>());
         }
+    }
 
-	}
-
-    public void Play(string name)
+    public void Play(string name, bool PlayFadeSound = false)
     {
-        var sound = AudioArray.First(x => x == name);
+        var sound = GetAudioFromArray(name);
 
         if (sound != null)
         {
-            sound.PlaySound();
+            if (PlayFadeSound)
+                StartCoroutine(sound.FadeIn());
+            else
+                sound.PlaySound();
         }
         else
         {
-            Debug.LogError("AudioManager: can't find audio with name - " + name);
+            Debug.LogError("AudioManager.Play: can't find audio with name - " + name);
         }
+    }
+
+    public void Stop(string name, bool PlayFadeSound = false)
+    {
+        var sound = GetAudioFromArray(name);
+
+        if (sound != null)
+        {
+            if (PlayFadeSound)
+                StartCoroutine(sound.FadeOut());
+            else
+                sound.StopSound();
+        }
+        else
+        {
+            Debug.LogError("AudioManager.Stop: can't find audio with name - " + name);
+        }
+    }
+
+    private Audio GetAudioFromArray(string name)
+    {
+        Audio returnAudio = null;
+        
+        if (!string.IsNullOrEmpty(name))
+            returnAudio = AudioArray.First(x => x == name);
+
+        return returnAudio;
     }
 }
