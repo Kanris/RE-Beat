@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114110251304591286}
   - component: {fileID: 114565561385868806}
   - component: {fileID: 114480270307775108}
+  - component: {fileID: 81311715424302292}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -155,6 +156,13 @@ CapsuleCollider2D:
   m_Offset: {x: 0.007015854, y: 0.2554505}
   m_Size: {x: 0.32080382, y: 0.48823833}
   m_Direction: 0
+--- !u!81 &81311715424302292
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587882821856884}
+  m_Enabled: 1
 --- !u!95 &95506491691971104
 Animator:
   serializedVersion: 3
@@ -203,6 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   YBoundaries: -20
+  playerStats:
+    MaxHealth: 200
 --- !u!114 &114565561385868806
 MonoBehaviour:
   m_ObjectHideFlags: 1

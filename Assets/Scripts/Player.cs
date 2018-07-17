@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 		
         if (transform.position.y <= YBoundaries)
         {
-            playerStats.TakeDamage(9999);
+            playerStats.TakeDamage(playerStats.MaxHealth);
         }
 	}
 }

@@ -41,7 +41,7 @@ public class Stats {
         if (MaxHealth <= 0)
         {
             Debug.LogError("Stats: Max health is less or equals to 0. Destroying Game object");
-            GameObject.Destroy(m_GameObject);
+            GameMaster.Destroy(m_GameObject);
         }
         else
             m_CurrentHealth = MaxHealth;
@@ -59,7 +59,7 @@ public class Stats {
 
     protected virtual void KillObject()
     {
-        GameObject.Destroy(m_GameObject);
+        GameMaster.Destroy(m_GameObject);
     }
 	
 }
