@@ -113,6 +113,88 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &70551573
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.89482504
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.75806534
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.3441087
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].Name
+      value: StoneRunning
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 94dcf3bd408d04d229f5fd06d8c00d4b, type: 3}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].VolumeOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].PitchOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[3].Loop
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &77665799
 GameObject:
   m_ObjectHideFlags: 0
@@ -11190,6 +11272,7 @@ GameObject:
   - component: {fileID: 1708235196}
   - component: {fileID: 1708235195}
   - component: {fileID: 1708235194}
+  - component: {fileID: 1708235197}
   m_Layer: 0
   m_Name: EntranceTrigger
   m_TagString: Untagged
@@ -11209,7 +11292,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.24226189, y: 0.15963602}
+  m_Offset: {x: 9.293857, y: 0.15963602}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -11220,7 +11303,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5154762, y: 12.5573435}
+  m_Size: {x: 19.587713, y: 12.5573435}
   m_EdgeRadius: 0
 --- !u!114 &1708235195
 MonoBehaviour:
@@ -11246,6 +11329,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1708235197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1708235193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sound: StoneRunning
 --- !u!1 &1803359818
 GameObject:
   m_ObjectHideFlags: 0
