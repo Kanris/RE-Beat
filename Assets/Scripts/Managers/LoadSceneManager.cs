@@ -70,6 +70,8 @@ public class LoadSceneManager : MonoBehaviour {
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
         var operation = SceneManager.LoadSceneAsync(sceneName);
 
         SetActiveLoadScene(true);
@@ -85,7 +87,11 @@ public class LoadSceneManager : MonoBehaviour {
             yield return null;
         }
 
+        yield return new WaitForSeconds(2f); //TODO: Remove 
+
         SetActiveLoadScene(false);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     private void SetActiveLoadScene(bool active)

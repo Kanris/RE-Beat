@@ -45,13 +45,6 @@ public class GameMaster : MonoBehaviour {
     private Transform m_RespawnPoint;
     private GameObject m_PlayerToRespawn;
 
-	// Use this for initialization
-	void Start () {
-
-
-
-	}
-
     void Initialize(string name)
     {
         var gameObjectToInstantiate = Resources.Load(name);

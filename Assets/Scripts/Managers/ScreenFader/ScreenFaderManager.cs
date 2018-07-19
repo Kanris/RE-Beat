@@ -69,22 +69,25 @@ public class ScreenFaderManager : MonoBehaviour {
 
     public IEnumerator FadeToClear()
     {
-        yield return FadeTo("FadeIn");
+        yield return FadeTo("FadeOut");
     }
 
     public IEnumerator FadeToBlack()
     {
-        yield return FadeTo("FadeOut");
+        yield return FadeTo("FadeIn");
     }
 
     private IEnumerator FadeTo(string trigger)
     {
         m_IsFading = true;
-        m_Animator.SetTrigger(trigger);
+        SetActiveUI(m_IsFading);
+        m_Animator.SetBool(trigger, m_IsFading);
 
         while (m_IsFading)
             yield return null;
 
+        m_Animator.SetBool(trigger, m_IsFading);
+        SetActiveUI(m_IsFading);
     }
 
     public void AnimationComplete()
