@@ -125,6 +125,8 @@ public class AudioManager : MonoBehaviour {
     private void Start()
     {
         InitializeAudioPlaylist();
+
+        SetBackgroundMusic("Background");
     }
 
     private void InitializeAudioPlaylist()
@@ -168,6 +170,20 @@ public class AudioManager : MonoBehaviour {
         else
         {
             Debug.LogError("AudioManager.Stop: can't find audio with name - " + name);
+        }
+    }
+
+    public void SetBackgroundMusic(string name)
+    {
+        var sound = GetAudioFromArray(name);
+
+        if (sound != null)
+        {
+            sound.PlaySound();
+        }
+        else
+        {
+            Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
         }
     }
 
