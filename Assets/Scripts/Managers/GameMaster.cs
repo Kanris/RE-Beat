@@ -31,6 +31,8 @@ public class GameMaster : MonoBehaviour {
 
         Initialize("ScreenFaderManager");
 
+        Initialize("PauseMenuManager");
+
         InitializeRespawnPoint();
 
         InitalizePlayerToRespawn();

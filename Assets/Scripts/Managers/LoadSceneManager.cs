@@ -101,5 +101,13 @@ public class LoadSceneManager : MonoBehaviour {
     {
         if (m_LoadSceneUI != null)
             m_LoadSceneUI.SetActive(active);
+
+        if (m_LoadSlider != null)
+            m_LoadSlider.value = 0f;
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }
