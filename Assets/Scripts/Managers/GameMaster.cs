@@ -38,7 +38,7 @@ public class GameMaster : MonoBehaviour {
         InitalizePlayerToRespawn();
         #endregion
 
-        RespawnPlayer();
+        RespawnPlayer(false);
     }
 
     #endregion
@@ -91,13 +91,16 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public void RespawnPlayer()
+    public void RespawnPlayer(bool isPlayerDied)
     {
         if (m_RespawnPoint != null)
         {
             if (m_PlayerToRespawn != null)
             {
-                Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_RespawnPoint.rotation);
+                if (isPlayerDied)
+                    StartCoroutine(RespawnPlayerWithFade());
+                else
+                    RespawnPlayerWithoutFade();
             }
             else
             {
@@ -108,5 +111,22 @@ public class GameMaster : MonoBehaviour {
         {
             Debug.LogError("GameMaster: Can't respawn player, because GameMaster couldn't found RespawnPoint on scene.");
         }
+    }
+
+    private IEnumerator RespawnPlayerWithFade()
+    {
+        yield return new WaitForSeconds(1f);
+
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        RespawnPlayerWithoutFade();
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
+    }
+
+    private void RespawnPlayerWithoutFade()
+    {
+        Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
+
     }
 }

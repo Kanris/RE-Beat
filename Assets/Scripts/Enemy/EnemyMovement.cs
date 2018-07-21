@@ -8,8 +8,9 @@ public class EnemyMovement : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
     private float m_PosX = -1f;
-    private bool isWaiting = false;
     private Vector2 m_PreviousPosition = Vector2.zero;
+
+    public bool isWaiting = false;
 
     [SerializeField] private float Speed = 1f;
     [SerializeField] private float IdleTime = 2f;
@@ -47,6 +48,9 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (!isWaiting)
         {
+            if (!m_Animator.GetBool("isWalking"))
+                SetAnimation();
+
             m_Rigidbody2D.position += new Vector2(m_PosX, 0) * Time.fixedDeltaTime * Speed;
             SetAnimation();
 
@@ -56,6 +60,10 @@ public class EnemyMovement : MonoBehaviour {
             }
             else
                 m_PreviousPosition = m_Rigidbody2D.position;
+        }
+        else if (m_Animator.GetBool("isWalking"))
+        {
+            SetAnimation();
         }
     }
 
