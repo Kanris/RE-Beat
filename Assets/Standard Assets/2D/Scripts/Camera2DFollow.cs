@@ -73,12 +73,20 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        public void ChangeCameraPosition(Vector2 position)
+        {
+            if (target == null)
+            {
+                transform.position = new Vector3(position.x, position.y, transform.position.z);
+            }
+        }
+
         private void SearchForTarget()
         {
             var player = GameObject.FindWithTag("Player");
 
             if (player == null)
-                m_UpdateSearchTime = Time.time + 2f;
+                m_UpdateSearchTime = Time.time + 1f;
             else
             {
                 target = player.transform;

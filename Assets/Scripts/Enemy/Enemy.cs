@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour {
     private EnemyMovement m_EnemyMovement;
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private string Phrase;
+    [SerializeField] private float WaitTimeAfterSpot = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour {
         m_Text.text = Phrase;
         m_EnemyMovement.isWaiting = true;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(WaitTimeAfterSpot);
 
         m_Text.text = string.Empty;
         m_EnemyMovement.isWaiting = false;

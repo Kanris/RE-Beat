@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour {
     private float m_PosX = -1f;
     private Vector2 m_PreviousPosition = Vector2.zero;
 
-    public bool isWaiting = false;
+    [HideInInspector] public bool isWaiting = false;
 
     [SerializeField] private float Speed = 1f;
     [SerializeField] private float IdleTime = 2f;

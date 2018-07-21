@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 public class GameMaster : MonoBehaviour {
 
@@ -119,6 +120,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
+        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(m_RespawnPoint.position);
         RespawnPlayerWithoutFade();
 
         yield return ScreenFaderManager.Instance.FadeToClear();
