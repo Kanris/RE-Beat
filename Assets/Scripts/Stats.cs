@@ -75,3 +75,9 @@ public class PlayerStats : Stats
         base.KillObject();
     }
 }
+
+[System.Serializable]
+public class EnemyStats : Stats
+{
+
+}

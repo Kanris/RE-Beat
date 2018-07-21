@@ -9,13 +9,15 @@ public class EnemyMovement : MonoBehaviour {
     private Animator m_Animator;
     private float m_PosX = -1f;
     private bool isWaiting = false;
-    private Vector2 m_PreviousPosition;
+    private Vector2 m_PreviousPosition = Vector2.zero;
 
-    private float Speed = 1f;
-    private float IdleTime = 2f;
+    [SerializeField] private float Speed = 1f;
+    [SerializeField] private float IdleTime = 2f;
+    [SerializeField] private Transform AttackRange;
 
     // Use this for initialization
     void Start () {
+
         InitializeRigidBody();
 
         InitializeAnimator();
@@ -49,9 +51,19 @@ public class EnemyMovement : MonoBehaviour {
             SetAnimation();
 
             if (m_Rigidbody2D.position == m_PreviousPosition & !isWaiting)
+            {
                 StartCoroutine(Idle());
+            }
             else
                 m_PreviousPosition = m_Rigidbody2D.position;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            StartCoroutine(Idle());
         }
     }
 
@@ -59,6 +71,7 @@ public class EnemyMovement : MonoBehaviour {
     {
         isWaiting = true;
         m_PosX = -m_PosX;
+        RotateAttackRange();
         SetAnimation();
 
         yield return new WaitForSeconds(IdleTime);
@@ -70,5 +83,11 @@ public class EnemyMovement : MonoBehaviour {
     {
         m_Animator.SetBool("isWalking", !isWaiting);
         m_Animator.SetFloat("PosX", m_PosX);
+    }
+
+    private void RotateAttackRange()
+    {
+        AttackRange.transform.localScale = new Vector3(-AttackRange.transform.localScale.x, 
+            AttackRange.transform.localScale.y, AttackRange.transform.localScale.z);
     }
 }

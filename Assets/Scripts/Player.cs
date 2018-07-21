@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField] private float YBoundaries = -20f;
-    [SerializeField] private PlayerStats playerStats;
+    public PlayerStats playerStats;
 
     private void Start()
     {
