@@ -31,9 +31,14 @@ public class Enemy : MonoBehaviour {
         m_EnemyMovement = GetComponent<EnemyMovement>();
     }
 
+    private string ChangePhrase()
+    {
+        return Phrase.Replace("<br>", "\n");
+    }
+
     private IEnumerator ShowPhrase()
     {
-        m_Text.text = Phrase;
+        m_Text.text = ChangePhrase();
         m_EnemyMovement.isWaiting = true;
 
         yield return new WaitForSeconds(WaitTimeAfterSpot);
