@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TilemapRenderer))]
 public class DisableBackground : MonoBehaviour {
 
     private bool m_PlayerInCave;
     private GameObject m_Background;
+    private TilemapRenderer m_TilemapRenderer;
 
     private void Start()
     {
         InitializeBackground();
+
+        InitializeTilemapRenderer();
     }
 
     private void InitializeBackground()
@@ -22,12 +27,23 @@ public class DisableBackground : MonoBehaviour {
         }
     }
 
+    private void InitializeTilemapRenderer()
+    {
+        m_TilemapRenderer = GetComponent<TilemapRenderer>();
+
+        if (m_TilemapRenderer == null)
+        {
+            Debug.LogError("DisableBackground.InitializeTilemapRenderer: Can't find component - TilemapRenderer");
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_PlayerInCave)
         {
             m_PlayerInCave = true;
             ManageBackground();
+            m_TilemapRenderer.sortingOrder = -10;
         }
     }
 
@@ -37,6 +53,7 @@ public class DisableBackground : MonoBehaviour {
         {
             m_PlayerInCave = false;
             ManageBackground();
+            m_TilemapRenderer.sortingOrder = 10;
         }
     }
 
