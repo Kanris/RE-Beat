@@ -8,6 +8,8 @@ public class Stats {
     public int MaxHealth = 200;
 
     private int m_CurrentHealth;
+    [SerializeField] private GameObject DeathParticle;
+
     private int CurrentHealth
     {
         get
@@ -59,7 +61,19 @@ public class Stats {
 
     protected virtual void KillObject()
     {
+        SpawnParticle();
         GameMaster.Destroy(m_GameObject);
+    }
+
+    protected virtual void SpawnParticle()
+    {
+        if (DeathParticle != null)
+        {
+            if (m_GameObject != null)
+            {
+                GameMaster.Instantiate(DeathParticle, m_GameObject.transform.position, m_GameObject.transform.rotation);
+            }
+        }
     }
 	
 }
