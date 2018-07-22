@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour {
 
     [HideInInspector] public bool isWaiting = false;
 
-    [SerializeField] private float Speed = 1f;
+    public float Speed = 1f;
     [SerializeField] private float IdleTime = 2f;
     [SerializeField] private Transform AttackRange;
 
