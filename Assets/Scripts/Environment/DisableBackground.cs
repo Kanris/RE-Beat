@@ -43,7 +43,7 @@ public class DisableBackground : MonoBehaviour {
         {
             m_PlayerInCave = true;
             ManageBackground();
-            m_TilemapRenderer.sortingOrder = -10;
+            ChangeBackgroundOrder();
         }
     }
 
@@ -53,10 +53,14 @@ public class DisableBackground : MonoBehaviour {
         {
             m_PlayerInCave = false;
             ManageBackground();
-            m_TilemapRenderer.sortingOrder = 10;
+            ChangeBackgroundOrder();
         }
     }
 
+    private void ChangeBackgroundOrder()
+    {
+        m_TilemapRenderer.sortingOrder = -m_TilemapRenderer.sortingOrder;
+    }
 
     private void ManageBackground()
     {
