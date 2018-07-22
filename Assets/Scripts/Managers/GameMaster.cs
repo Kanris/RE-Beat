@@ -121,14 +121,16 @@ public class GameMaster : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(m_RespawnPoint.position);
-        RespawnPlayerWithoutFade();
+        var playerTransform = RespawnPlayerWithoutFade();
+        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
-    private void RespawnPlayerWithoutFade()
+    private Transform RespawnPlayerWithoutFade()
     {
-        Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
+        var playerGameObject = Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
 
+        return playerGameObject.transform;
     }
 }

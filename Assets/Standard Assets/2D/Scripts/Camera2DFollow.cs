@@ -81,6 +81,18 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        public void ChangeCameraTarget(Transform newTarget)
+        {
+            if (newTarget != null)
+            {
+                target = newTarget;
+            }
+            else
+            {
+                Debug.LogError("Camera2DFollow.ChangeCameraTarget: newTarget is null");
+            }
+        }
+
         private void SearchForTarget()
         {
             var player = GameObject.FindWithTag("Player");
