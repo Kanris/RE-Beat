@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] private string Phrase;
     [SerializeField] private float WaitTimeAfterSpot = 2f;
     private float m_UpdateTime = 0f;
+    private bool m_IsPlayerDead;
 
 	// Use this for initialization
 	void Start () {
@@ -65,11 +66,18 @@ public class Enemy : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player") & !m_IsPlayerDead)
         {
+            m_IsPlayerDead = true;
             PlayerSpot(false);
             AttackPlayer(collision);
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (m_IsPlayerDead)
+            m_IsPlayerDead = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
