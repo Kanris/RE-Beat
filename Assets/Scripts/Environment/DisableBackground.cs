@@ -7,11 +7,11 @@ using UnityEngine.Tilemaps;
 public class DisableBackground : MonoBehaviour {
 
     private bool m_PlayerInCave;
-    private GameObject m_Background;
+    private Animator m_BackgroundAnimator;
     private TilemapRenderer m_TilemapRenderer;
 
     private Tilemap m_MistTilemap;
-    private Animator m_Animator;
+    private Animator m_MistAnimator;
     private bool m_IsFading;
 
     private void Start()
@@ -38,7 +38,7 @@ public class DisableBackground : MonoBehaviour {
         if (mistGameObject != null)
         {
             m_MistTilemap = mistGameObject.GetComponent<Tilemap>();
-            m_Animator = mistGameObject.GetComponent<Animator>();
+            m_MistAnimator = mistGameObject.GetComponent<Animator>();
         }
         else
             Debug.LogError("DisableBackground.InitializeMist: Can't find Gameobject with tag - Mist");
@@ -46,11 +46,15 @@ public class DisableBackground : MonoBehaviour {
 
     private void InitializeBackground()
     {
-        m_Background = GameObject.FindWithTag("BackgroundImage");
+        var m_Background = GameObject.FindWithTag("BackgroundImage");
 
         if (m_Background == null)
         {
             Debug.LogError("DisableBackground: Can't find gameObject with BackgroundImage tag");
+        }
+        else
+        {
+            m_BackgroundAnimator = m_Background.GetComponent<Animator>();
         }
     }
 
@@ -84,7 +88,6 @@ public class DisableBackground : MonoBehaviour {
     {
         StartCoroutine(FadeToClear());
         m_PlayerInCave = true;
-        ManageBackground();
     }
 
     private IEnumerator PlayerLeaveCave(bool isNeedWaiting)
@@ -97,20 +100,6 @@ public class DisableBackground : MonoBehaviour {
             yield return null;
 
         yield return FadeToBlack();
-        ManageBackground();
-    }
-
-    private void ChangeBackgroundOrder()
-    {
-        m_TilemapRenderer.sortingOrder = -m_TilemapRenderer.sortingOrder;
-    }
-
-    private void ManageBackground()
-    {
-        if (m_Background != null)
-            m_Background.SetActive(!m_PlayerInCave);
-        else
-            Debug.LogError("DisableBackground.ManageBackground: m_Background is not initialized");
     }
 
     private IEnumerator FadeToClear()
@@ -126,7 +115,8 @@ public class DisableBackground : MonoBehaviour {
     private IEnumerator FadeTo(string trigger)
     {
         m_IsFading = true;
-        m_Animator.SetTrigger(trigger);
+        m_MistAnimator.SetTrigger(trigger);
+        m_BackgroundAnimator.SetTrigger(trigger);
 
         while (m_IsFading)
             yield return null;
