@@ -10,11 +10,17 @@ public class DisableBackground : MonoBehaviour {
     private GameObject m_Background;
     private TilemapRenderer m_TilemapRenderer;
 
+    private Tilemap m_MistTilemap;
+    private Animator m_Animator;
+    private bool m_IsFading;
+
     private void Start()
     {
         InitializeBackground();
 
         InitializeTilemapRenderer();
+
+        InitializeMist();
     }
 
     private void Update()
@@ -23,6 +29,19 @@ public class DisableBackground : MonoBehaviour {
         {
             StartCoroutine(PlayerLeaveCave(true));
         }
+    }
+
+    private void InitializeMist()
+    {
+        var mistGameObject = GameObject.FindWithTag("Mist");
+
+        if (mistGameObject != null)
+        {
+            m_MistTilemap = mistGameObject.GetComponent<Tilemap>();
+            m_Animator = mistGameObject.GetComponent<Animator>();
+        }
+        else
+            Debug.LogError("DisableBackground.InitializeMist: Can't find Gameobject with tag - Mist");
     }
 
     private void InitializeBackground()
@@ -63,9 +82,9 @@ public class DisableBackground : MonoBehaviour {
 
     private void PlayerEnterCave()
     {
+        StartCoroutine(FadeToClear());
         m_PlayerInCave = true;
         ManageBackground();
-        ChangeBackgroundOrder();
     }
 
     private IEnumerator PlayerLeaveCave(bool isNeedWaiting)
@@ -73,12 +92,12 @@ public class DisableBackground : MonoBehaviour {
         m_PlayerInCave = false;
         
         if (isNeedWaiting)
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
         else
             yield return null;
-        
+
+        yield return FadeToBlack();
         ManageBackground();
-        ChangeBackgroundOrder();
     }
 
     private void ChangeBackgroundOrder()
@@ -92,5 +111,29 @@ public class DisableBackground : MonoBehaviour {
             m_Background.SetActive(!m_PlayerInCave);
         else
             Debug.LogError("DisableBackground.ManageBackground: m_Background is not initialized");
+    }
+
+    private IEnumerator FadeToClear()
+    {
+        yield return FadeTo("FadeOut");
+    }
+
+    private IEnumerator FadeToBlack()
+    {
+        yield return FadeTo("FadeIn");
+    }
+
+    private IEnumerator FadeTo(string trigger)
+    {
+        m_IsFading = true;
+        m_Animator.SetTrigger(trigger);
+
+        while (m_IsFading)
+            yield return null;
+    }
+
+    public void AnimationComplete()
+    {
+        m_IsFading = false;
     }
 }
