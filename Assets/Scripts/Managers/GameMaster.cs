@@ -48,6 +48,8 @@ public class GameMaster : MonoBehaviour {
     private Transform m_RespawnPoint;
     private GameObject m_PlayerToRespawn;
 
+    public bool isPlayerDead;
+
     void Initialize(string name)
     {
         var gameObjectToInstantiate = Resources.Load(name);
@@ -116,6 +118,8 @@ public class GameMaster : MonoBehaviour {
 
     private IEnumerator RespawnPlayerWithFade()
     {
+        isPlayerDead = true;
+
         yield return new WaitForSeconds(1f);
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
@@ -124,12 +128,18 @@ public class GameMaster : MonoBehaviour {
         var playerTransform = RespawnPlayerWithoutFade();
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
+        isPlayerDead = false;
+
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     private Transform RespawnPlayerWithoutFade()
     {
+        isPlayerDead = true;
+
         var playerGameObject = Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
+
+        isPlayerDead = false;
 
         return playerGameObject.transform;
     }

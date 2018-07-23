@@ -17,6 +17,14 @@ public class DisableBackground : MonoBehaviour {
         InitializeTilemapRenderer();
     }
 
+    private void Update()
+    {
+        if (m_PlayerInCave & GameMaster.Instance.isPlayerDead)
+        {
+            StartCoroutine(PlayerLeaveCave(true));
+        }
+    }
+
     private void InitializeBackground()
     {
         m_Background = GameObject.FindWithTag("BackgroundImage");
@@ -41,9 +49,7 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !m_PlayerInCave)
         {
-            m_PlayerInCave = true;
-            ManageBackground();
-            ChangeBackgroundOrder();
+            PlayerEnterCave();
         }
     }
 
@@ -51,10 +57,28 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_PlayerInCave)
         {
-            m_PlayerInCave = false;
-            ManageBackground();
-            ChangeBackgroundOrder();
+            StartCoroutine(PlayerLeaveCave(false));
         }
+    }
+
+    private void PlayerEnterCave()
+    {
+        m_PlayerInCave = true;
+        ManageBackground();
+        ChangeBackgroundOrder();
+    }
+
+    private IEnumerator PlayerLeaveCave(bool isNeedWaiting)
+    {
+        m_PlayerInCave = false;
+        
+        if (isNeedWaiting)
+            yield return new WaitForSeconds(2f);
+        else
+            yield return null;
+        
+        ManageBackground();
+        ChangeBackgroundOrder();
     }
 
     private void ChangeBackgroundOrder()
