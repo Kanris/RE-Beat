@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class PatrolEnemy : MonoBehaviour {
@@ -9,12 +10,14 @@ public class PatrolEnemy : MonoBehaviour {
     public Stats EnemyStats;
 
     private EnemyMovement m_EnemyMovement;
-    [SerializeField] private TextMeshProUGUI m_Text;
-    [SerializeField] private GameObject m_AlarmImage;
-    [SerializeField] private string Phrase;
-    [SerializeField] private float WaitTimeAfterSpot = 2f;
+    private TextMeshProUGUI m_Text;
+    private Image m_AlarmImage;
     private float m_UpdateTime = 0f;
     private bool m_IsPlayerDead;
+
+    [SerializeField] private Canvas UI;
+    [SerializeField] private string Phrase;
+    [SerializeField] private float WaitTimeAfterSpot = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +25,10 @@ public class PatrolEnemy : MonoBehaviour {
         InitializeStats();
 
         InitializeEnemyMovement();
+
+        InitializeEnemyUI();
+
+        m_AlarmImage.gameObject.SetActive(false);
     }
 
     private void InitializeStats()
@@ -32,6 +39,22 @@ public class PatrolEnemy : MonoBehaviour {
     private void InitializeEnemyMovement()
     {
         m_EnemyMovement = GetComponent<EnemyMovement>();
+    }
+
+    private void InitializeEnemyUI()
+    {
+        if (UI != null)
+        {
+            m_Text = UI.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (m_Text == null)
+                Debug.LogError("Can't initizlize text");
+
+            m_AlarmImage = UI.GetComponentInChildren<Image>(); 
+
+            if (m_AlarmImage == null)
+                Debug.LogError("Can't initizlize image");
+        }
     }
 
     private string ChangePhrase()
@@ -47,7 +70,7 @@ public class PatrolEnemy : MonoBehaviour {
             {
                 m_UpdateTime = Time.time + 0.5f;
 
-                if (m_AlarmImage.activeSelf)
+                if (m_AlarmImage.gameObject.activeSelf)
                     m_EnemyMovement.isWaiting = false;
             }
         }
@@ -104,7 +127,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void PlayerSpot(bool isSpot)
     {
-        m_AlarmImage.SetActive(isSpot);
+        m_AlarmImage.gameObject.SetActive(isSpot);
 
         if (isSpot)
             m_EnemyMovement.Speed = 2f;

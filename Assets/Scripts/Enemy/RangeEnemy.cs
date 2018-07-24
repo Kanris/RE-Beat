@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RangeEnemy : MonoBehaviour {
 
     public MageEnemyStats EnemyStats;
 
-    private EnemyMovement m_EnemyMovement;
+    [SerializeField] private Canvas UI;
+
+    private EnemyMovement m_EnemyMovement; private Animator m_Animator;
+    private TextMeshProUGUI m_Text;
+    private Image m_AlarmImage;
     private bool m_IsPlayerDead = false;
     private bool m_CanCreateNewFireball = true;
-    private Animator m_Animator;
-    [SerializeField] private TextMeshProUGUI m_Text;
-    [SerializeField] private GameObject m_AlarmImage;
 
     // Use this for initialization
     void Start()
@@ -22,6 +24,10 @@ public class RangeEnemy : MonoBehaviour {
         InitializeEnemyMovement();
 
         InitializeAnimator();
+
+        InitializeEnemyUI();
+
+        m_AlarmImage.gameObject.SetActive(false);
     }
 
     private void InitializeStats()
@@ -40,6 +46,22 @@ public class RangeEnemy : MonoBehaviour {
 
         if (m_Animator == null)
             Debug.LogError("RangeEnemy.InitializeAnimator: Can't find animator on GameObject");
+    }
+
+    private void InitializeEnemyUI()
+    {
+        if (UI != null)
+        {
+            m_Text = UI.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (m_Text == null)
+                Debug.LogError("Can't initizlize text");
+
+            m_AlarmImage = UI.GetComponentInChildren<Image>();
+
+            if (m_AlarmImage == null)
+                Debug.LogError("Can't initizlize image");
+        }
     }
 
     private void Update()
@@ -136,7 +158,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (m_AlarmImage != null)
         {
-            m_AlarmImage.SetActive(isAttacking);
+            m_AlarmImage.gameObject.SetActive(isAttacking);
         }
     }
 
