@@ -45,7 +45,7 @@ public class GameMaster : MonoBehaviour {
     #endregion
 
 
-    private Transform m_RespawnPoint;
+    public Transform RespawnPoint;
     private GameObject m_PlayerToRespawn;
 
     public bool isPlayerDead;
@@ -58,9 +58,10 @@ public class GameMaster : MonoBehaviour {
 
     void InitializeRespawnPoint()
     {
-        m_RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
+        if (RespawnPoint == null)
+            RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
 
-        if (m_RespawnPoint == null)
+        if (RespawnPoint == null)
         {
             Debug.LogError("GameMaster: Can't find Respawn Point on scene");
         }
@@ -80,12 +81,12 @@ public class GameMaster : MonoBehaviour {
     {
         if (respawnPointTransform != null)
         {
-            if (!ReferenceEquals(m_RespawnPoint, respawnPointTransform))
+            if (!ReferenceEquals(RespawnPoint, respawnPointTransform))
             {
-                if (m_RespawnPoint != null)
-                    m_RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
+                if (RespawnPoint != null)
+                    RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
                 
-                m_RespawnPoint = respawnPointTransform;
+                RespawnPoint = respawnPointTransform;
             }
         }
         else
@@ -96,7 +97,7 @@ public class GameMaster : MonoBehaviour {
 
     public void RespawnPlayer(bool isPlayerDied)
     {
-        if (m_RespawnPoint != null)
+        if (RespawnPoint != null)
         {
             if (m_PlayerToRespawn != null)
             {
@@ -124,7 +125,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(m_RespawnPoint.position);
+        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(RespawnPoint.position);
         var playerTransform = RespawnPlayerWithoutFade();
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
@@ -137,7 +138,7 @@ public class GameMaster : MonoBehaviour {
     {
         isPlayerDead = true;
 
-        var playerGameObject = Instantiate(m_PlayerToRespawn, m_RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
+        var playerGameObject = Instantiate(m_PlayerToRespawn, RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
 
         isPlayerDead = false;
 
