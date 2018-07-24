@@ -95,7 +95,10 @@ public class EnemyMovement : MonoBehaviour {
 
     private void RotateAttackRange()
     {
-        AttackRange.transform.localScale = new Vector3(-AttackRange.transform.localScale.x, 
+        if (AttackRange != null)
+        {
+            AttackRange.transform.localScale = new Vector3(-AttackRange.transform.localScale.x,
             AttackRange.transform.localScale.y, AttackRange.transform.localScale.z);
+        }
     }
 }
