@@ -549,7 +549,7 @@ Prefab:
         type: 2}
       propertyPath: RespawnPoint
       value: 
-      objectReference: {fileID: 6850266}
+      objectReference: {fileID: 77665800}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -3895,12 +3895,27 @@ Prefab:
     - target: {fileID: 114253833036869788, guid: 139eb539f2552f24ba30a4457c9cd24f,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114253833036869788, guid: 139eb539f2552f24ba30a4457c9cd24f,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61758729773124386, guid: 139eb539f2552f24ba30a4457c9cd24f,
+        type: 2}
+      propertyPath: m_AutoTiling
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61758729773124386, guid: 139eb539f2552f24ba30a4457c9cd24f,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 61492229273646546, guid: 139eb539f2552f24ba30a4457c9cd24f,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
