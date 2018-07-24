@@ -13,8 +13,8 @@ public class RangeEnemy : MonoBehaviour {
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
     private Image m_AlarmImage;
-    private bool m_IsPlayerInSight = false;
-    private bool m_CanCreateNewFireball = true;
+    public bool m_IsPlayerInSight = false;
+    public bool m_CanCreateNewFireball = true;
 
     // Use this for initialization
     void Start()
@@ -64,38 +64,24 @@ public class RangeEnemy : MonoBehaviour {
         }
     }
 
-    private void Update()
-    {
-        if (GameMaster.Instance.isPlayerDead)
-        {
-            m_EnemyMovement.isWaiting = false;
-            EnableWarningSign(false);
-        }
-    }
-
+    //simplify
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            KillPlayer(collision);
+            m_IsPlayerInSight = false;
+            m_EnemyMovement.isWaiting = false;
+            EnableWarningSign(false);
+
+            collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
         }
     }
 
-    private IEnumerator OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_IsPlayerInSight)
         {
             m_IsPlayerInSight = true;
-            yield return StartCast();
-        }
-    }
-
-    private IEnumerator OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & m_IsPlayerInSight & m_CanCreateNewFireball)
-        {
-            m_IsPlayerInSight = true;
-            yield return StartCast();
         }
     }
 
@@ -109,35 +95,45 @@ public class RangeEnemy : MonoBehaviour {
         }
     }
 
-    private void KillPlayer(Collision2D collision)
+    private void Update()
     {
-        m_IsPlayerInSight = false;
+        if (GameMaster.Instance.isPlayerDead)
+        {
+            m_IsPlayerInSight = false;
+            m_EnemyMovement.isWaiting = false;
+            EnableWarningSign(false);
+        }
 
-        m_EnemyMovement.isWaiting = false;
-        EnableWarningSign(false);
+        if (m_IsPlayerInSight)
+        {
+            m_EnemyMovement.isWaiting = true;
+            EnableWarningSign(m_EnemyMovement.isWaiting);
 
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
+            if (m_CanCreateNewFireball)
+            {
+                StartCoroutine(StartCast());
+            }
+        }
     }
 
     private IEnumerator StartCast()
     {
-        if (m_CanCreateNewFireball)
+        if(m_IsPlayerInSight)
         {
-            m_EnemyMovement.isWaiting = true;
-            Animate(true);
-            EnableWarningSign(true);
+            if (m_CanCreateNewFireball)
+            {
+                Animate(true);
 
-            m_CanCreateNewFireball = false;
+                m_CanCreateNewFireball = false;
 
-            yield return new WaitForSeconds(0.6f);
+                yield return new WaitForSeconds(0.6f);
 
-            Animate(false);
+                Animate(false);
 
-            CreateFireball();
+                CreateFireball();
 
-            yield return new WaitForSeconds(EnemyStats.AttackSpeed);
-
-            m_CanCreateNewFireball = true;
+                yield return CastCooldown();
+            }
         }
     }
 
@@ -151,21 +147,13 @@ public class RangeEnemy : MonoBehaviour {
             instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
     }
 
-    private void Animate(bool isAttacking)
+    private IEnumerator CastCooldown()
     {
-        if (m_Animator != null)
-        {
-            m_Animator.SetBool("isAttacking", isAttacking);    
-        }
+        yield return new WaitForSeconds(EnemyStats.AttackSpeed);
+
+        m_CanCreateNewFireball = true;
     }
 
-    private void EnableWarningSign(bool isAttacking)
-    {
-        if (m_AlarmImage != null)
-        {
-            m_AlarmImage.gameObject.SetActive(isAttacking);
-        }
-    }
 
     private IEnumerator ResetState()
     {
@@ -175,6 +163,22 @@ public class RangeEnemy : MonoBehaviour {
         {
             m_EnemyMovement.isWaiting = false;
             EnableWarningSign(false);
+        }
+    }
+
+    private void Animate(bool isAttacking)
+    {
+        if (m_Animator != null)
+        {
+            m_Animator.SetBool("isAttacking", isAttacking);
+        }
+    }
+
+    private void EnableWarningSign(bool isAttacking)
+    {
+        if (m_AlarmImage != null)
+        {
+            m_AlarmImage.gameObject.SetActive(isAttacking);
         }
     }
 
