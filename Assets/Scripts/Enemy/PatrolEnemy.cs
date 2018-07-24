@@ -62,20 +62,6 @@ public class PatrolEnemy : MonoBehaviour {
         return Phrase.Replace("<br>", "\n");
     }
 
-    private void Update()
-    {
-        if (m_EnemyMovement.isWaiting)
-        {
-            if (m_UpdateTime < Time.time)
-            {
-                m_UpdateTime = Time.time + 0.5f;
-
-                if (m_AlarmImage.gameObject.activeSelf)
-                    m_EnemyMovement.isWaiting = false;
-            }
-        }
-    }
-
     private IEnumerator ShowPhrase()
     {
         m_Text.text = ChangePhrase();
@@ -103,19 +89,19 @@ public class PatrolEnemy : MonoBehaviour {
             m_IsPlayerDead = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerSpot(true);
+            yield return PlayerSpot(true);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerSpot(false);
+            yield return PlayerSpot(false);
         }
     }
 
@@ -125,9 +111,13 @@ public class PatrolEnemy : MonoBehaviour {
         StartCoroutine(ShowPhrase());
     }
 
-    private void PlayerSpot(bool isSpot)
+    private IEnumerator PlayerSpot(bool isSpot)
     {
+        yield return null;
+
         m_AlarmImage.gameObject.SetActive(isSpot);
+
+        m_EnemyMovement.isWaiting = false;
 
         if (isSpot)
             m_EnemyMovement.Speed = 2f;
