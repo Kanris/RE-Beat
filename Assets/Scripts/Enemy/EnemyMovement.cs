@@ -13,7 +13,6 @@ public class EnemyMovement : MonoBehaviour {
 
     public float Speed = 1f;
     [SerializeField] private float IdleTime = 2f;
-    [SerializeField] private Transform AttackRange;
     [HideInInspector] public float m_PosX = -1f;
 
     // Use this for initialization
@@ -94,14 +93,5 @@ public class EnemyMovement : MonoBehaviour {
     {
         m_Animator.SetBool("isWalking", !isWaiting);
         m_Animator.SetFloat("PosX", m_PosX);
-    }
-
-    private void RotateAttackRange()
-    {
-        if (AttackRange != null)
-        {
-            AttackRange.transform.localScale = new Vector3(-AttackRange.transform.localScale.x,
-            AttackRange.transform.localScale.y, AttackRange.transform.localScale.z);
-        }
     }
 }
