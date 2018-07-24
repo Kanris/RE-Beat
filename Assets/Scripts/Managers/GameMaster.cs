@@ -44,11 +44,11 @@ public class GameMaster : MonoBehaviour {
 
     #endregion
 
-
     public Transform RespawnPoint;
     private GameObject m_PlayerToRespawn;
 
     public bool isPlayerDead;
+    private bool isPlayerRespawning;
 
     void Initialize(string name)
     {
@@ -97,23 +97,27 @@ public class GameMaster : MonoBehaviour {
 
     public void RespawnPlayer(bool isPlayerDied)
     {
-        if (RespawnPoint != null)
+        if (!isPlayerRespawning)
         {
-            if (m_PlayerToRespawn != null)
+            if (RespawnPoint != null)
             {
-                if (isPlayerDied)
-                    StartCoroutine(RespawnPlayerWithFade());
+                if (m_PlayerToRespawn != null)
+                {
+                    isPlayerRespawning = true;
+                    if (isPlayerDied)
+                        StartCoroutine(RespawnPlayerWithFade());
+                    else
+                        RespawnPlayerWithoutFade();
+                }
                 else
-                    RespawnPlayerWithoutFade();
+                {
+                    Debug.LogError("GameMaster: Couldn't respawn player, because GameMaster couldn't load Player from Resources.");
+                }
             }
             else
             {
-                Debug.LogError("GameMaster: Couldn't respawn player, because GameMaster couldn't load Player from Resources.");
+                Debug.LogError("GameMaster: Can't respawn player, because GameMaster couldn't found RespawnPoint on scene.");
             }
-        }
-        else
-        {
-            Debug.LogError("GameMaster: Can't respawn player, because GameMaster couldn't found RespawnPoint on scene.");
         }
     }
 
@@ -140,6 +144,7 @@ public class GameMaster : MonoBehaviour {
 
         var playerGameObject = Instantiate(m_PlayerToRespawn, RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
 
+        isPlayerRespawning = false;
         isPlayerDead = false;
 
         return playerGameObject.transform;
