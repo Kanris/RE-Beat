@@ -117,11 +117,10 @@ public class RangeEnemy : MonoBehaviour {
     private void CreateFireball()
     {
         var newFireball = Resources.Load("Fireball");
-        var posX = m_Animator.GetFloat("PosX");
 
         var instantiateFireball = Instantiate(newFireball, transform.position, transform.rotation) as GameObject;
 
-        if (posX < 0)
+        if (m_Animator.GetFloat("PosX") < 0)
             instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
     }
 
