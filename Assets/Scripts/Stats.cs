@@ -95,6 +95,5 @@ public class PlayerStats : Stats
 [System.Serializable]
 public class MageEnemyStats : Stats
 {
-    public float FireBallSpeed = 1f;
     public float AttackSpeed = 2f;
 }

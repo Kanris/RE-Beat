@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour {
+public class PatrolEnemy : MonoBehaviour {
 
     public Stats EnemyStats;
 
