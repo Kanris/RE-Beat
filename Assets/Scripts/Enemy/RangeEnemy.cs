@@ -13,7 +13,7 @@ public class RangeEnemy : MonoBehaviour {
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
     private Image m_AlarmImage;
-    private bool m_IsPlayerDead = false;
+    private bool m_IsPlayerInSight = false;
     private bool m_CanCreateNewFireball = true;
 
     // Use this for initialization
@@ -68,7 +68,8 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (GameMaster.Instance.isPlayerDead)
         {
-            ResetState();
+            m_EnemyMovement.isWaiting = false;
+            EnableWarningSign(false);
         }
     }
 
@@ -82,31 +83,35 @@ public class RangeEnemy : MonoBehaviour {
 
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerDead)
+        if (collision.CompareTag("Player") & !m_IsPlayerInSight)
         {
+            m_IsPlayerInSight = true;
             yield return StartCast();
         }
     }
 
     private IEnumerator OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerDead & m_CanCreateNewFireball)
+        if (collision.CompareTag("Player") & m_IsPlayerInSight & m_CanCreateNewFireball)
         {
+            m_IsPlayerInSight = true;
             yield return StartCast();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerDead)
+        if (collision.CompareTag("Player") & m_IsPlayerInSight)
         {
-            ResetState();
+            m_IsPlayerInSight = false;
+
+            yield return ResetState();
         }
     }
 
     private void KillPlayer(Collision2D collision)
     {
-        m_IsPlayerDead = true;
+        m_IsPlayerInSight = false;
 
         m_EnemyMovement.isWaiting = false;
         EnableWarningSign(false);
@@ -162,11 +167,15 @@ public class RangeEnemy : MonoBehaviour {
         }
     }
 
-    private void ResetState()
+    private IEnumerator ResetState()
     {
-        m_IsPlayerDead = false;
-        m_EnemyMovement.isWaiting = false;
-        EnableWarningSign(false);
+        yield return new WaitForSeconds(1f);
+
+        if (!m_IsPlayerInSight)
+        {
+            m_EnemyMovement.isWaiting = false;
+            EnableWarningSign(false);
+        }
     }
 
 }
