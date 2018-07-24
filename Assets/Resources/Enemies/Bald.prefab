@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 70123402068735196}
   - component: {fileID: 114603082982681794}
   - component: {fileID: 114707679825437764}
+  - component: {fileID: 114266846659773688}
   m_Layer: 0
   m_Name: Bald
   m_TagString: Enemy
@@ -136,7 +137,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1576115118077050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.007, y: -0.2, z: 0}
+  m_LocalPosition: {x: 0.007, y: -0.128, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4771710641920692}
@@ -149,7 +150,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811759474394858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.45, y: 0.12, z: 0}
+  m_LocalPosition: {x: 11.494, y: 2.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4704001083474554}
@@ -240,7 +241,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.603131, y: -0.017930627}
+  m_Offset: {x: -1.603131, y: -0.089535356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -251,7 +252,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.719998, y: 0.74410176}
+  m_Size: {x: 3.719998, y: 0.6008923}
   m_EdgeRadius: 0
 --- !u!70 &70123402068735196
 CapsuleCollider2D:
@@ -265,8 +266,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016819239, y: -0.14697483}
-  m_Size: {x: 0.44750166, y: 0.7453212}
+  m_Offset: {x: 0.016819239, y: -0.14833426}
+  m_Size: {x: 0.44750166, y: 0.74260235}
   m_Direction: 0
 --- !u!95 &95857514711989202
 Animator:
@@ -302,6 +303,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114266846659773688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1811759474394858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4c7c6ca284f5e499f43efc193a6595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyStats:
+    MaxHealth: 200
+    DeathParticle: {fileID: 0}
+  m_Text: {fileID: 114381703808441416}
+  m_AlarmImage: {fileID: 1177420364540028}
+  Phrase: You shouldn't be here!<br>Go home!
+  WaitTimeAfterSpot: 2
 --- !u!114 &114381703808441416
 MonoBehaviour:
   m_ObjectHideFlags: 1
