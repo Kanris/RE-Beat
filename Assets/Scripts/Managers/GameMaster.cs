@@ -39,7 +39,7 @@ public class GameMaster : MonoBehaviour {
         InitalizePlayerToRespawn();
         #endregion
 
-        RespawnPlayer(false);
+        InitializePlayerRespawn(false);
     }
 
     #endregion
@@ -95,7 +95,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public void RespawnPlayer(bool isPlayerDied)
+    public void InitializePlayerRespawn(bool isPlayerDied)
     {
         if (!isPlayerRespawning)
         {
@@ -104,10 +104,11 @@ public class GameMaster : MonoBehaviour {
                 if (m_PlayerToRespawn != null)
                 {
                     isPlayerRespawning = true;
+
                     if (isPlayerDied)
-                        StartCoroutine(RespawnPlayerWithFade());
+                        StartCoroutine(RespawnWithFade());
                     else
-                        RespawnPlayerWithoutFade();
+                        RespawnWithoutFade();
                 }
                 else
                 {
@@ -121,7 +122,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    private IEnumerator RespawnPlayerWithFade()
+    private IEnumerator RespawnWithFade()
     {
         isPlayerDead = true;
 
@@ -130,7 +131,7 @@ public class GameMaster : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(RespawnPoint.position);
-        var playerTransform = RespawnPlayerWithoutFade();
+        var playerTransform = RespawnWithoutFade();
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
         isPlayerDead = false;
@@ -138,7 +139,7 @@ public class GameMaster : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
-    private Transform RespawnPlayerWithoutFade()
+    private Transform RespawnWithoutFade()
     {
         isPlayerDead = true;
 

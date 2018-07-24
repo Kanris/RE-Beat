@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 6850268}
   - component: {fileID: 6850267}
   m_Layer: 9
-  m_Name: CaveRespawnPoing
+  m_Name: RespawnPoint_Cave_Inside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,6 +561,26 @@ Prefab:
     - target: {fileID: 1941835792327864, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 70951857369326182, guid: 4c3b77b88c431e742a72059fbc306a1a,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: -0.108599424
+      objectReference: {fileID: 0}
+    - target: {fileID: 70951857369326182, guid: 4c3b77b88c431e742a72059fbc306a1a,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.5672368
+      objectReference: {fileID: 0}
+    - target: {fileID: 70951857369326182, guid: 4c3b77b88c431e742a72059fbc306a1a,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: 0.01952362
+      objectReference: {fileID: 0}
+    - target: {fileID: 70951857369326182, guid: 4c3b77b88c431e742a72059fbc306a1a,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.3231125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 2}
@@ -2511,7 +2531,7 @@ GameObject:
   - component: {fileID: 468405519}
   - component: {fileID: 468405518}
   m_Layer: 9
-  m_Name: RespawnPointRightCave
+  m_Name: RespawnPointRight_Cave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -87,7 +87,7 @@ public class PlayerStats : Stats
 
     protected override void KillObject()
     {
-        GameMaster.Instance.RespawnPlayer(true);
+        GameMaster.Instance.InitializePlayerRespawn(true);
         base.KillObject();
     }
 }
