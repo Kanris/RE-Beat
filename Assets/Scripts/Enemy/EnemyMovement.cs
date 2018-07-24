@@ -7,7 +7,6 @@ public class EnemyMovement : MonoBehaviour {
 
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
-    private float m_PosX = -1f;
     private Vector2 m_PreviousPosition = Vector2.zero;
 
     [HideInInspector] public bool isWaiting = false;
@@ -15,6 +14,7 @@ public class EnemyMovement : MonoBehaviour {
     public float Speed = 1f;
     [SerializeField] private float IdleTime = 2f;
     [SerializeField] private Transform AttackRange;
+    [HideInInspector] public float m_PosX = -1f;
 
     // Use this for initialization
     void Start () {
@@ -77,14 +77,17 @@ public class EnemyMovement : MonoBehaviour {
 
     private IEnumerator Idle()
     {
-        isWaiting = true;
-        m_PosX = -m_PosX;
-        RotateAttackRange();
-        SetAnimation();
+        if (!isWaiting)
+        {
+            isWaiting = true;
+            transform.localScale = new Vector3(m_PosX, 1, 1);
+            m_PosX = -m_PosX;
+            SetAnimation();
 
-        yield return new WaitForSeconds(IdleTime);
+            yield return new WaitForSeconds(IdleTime);
 
-        isWaiting = false;
+            isWaiting = false;
+        }
     }
 
     private void SetAnimation()

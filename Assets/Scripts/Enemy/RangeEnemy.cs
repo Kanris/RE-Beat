@@ -120,7 +120,7 @@ public class RangeEnemy : MonoBehaviour {
 
         var instantiateFireball = Instantiate(newFireball, transform.position, transform.rotation) as GameObject;
 
-        if (m_Animator.GetFloat("PosX") < 0)
+        if (m_EnemyMovement.m_PosX < 0)
             instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
     }
 
