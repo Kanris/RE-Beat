@@ -9241,81 +9241,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1811759474394858, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
+      propertyPath: m_Name
+      value: Mage
+      objectReference: {fileID: 0}
     - target: {fileID: 114381703808441416, guid: 139eb539f2552f24ba30a4457c9cd24f,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114381703808441416, guid: 139eb539f2552f24ba30a4457c9cd24f,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 61478343542372708, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: -1.603131
-      objectReference: {fileID: 0}
-    - target: {fileID: 61478343542372708, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 3.719998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1811759474394858, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1811759474394858, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
-      propertyPath: m_Name
-      value: Mage
-      objectReference: {fileID: 0}
-    - target: {fileID: 95857514711989202, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 5e1df5eed5d02894ab984ccc9cb3e32d, type: 2}
-    - target: {fileID: 212827543611573360, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300014, guid: 353e9118d76fc7847a5fe4efd7dd8d65,
-        type: 3}
-    - target: {fileID: 70123402068735196, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.008545399
-      objectReference: {fileID: 0}
-    - target: {fileID: 70123402068735196, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 0.76734483
-      objectReference: {fileID: 0}
-    - target: {fileID: 61460684811962274, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.3585551
-      objectReference: {fileID: 0}
-    - target: {fileID: 61445717990861406, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.3585551
-      objectReference: {fileID: 0}
-    - target: {fileID: 61478343542372708, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.017930612
-      objectReference: {fileID: 0}
-    - target: {fileID: 61478343542372708, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 0.74410176
-      objectReference: {fileID: 0}
-    - target: {fileID: 4714282991264724, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.008
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114716538138832412, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1102590377
@@ -13592,12 +13536,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &1282875699 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114381703808441416, guid: 139eb539f2552f24ba30a4457c9cd24f,
-    type: 2}
-  m_PrefabInternal: {fileID: 924413265}
-  m_Script: {fileID: 1453722849, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
 --- !u!1 &1361907316
 GameObject:
   m_ObjectHideFlags: 0
@@ -15397,11 +15335,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DisableBackground: {fileID: 232266374}
---- !u!1 &1883385476 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1177420364540028, guid: 139eb539f2552f24ba30a4457c9cd24f,
-    type: 2}
-  m_PrefabInternal: {fileID: 924413265}
 --- !u!1 &1902360073
 GameObject:
   m_ObjectHideFlags: 0
@@ -16243,29 +16176,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &2043627878 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1811759474394858, guid: 139eb539f2552f24ba30a4457c9cd24f,
-    type: 2}
-  m_PrefabInternal: {fileID: 924413265}
---- !u!114 &2043627879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2043627878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3b544a90082224daebde12893e58d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyStats:
-    MaxHealth: 200
-    DeathParticle: {fileID: 0}
-    FireBallSpeed: 1
-    AttackSpeed: 2
-  m_Text: {fileID: 1282875699}
-  m_AlarmImage: {fileID: 1883385476}
 --- !u!1 &2113073318
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,8 +14,6 @@ public class RangeEnemy : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private GameObject m_AlarmImage;
 
-
-
     // Use this for initialization
     void Start()
     {
@@ -44,6 +42,14 @@ public class RangeEnemy : MonoBehaviour {
             Debug.LogError("RangeEnemy.InitializeAnimator: Can't find animator on GameObject");
     }
 
+    private void Update()
+    {
+        if (GameMaster.Instance.isPlayerDead)
+        {
+            ResetState();
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -52,32 +58,19 @@ public class RangeEnemy : MonoBehaviour {
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (m_IsPlayerDead)
-            m_IsPlayerDead = false;
-    }
-
-    private void KillPlayer(Collision2D collision)
-    {
-        m_IsPlayerDead = true;
-        m_EnemyMovement.isWaiting = false;
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_IsPlayerDead)
         {
-            StartCoroutine(CreateFireball());
+            yield return StartCast();
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private IEnumerator OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_IsPlayerDead & m_CanCreateNewFireball)
         {
-            StartCoroutine(CreateFireball());
+            yield return StartCast();
         }
     }
 
@@ -85,16 +78,27 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !m_IsPlayerDead)
         {
-            m_EnemyMovement.isWaiting = false;
+            ResetState();
         }
     }
 
-    private IEnumerator CreateFireball()
+    private void KillPlayer(Collision2D collision)
+    {
+        m_IsPlayerDead = true;
+
+        m_EnemyMovement.isWaiting = false;
+        EnableWarningSign(false);
+
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
+    }
+
+    private IEnumerator StartCast()
     {
         if (m_CanCreateNewFireball)
         {
             m_EnemyMovement.isWaiting = true;
             Animate(true);
+            EnableWarningSign(true);
 
             m_CanCreateNewFireball = false;
 
@@ -102,14 +106,23 @@ public class RangeEnemy : MonoBehaviour {
 
             Animate(false);
 
-            var newFireball = Resources.Load("Fireball");
-
-            var instantiateFireball = Instantiate(newFireball, transform.position, transform.rotation);
+            CreateFireball();
 
             yield return new WaitForSeconds(EnemyStats.AttackSpeed);
 
             m_CanCreateNewFireball = true;
         }
+    }
+
+    private void CreateFireball()
+    {
+        var newFireball = Resources.Load("Fireball");
+        var posX = m_Animator.GetFloat("PosX");
+
+        var instantiateFireball = Instantiate(newFireball, transform.position, transform.rotation) as GameObject;
+
+        if (posX < 0)
+            instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
     }
 
     private void Animate(bool isAttacking)
@@ -118,6 +131,21 @@ public class RangeEnemy : MonoBehaviour {
         {
             m_Animator.SetBool("isAttacking", isAttacking);    
         }
+    }
+
+    private void EnableWarningSign(bool isAttacking)
+    {
+        if (m_AlarmImage != null)
+        {
+            m_AlarmImage.SetActive(isAttacking);
+        }
+    }
+
+    private void ResetState()
+    {
+        m_IsPlayerDead = false;
+        m_EnemyMovement.isWaiting = false;
+        EnableWarningSign(false);
     }
 
 }
