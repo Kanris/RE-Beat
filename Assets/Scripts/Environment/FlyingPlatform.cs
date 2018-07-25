@@ -8,8 +8,8 @@ public class FlyingPlatform : MonoBehaviour {
     public enum DirectionType { LeftDown, RightUp }
 
     [SerializeField] private FlyingPlatformType PlatformType;
-    [SerializeField] private float MovingTime = 1f;
-    [SerializeField] private float IdleTime = 3f;
+    [SerializeField, Range(1, 20)] private float MovingTime = 1f;
+    [SerializeField, Range(1, 20)] private float IdleTime = 3f;
     [SerializeField] private DirectionType Direction;
 
     private Vector3 m_MoveVector;
