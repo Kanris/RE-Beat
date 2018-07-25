@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
 
-    [SerializeField] private float YBoundaries = -20f;
-    [SerializeField] private float YDeath = -3f;
+    [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
+    [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
     public PlayerStats playerStats;
 
     private float m_YPositionBeforeJump;
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
     {
         if (!m_Animator.GetBool("Ground"))
         {
-            if (m_YPositionBeforeJump + YDeath >= transform.position.y & !GameMaster.Instance.isPlayerDead)
+            if (m_YPositionBeforeJump + YFallDeath >= transform.position.y & !GameMaster.Instance.isPlayerDead)
             {
                 playerStats.TakeDamage(999);
             }
