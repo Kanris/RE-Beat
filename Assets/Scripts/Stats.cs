@@ -84,6 +84,13 @@ public class Stats {
 public class PlayerStats : Stats
 {
     public static int GemsAmount;
+    public static Inventory PlayerInventory;
+
+    public override void Initialize(GameObject gameObject)
+    {
+        PlayerInventory = new Inventory(100);
+        base.Initialize(gameObject);
+    }
 
     protected override void KillObject()
     {
