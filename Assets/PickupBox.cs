@@ -5,9 +5,13 @@ using UnityEngine;
 public class PickupBox : MonoBehaviour {
 
     private GameObject m_InteractionButton;
+    private Vector3 m_SpawnPosition;
+    private Quaternion m_SpawnRotation;
+
     private bool m_IsPlayerNear;
     private bool m_IsBoxUp;
     private Transform m_Player;
+    private bool isQuitting = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +19,9 @@ public class PickupBox : MonoBehaviour {
         InitializeInteractionButton();
 
         ActiveInteractionButton(false);
+
+        m_SpawnPosition = transform.position;
+        m_SpawnRotation = transform.rotation;
     }
 
     private void InitializeInteractionButton()
@@ -30,9 +37,23 @@ public class PickupBox : MonoBehaviour {
             Debug.LogError("PickupBox.InitializeInteractionButton: There is no child gameobject");
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
+
+    private void OnDestroy()
+    {
+        if (!isQuitting)
+        {
+            var newBox = Resources.Load("Items/Box") as GameObject;
+            Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
         if (m_IsPlayerNear)
         {
