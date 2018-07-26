@@ -731,8 +731,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -2.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1902360075}
-  m_RootOrder: 7
+  m_Father: {fileID: 1790738710}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &232266372
 TilemapRenderer:
@@ -2200,25 +2200,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 232266375}
     m_ColliderPaths:
-    - - X: 360000000
-        Y: -60000000
-      - X: 370000000
-        Y: -60000000
-      - X: 370000000
-        Y: -40000000
-      - X: 390000000
-        Y: -40000000
-      - X: 390000000
-        Y: -50000000
-      - X: 450000000
-        Y: -50000000
-      - X: 450000000
-        Y: 20000000
-      - X: 270000000
-        Y: 20000000
-      - X: 270000000
-        Y: -50000000
-      - X: 260000000
+    - - X: 260000000
         Y: -50000000
       - X: 260000000
         Y: -60000000
@@ -2228,6 +2210,24 @@ CompositeCollider2D:
         Y: -70000000
       - X: 360000000
         Y: -70000000
+      - X: 360000000
+        Y: -60000000
+      - X: 370000000
+        Y: -60000000
+      - X: 370000000
+        Y: -40000000
+      - X: 390000000
+        Y: -40000000
+      - X: 390000000
+        Y: -50000000
+      - X: 450000000
+        Y: -50000000
+      - X: 450000000
+        Y: 20000000
+      - X: 270000000
+        Y: 20000000
+      - X: 270000000
+        Y: -50000000
   m_CompositePaths:
     m_Paths:
     - - {x: 36, y: -6}
@@ -2708,7 +2708,7 @@ GameObject:
   - component: {fileID: 477436186}
   - component: {fileID: 477436185}
   m_Layer: 0
-  m_Name: MapExits
+  m_Name: RainBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2721,11 +2721,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 477436181}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.81, y: -0.1, z: 0}
+  m_LocalPosition: {x: -5.81, y: -0.099999905, z: 0}
   m_LocalScale: {x: 0.9273801, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1902360075}
-  m_RootOrder: 5
+  m_Father: {fileID: 1790738710}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &477436183
 TilemapRenderer:
@@ -12696,8 +12696,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1902360075}
-  m_RootOrder: 6
+  m_Father: {fileID: 1790738710}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &675424339
 TilemapRenderer:
@@ -22541,7 +22541,7 @@ Transform:
   m_LocalPosition: {x: -5.25, y: -3, z: 0}
   m_LocalScale: {x: 0.3, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 1902360075}
+  m_Father: {fileID: 1790738710}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1252310218
@@ -23330,7 +23330,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1902360075}
-  m_RootOrder: 9
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!19719996 &1759945779
 TilemapCollider2D:
@@ -23456,6 +23456,39 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1790738709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1790738710}
+  m_Layer: 0
+  m_Name: GridWithScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790738710
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1790738709}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1879026369}
+  - {fileID: 232266371}
+  - {fileID: 675424338}
+  - {fileID: 477436182}
+  - {fileID: 1252310217}
+  m_Father: {fileID: 1902360075}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1803359818
 GameObject:
   m_ObjectHideFlags: 0
@@ -23575,7 +23608,7 @@ GameObject:
   - component: {fileID: 1879026372}
   - component: {fileID: 1879026373}
   m_Layer: 0
-  m_Name: Mist
+  m_Name: CaveMist
   m_TagString: Mist
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23591,8 +23624,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1902360075}
-  m_RootOrder: 8
+  m_Father: {fileID: 1790738710}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1879026370
 TilemapRenderer:
@@ -24991,12 +25024,8 @@ Transform:
   - {fileID: 1927212824}
   - {fileID: 647897281}
   - {fileID: 712993311}
-  - {fileID: 1252310217}
-  - {fileID: 477436182}
-  - {fileID: 675424338}
-  - {fileID: 232266371}
-  - {fileID: 1879026369}
   - {fileID: 1759945778}
+  - {fileID: 1790738710}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
