@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
 
+    public enum DoorType { Key, Switch, Button }
+
+    [SerializeField] private DoorType Type;
     [SerializeField] private Item KeyName;
 
     private SpriteRenderer m_InteractionButton;
@@ -27,7 +30,7 @@ public class Door : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearDoor)
+        if (m_IsPlayerNearDoor & Type == DoorType.Key)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -38,7 +41,7 @@ public class Door : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor & Type == DoorType.Key)
         {
             m_IsPlayerNearDoor = true;
             ShowInteractionKey(m_IsPlayerNearDoor);
@@ -47,7 +50,7 @@ public class Door : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player") & m_IsPlayerNearDoor & Type == DoorType.Key)
         {
             m_IsPlayerNearDoor = false;
             ShowInteractionKey(m_IsPlayerNearDoor);

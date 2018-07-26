@@ -8,7 +8,6 @@ public class PickupBox : MonoBehaviour {
     private bool m_IsPlayerNear;
     private bool m_IsBoxUp;
     private Transform m_Player;
-    private Rigidbody2D m_Rigidbody2D;
 
 	// Use this for initialization
 	void Start () {
@@ -16,8 +15,6 @@ public class PickupBox : MonoBehaviour {
         InitializeInteractionButton();
 
         ActiveInteractionButton(false);
-
-        InitializeRigidbody();
     }
 
     private void InitializeInteractionButton()
@@ -31,16 +28,6 @@ public class PickupBox : MonoBehaviour {
         else
         {
             Debug.LogError("PickupBox.InitializeInteractionButton: There is no child gameobject");
-        }
-    }
-
-    private void InitializeRigidbody()
-    {
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (m_Rigidbody2D == null)
-        {
-            Debug.LogError("PickupBox.InitializeRigidbody: There is not Rigidbody on Gameobject");
         }
     }
 	
@@ -111,13 +98,11 @@ public class PickupBox : MonoBehaviour {
 
         if (parrent != null)
         {
-            //m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
             transform.localPosition = new Vector3(0.5f, 0.6f);
             transform.gameObject.layer = 15;
         }
         else
         {
-            //m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(1, 1, 1);
             transform.gameObject.layer = 0;
         }
