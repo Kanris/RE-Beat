@@ -44,10 +44,7 @@ public class PickupBox : MonoBehaviour {
                     if (m_Player != null)
                     {
                         parrentTransform = m_Player;
-                        m_IsBoxUp = true;
                     }
-                    else
-                        Debug.LogError("PickupBox.Update: player transform is null");
                 }
 
                 AttachToParent(parrentTransform);
@@ -57,7 +54,6 @@ public class PickupBox : MonoBehaviour {
         {
             if (Input.GetKeyDown( KeyCode.E ))
             {
-                m_IsBoxUp = false;
                 AttachToParent(null);
             }
         }
@@ -98,11 +94,15 @@ public class PickupBox : MonoBehaviour {
 
         if (parrent != null)
         {
+            m_IsBoxUp = true;
+            
             transform.localPosition = new Vector3(0.5f, 0.6f);
             transform.gameObject.layer = 15;
         }
         else
         {
+            m_IsBoxUp = false;
+            
             transform.localScale = new Vector3(1, 1, 1);
             transform.gameObject.layer = 0;
         }
