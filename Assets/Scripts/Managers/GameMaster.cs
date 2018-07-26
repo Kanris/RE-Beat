@@ -24,17 +24,17 @@ public class GameMaster : MonoBehaviour {
         }
 
         #region Initialize Managers
-        Initialize("EventSystem");
+        Initialize("Managers/EventSystem");
 
-        Initialize("AudioManager");
+        Initialize("Managers/AudioManager");
 
-        Initialize("LoadSceneManager");
+        Initialize("Managers/LoadSceneManager");
 
-        Initialize("ScreenFaderManager");
+        Initialize("Managers/ScreenFaderManager");
 
-        Initialize("PauseMenuManager");
+        Initialize("Managers/PauseMenuManager");
 
-        Initialize("AnnouncerManager");
+        Initialize("Managers/AnnouncerManager");
 
         InitializeRespawnPoint();
 
