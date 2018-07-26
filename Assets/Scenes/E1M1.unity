@@ -2041,11 +2041,59 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 139
     m_Data: {fileID: 11400000, guid: 55de0512f15124a71a798508226adbc2, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 139
     m_Data: {fileID: 21300016, guid: 77060c312d1289b41a98bf743963e44c, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 139
     m_Data:
@@ -2088,8 +2136,8 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -24, y: -7, z: 0}
-  m_Size: {x: 70, y: 11, z: 1}
+  m_Origin: {x: -62, y: -8, z: 0}
+  m_Size: {x: 108, y: 15, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -2152,50 +2200,50 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 232266375}
     m_ColliderPaths:
-    - - X: 260000000
-        Y: -50600000
+    - - X: 360000000
+        Y: -60000000
+      - X: 370000000
+        Y: -60000000
+      - X: 370000000
+        Y: -40000000
+      - X: 390000000
+        Y: -40000000
+      - X: 390000000
+        Y: -50000000
+      - X: 450000000
+        Y: -50000000
+      - X: 450000000
+        Y: 20000000
+      - X: 270000000
+        Y: 20000000
+      - X: 270000000
+        Y: -50000000
       - X: 260000000
-        Y: -60600000
+        Y: -50000000
+      - X: 260000000
+        Y: -60000000
       - X: 320000000
-        Y: -60600000
+        Y: -60000000
       - X: 320000000
-        Y: -70600000
+        Y: -70000000
       - X: 360000000
-        Y: -70600000
-      - X: 360000000
-        Y: -60600000
-      - X: 370000000
-        Y: -60600000
-      - X: 370000000
-        Y: -40600000
-      - X: 390000000
-        Y: -40600000
-      - X: 390000000
-        Y: -50600000
-      - X: 450000000
-        Y: -50600000
-      - X: 450000000
-        Y: 19400000
-      - X: 270000000
-        Y: 19400000
-      - X: 270000000
-        Y: -50600000
+        Y: -70000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 36, y: -6.06}
-      - {x: 37, y: -6.06}
-      - {x: 37, y: -4.06}
-      - {x: 39, y: -4.06}
-      - {x: 39, y: -5.06}
-      - {x: 45, y: -5.06}
-      - {x: 45, y: 1.94}
-      - {x: 27, y: 1.94}
-      - {x: 27, y: -5.06}
-      - {x: 26, y: -5.06}
-      - {x: 26, y: -6.06}
-      - {x: 32, y: -6.06}
-      - {x: 32, y: -7.06}
-      - {x: 36, y: -7.06}
+    - - {x: 36, y: -6}
+      - {x: 37, y: -6}
+      - {x: 37, y: -4}
+      - {x: 39, y: -4}
+      - {x: 39, y: -5}
+      - {x: 45, y: -5}
+      - {x: 45, y: 2}
+      - {x: 27, y: 2}
+      - {x: 27, y: -5}
+      - {x: 26, y: -5}
+      - {x: 26, y: -6}
+      - {x: 32, y: -6}
+      - {x: 32, y: -7}
+      - {x: 36, y: -7}
   m_VertexDistance: 0.0005
 --- !u!50 &232266377
 Rigidbody2D:
