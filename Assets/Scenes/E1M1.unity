@@ -629,7 +629,7 @@ Prefab:
         type: 2}
       propertyPath: RespawnPoint
       value: 
-      objectReference: {fileID: 1643330430}
+      objectReference: {fileID: 77665800}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -2673,8 +2673,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 477436181}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.81, y: -0.1, z: 0}
+  m_LocalScale: {x: 0.9273801, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1902360075}
   m_RootOrder: 5
@@ -11543,20 +11543,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 477436187}
     m_ColliderPaths:
-    - - X: -800000000
-        Y: 70000000
-      - X: -800000000
+    - - X: -213297424
         Y: -100000000
-      - X: -230000000
-        Y: -100000000
-      - X: -230000000
+      - X: -213297424
         Y: 70000000
+      - X: -741904064
+        Y: 70000000
+      - X: -741904064
+        Y: -100000000
   m_CompositePaths:
     m_Paths:
-    - - {x: -23, y: 7}
-      - {x: -80, y: 7}
-      - {x: -80, y: -10}
-      - {x: -23, y: -10}
+    - - {x: -21.329742, y: 7}
+      - {x: -74.19041, y: 7}
+      - {x: -74.19041, y: -10}
+      - {x: -21.329742, y: -10}
   m_VertexDistance: 0.0005
 --- !u!50 &477436186
 Rigidbody2D:
