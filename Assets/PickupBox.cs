@@ -131,6 +131,8 @@ public class PickupBox : MonoBehaviour {
             transform.gameObject.layer = 0;
 
             gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+            ActiveInteractionButton(true);
         }
     }
 }
