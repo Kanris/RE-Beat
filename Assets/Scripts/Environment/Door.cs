@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
 
-    public enum DoorType { Key, Switch, Button }
+    public enum DoorType { Key, SwitchOrButton }
 
     [SerializeField] private DoorType Type;
     [SerializeField] private Item KeyName;
 
     private SpriteRenderer m_InteractionButton;
     private bool m_IsPlayerNearDoor = false;
+    private Animator m_Animator;
 
     private void Start()
     {
         InitializeInteractionButton();
+
+        InitializeAnimator();
+
         ShowInteractionKey(false);
     }
 
@@ -28,13 +32,23 @@ public class Door : MonoBehaviour {
         }
     }
 
+    private void InitializeAnimator()
+    {
+        m_Animator = GetComponent<Animator>();
+
+        if (m_Animator == null)
+        {
+            Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
+        }
+    }
+
     private void Update()
     {
         if (m_IsPlayerNearDoor & Type == DoorType.Key)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                OpenDoor();
+                OpenDoorWithKey();
             }
         }
     }
@@ -65,7 +79,7 @@ public class Door : MonoBehaviour {
             Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
     }
 
-    private void OpenDoor()
+    private void OpenDoorWithKey()
     {
         if (string.IsNullOrEmpty(KeyName.Name))
         {
@@ -79,6 +93,24 @@ public class Door : MonoBehaviour {
         else
         {
             AnnouncerManager.Instance.DisplayAnnouncerMessage(GetMessage());
+        }
+    }
+
+    public void PlayOpenDoorAnimation()
+    {
+        PlayAnimation("Open");
+    }
+
+    public void PlayCloseDoorAnimation()
+    {
+        PlayAnimation("Close");
+    }
+
+    private void PlayAnimation(string name)
+    {
+        if (m_Animator != null)
+        {
+            m_Animator.SetTrigger(name);
         }
     }
 

@@ -91,7 +91,9 @@ public class DoorSwitch : MonoBehaviour {
 
         m_Animator.SetTrigger("Triggering");
 
-        yield return new WaitForSeconds(0.4f);
+        DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
+
+        yield return new WaitForSeconds(1f);
 
         Destroy(DoorToOpen);
 
