@@ -7,7 +7,7 @@ public class DoorButton : MonoBehaviour {
     [SerializeField] private GameObject DoorToOpen;
 
     private Animator m_Animator;
-    public bool m_IsDoorOpen;
+    private bool m_IsDoorOpen;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class DoorButton : MonoBehaviour {
         {
             TriggerAnimation("Pressed");
             m_IsDoorOpen = true;
-            OpenDoor(m_IsDoorOpen);
+            StartCoroutine(OpenDoor(m_IsDoorOpen));
         }
     }
 
@@ -40,13 +40,27 @@ public class DoorButton : MonoBehaviour {
         {
             m_IsDoorOpen = false;
             TriggerAnimation("Unpressed");
-            OpenDoor(m_IsDoorOpen);
+            StartCoroutine( OpenDoor(m_IsDoorOpen) );
         }
     }
 
-    private void OpenDoor(bool open)
+    private IEnumerator OpenDoor(bool open)
     {
-        DoorToOpen.SetActive(!open);
+        if (DoorToOpen != null)
+        {
+            if (open)
+            {
+                DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
+
+                yield return new WaitForSeconds(2f);
+            }
+
+            DoorToOpen.SetActive(!open);
+        }
+        else
+        {
+            Debug.LogError("DoorButton.OpenDoor: Door to open is not assigned!");
+        }
     }
 
     private void TriggerAnimation(string animation)

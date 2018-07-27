@@ -87,16 +87,24 @@ public class DoorSwitch : MonoBehaviour {
 
     private IEnumerator OpenTheDoor()
     {
-        ShowInteractionKey(false);
+        if (DoorToOpen != null)
+        {
+            ShowInteractionKey(false);
 
-        m_Animator.SetTrigger("Triggering");
+            m_Animator.SetTrigger("Triggering");
 
-        DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
+            DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
-        Destroy(DoorToOpen);
+            Destroy(DoorToOpen);
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
+        }
+
     }
 }
