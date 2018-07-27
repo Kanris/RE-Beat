@@ -119,6 +119,9 @@ public class PickupBox : MonoBehaviour {
             
             transform.localPosition = new Vector3(0.5f, 0.6f);
             transform.gameObject.layer = 15;
+            Destroy(transform.GetComponent<Rigidbody2D>());
+
+            ActiveInteractionButton(false);
         }
         else
         {
@@ -126,6 +129,8 @@ public class PickupBox : MonoBehaviour {
             
             transform.localScale = new Vector3(1, 1, 1);
             transform.gameObject.layer = 0;
+
+            gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
     }
 }
