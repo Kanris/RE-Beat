@@ -13,16 +13,23 @@ public class Inventory {
         m_Bag = new List<Item>(size);
     }
 
-    public void Add(Item item)
+    public bool Add(Item item)
     {
-        if (IsInBag(item.Name))
+        if (m_Bag.Capacity > m_Bag.Count)
         {
-            Debug.LogError("Inventory.Add: Add amount");
+            if (IsInBag(item.Name))
+            {
+                Debug.LogError("Inventory.Add: Add amount");
+            }
+            else
+            {
+                m_Bag.Add(item);
+            }
+
+            return true;
         }
-        else
-        {
-            m_Bag.Add(item);
-        }
+
+        return false;
     }
 
     public bool IsInBag(string item)
@@ -31,13 +38,17 @@ public class Inventory {
         return searchResult != null;
     }
 
-    public void Remove(Item item)
+    public bool Remove(Item item)
     {
         if (IsInBag(item.Name))
         {
             var searchResult = m_Bag.First(x => x.Name == item.Name);
             m_Bag.RemoveAt(m_Bag.IndexOf(searchResult));
+
+            return true;
         }
+
+        return false;
     }
 }
 
