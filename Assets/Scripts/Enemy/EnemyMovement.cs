@@ -92,6 +92,5 @@ public class EnemyMovement : MonoBehaviour {
     private void SetAnimation()
     {
         m_Animator.SetBool("isWalking", !isWaiting);
-        m_Animator.SetFloat("PosX", m_PosX);
     }
 }

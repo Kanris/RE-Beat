@@ -24,21 +24,31 @@ public class Door : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        m_InteractionButton = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-        if (m_InteractionButton == null)
+        if (transform.childCount > 0)
         {
-            Debug.LogError("PickUpItem.InitializeInteractionButton: Can't find SpriteRenderer in child");
+            m_InteractionButton = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+            if (m_InteractionButton == null)
+            {
+                Debug.LogError("Door.InitializeInteractionButton: There is no Sprite Renderer on Gameobject.");
+            }
+        }
+        else if (Type == DoorType.Key)
+        {
+            Debug.LogError("Door.InitializeInteractionButton: Can't find SpriteRenderer in child");
         }
     }
 
     private void InitializeAnimator()
     {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
+        if (Type == DoorType.Key)
         {
-            Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
+            m_Animator = GetComponent<Animator>();
+
+            if (m_Animator == null)
+            {
+                Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
+            }
         }
     }
 
@@ -73,10 +83,13 @@ public class Door : MonoBehaviour {
 
     private void ShowInteractionKey(bool show)
     {
-        if (m_InteractionButton != null)
-            m_InteractionButton.gameObject.SetActive(show);
-        else
-            Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
+        if (Type == DoorType.Key)
+        {
+            if (m_InteractionButton != null)
+                m_InteractionButton.gameObject.SetActive(show);
+            else
+                Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
+        }
     }
 
     private void OpenDoorWithKey()
@@ -108,7 +121,7 @@ public class Door : MonoBehaviour {
 
     private void PlayAnimation(string name)
     {
-        if (m_Animator != null)
+        if (m_Animator != null & Type == DoorType.Key)
         {
             m_Animator.SetTrigger(name);
         }
