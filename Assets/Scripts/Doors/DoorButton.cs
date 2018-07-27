@@ -7,7 +7,9 @@ public class DoorButton : MonoBehaviour {
     [SerializeField] private GameObject DoorToOpen;
 
     private Animator m_Animator;
-    private bool m_IsDoorOpen;
+    public bool m_IsDoorOpen;
+    public bool m_IsPlayerNear;
+    public bool m_IsItemNear;
 
     private void Start()
     {
@@ -24,23 +26,47 @@ public class DoorButton : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    { 
-        if (collision.CompareTag("Item") & !m_IsDoorOpen)
+    private void Update()
+    {
+        if (m_IsPlayerNear)
         {
-            TriggerAnimation("Pressed");
-            m_IsDoorOpen = true;
-            StartCoroutine(OpenDoor(m_IsDoorOpen));
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                m_IsDoorOpen = !m_IsDoorOpen;
+
+                if (m_IsDoorOpen & m_IsItemNear)
+                {
+                    TriggerAnimation("Pressed");
+                    StartCoroutine(OpenDoor(m_IsDoorOpen));
+                }
+                else
+                {
+                    TriggerAnimation("Unpressed");
+                    StartCoroutine(OpenDoor(m_IsDoorOpen));
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+            m_IsItemNear = true;
+
+        if (collision.CompareTag("Player"))
+        {
+            m_IsPlayerNear = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Item") & m_IsDoorOpen)
+        if (collision.CompareTag("Item"))
+            m_IsItemNear = false;
+
+        if (collision.CompareTag("Player"))
         {
-            m_IsDoorOpen = false;
-            TriggerAnimation("Unpressed");
-            StartCoroutine( OpenDoor(m_IsDoorOpen) );
+            m_IsPlayerNear = false;
         }
     }
 

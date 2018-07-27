@@ -37,7 +37,7 @@ public class PickupBox : MonoBehaviour {
             Debug.LogError("PickupBox.InitializeInteractionButton: There is no child gameobject");
         }
     }
-
+    
     private void OnApplicationQuit()
     {
         isQuitting = true;
@@ -45,12 +45,12 @@ public class PickupBox : MonoBehaviour {
 
     private void OnDestroy()
     {
-        if (!isQuitting)
-        {
-            var newBox = Resources.Load("Items/Box") as GameObject;
-            Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
-        }
-    }
+         if (!isQuitting)
+         {
+             var newBox = Resources.Load("Items/Box") as GameObject;
+             Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
+         }
+     }
 
     // Update is called once per frame
     void Update () {
@@ -130,14 +130,5 @@ public class PickupBox : MonoBehaviour {
         m_IsBoxUp = isActive;
         transform.gameObject.layer = layerId;
         ActiveInteractionButton(!isActive);
-
-        if (isActive)
-        {
-            Destroy(transform.GetComponent<Rigidbody2D>());
-        }
-        else
-        {
-            gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        }
     }
 }

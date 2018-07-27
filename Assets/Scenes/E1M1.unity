@@ -745,7 +745,7 @@ Prefab:
         type: 2}
       propertyPath: RespawnPoint
       value: 
-      objectReference: {fileID: 6850266}
+      objectReference: {fileID: 1218462891}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -13091,40 +13091,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1001012220340522, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_TagString
-      value: Untagged
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248686669654070, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &689586392 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1248686669654070, guid: 74393718dd00ee1439233ebe530cb04c,
-    type: 2}
-  m_PrefabInternal: {fileID: 689586391}
---- !u!50 &689586393
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 689586392}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1001 &697408113
 Prefab:
   m_ObjectHideFlags: 0
@@ -18743,7 +18722,7 @@ Transform:
   m_Children:
   - {fileID: 901489720}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1100114193 stripped
 Transform:
@@ -23232,7 +23211,7 @@ Transform:
   m_Children:
   - {fileID: 1404493237}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1387431272
 Animator:
@@ -23304,7 +23283,7 @@ Transform:
   m_Children:
   - {fileID: 1191740396}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1404493236
 GameObject:
@@ -23420,7 +23399,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4349516195416460, guid: 759cd657d6416324a8040299d55f6d78, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 114291869846903874, guid: 759cd657d6416324a8040299d55f6d78,
         type: 2}
