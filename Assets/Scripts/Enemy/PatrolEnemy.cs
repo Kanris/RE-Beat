@@ -14,6 +14,7 @@ public class PatrolEnemy : MonoBehaviour {
     private Image m_AlarmImage;
     private float m_UpdateTime = 0f;
     private bool m_IsPlayerDead;
+    private bool m_IsPlayerNear;
 
     [SerializeField] private Canvas UI;
     [SerializeField] private string Phrase;
@@ -93,7 +94,8 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            yield return PlayerSpot(true);
+            m_IsPlayerNear = true;
+            yield return PlayerSpot(m_IsPlayerNear);
         }
     }
 
@@ -101,7 +103,12 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            yield return PlayerSpot(false);
+            m_IsPlayerNear = false;
+
+            yield return new WaitForSeconds(1f);
+
+            if (!m_IsPlayerNear)
+                yield return PlayerSpot(false);
         }
     }
 
