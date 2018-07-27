@@ -88,7 +88,9 @@ public class PlayerStats : Stats
 
     public override void Initialize(GameObject gameObject)
     {
-        PlayerInventory = new Inventory(100);
+        if (PlayerInventory == null)
+            PlayerInventory = new Inventory(10);
+
         base.Initialize(gameObject);
     }
 
