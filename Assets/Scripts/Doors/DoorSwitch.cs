@@ -52,6 +52,7 @@ public class DoorSwitch : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 m_IsPlayerNearSwitch = false;
+                ShowInteractionKey(false);
 
                 StartCoroutine(OpenTheDoor());
             }
