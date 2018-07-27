@@ -18273,7 +18273,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -156.57034
+      value: -156.56
       objectReference: {fileID: 0}
     - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -18307,6 +18307,11 @@ Prefab:
         type: 2}
       propertyPath: Type
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
@@ -22807,7 +22812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1387431269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23071,7 +23076,7 @@ Prefab:
         type: 2}
       propertyPath: DoorToOpen
       value: 
-      objectReference: {fileID: 965218124}
+      objectReference: {fileID: 1134870082}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 759cd657d6416324a8040299d55f6d78, type: 2}
   m_IsPrefabParent: 0
