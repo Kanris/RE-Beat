@@ -115,24 +115,29 @@ public class PickupBox : MonoBehaviour {
 
         if (parrent != null)
         {
-            m_IsBoxUp = true;
-            
             transform.localPosition = new Vector3(0.5f, 0.6f);
-            transform.gameObject.layer = 15;
-            Destroy(transform.GetComponent<Rigidbody2D>());
+            ChangeBoxProperty(true, 15);   
+        }
+        else
+        {            
+            transform.localScale = new Vector3(1, 1, 1);
+            ChangeBoxProperty(false, 0);
+        }
+    }
 
-            ActiveInteractionButton(false);
+    private void ChangeBoxProperty(bool isActive, int layerId)
+    {
+        m_IsBoxUp = isActive;
+        transform.gameObject.layer = layerId;
+        ActiveInteractionButton(!isActive);
+
+        if (isActive)
+        {
+            Destroy(transform.GetComponent<Rigidbody2D>());
         }
         else
         {
-            m_IsBoxUp = false;
-            
-            transform.localScale = new Vector3(1, 1, 1);
-            transform.gameObject.layer = 0;
-
             gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-
-            ActiveInteractionButton(true);
         }
     }
 }

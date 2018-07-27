@@ -12742,7 +12742,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1001012220340522, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_TagString
-      value: Item
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
@@ -18312,6 +18312,21 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.2688679
+      objectReference: {fileID: 0}
+    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.51452655
+      objectReference: {fileID: 0}
+    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}

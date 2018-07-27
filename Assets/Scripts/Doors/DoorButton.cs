@@ -52,7 +52,7 @@ public class DoorButton : MonoBehaviour {
             {
                 DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
 
-                yield return new WaitForSeconds(0.9f);
+                yield return new WaitForSeconds(0.5f);
             }
 
             DoorToOpen.SetActive(!open);
