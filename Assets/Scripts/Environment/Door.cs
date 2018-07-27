@@ -100,7 +100,8 @@ public class Door : MonoBehaviour {
         }
         else if (PlayerStats.PlayerInventory.IsInBag(KeyName.Name))
         {
-            PlayerStats.PlayerInventory.Remove(KeyName);
+            if (PlayerStats.PlayerInventory.Remove(KeyName))
+                AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(KeyName.Name + " was removed from inventory"));
             Destroy(gameObject);
         }
         else
