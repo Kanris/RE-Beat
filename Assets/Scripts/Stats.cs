@@ -83,6 +83,7 @@ public class Stats {
 [System.Serializable]
 public class PlayerStats : Stats
 {
+    public static string PlayerName = "Penny";
     public static int GemsAmount;
     public static Inventory PlayerInventory;
 
