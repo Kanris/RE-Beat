@@ -5,23 +5,11 @@ using UnityStandardAssets._2D;
 
 public class GameMaster : MonoBehaviour {
 
-    #region Singleton
     public static GameMaster Instance;
 
     public void Awake()
     {
-        if (Instance != null)
-        {
-            if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }
+        Instance = this;
 
         #region Initialize Managers
         Initialize("Managers/EventSystem");
@@ -45,8 +33,6 @@ public class GameMaster : MonoBehaviour {
 
         InitializePlayerRespawn(false);
     }
-
-    #endregion
 
     public Transform RespawnPoint;
     private GameObject m_PlayerToRespawn;
