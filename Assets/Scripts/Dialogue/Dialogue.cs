@@ -19,4 +19,12 @@ public class Sentence
 
     [TextArea(3, 10)]
     public string DisplaySentence;
+
+    public string firstAnswer;
+
+    public string secondAnswer;
+
+    public Sentence[] firstSentence;
+
+    public Sentence[] secondSentence;
 }

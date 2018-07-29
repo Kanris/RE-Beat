@@ -29,20 +29,30 @@ public class DialogueManager : MonoBehaviour {
     public bool isDialogueInProgress = false;
 
     private GameObject m_DialogueUI;
+    private GameObject m_Buttons;
     private Queue<Sentence> sentences = new Queue<Sentence>();
-    private Dialogue m_DialogueTrigger;
+    private Dialogue m_Dialogue;
+    private Sentence m_CurrentSentence;
     private bool m_IsSentenceTyping;
+    private bool m_AnwswerChoose;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
     [SerializeField] private GameObject m_NextImage;
+    [SerializeField] private Button m_FirstButton;
+    [SerializeField] private Button m_SecondButton;
+
 
     // Use this for initialization
     void Start () {
 
         InitializeDialogueUI();
 
+        InitializeButtonsUI();
+
         SetActiveUI(false);
+
+        SetActiveButtons(false);
     }
 
     private void InitializeDialogueUI()
@@ -56,13 +66,25 @@ public class DialogueManager : MonoBehaviour {
             Debug.LogError("DialogueManager.InitializeDialogueUI: Dialogue UI has no child.");
         }
     }
+
+    private void InitializeButtonsUI()
+    {
+        if (transform.childCount > 1)
+        {
+            m_Buttons = transform.GetChild(1).gameObject;
+        }
+        else
+        {
+            Debug.LogError("DialogueManager.InitializeDialogueUI: Dialogue UI has no child.");
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
         if (isDialogueInProgress)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) & !m_AnwswerChoose)
             {
                 if (m_IsSentenceTyping)
                     m_IsSentenceTyping = false;
@@ -79,11 +101,11 @@ public class DialogueManager : MonoBehaviour {
         if (dialogue != null)
         {
             isDialogueInProgress = true;
-            m_DialogueTrigger = dialogue;
+            m_Dialogue = dialogue;
             sentences.Clear();
 
-            var dialogueToDisplay = m_DialogueTrigger.IsDialogueFinished 
-                ? m_DialogueTrigger.RepeatSentences : m_DialogueTrigger.MainSentences;
+            var dialogueToDisplay = m_Dialogue.IsDialogueFinished 
+                ? m_Dialogue.RepeatSentences : m_Dialogue.MainSentences;
 
             foreach (var sentence in dialogueToDisplay)
             {
@@ -99,6 +121,20 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
+    public void StartDialogue(Sentence[] dialogueToDisplay)
+    {
+        isDialogueInProgress = true;
+        sentences.Clear();
+
+        foreach (var sentence in dialogueToDisplay)
+        {
+            sentences.Enqueue(sentence);
+        }
+
+        SetActiveUI(true);
+        DisplayNextSentence();
+    }
+
     private void DisplayNextSentence()
     {
         if (isDialogueInProgress)
@@ -112,6 +148,16 @@ public class DialogueManager : MonoBehaviour {
             var sentence = sentences.Dequeue();
 
             StopAllCoroutines();
+            if (!string.IsNullOrEmpty(sentence.firstAnswer))
+            {
+                m_AnwswerChoose = true;
+                SetActiveButtons(true);
+                m_CurrentSentence = sentence;
+                SetButtonsText(sentence.firstAnswer, sentence.secondAnswer);
+            }
+            else
+                SetActiveButtons(false);
+
             StartCoroutine(TypeSentence(GetName(sentence), sentence.DisplaySentence));
         }
     }
@@ -157,13 +203,38 @@ public class DialogueManager : MonoBehaviour {
 
     private void DialogueComplete()
     {        
-        m_DialogueTrigger.IsDialogueFinished = true;
+        m_Dialogue.IsDialogueFinished = true;
         StopDialogue();
     }
 
     public void StopDialogue()
     {
+        m_AnwswerChoose = false;
         isDialogueInProgress = false;
+
+        SetActiveButtons(false);
         SetActiveUI(false);
+    }
+
+    private void SetActiveButtons(bool isActive)
+    {
+        m_Buttons.SetActive(isActive);
+    }
+
+    private void SetButtonsText(string button1, string button2)
+    {
+        m_FirstButton.GetComponentInChildren<Text>().text = button1;
+        m_SecondButton.GetComponentInChildren<Text>().text = button2;
+    }
+
+    public void GetAnswer(bool isFirst)
+    {
+        SetActiveButtons(false);
+
+        var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence;
+
+        m_AnwswerChoose = false;
+
+        StartDialogue(sentenceToStart);
     }
 }
