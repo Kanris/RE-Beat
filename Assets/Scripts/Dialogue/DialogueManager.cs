@@ -30,9 +30,8 @@ public class DialogueManager : MonoBehaviour {
 
     private GameObject m_DialogueUI;
     private Queue<Sentence> sentences = new Queue<Sentence>();
-    private DialogueTrigger m_DialogueTrigger;
+    private Dialogue m_DialogueTrigger;
     private bool m_IsSentenceTyping;
-    private bool m_NextString;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
@@ -68,25 +67,25 @@ public class DialogueManager : MonoBehaviour {
                 if (m_IsSentenceTyping)
                     m_IsSentenceTyping = false;
 
-                else if (m_NextString)
+                else 
                     DisplayNextSentence();
-
-                else
-                    m_NextString = true;
             }
         }
 
 	}
 
-    public void StartDialogue(Dialogue dialogue, DialogueTrigger trigger)
+    public void StartDialogue(Dialogue dialogue)
     {
         if (dialogue != null)
         {
             isDialogueInProgress = true;
-            m_DialogueTrigger = trigger;
+            m_DialogueTrigger = dialogue;
             sentences.Clear();
 
-            foreach (var sentence in dialogue.sentences)
+            var dialogueToDisplay = m_DialogueTrigger.IsDialogueFinished 
+                ? m_DialogueTrigger.RepeatSentences : m_DialogueTrigger.MainSentences;
+
+            foreach (var sentence in dialogueToDisplay)
             {
                 sentences.Enqueue(sentence);
             }
@@ -113,7 +112,7 @@ public class DialogueManager : MonoBehaviour {
             var sentence = sentences.Dequeue();
 
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(GetName(sentence), sentence.FirstSentence));
+            StartCoroutine(TypeSentence(GetName(sentence), sentence.DisplaySentence));
         }
     }
 
@@ -158,7 +157,7 @@ public class DialogueManager : MonoBehaviour {
 
     private void DialogueComplete()
     {        
-        m_DialogueTrigger.m_isDialogueFinished = true;
+        m_DialogueTrigger.IsDialogueFinished = true;
         StopDialogue();
     }
 

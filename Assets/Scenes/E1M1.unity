@@ -18968,28 +18968,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3b1aec818c3774e9d2c4c13fad1350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isDialogueFinished: 0
   dialogue:
-    sentences:
+    MainSentences:
     - Name: Junk
-      FirstSentence: You are new here?
+      DisplaySentence: You are new here?
     - Name: Penny
-      FirstSentence: Yep
+      DisplaySentence: Yep
     - Name: Junk
-      FirstSentence: Okay, i will explain what to do!
+      DisplaySentence: You need to find two bells, one on church...wait...i just realized...
     - Name: Junk
-      FirstSentence: First of all you have to find two bells, one of them is on church
-        and ... wait..
+      DisplaySentence: I dont wan't to talk with you anymore.
+    RepeatSentences:
     - Name: Junk
-      FirstSentence: It's not my concern what will happen to you, do what you want...
-  repeatDialogue:
-    sentences:
+      DisplaySentence: Just let...
     - Name: Junk
-      FirstSentence: Just let...
+      DisplaySentence: '...me...'
     - Name: Junk
-      FirstSentence: '...me...'
-    - Name: Junk
-      FirstSentence: '...be!'
+      DisplaySentence: ..be!
+    IsDialogueFinished: 0
 --- !u!61 &1059946819
 BoxCollider2D:
   m_ObjectHideFlags: 0

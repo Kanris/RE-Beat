@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour {
 
-    [HideInInspector] public bool m_isDialogueFinished = false;
-
     [SerializeField] private Dialogue dialogue;
-    [SerializeField] private Dialogue repeatDialogue;
 
     private bool m_isPlayerNear = false;
     private GameObject m_UI;
@@ -56,14 +53,11 @@ public class DialogueTrigger : MonoBehaviour {
                 DialogueManager.Instance.StopDialogue();
             }
         }
-
 	}
 
     private void StartDialogue()
     {
-        var dialogueToStart = m_isDialogueFinished ? repeatDialogue : dialogue;
-
-        DialogueManager.Instance.StartDialogue(dialogueToStart, this);
+        DialogueManager.Instance.StartDialogue(dialogue);
 
         DisplayUI(false);
     }
@@ -96,11 +90,5 @@ public class DialogueTrigger : MonoBehaviour {
         {
             Debug.LogError("DialogueTrigger.DisplayInteractionButton: m_InteractionButton is not initialized.");
         }
-    }
-
-    private void StopDialogue()
-    {
-        if (!m_isDialogueFinished)
-            m_isDialogueFinished = true;
     }
 }
