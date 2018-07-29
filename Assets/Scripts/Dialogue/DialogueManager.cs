@@ -33,7 +33,6 @@ public class DialogueManager : MonoBehaviour {
     private DialogueTrigger m_DialogueTrigger;
     private bool m_IsSentenceTyping;
     private bool m_NextString;
-    private string m_NPCName;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
@@ -92,7 +91,6 @@ public class DialogueManager : MonoBehaviour {
                 sentences.Enqueue(sentence);
             }
 
-            m_NPCName = string.IsNullOrEmpty(dialogue.Name) ? "Stranger" : dialogue.Name;
             SetActiveUI(true);
             DisplayNextSentence();
         }
@@ -115,36 +113,8 @@ public class DialogueManager : MonoBehaviour {
             var sentence = sentences.Dequeue();
 
             StopAllCoroutines();
-            StartCoroutine(DisplaySentence(sentence));
+            StartCoroutine(TypeSentence(GetName(sentence), sentence.FirstSentence));
         }
-    }
-
-    private IEnumerator DisplaySentence(Sentence sentence)
-    {
-        m_NextString = false;
-
-        if (sentence.isPlayerFirst)
-        {
-            yield return DisplaySentence(PlayerStats.PlayerName, sentence.Player, m_NPCName, sentence.NPC);
-        }
-        else
-        {
-            yield return DisplaySentence(m_NPCName, sentence.NPC, PlayerStats.PlayerName, sentence.Player);
-        }
-
-        m_NextString = true;
-    }
-
-    private IEnumerator DisplaySentence(string firstName, string firstSentence, string secondName, string secondSentence)
-    {
-        if (!string.IsNullOrEmpty(firstSentence))
-            yield return TypeSentence(firstName, firstSentence);
-
-        while (!m_NextString & !string.IsNullOrEmpty(secondSentence))
-            yield return null;
-
-        if (!string.IsNullOrEmpty(secondSentence))
-            yield return TypeSentence(secondName, secondSentence);
     }
 
     private IEnumerator TypeSentence(string name, string sentence)
@@ -166,6 +136,11 @@ public class DialogueManager : MonoBehaviour {
         m_IsSentenceTyping = false;
     }
 
+    private string GetName(Sentence sentence)
+    {
+        return string.IsNullOrEmpty(sentence.Name) ? "Stranger" : sentence.Name;
+    }
+
     private void SetActiveUI(bool isActive)
     {
         if (m_DialogueUI != null)
@@ -182,9 +157,8 @@ public class DialogueManager : MonoBehaviour {
     }
 
     private void DialogueComplete()
-    {
+    {        
         m_DialogueTrigger.m_isDialogueFinished = true;
-
         StopDialogue();
     }
 

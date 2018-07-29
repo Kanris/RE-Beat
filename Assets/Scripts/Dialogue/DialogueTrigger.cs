@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour {
 
-    public bool m_isDialogueFinished = false;
+    [HideInInspector] public bool m_isDialogueFinished = false;
 
     [SerializeField] private Dialogue dialogue;
     [SerializeField] private Dialogue repeatDialogue;
 
     private bool m_isPlayerNear = false;
-    private GameObject m_InteractionButton;
+    private GameObject m_UI;
 
     private void Start()
     {
         InitializeInteractionButton();
 
-        DisplayInteractionButton();
+        DisplayUI(false);
     }
 
     private void InitializeInteractionButton()
     {
         if (transform.childCount > 0)
         {
-            m_InteractionButton = transform.GetChild(0).gameObject;
+            m_UI = transform.GetChild(0).gameObject;
         }
         else
         {
@@ -42,6 +42,11 @@ public class DialogueTrigger : MonoBehaviour {
                 {
                     StartDialogue();
                 }
+                else
+                {
+                    if (!m_UI.activeSelf)
+                        DisplayUI(true);
+                }
             }
         }
         else
@@ -59,6 +64,8 @@ public class DialogueTrigger : MonoBehaviour {
         var dialogueToStart = m_isDialogueFinished ? repeatDialogue : dialogue;
 
         DialogueManager.Instance.StartDialogue(dialogueToStart, this);
+
+        DisplayUI(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,7 +73,7 @@ public class DialogueTrigger : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_isPlayerNear)
         {
             m_isPlayerNear = true;
-            DisplayInteractionButton();
+            DisplayUI(m_isPlayerNear);
         }
     }
 
@@ -75,15 +82,15 @@ public class DialogueTrigger : MonoBehaviour {
         if (collision.CompareTag("Player") & m_isPlayerNear)
         {
             m_isPlayerNear = false;
-            DisplayInteractionButton();
+            DisplayUI(m_isPlayerNear);
         }
     }
 
-    private void DisplayInteractionButton()
+    private void DisplayUI(bool isActive)
     {
-        if (m_InteractionButton != null)
+        if (m_UI != null)
         {
-            m_InteractionButton.SetActive(m_isPlayerNear);
+            m_UI.SetActive(isActive);
         }
         else
         {

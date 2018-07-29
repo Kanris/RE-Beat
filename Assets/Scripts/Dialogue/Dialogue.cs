@@ -5,8 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Dialogue  {
 
-    public string Name;
-
     public Sentence[] sentences;
 
 }
@@ -14,11 +12,8 @@ public class Dialogue  {
 [System.Serializable]
 public class Sentence
 {
-    [TextArea(3, 10)]
-    public string NPC;
+    public string Name;
 
     [TextArea(3, 10)]
-    public string Player;
-
-    public bool isPlayerFirst;
+    public string FirstSentence;
 }
