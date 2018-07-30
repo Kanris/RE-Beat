@@ -26,22 +26,21 @@ public class DialogueManager : MonoBehaviour {
     }
     #endregion
 
-    public bool isDialogueInProgress = false;
+    [HideInInspector] public bool isDialogueInProgress = false;
 
     private GameObject m_DialogueUI;
     private GameObject m_Buttons;
-    private Queue<Sentence> sentences = new Queue<Sentence>();
+    private Queue<Sentence> m_Sentences = new Queue<Sentence>();
     private Dialogue m_Dialogue;
     private Sentence m_CurrentSentence;
+    private Button m_FirstButton;
+    private Button m_SecondButton;
     private bool m_IsSentenceTyping;
     private bool m_AnwswerChoose;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
     [SerializeField] private GameObject m_NextImage;
-    private Button m_FirstButton;
-    private Button m_SecondButton;
-
 
     // Use this for initialization
     void Start () {
@@ -52,7 +51,7 @@ public class DialogueManager : MonoBehaviour {
 
         SetActiveUI(false);
 
-        SetActiveButtons(false);
+        SetActiveAnswerButtons(false);
     }
 
     private void InitializeDialogueUI()
@@ -84,10 +83,24 @@ public class DialogueManager : MonoBehaviour {
             Debug.LogError("DialogueManager.InitializeDialogueUI: Dialogue UI has no child.");
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+    private void InitializeSentences()
+    {
+        m_Sentences.Clear();
+
+        var dialogueToDisplay = m_Dialogue.IsDialogueFinished
+            ? m_Dialogue.RepeatSentences : m_Dialogue.MainSentences;
+
+        foreach (var sentence in dialogueToDisplay)
+        {
+            m_Sentences.Enqueue(sentence);
+        }
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+
         if (isDialogueInProgress)
         {
             if (Input.GetMouseButtonDown(0) & !m_AnwswerChoose)
@@ -95,87 +108,22 @@ public class DialogueManager : MonoBehaviour {
                 if (m_IsSentenceTyping)
                     m_IsSentenceTyping = false;
 
-                else 
+                else
                     DisplayNextSentence();
             }
         }
 
-	}
-
-    public void StartDialogue(Dialogue dialogue)
-    {
-        if (dialogue != null)
-        {
-            isDialogueInProgress = true;
-            m_Dialogue = dialogue;
-            sentences.Clear();
-
-            var dialogueToDisplay = m_Dialogue.IsDialogueFinished 
-                ? m_Dialogue.RepeatSentences : m_Dialogue.MainSentences;
-
-            foreach (var sentence in dialogueToDisplay)
-            {
-                sentences.Enqueue(sentence);
-            }
-
-            SetActiveUI(true);
-            DisplayNextSentence();
-        }
-        else
-        {
-            Debug.LogError("DialogueManager.StartDialogue: Can't start empty dialogue");
-        }
-    }
-
-    public void StartDialogue(Sentence[] dialogueToDisplay)
-    {
-        isDialogueInProgress = true;
-        sentences.Clear();
-
-        foreach (var sentence in dialogueToDisplay)
-        {
-            sentences.Enqueue(sentence);
-        }
-
-        SetActiveUI(true);
-        DisplayNextSentence();
-    }
-
-    private void DisplayNextSentence()
-    {
-        if (isDialogueInProgress)
-        {
-            if (sentences.Count == 0)
-            {
-                DialogueComplete();
-                return;
-            }
-
-            var sentence = sentences.Dequeue();
-
-            StopAllCoroutines();
-            if (!string.IsNullOrEmpty(sentence.firstAnswer))
-            {
-                m_AnwswerChoose = true;
-                SetActiveButtons(true);
-                m_CurrentSentence = sentence;
-                SetButtonsText(sentence.firstAnswer, sentence.secondAnswer);
-            }
-            else
-                SetActiveButtons(false);
-
-            StartCoroutine(TypeSentence(GetName(sentence), sentence.DisplaySentence));
-        }
     }
 
     private IEnumerator TypeSentence(string name, string sentence)
     {
         m_NameText.text = name;
         m_Text.text = "";
-        SetActiveImage(false);
+        SetActiveNextImage(false);
 
         m_IsSentenceTyping = true;
-        foreach ( var letter in sentence )
+
+        foreach (var letter in sentence)
         {
             if (m_IsSentenceTyping)
                 yield return new WaitForSeconds(0.05f);
@@ -183,8 +131,15 @@ public class DialogueManager : MonoBehaviour {
             m_Text.text += letter;
         }
 
-        SetActiveImage(true);
+
+        if (m_AnwswerChoose)
+        {
+            SetActiveAnswerButtons(true);
+            SetButtonsText(m_CurrentSentence.firstAnswer, m_CurrentSentence.secondAnswer);
+        }
+
         m_IsSentenceTyping = false;
+        SetActiveNextImage(true);
     }
 
     private string GetName(Sentence sentence)
@@ -202,27 +157,43 @@ public class DialogueManager : MonoBehaviour {
             Debug.LogError("DialogueManager.SetActiveUI: m_DialogueUI is not initialized");
     }
 
-    private void SetActiveImage(bool isActive)
+    private void SetActiveNextImage(bool isActive)
     {
         m_NextImage.SetActive(isActive);
     }
 
     private void DialogueComplete()
-    {        
+    {
         m_Dialogue.IsDialogueFinished = true;
         StopDialogue();
     }
 
-    public void StopDialogue()
+    private void DisplayNextSentence()
     {
-        m_AnwswerChoose = false;
-        isDialogueInProgress = false;
+        if (isDialogueInProgress)
+        {
+            if (m_Sentences.Count == 0)
+            {
+                DialogueComplete();
+                return;
+            }
 
-        SetActiveButtons(false);
-        SetActiveUI(false);
+            var sentence = m_Sentences.Dequeue();
+
+            StopAllCoroutines();
+            if (!string.IsNullOrEmpty(sentence.firstAnswer))
+            {
+                m_AnwswerChoose = true;
+                m_CurrentSentence = sentence;
+            }
+            else
+                SetActiveAnswerButtons(false);
+
+            StartCoroutine(TypeSentence(GetName(sentence), sentence.DisplaySentence));
+        }
     }
 
-    private void SetActiveButtons(bool isActive)
+    private void SetActiveAnswerButtons(bool isActive)
     {
         m_Buttons.SetActive(isActive);
     }
@@ -233,9 +204,51 @@ public class DialogueManager : MonoBehaviour {
         m_SecondButton.GetComponentInChildren<Text>().text = button2;
     }
 
+    public void StartDialogue(Dialogue dialogue)
+    {
+        if (dialogue != null)
+        {
+            isDialogueInProgress = true;
+            m_Dialogue = dialogue;
+
+            InitializeSentences();
+
+            SetActiveUI(true);
+            DisplayNextSentence();
+        }
+        else
+        {
+            Debug.LogError("DialogueManager.StartDialogue: Can't start empty dialogue");
+        }
+    }
+
+
+    public void StartDialogue(Sentence[] dialogueToDisplay)
+    {
+        isDialogueInProgress = true;
+        m_Sentences.Clear();
+
+        foreach (var sentence in dialogueToDisplay)
+        {
+            m_Sentences.Enqueue(sentence);
+        }
+
+        SetActiveUI(true);
+        DisplayNextSentence();
+    }
+
+    public void StopDialogue()
+    {
+        m_AnwswerChoose = false;
+        isDialogueInProgress = false;
+
+        SetActiveAnswerButtons(false);
+        SetActiveUI(false);
+    }
+
     public void GetAnswer(bool isFirst)
     {
-        SetActiveButtons(false);
+        SetActiveAnswerButtons(false);
 
         var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence;
 
