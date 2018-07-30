@@ -127,7 +127,7 @@ public class PatrolEnemy : MonoBehaviour {
         m_EnemyMovement.isWaiting = false;
 
         if (isSpot)
-            m_EnemyMovement.Speed = 2f;
+            m_EnemyMovement.Speed = 1.5f;
         else
             m_EnemyMovement.Speed = 1f;
     }
