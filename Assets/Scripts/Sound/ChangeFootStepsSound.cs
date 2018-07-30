@@ -8,9 +8,9 @@ public class ChangeFootStepsSound : MonoBehaviour {
     private string PreviousSound;
     private bool isPlayerOnTrigger = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") & !isPlayerOnTrigger)
+        if (collision.transform.CompareTag("Player") & !isPlayerOnTrigger)
         {
             PreviousSound = collision.gameObject.GetComponent<FootSound>().Sound;
             AudioManager.Instance.Stop(PreviousSound);
@@ -20,9 +20,9 @@ public class ChangeFootStepsSound : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") & isPlayerOnTrigger)
+        if (collision.transform.CompareTag("Player") & isPlayerOnTrigger)
         {
             AudioManager.Instance.Stop(Sound);
             collision.gameObject.GetComponent<FootSound>().Sound = PreviousSound;
