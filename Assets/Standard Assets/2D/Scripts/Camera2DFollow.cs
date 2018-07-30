@@ -19,6 +19,7 @@ namespace UnityStandardAssets._2D
         private float m_UpdateSearchTime = 0f;
         [SerializeField, Range(0, -100)] private float YMinusPosition = -1f;
         [SerializeField, Range(0, 100)] private float YPlusPosition = 3f;
+        [SerializeField, Range(0, 100)] private float XPlusPosition = 3f;
 
         // Use this for initialization
         private void Start()
@@ -66,7 +67,8 @@ namespace UnityStandardAssets._2D
                 Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
                 Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
-                newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YMinusPosition, YPlusPosition), newPos.z);
+                newPos = new Vector3(Mathf.Clamp(newPos.x, -Mathf.Infinity, XPlusPosition), 
+                                     Mathf.Clamp(newPos.y, YMinusPosition, YPlusPosition), newPos.z);
 
                 transform.position = newPos;
 
