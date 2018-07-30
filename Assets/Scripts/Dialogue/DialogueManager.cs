@@ -103,12 +103,12 @@ public class DialogueManager : MonoBehaviour {
 
         if (isDialogueInProgress)
         {
-            if (Input.GetMouseButtonDown(0) & !m_AnwswerChoose)
+            if (Input.GetMouseButtonDown(0))
             {
                 if (m_IsSentenceTyping)
                     m_IsSentenceTyping = false;
 
-                else
+                else if (!m_AnwswerChoose)
                     DisplayNextSentence();
             }
         }
