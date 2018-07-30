@@ -39,8 +39,8 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
     [SerializeField] private GameObject m_NextImage;
-    [SerializeField] private Button m_FirstButton;
-    [SerializeField] private Button m_SecondButton;
+    private Button m_FirstButton;
+    private Button m_SecondButton;
 
 
     // Use this for initialization
@@ -72,6 +72,12 @@ public class DialogueManager : MonoBehaviour {
         if (transform.childCount > 1)
         {
             m_Buttons = transform.GetChild(1).gameObject;
+
+            if (m_Buttons.transform.childCount > 1)
+            {
+                m_FirstButton = m_Buttons.transform.GetChild(0).GetComponent<Button>();
+                m_SecondButton = m_Buttons.transform.GetChild(1).GetComponent<Button>();
+            }
         }
         else
         {
