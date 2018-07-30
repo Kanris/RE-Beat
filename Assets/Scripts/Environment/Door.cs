@@ -94,6 +94,7 @@ public class Door : MonoBehaviour {
 
     private void OpenDoorWithKey()
     {
+        Debug.LogError("Open door");
         if (string.IsNullOrEmpty(KeyName.Name))
         {
             Destroy(gameObject);
