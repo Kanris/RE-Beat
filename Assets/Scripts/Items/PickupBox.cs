@@ -46,11 +46,6 @@ public class PickupBox : MonoBehaviour {
         isQuitting = true;
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        isQuitting = true;
-    }
-
     private void OnDestroy()
     {
          if (!isQuitting)
@@ -68,6 +63,7 @@ public class PickupBox : MonoBehaviour {
             if (Input.GetKeyDown( KeyCode.E ))
             {
                 Transform parrentTransform = null;
+
                 if (!m_IsBoxUp)
                 {
                     if (m_Player != null)

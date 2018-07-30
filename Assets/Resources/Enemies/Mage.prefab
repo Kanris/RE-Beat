@@ -179,8 +179,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1877203621587902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.489998, y: 0.27575, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 67.15, y: -2.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4284016882004388}
@@ -207,7 +207,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!61 &61230134668581924
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -515,6 +515,8 @@ MonoBehaviour:
     DeathParticle: {fileID: 0}
     AttackSpeed: 2
   UI: {fileID: 223717448920694272}
+  m_IsPlayerInSight: 0
+  m_CanCreateNewFireball: 1
 --- !u!212 &212572766784025328
 SpriteRenderer:
   m_ObjectHideFlags: 1
