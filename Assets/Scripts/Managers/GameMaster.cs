@@ -126,6 +126,8 @@ public class GameMaster : MonoBehaviour {
 
         isPlayerDead = false;
 
+        yield return new WaitForSeconds(0.5f);
+
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
