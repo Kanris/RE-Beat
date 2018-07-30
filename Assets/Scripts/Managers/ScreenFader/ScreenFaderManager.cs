@@ -81,11 +81,13 @@ public class ScreenFaderManager : MonoBehaviour {
     {
         m_IsFading = true;
         SetActiveUI(m_IsFading);
+        m_ChildUIGameObject.transform.SetSiblingIndex(999);
         m_Animator.SetTrigger(trigger);
 
         while (m_IsFading)
             yield return null;
 
+        m_ChildUIGameObject.transform.SetSiblingIndex(-999);
         //SetActiveUI(m_IsFading);
     }
 

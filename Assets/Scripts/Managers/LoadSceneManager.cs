@@ -65,10 +65,15 @@ public class LoadSceneManager : MonoBehaviour {
 	
 	public void Load(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        StartCoroutine(LoadSceneAsyncWithUI(sceneName));
     }
 
-    private IEnumerator LoadSceneAsync(string sceneName)
+    public void LoadWithFade(string sceneName)
+    {
+        StartCoroutine(LoadSceneAsyncWithFade(sceneName));
+    }
+
+    private IEnumerator LoadSceneAsyncWithUI(string sceneName)
     {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
@@ -93,6 +98,26 @@ public class LoadSceneManager : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         SetActiveLoadScene(false);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
+    }
+
+    private IEnumerator LoadSceneAsyncWithFade(string sceneName)
+    {
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!operation.isDone)
+        {
+            var progress = Mathf.Clamp01(operation.progress / .9f);
+
+            if (m_LoadSlider != null) m_LoadSlider.value = progress;
+
+            yield return null;
+        }
+
+        PickupBox.isQuitting = false;
 
         yield return ScreenFaderManager.Instance.FadeToClear();
     }

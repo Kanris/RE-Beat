@@ -7,11 +7,12 @@ public class PickupBox : MonoBehaviour {
     private GameObject m_InteractionButton;
     private Vector3 m_SpawnPosition;
     private Quaternion m_SpawnRotation;
+    private Transform m_Player;
 
     private bool m_IsPlayerNear;
     private bool m_IsBoxUp;
-    private Transform m_Player;
-    private bool isQuitting = false;
+
+    public static bool isQuitting = false;
 
 	// Use this for initialization
 	void Start () {
@@ -39,6 +40,11 @@ public class PickupBox : MonoBehaviour {
     }
     
     private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
+
+    private void OnLevelWasLoaded(int level)
     {
         isQuitting = true;
     }
