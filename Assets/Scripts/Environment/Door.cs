@@ -41,14 +41,11 @@ public class Door : MonoBehaviour {
 
     private void InitializeAnimator()
     {
-        if (Type == DoorType.Key)
-        {
-            m_Animator = GetComponent<Animator>();
+        m_Animator = GetComponent<Animator>();
 
-            if (m_Animator == null)
-            {
-                Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
-            }
+        if (m_Animator == null)
+        {
+            Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
         }
     }
 
@@ -123,7 +120,7 @@ public class Door : MonoBehaviour {
 
     private void PlayAnimation(string name)
     {
-        if (m_Animator != null & Type == DoorType.Key)
+        if (m_Animator != null)
         {
             m_Animator.SetTrigger(name);
         }
