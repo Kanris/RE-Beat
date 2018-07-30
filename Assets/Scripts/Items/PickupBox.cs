@@ -23,6 +23,8 @@ public class PickupBox : MonoBehaviour {
 
         m_SpawnPosition = transform.position;
         m_SpawnRotation = transform.rotation;
+
+        isQuitting = false;
     }
 
     private void InitializeInteractionButton()
