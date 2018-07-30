@@ -81,13 +81,12 @@ public class ScreenFaderManager : MonoBehaviour {
     {
         m_IsFading = true;
         SetActiveUI(m_IsFading);
-        m_Animator.SetBool(trigger, m_IsFading);
+        m_Animator.SetTrigger(trigger);
 
         while (m_IsFading)
             yield return null;
 
-        m_Animator.SetBool(trigger, m_IsFading);
-        SetActiveUI(m_IsFading);
+        //SetActiveUI(m_IsFading);
     }
 
     public void AnimationComplete()
