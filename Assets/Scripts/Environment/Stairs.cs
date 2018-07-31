@@ -29,14 +29,17 @@ public class Stairs : MonoBehaviour {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, -0.03f);
                 }
-                else if ((Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.A) | true) & Input.GetKey(KeyCode.Space))
+                else if (Input.GetKey(KeyCode.Space))
                 {
                     m_Player.bodyType = RigidbodyType2D.Dynamic;
                 }
                 else
                 {
                     if (m_Player.bodyType == RigidbodyType2D.Dynamic)
+                    {
                         m_Player.bodyType = RigidbodyType2D.Kinematic;
+                    }
+
                     m_Animator.SetBool("IsMovingOnStairs", false);
                 }
             }
@@ -66,10 +69,10 @@ public class Stairs : MonoBehaviour {
         GetComponentsOnPlayer(collision);
         m_Animator.SetBool("OnStairs", isPlayerOnStairs);
 
-        if (isPlayerOnStairs)
+        if (isOnstairs)
         {
             m_Player.bodyType = RigidbodyType2D.Kinematic;
-            m_Player.velocity = new Vector2(0, 0);
+            m_Player.velocity = Vector3.zero;
         }
         else
         {
