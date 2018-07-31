@@ -115,6 +115,7 @@ public class PatrolEnemy : MonoBehaviour {
     private void AttackPlayer(Collision2D collision)
     {
         collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
+        StartCoroutine(PlayerSpot(false));
         StartCoroutine(ShowPhrase());
     }
 
@@ -127,7 +128,7 @@ public class PatrolEnemy : MonoBehaviour {
         m_EnemyMovement.isWaiting = false;
 
         if (isSpot)
-            m_EnemyMovement.Speed = 1.5f;
+            m_EnemyMovement.Speed = 2f;
         else
             m_EnemyMovement.Speed = 1f;
     }
