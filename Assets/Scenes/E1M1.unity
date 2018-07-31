@@ -661,36 +661,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114808427724484112, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: YPlusPosition
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 20730550006504440, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: m_BackGroundColor.r
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 20730550006504440, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: m_BackGroundColor.g
-      value: 0.10588236
-      objectReference: {fileID: 0}
-    - target: {fileID: 20730550006504440, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: m_BackGroundColor.b
-      value: 0.12941177
-      objectReference: {fileID: 0}
-    - target: {fileID: 114808427724484112, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: XPlusPosition
-      value: 39.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114808427724484112, guid: a636f32de5a6fcd43819d6cde2d8e50d,
-        type: 2}
-      propertyPath: XMinusPosition
-      value: -35
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a636f32de5a6fcd43819d6cde2d8e50d, type: 2}
   m_IsPrefabParent: 0
@@ -2242,21 +2212,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 232266375}
     m_ColliderPaths:
-    - - X: 480000000
-        Y: -30000000
-      - X: 460000000
-        Y: -30000000
-      - X: 460000000
-        Y: -20000000
-      - X: 450000000
-        Y: -20000000
-      - X: 450000000
-        Y: 20000000
-      - X: 270000000
-        Y: 20000000
-      - X: 270000000
-        Y: -50000000
-      - X: 330000000
+    - - X: 330000000
         Y: -50000000
       - X: 330000000
         Y: -60000000
@@ -2270,6 +2226,20 @@ CompositeCollider2D:
         Y: -40000000
       - X: 480000000
         Y: -40000000
+      - X: 480000000
+        Y: -30000000
+      - X: 460000000
+        Y: -30000000
+      - X: 460000000
+        Y: -20000000
+      - X: 450000000
+        Y: -20000000
+      - X: 450000000
+        Y: 20000000
+      - X: 270000000
+        Y: 20000000
+      - X: 270000000
+        Y: -50000000
   m_CompositePaths:
     m_Paths:
     - - {x: 35, y: -5}
@@ -2857,7 +2827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4f8fb100ae89c449074f2b09d9696d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NextScene: StartScreen
+  NextScene: E1M2
 --- !u!1 &424000586
 GameObject:
   m_ObjectHideFlags: 0

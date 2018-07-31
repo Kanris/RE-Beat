@@ -76,11 +76,11 @@ public class DisableBackground : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & m_PlayerInCave)
         {
-            StartCoroutine(PlayerLeaveCave(false));
+            yield return PlayerLeaveCave(false);
         }
     }
 
