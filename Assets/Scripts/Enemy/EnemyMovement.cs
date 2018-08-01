@@ -79,14 +79,19 @@ public class EnemyMovement : MonoBehaviour {
         if (!isWaiting)
         {
             isWaiting = true;
-            transform.localScale = new Vector3(m_PosX, 1, 1);
-            m_PosX = -m_PosX;
+            TurnAround();
             SetAnimation();
 
             yield return new WaitForSeconds(IdleTime);
 
             isWaiting = false;
         }
+    }
+
+    public void TurnAround()
+    {
+        transform.localScale = new Vector3(m_PosX, 1, 1);
+        m_PosX = -m_PosX;
     }
 
     private void SetAnimation()

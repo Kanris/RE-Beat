@@ -13,8 +13,7 @@ public class PatrolEnemy : MonoBehaviour {
     private TextMeshProUGUI m_Text;
     private Image m_AlarmImage;
     private float m_UpdateTime = 0f;
-    private bool m_IsPlayerDead;
-    private bool m_IsPlayerNear;
+    [SerializeField] private bool m_IsPlayerNear;
 
     [SerializeField] private Canvas UI;
     [SerializeField] private string Phrase;
@@ -77,18 +76,15 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & !m_IsPlayerDead)
+        if (collision.transform.CompareTag("Player"))
         {
-            m_IsPlayerDead = true;
-            PlayerSpot(false);
             AttackPlayer(collision);
-        }
-    }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (m_IsPlayerDead)
-            m_IsPlayerDead = false;
+            if (!m_IsPlayerNear)
+            {
+                m_EnemyMovement.TurnAround();
+            }
+        }
     }
 
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
@@ -96,6 +92,7 @@ public class PatrolEnemy : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             m_IsPlayerNear = true;
+
             yield return PlayerSpot(m_IsPlayerNear);
         }
     }
@@ -115,9 +112,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void AttackPlayer(Collision2D collision)
     {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
-        StartCoroutine(PlayerSpot(false));
-        StartCoroutine(ShowPhrase());
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);       
     }
 
     private IEnumerator PlayerSpot(bool isSpot)

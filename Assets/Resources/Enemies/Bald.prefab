@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 61828110043643192}
   m_Layer: 0
   m_Name: AttackRange
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,7 +244,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.603131, y: -0.089535356}
+  m_Offset: {x: -1.7307591, y: -0.089535356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -255,7 +255,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.719998, y: 0.6008923}
+  m_Size: {x: 3.4647417, y: 0.6008923}
   m_EdgeRadius: 0
 --- !u!70 &70913908093846126
 CapsuleCollider2D:
@@ -487,9 +487,11 @@ MonoBehaviour:
   EnemyStats:
     MaxHealth: 200
     DeathParticle: {fileID: 0}
+  m_IsPlayerNear: 0
   UI: {fileID: 223284647539823208}
   Phrase: You shouldn't be here!<br>Go home!
   WaitTimeAfterSpot: 2
+  DamageAmount: 1
 --- !u!212 &212241977726355502
 SpriteRenderer:
   m_ObjectHideFlags: 1
