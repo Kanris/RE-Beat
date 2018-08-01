@@ -114,7 +114,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void AttackPlayer(Collision2D collision)
     {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(999);
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(50);
         StartCoroutine(PlayerSpot(false));
         StartCoroutine(ShowPhrase());
     }

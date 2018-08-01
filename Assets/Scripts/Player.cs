@@ -12,6 +12,8 @@ public class Player : MonoBehaviour {
     private float m_YPositionBeforeJump;
     private Animator m_Animator;
 
+    public bool isPlayerTakeDamage;
+
     private void Start()
     {
         playerStats.Initialize(gameObject);
@@ -39,6 +41,21 @@ public class Player : MonoBehaviour {
 
         JumpHeightControl();
 
+    }
+
+    private void FixedUpdate()
+    {
+        if (isPlayerTakeDamage)
+        {
+            if (transform.localScale.x == 1)
+            {
+                GetComponent<Rigidbody2D>().position += new Vector2(-0.05f, 0.1f);
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().position += new Vector2(0.05f, 0.1f);
+            }
+        }
     }
 
     private void JumpHeightControl()

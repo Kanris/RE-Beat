@@ -7,10 +7,12 @@ public class Stats {
 
     public int MaxHealth = 200;
 
+    protected GameObject m_GameObject;
+
     private int m_CurrentHealth;
     [SerializeField] private GameObject DeathParticle;
 
-    private int CurrentHealth
+    public int CurrentHealth
     {
         get
         {
@@ -21,8 +23,6 @@ public class Stats {
             m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
     }
-
-    private GameObject m_GameObject;
 
     public virtual void Initialize(GameObject gameObject)
     {
@@ -87,12 +87,54 @@ public class PlayerStats : Stats
     public static int GemsAmount;
     public static Inventory PlayerInventory;
 
+    private Animator m_Animator;
+    private bool isInvincible;
+
     public override void Initialize(GameObject gameObject)
     {
         if (PlayerInventory == null)
             PlayerInventory = new Inventory(10);
 
         base.Initialize(gameObject);
+
+        InitializeAnimator();
+    }
+
+    private void InitializeAnimator()
+    {
+        m_Animator = m_GameObject.GetComponent<Animator>();
+
+        if (m_Animator == null)
+        {
+            Debug.LogError("PlayerStats.InitializeAnimator: Can't initialize animator.");
+        }
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        if (!isInvincible)
+        {
+            base.TakeDamage(amount);
+
+            if (CurrentHealth > 0)
+                GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
+        }
+    }
+
+    private IEnumerator PlayTakeDamageAnimation()
+    {
+        m_GameObject.GetComponent<Player>().isPlayerTakeDamage = true;
+
+        m_Animator.SetBool("Damage", true);
+        m_Animator.SetTrigger("DamageTrigger");
+        isInvincible = true;
+
+        yield return new WaitForSeconds(0.3f);
+
+        m_Animator.SetBool("Damage", false);
+        isInvincible = false;
+        m_GameObject.GetComponent<Player>().isPlayerTakeDamage = false;
+
     }
 
     protected override void KillObject()
