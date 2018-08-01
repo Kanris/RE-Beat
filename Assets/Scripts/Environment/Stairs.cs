@@ -20,18 +20,20 @@ public class Stairs : MonoBehaviour {
         {
             if (m_Player != null)
             {
-                float h = CrossPlatformInputManager.GetAxis("Vertical");
-                if (h > 0)
+                float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+                float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+
+                if (vertical > 0)
                 {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, 0.03f);
                 }
-                else if (h < 0)
+                else if (vertical < 0)
                 {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, -0.03f);
                 }
-                else if ( ( Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.D) ) & Input.GetKey(KeyCode.Space))
+                else if ( horizontal != 0f  & CrossPlatformInputManager.GetButtonDown("Jump"))
                 {
                     m_Player.bodyType = RigidbodyType2D.Dynamic;
                 }

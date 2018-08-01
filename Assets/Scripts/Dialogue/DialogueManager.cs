@@ -109,7 +109,9 @@ public class DialogueManager : MonoBehaviour {
                     m_IsSentenceTyping = false;
 
                 else if (!m_AnwswerChoose)
+                {
                     DisplayNextSentence();
+                }
             }
         }
 
