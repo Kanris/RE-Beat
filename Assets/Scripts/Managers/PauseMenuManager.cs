@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.EventSystems;
 
 public class PauseMenuManager : MonoBehaviour {
 
@@ -26,6 +28,9 @@ public class PauseMenuManager : MonoBehaviour {
 
     public bool isGamePause = false;
     private GameObject m_PauseGame;
+
+    [SerializeField] private GameObject m_FirstSelectedGameobject;
+
     // Use this for initialization
     void Start () {
 
@@ -54,7 +59,12 @@ public class PauseMenuManager : MonoBehaviour {
             m_PauseGame.SetActive(active);
 
             if (active == true)
+            {
                 Time.timeScale = 0f;
+
+                if (m_FirstSelectedGameobject != null)
+                    GameObject.Find("EventSystem").GetComponent<EventSystem>().SetSelectedGameObject(m_FirstSelectedGameobject);
+            }
             else
                 Time.timeScale = 1f;
         }
@@ -65,7 +75,7 @@ public class PauseMenuManager : MonoBehaviour {
 		
         if (m_PauseGame != null)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
             {
                 ChangeUIState();
             }
