@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -202,6 +203,12 @@ public class DialogueManager : MonoBehaviour {
 
     private void SetActiveAnswerButtons(bool isActive)
     {
+        if (isActive)
+        {
+            GameObject.Find("EventSystem").GetComponent<EventSystem>()
+                .SetSelectedGameObject(m_FirstButton.gameObject);
+        }
+
         m_Buttons.SetActive(isActive);
     }
 
