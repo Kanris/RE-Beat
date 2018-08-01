@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 [System.Serializable]
 public class Stats {
@@ -116,7 +117,6 @@ public class PlayerStats : Stats
     {
         if (!isInvincible)
         {
-            Debug.LogError("Playsound");
             AudioManager.Instance.Play("Hit");
 
             base.TakeDamage(amount);
@@ -130,12 +130,14 @@ public class PlayerStats : Stats
 
     private IEnumerator PlayTakeDamageAnimation()
     {
+        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
         m_Animator.SetBool("Damage", true);
         m_Animator.SetTrigger("DamageTrigger");
         isInvincible = true;
 
         yield return new WaitForSeconds(0.3f);
 
+        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
         m_Animator.SetBool("Damage", false);
         isInvincible = false;
         
