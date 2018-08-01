@@ -116,6 +116,8 @@ public class PlayerStats : Stats
     {
         if (!isInvincible)
         {
+            AudioManager.Instance.Play("Hit");
+
             base.TakeDamage(amount);
 
             UIManager.Instance.RemoveHealth(amount);
