@@ -123,6 +123,8 @@ public class RangeEnemy : MonoBehaviour {
         {
             if (m_CanCreateNewFireball)
             {
+                AudioManager.Instance.Play("Cast");
+
                 Animate(true);
 
                 m_CanCreateNewFireball = false;

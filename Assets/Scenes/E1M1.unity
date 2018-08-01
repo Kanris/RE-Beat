@@ -26706,7 +26706,7 @@ Prefab:
     - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
         type: 2}
       propertyPath: AudioArray.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_LocalPosition.x
@@ -26803,6 +26803,36 @@ Prefab:
     - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
         type: 2}
       propertyPath: AudioArray.Array.data[7].PitchOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].Name
+      value: Cast
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 760ed72a961ca0548822e85b8bd98258, type: 3}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].VolumeOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[8].PitchOffset
       value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
