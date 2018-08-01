@@ -112,6 +112,8 @@ public class AudioManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        InitializeAudioPlaylist();
     }
 
     #endregion
@@ -122,8 +124,6 @@ public class AudioManager : MonoBehaviour {
 
     private void Start()
     {
-        InitializeAudioPlaylist();
-
         SetBackgroundMusic("Background");
     }
 
@@ -173,28 +173,33 @@ public class AudioManager : MonoBehaviour {
 
     public void SetBackgroundMusic(string name)
     {
-        if (!string.IsNullOrEmpty(m_BackgroundMusic))
+        if (m_BackgroundMusic != name)
         {
-            Stop(m_BackgroundMusic);
-        }
-
-        if (!string.IsNullOrEmpty(name))
-        {
-            m_BackgroundMusic = name;
-            var sound = GetAudioFromArray(m_BackgroundMusic);
-
-            if (sound != null)
+            if (!string.IsNullOrEmpty(m_BackgroundMusic))
             {
-                sound.PlaySound();
+                var sound = GetAudioFromArray(name);
+
+                if (sound != null)
+                    StartCoroutine(sound.FadeOut());
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                m_BackgroundMusic = name;
+                var sound = GetAudioFromArray(m_BackgroundMusic);
+
+                if (sound != null)
+                {
+                    StartCoroutine(sound.FadeIn());
+                }
+                else
+                {
+                    Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
+                }
             }
             else
-            {
-                Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
-            }
+                Debug.LogError("AudioManager.SetBackgroundMusic: can't change background music, because name is null or empty");
         }
-        else
-            Debug.LogError("AudioManager.SetBackgroundMusic: can't change background music, because name is null or empty");
-
     }
 
     private Audio GetAudioFromArray(string name)
