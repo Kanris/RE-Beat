@@ -9,9 +9,10 @@ public class Door : MonoBehaviour {
 
     [SerializeField] private DoorType Type;
     [SerializeField] private Item KeyName;
+    [SerializeField] private string DisplayMessage;
 
     private SpriteRenderer m_InteractionButton;
-    private bool m_IsPlayerNearDoor = false;
+    public bool m_IsPlayerNearDoor = false;
     private Animator m_Animator;
 
     private void Start()
@@ -52,19 +53,20 @@ public class Door : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearDoor & Type == DoorType.Key)
+        if (m_IsPlayerNearDoor)
         {
-            //CrossPlatformInputManager.
-            if (Input.GetKeyDown(KeyCode.E))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                OpenDoorWithKey();
+                Debug.LogError("Button pressed");
+                if (Type == DoorType.Key)
+                    OpenDoorWithKey();
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor & Type == DoorType.Key)
+        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor)
         {
             m_IsPlayerNearDoor = true;
             ShowInteractionKey(m_IsPlayerNearDoor);
@@ -73,10 +75,27 @@ public class Door : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNearDoor & Type == DoorType.Key)
+        if (collision.CompareTag("Player") & m_IsPlayerNearDoor)
         {
             m_IsPlayerNearDoor = false;
             ShowInteractionKey(m_IsPlayerNearDoor);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") & !m_IsPlayerNearDoor)
+        {
+            m_IsPlayerNearDoor = true;
+            ShowTip();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") & m_IsPlayerNearDoor)
+        {
+            m_IsPlayerNearDoor = false;
         }
     }
 
@@ -107,6 +126,15 @@ public class Door : MonoBehaviour {
         {
             AnnouncerManager.Instance.DisplayAnnouncerMessage(GetMessage());
         }
+    }
+
+    private void ShowTip()
+    {
+        if (!string.IsNullOrEmpty(DisplayMessage))
+            AnnouncerManager.Instance.DisplayAnnouncerMessage(
+                new AnnouncerManager.Message(DisplayMessage));
+        else
+            Debug.LogError("Door.ShowTip: Can't display empty tip");
     }
 
     public void PlayOpenDoorAnimation()
