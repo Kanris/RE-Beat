@@ -33,7 +33,7 @@ public class Stairs : MonoBehaviour {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, -0.03f);
                 }
-                else if ( horizontal != 0f  & CrossPlatformInputManager.GetButtonDown("Jump"))
+                else if (horizontal != 0f & CrossPlatformInputManager.GetButton("Jump"))
                 {
                     m_Player.bodyType = RigidbodyType2D.Dynamic;
                 }
