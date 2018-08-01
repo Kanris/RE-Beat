@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 
     [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
+    [SerializeField] private float ThrowX = 0.08f;
+    [SerializeField] private float ThrowY = 0.1f;
     public PlayerStats playerStats;
 
     private float m_YPositionBeforeJump;
@@ -49,11 +51,11 @@ public class Player : MonoBehaviour {
         {
             if (transform.localScale.x == 1)
             {
-                GetComponent<Rigidbody2D>().position += new Vector2(-0.05f, 0.1f);
+                GetComponent<Rigidbody2D>().position += new Vector2(-ThrowX, ThrowY);
             }
             else
             {
-                GetComponent<Rigidbody2D>().position += new Vector2(0.05f, 0.1f);
+                GetComponent<Rigidbody2D>().position += new Vector2(ThrowX, ThrowY);
             }
         }
     }
