@@ -91,7 +91,6 @@ public class Door : MonoBehaviour {
 
     private void OpenDoorWithKey()
     {
-        Debug.LogError("Open door");
         if (string.IsNullOrEmpty(KeyName.Name))
         {
             Destroy(gameObject);
@@ -110,6 +109,7 @@ public class Door : MonoBehaviour {
 
     public void PlayOpenDoorAnimation()
     {
+        AudioManager.Instance.Play("DoorOpen");
         PlayAnimation("Open");
     }
 
