@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour {
 
-    public Vector3 Direction;
-    public float DestroyTime;
+    [HideInInspector] public Vector3 Direction;
+    [HideInInspector] public float DestroyTime;
+    [HideInInspector] public int DamageAmount;
 
     private Animator m_Animator;
     private bool isDestroying = false;
@@ -57,16 +58,16 @@ public class Fireball : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player") & !isDestroying)
         {
-            KillPlayer(collision);
+            DamagePlayer(collision);
         }
 
        if (!collision.gameObject.CompareTag("Enemy"))
             yield return DestroyFireball();
     }
 
-    private void KillPlayer(Collision2D collision)
+    private void DamagePlayer(Collision2D collision)
     {
-        collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(999);
+        collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
     }
 
     private IEnumerator DestroyFireball()

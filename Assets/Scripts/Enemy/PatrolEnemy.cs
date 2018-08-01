@@ -19,6 +19,7 @@ public class PatrolEnemy : MonoBehaviour {
     [SerializeField] private Canvas UI;
     [SerializeField] private string Phrase;
     [SerializeField] private float WaitTimeAfterSpot = 2f;
+    [SerializeField, Range(0, 3)] private int DamageAmount = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -114,7 +115,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void AttackPlayer(Collision2D collision)
     {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(50);
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
         StartCoroutine(PlayerSpot(false));
         StartCoroutine(ShowPhrase());
     }
