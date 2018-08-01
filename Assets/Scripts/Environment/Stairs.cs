@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets._2D;
 
 public class Stairs : MonoBehaviour {
 
@@ -20,20 +21,18 @@ public class Stairs : MonoBehaviour {
         {
             if (m_Player != null)
             {
-                float vertical = CrossPlatformInputManager.GetAxis("Vertical");
-                float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+                if (CrossPlatformInputManager.GetButton("Vertical"))
+                {
+                    m_Animator.SetBool("IsMovingOnStairs", true);
 
-                if (vertical > 0)
-                {
-                    m_Animator.SetBool("IsMovingOnStairs", true);
-                    m_Player.position += new Vector2(0, 0.03f);
+                    var yPos = 0.03f;
+
+                    if (CrossPlatformInputManager.GetAxis("Vertical") < 0f)
+                        yPos = -yPos;
+
+                    m_Player.position += new Vector2(0, yPos);
                 }
-                else if (vertical < 0)
-                {
-                    m_Animator.SetBool("IsMovingOnStairs", true);
-                    m_Player.position += new Vector2(0, -0.03f);
-                }
-                else if (horizontal != 0f & CrossPlatformInputManager.GetButton("Jump"))
+                else if (CrossPlatformInputManager.GetButton("Horizontal") & CrossPlatformInputManager.GetButton("Jump"))
                 {
                     m_Player.bodyType = RigidbodyType2D.Dynamic;
                 }
@@ -49,7 +48,6 @@ public class Stairs : MonoBehaviour {
             }
         }
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
