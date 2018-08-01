@@ -98,6 +98,8 @@ public class PlayerStats : Stats
         base.Initialize(gameObject);
 
         InitializeAnimator();
+
+        UIManager.Instance.AddHealth(CurrentHealth);
     }
 
     private void InitializeAnimator()
@@ -115,6 +117,8 @@ public class PlayerStats : Stats
         if (!isInvincible)
         {
             base.TakeDamage(amount);
+
+            UIManager.Instance.RemoveHealth(amount);
 
             if (CurrentHealth > 0)
                 GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
