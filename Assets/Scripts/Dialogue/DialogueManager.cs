@@ -106,8 +106,10 @@ public class DialogueManager : MonoBehaviour {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 if (m_IsSentenceTyping)
+                {
+                    Debug.LogError("Skip typing");
                     m_IsSentenceTyping = false;
-
+                }
                 else if (!m_AnwswerChoose)
                 {
                     DisplayNextSentence();
@@ -167,7 +169,9 @@ public class DialogueManager : MonoBehaviour {
     private IEnumerator DialogueComplete()
     {
         m_Dialogue.IsDialogueFinished = true;
+
         yield return null;
+
         StopDialogue();
     }
 
@@ -251,6 +255,13 @@ public class DialogueManager : MonoBehaviour {
 
     public void GetAnswer(bool isFirst)
     {
+        StartCoroutine(SetUpAnswer(isFirst));
+    }
+
+    private IEnumerator SetUpAnswer(bool isFirst)
+    {
+        yield return null;
+
         SetActiveAnswerButtons(false);
 
         var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence;
