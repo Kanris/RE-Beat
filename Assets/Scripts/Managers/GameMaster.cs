@@ -26,6 +26,8 @@ public class GameMaster : MonoBehaviour {
 
         Initialize("Managers/DialogueManager");
 
+        Initialize("Managers/UIManager");
+
         InitializeRespawnPoint();
 
         InitalizePlayerToRespawn();
