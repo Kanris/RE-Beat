@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(EnemyMovement))]
 public class PatrolEnemy : MonoBehaviour {
 
-    public Stats EnemyStats;
+    public Enemy EnemyStats;
 
     private EnemyMovement m_EnemyMovement;
     private TextMeshProUGUI m_Text;
@@ -18,7 +18,6 @@ public class PatrolEnemy : MonoBehaviour {
     [SerializeField] private Canvas UI;
     [SerializeField] private string Phrase;
     [SerializeField] private float WaitTimeAfterSpot = 2f;
-    [SerializeField, Range(0, 3)] private int DamageAmount = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -112,7 +111,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void AttackPlayer(Collision2D collision)
     {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);       
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(EnemyStats.DamageAmount);       
     }
 
     private IEnumerator PlayerSpot(bool isSpot)

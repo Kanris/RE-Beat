@@ -6,7 +6,7 @@ public class Fireball : MonoBehaviour {
 
     [HideInInspector] public Vector3 Direction;
     [HideInInspector] public float DestroyTime;
-    [HideInInspector] public int DamageAmount = 1;
+    [SerializeField] private int DamageAmount = 2;
 
     private Animator m_Animator;
     private bool isDestroying = false;

@@ -153,7 +153,13 @@ public class PlayerStats : Stats
 }
 
 [System.Serializable]
-public class MageEnemyStats : Stats
+public class Enemy : Stats
+{
+    public int DamageAmount = 1;
+}
+
+[System.Serializable]
+public class MageEnemyStats : Enemy
 {
     public float AttackSpeed = 2f;
 }

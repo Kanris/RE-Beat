@@ -9,7 +9,6 @@ public class RangeEnemy : MonoBehaviour {
     public MageEnemyStats EnemyStats;
 
     [SerializeField] private Canvas UI;
-    [SerializeField, Range(0, 3)] private int DamageAmount = 1;
 
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
@@ -74,7 +73,7 @@ public class RangeEnemy : MonoBehaviour {
             m_EnemyMovement.isWaiting = false;
             EnableWarningSign(false);
 
-            collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+            collision.transform.GetComponent<Player>().playerStats.TakeDamage(EnemyStats.DamageAmount);
         }
     }
 
@@ -150,8 +149,6 @@ public class RangeEnemy : MonoBehaviour {
         {
             instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
         }
-
-        instantiateFireball.GetComponent<Fireball>().DamageAmount = DamageAmount;
     }
 
     private IEnumerator CastCooldown()
