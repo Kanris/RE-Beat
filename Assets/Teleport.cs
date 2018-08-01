@@ -59,7 +59,7 @@ public class Teleport : MonoBehaviour {
         if (target != null)
         {
             m_Animator.SetBool("Teleport", true);
-
+            AudioManager.Instance.Play("Teleport");
             m_IsPlayerNear = false;
             m_Player.SetActive(false);
             StartCoroutine(ScreenFaderManager.Instance.FadeToBlack());
