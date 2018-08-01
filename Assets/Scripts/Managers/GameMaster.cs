@@ -6,6 +6,7 @@ using UnityStandardAssets._2D;
 public class GameMaster : MonoBehaviour {
 
     public static GameMaster Instance;
+    [SerializeField] private string Music = "Background";
 
     public void Awake()
     {
@@ -34,6 +35,8 @@ public class GameMaster : MonoBehaviour {
         #endregion
 
         InitializePlayerRespawn(false);
+
+        InitializeBackgroundMusic();
     }
 
     public Transform RespawnPoint;
@@ -57,6 +60,11 @@ public class GameMaster : MonoBehaviour {
         {
             Debug.LogError("GameMaster: Can't find Respawn Point on scene");
         }
+    }
+
+    private void InitializeBackgroundMusic()
+    {
+        AudioManager.Instance.SetBackgroundMusic(Music);
     }
 
     void InitalizePlayerToRespawn()

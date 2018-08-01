@@ -38,10 +38,6 @@ public class AudioManager : MonoBehaviour {
                     m_AudioSource.Play();
                 }
             }
-            else
-            {
-                Debug.LogError("Audio: m_AudioSource is equals to null");
-            }
         }
 
         public void StopSound()
@@ -122,6 +118,8 @@ public class AudioManager : MonoBehaviour {
 
     public Audio[] AudioArray;
 
+    private string m_BackgroundMusic;
+
     private void Start()
     {
         InitializeAudioPlaylist();
@@ -175,16 +173,28 @@ public class AudioManager : MonoBehaviour {
 
     public void SetBackgroundMusic(string name)
     {
-        var sound = GetAudioFromArray(name);
-
-        if (sound != null)
+        if (!string.IsNullOrEmpty(m_BackgroundMusic))
         {
-            sound.PlaySound();
+            Stop(m_BackgroundMusic);
+        }
+
+        if (!string.IsNullOrEmpty(name))
+        {
+            m_BackgroundMusic = name;
+            var sound = GetAudioFromArray(m_BackgroundMusic);
+
+            if (sound != null)
+            {
+                sound.PlaySound();
+            }
+            else
+            {
+                Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
+            }
         }
         else
-        {
-            Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
-        }
+            Debug.LogError("AudioManager.SetBackgroundMusic: can't change background music, because name is null or empty");
+
     }
 
     private Audio GetAudioFromArray(string name)
