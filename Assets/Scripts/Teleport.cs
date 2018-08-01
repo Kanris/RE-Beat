@@ -62,6 +62,7 @@ public class Teleport : MonoBehaviour {
             AudioManager.Instance.Play("Teleport");
             m_IsPlayerNear = false;
             m_Player.SetActive(false);
+
             StartCoroutine(ScreenFaderManager.Instance.FadeToBlack());
 
             yield return new WaitForSeconds(0.8f);
@@ -70,8 +71,10 @@ public class Teleport : MonoBehaviour {
 
             yield return new WaitForSeconds(0.8f);
 
+            SetActiveInteractionButton(false);
             m_Player.SetActive(true);
             m_Animator.SetBool("Teleport", false);
+
             StartCoroutine(ScreenFaderManager.Instance.FadeToClear());
         }
         else
