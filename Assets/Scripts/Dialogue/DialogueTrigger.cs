@@ -7,7 +7,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     [SerializeField] private Dialogue dialogue;
 
-    private bool m_isPlayerNear = false;
+    [HideInInspector] public bool m_isPlayerNear = false;
     private GameObject m_UI;
 
     private void Start()

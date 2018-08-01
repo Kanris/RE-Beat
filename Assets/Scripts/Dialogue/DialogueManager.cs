@@ -164,9 +164,10 @@ public class DialogueManager : MonoBehaviour {
         m_NextImage.SetActive(isActive);
     }
 
-    private void DialogueComplete()
+    private IEnumerator DialogueComplete()
     {
         m_Dialogue.IsDialogueFinished = true;
+        yield return null;
         StopDialogue();
     }
 
@@ -176,7 +177,7 @@ public class DialogueManager : MonoBehaviour {
         {
             if (m_Sentences.Count == 0)
             {
-                DialogueComplete();
+                StartCoroutine( DialogueComplete() );
                 return;
             }
 
