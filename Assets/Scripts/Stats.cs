@@ -116,6 +116,7 @@ public class PlayerStats : Stats
     {
         if (!isInvincible)
         {
+            Debug.LogError("Playsound");
             AudioManager.Instance.Play("Hit");
 
             base.TakeDamage(amount);
