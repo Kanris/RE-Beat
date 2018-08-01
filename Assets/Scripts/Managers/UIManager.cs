@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour {
 
     public void RemoveHealth(int amount)
     {
-        for (int index = 0; index < amount & m_HealthInPanel.Count > 0; index++)
+        for (int index = m_HealthInPanel.Count - 1; index >= 0 & m_HealthInPanel.Count > 0 & amount > 0; index--, amount--)
         {
             var objectToDestroy = m_HealthInPanel[index];
             m_HealthInPanel.RemoveAt(index);
