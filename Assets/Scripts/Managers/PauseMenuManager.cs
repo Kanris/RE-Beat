@@ -96,6 +96,7 @@ public class PauseMenuManager : MonoBehaviour {
     public void ReturnToStartScreen()
     {
         ChangeUIState();
+        PickupBox.isQuitting = true;
         LoadSceneManager.Instance.Load("StartScreen");
     }
 
