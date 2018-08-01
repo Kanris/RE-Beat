@@ -9,12 +9,14 @@ public class Player : MonoBehaviour {
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
     [SerializeField] private float ThrowX = 0.08f;
     [SerializeField] private float ThrowY = 0.1f;
-    public PlayerStats playerStats;
 
     private float m_YPositionBeforeJump;
+    private Vector2 m_ThrowBackVector;
     private Animator m_Animator;
 
-    public bool isPlayerTakeDamage;
+    public PlayerStats playerStats;
+    [HideInInspector] public bool isPlayerThrowingBack;
+    [HideInInspector] public bool isTriggered;
 
     private void Start()
     {
@@ -47,15 +49,29 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (isPlayerTakeDamage)
+        if (m_Animator.GetBool("Damage"))
         {
-            if (transform.localScale.x == 1)
+            if (!isPlayerThrowingBack)
             {
-                GetComponent<Rigidbody2D>().position += new Vector2(-ThrowX, ThrowY);
+                if (transform.localScale.x == 1)
+                {
+                    m_ThrowBackVector = new Vector2(-ThrowX, ThrowY);
+                }
+                else
+                {
+                    m_ThrowBackVector = new Vector2(ThrowX, ThrowY);
+                }
+
+                if (!isTriggered)
+                {
+                    m_ThrowBackVector = new Vector2(-m_ThrowBackVector.x, m_ThrowBackVector.y);
+                }
+
+                isPlayerThrowingBack = true;
             }
             else
             {
-                GetComponent<Rigidbody2D>().position += new Vector2(ThrowX, ThrowY);
+                GetComponent<Rigidbody2D>().position += m_ThrowBackVector;
             }
         }
     }

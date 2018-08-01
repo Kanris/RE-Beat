@@ -127,8 +127,6 @@ public class PlayerStats : Stats
 
     private IEnumerator PlayTakeDamageAnimation()
     {
-        m_GameObject.GetComponent<Player>().isPlayerTakeDamage = true;
-
         m_Animator.SetBool("Damage", true);
         m_Animator.SetTrigger("DamageTrigger");
         isInvincible = true;
@@ -137,7 +135,8 @@ public class PlayerStats : Stats
 
         m_Animator.SetBool("Damage", false);
         isInvincible = false;
-        m_GameObject.GetComponent<Player>().isPlayerTakeDamage = false;
+        
+        m_GameObject.GetComponent<Player>().isPlayerThrowingBack = false;
 
     }
 
