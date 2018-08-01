@@ -14,6 +14,8 @@ public class PickupBox : MonoBehaviour {
 
     public static bool isQuitting = false;
 
+    [SerializeField] private BoxCollider2D m_BoxCollider;
+
 	// Use this for initialization
 	void Start () {
 
@@ -132,6 +134,7 @@ public class PickupBox : MonoBehaviour {
     private void ChangeBoxProperty(bool isActive, int layerId)
     {
         m_IsBoxUp = isActive;
+        m_BoxCollider.enabled = !isActive;
         transform.gameObject.layer = layerId;
         ActiveInteractionButton(!isActive);
     }

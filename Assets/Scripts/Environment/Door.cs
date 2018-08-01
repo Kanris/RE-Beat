@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Door : MonoBehaviour {
 
@@ -53,6 +54,7 @@ public class Door : MonoBehaviour {
     {
         if (m_IsPlayerNearDoor & Type == DoorType.Key)
         {
+            //CrossPlatformInputManager.
             if (Input.GetKeyDown(KeyCode.E))
             {
                 OpenDoorWithKey();
