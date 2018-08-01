@@ -101,7 +101,6 @@ public class DialogueManager : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
-
         if (isDialogueInProgress)
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))

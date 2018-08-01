@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Stairs : MonoBehaviour {
 
@@ -19,12 +20,13 @@ public class Stairs : MonoBehaviour {
         {
             if (m_Player != null)
             {
-                if (Input.GetKey(KeyCode.W))
+                float h = CrossPlatformInputManager.GetAxis("Vertical");
+                if (h > 0)
                 {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, 0.03f);
                 }
-                else if (Input.GetKey(KeyCode.S))
+                else if (h < 0)
                 {
                     m_Animator.SetBool("IsMovingOnStairs", true);
                     m_Player.position += new Vector2(0, -0.03f);
