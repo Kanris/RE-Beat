@@ -31,6 +31,18 @@ public class PatrolEnemy : MonoBehaviour {
         m_AlarmImage.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (m_IsPlayerNear)
+        {
+            if (GameMaster.Instance.isPlayerDead)
+            {
+                m_IsPlayerNear = false;
+                StartCoroutine(PlayerSpot(false));
+            }
+        }
+    }
+
     private void InitializeStats()
     {
         EnemyStats.Initialize(gameObject);
