@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PickUpItem : MonoBehaviour {
 
@@ -29,7 +30,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (m_IsPlayerNearDoor)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 AddToTheInventory();
             }

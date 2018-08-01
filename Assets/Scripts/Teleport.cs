@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Animator))]
 public class Teleport : MonoBehaviour {
@@ -47,7 +48,7 @@ public class Teleport : MonoBehaviour {
     {
         if (m_IsPlayerNear)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 StartCoroutine(TeleportPlayer());
             }

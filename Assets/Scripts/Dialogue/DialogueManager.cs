@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -103,7 +104,7 @@ public class DialogueManager : MonoBehaviour {
 
         if (isDialogueInProgress)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 if (m_IsSentenceTyping)
                     m_IsSentenceTyping = false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class DoorSwitch : MonoBehaviour {
 
@@ -49,7 +50,7 @@ public class DoorSwitch : MonoBehaviour {
 		
         if (m_IsPlayerNearSwitch)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 m_IsPlayerNearSwitch = false;
                 ShowInteractionKey(false);

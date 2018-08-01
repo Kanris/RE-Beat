@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class DialogueTrigger : MonoBehaviour {
 
@@ -35,7 +36,7 @@ public class DialogueTrigger : MonoBehaviour {
         {
             if (!DialogueManager.Instance.isDialogueInProgress)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (CrossPlatformInputManager.GetButtonDown("Submit"))
                 {
                     StartDialogue();
                 }

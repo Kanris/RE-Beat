@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PickupBox : MonoBehaviour {
 
@@ -62,7 +63,7 @@ public class PickupBox : MonoBehaviour {
 		
         if (m_IsPlayerNear)
         {
-            if (Input.GetKeyDown( KeyCode.E ))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 Transform parrentTransform = null;
 
@@ -79,7 +80,7 @@ public class PickupBox : MonoBehaviour {
         }
         else if (m_IsBoxUp)
         {
-            if (Input.GetKeyDown( KeyCode.E ))
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 AttachToParent(null);
             }
