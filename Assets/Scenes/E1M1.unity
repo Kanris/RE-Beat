@@ -2838,6 +2838,7 @@ GameObject:
   - component: {fileID: 424000592}
   - component: {fileID: 424000591}
   - component: {fileID: 424000588}
+  - component: {fileID: 424000589}
   m_Layer: 0
   m_Name: GroundCave
   m_TagString: Ground
@@ -2870,6 +2871,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: StoneRunning
+--- !u!50 &424000589
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424000586}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!19719996 &424000591
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -13275,6 +13296,7 @@ GameObject:
   - component: {fileID: 638057558}
   - component: {fileID: 638057560}
   - component: {fileID: 638057561}
+  - component: {fileID: 638057562}
   m_Layer: 0
   m_Name: GroundWood
   m_TagString: Ground
@@ -13444,6 +13466,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: WoodRunning
+--- !u!50 &638057562
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 638057556}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &647897280
 GameObject:
   m_ObjectHideFlags: 0
@@ -18931,6 +18973,7 @@ GameObject:
   - component: {fileID: 1115813205}
   - component: {fileID: 1115813204}
   - component: {fileID: 1115813203}
+  - component: {fileID: 1115813201}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Ground
@@ -18951,6 +18994,26 @@ Transform:
   m_Father: {fileID: 1902360075}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1115813201
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1115813199}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!19719996 &1115813203
 TilemapCollider2D:
   m_ObjectHideFlags: 0
