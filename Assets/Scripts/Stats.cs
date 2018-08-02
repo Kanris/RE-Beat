@@ -12,6 +12,7 @@ public class Stats {
 
     private int m_CurrentHealth;
     [SerializeField] private GameObject DeathParticle;
+    protected Animator m_Animator;
 
     public int CurrentHealth
     {
@@ -29,6 +30,17 @@ public class Stats {
     {
         InitializeGameObject(gameObject);
         InitializeHealth();
+        InitializeAnimator();
+    }
+
+    private void InitializeAnimator()
+    {
+        m_Animator = m_GameObject.GetComponent<Animator>();
+
+        if (m_Animator == null)
+        {
+            Debug.LogError("PlayerStats.InitializeAnimator: Can't initialize animator.");
+        }
     }
 
     private void InitializeGameObject(GameObject gameObject)
@@ -57,6 +69,29 @@ public class Stats {
         if (CurrentHealth == 0)
         {
             KillObject();
+        }
+
+        if (CurrentHealth > 0)
+            GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
+    }
+
+    protected virtual IEnumerator PlayTakeDamageAnimation()
+    {
+        PlayHitAnimation(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        PlayHitAnimation(false);
+    }
+
+    protected void PlayHitAnimation(bool isHit)
+    {
+        if (m_Animator != null)
+        {
+            m_Animator.SetBool("Damage", isHit);
+
+            if (isHit)
+                m_Animator.SetTrigger("DamageTrigger");
         }
     }
 
@@ -90,7 +125,6 @@ public class PlayerStats : Stats
     public static float AttackSpeed = 0.1f;
     public static Inventory PlayerInventory;
 
-    private Animator m_Animator;
     private bool isInvincible;
 
     public override void Initialize(GameObject gameObject)
@@ -100,19 +134,7 @@ public class PlayerStats : Stats
 
         base.Initialize(gameObject);
 
-        InitializeAnimator();
-
         UIManager.Instance.AddHealth(CurrentHealth);
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = m_GameObject.GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("PlayerStats.InitializeAnimator: Can't initialize animator.");
-        }
     }
 
     public override void TakeDamage(int amount)
@@ -124,23 +146,21 @@ public class PlayerStats : Stats
             base.TakeDamage(amount);
 
             UIManager.Instance.RemoveHealth(amount);
-
-            if (CurrentHealth > 0)
-                GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
         }
     }
 
-    private IEnumerator PlayTakeDamageAnimation()
+    protected override IEnumerator PlayTakeDamageAnimation()
     {
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
-        m_Animator.SetBool("Damage", true);
-        m_Animator.SetTrigger("DamageTrigger");
+        PlayHitAnimation(true);
+
         isInvincible = true;
 
         yield return new WaitForSeconds(0.3f);
 
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
-        m_Animator.SetBool("Damage", false);
+
+        PlayHitAnimation(false);
         isInvincible = false;
         
         m_GameObject.GetComponent<Player>().isPlayerThrowingBack = false;
