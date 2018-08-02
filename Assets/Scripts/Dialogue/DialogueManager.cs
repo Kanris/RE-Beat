@@ -70,15 +70,12 @@ public class DialogueManager : MonoBehaviour {
 
     private void InitializeButtonsUI()
     {
-        if (transform.childCount > 1)
-        {
-            m_Buttons = transform.GetChild(1).gameObject;
+        m_Buttons = GameObject.Find("ButtonsDialogueGrid").gameObject;
 
-            if (m_Buttons.transform.childCount > 1)
-            {
-                m_FirstButton = m_Buttons.transform.GetChild(0).GetComponent<Button>();
-                m_SecondButton = m_Buttons.transform.GetChild(1).GetComponent<Button>();
-            }
+        if (m_Buttons.transform.childCount > 1)
+        {
+            m_FirstButton = m_Buttons.transform.GetChild(0).GetComponent<Button>();
+            m_SecondButton = m_Buttons.transform.GetChild(1).GetComponent<Button>();
         }
         else
         {
@@ -213,8 +210,8 @@ public class DialogueManager : MonoBehaviour {
 
     private void SetButtonsText(string button1, string button2)
     {
-        m_FirstButton.GetComponentInChildren<Text>().text = button1;
-        m_SecondButton.GetComponentInChildren<Text>().text = button2;
+        m_FirstButton.GetComponentInChildren<TextMeshProUGUI>().text = button1;
+        m_SecondButton.GetComponentInChildren<TextMeshProUGUI>().text = button2;
     }
 
     public void StartDialogue(Dialogue dialogue)
