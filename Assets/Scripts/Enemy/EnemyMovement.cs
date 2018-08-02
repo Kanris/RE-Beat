@@ -9,11 +9,12 @@ public class EnemyMovement : MonoBehaviour {
     private Animator m_Animator;
     private Vector2 m_PreviousPosition = Vector2.zero;
 
+    [SerializeField] private float IdleTime = 2f;
+
     [HideInInspector] public bool isWaiting = false;
+    [HideInInspector] public float m_PosX = -1f;
 
     public float Speed = 1f;
-    [SerializeField] private float IdleTime = 2f;
-    [HideInInspector] public float m_PosX = -1f;
 
     // Use this for initialization
     void Start () {

@@ -32,7 +32,8 @@ public class RangeEnemy : MonoBehaviour {
 
     private void InitializeStats()
     {
-        EnemyStats.Initialize(gameObject);
+        var parentGameObject = transform.parent.gameObject;
+        EnemyStats.Initialize(parentGameObject);
     }
 
     private void InitializeEnemyMovement()
