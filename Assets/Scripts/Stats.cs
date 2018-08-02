@@ -26,11 +26,15 @@ public class Stats {
         }
     }
 
-    public virtual void Initialize(GameObject gameObject)
+    public virtual void Initialize(GameObject gameObject, Animator animator = null)
     {
         InitializeGameObject(gameObject);
         InitializeHealth();
-        InitializeAnimator();
+
+        if (animator == null)
+            InitializeAnimator();
+        else
+            m_Animator = animator;
     }
 
     private void InitializeAnimator()
@@ -129,7 +133,7 @@ public class PlayerStats : Stats
 
     private bool isInvincible;
 
-    public override void Initialize(GameObject gameObject)
+    public override void Initialize(GameObject gameObject, Animator animator = null)
     {
         if (PlayerInventory == null)
             PlayerInventory = new Inventory(10);

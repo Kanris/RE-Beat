@@ -46,7 +46,7 @@ public class PatrolEnemy : MonoBehaviour {
     private void InitializeStats()
     {
         var parentGameObject = transform.parent.gameObject;
-        EnemyStats.Initialize(parentGameObject);
+        EnemyStats.Initialize(parentGameObject, GetComponent<Animator>());
     }
 
     private void InitializeEnemyMovement()

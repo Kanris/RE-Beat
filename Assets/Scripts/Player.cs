@@ -48,11 +48,14 @@ public class Player : MonoBehaviour {
 
         JumpHeightControl();
 
-        if (!isAttacking)
+        if (!AttackRange.activeSelf)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+            if (!isAttacking)
             {
-                StartCoroutine(Attack());
+                if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                {
+                    StartCoroutine(Attack());
+                }
             }
         }
     }
@@ -62,10 +65,9 @@ public class Player : MonoBehaviour {
         if (!isAttacking)
         {
             isAttacking = true;
-            AttackRange.SetActive(isAttacking);
+            AttackRange.SetActive(true);
 
             yield return new WaitForSeconds(PlayerStats.AttackSpeed);
-
             isAttacking = false;
             AttackRange.SetActive(isAttacking);
         }
@@ -117,8 +119,9 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") & isAttacking)
         {
+            Debug.LogError("Attack");
             var enemyStats = GetStats(collision);
 
             if (enemyStats != null)
