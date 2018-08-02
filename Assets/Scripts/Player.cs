@@ -123,6 +123,11 @@ public class Player : MonoBehaviour {
 
             if (enemyStats != null)
             {
+                if (collision.GetComponent<EnemyMovement>().Speed == 1f)
+                {
+                    collision.GetComponent<EnemyMovement>().TurnAround();
+                }
+
                 enemyStats.TakeDamage(PlayerStats.DamageAmount);
             }
         }
