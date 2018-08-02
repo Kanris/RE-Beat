@@ -52,7 +52,6 @@ public class Player : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Fire1"))
             {
-                Debug.LogError("Attack");
                 StartCoroutine(Attack());
             }
         }
