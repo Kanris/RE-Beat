@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
@@ -9,10 +10,12 @@ public class Player : MonoBehaviour {
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
     [SerializeField] private float ThrowX = 0.08f;
     [SerializeField] private float ThrowY = 0.1f;
+    [SerializeField] private GameObject AttackRange;
 
     private float m_YPositionBeforeJump;
     private Vector2 m_ThrowBackVector;
     private Animator m_Animator;
+    private bool isAttacking = false;
 
     public PlayerStats playerStats;
     [HideInInspector] public bool isPlayerThrowingBack;
@@ -45,6 +48,28 @@ public class Player : MonoBehaviour {
 
         JumpHeightControl();
 
+        if (!isAttacking)
+        {
+            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+            {
+                Debug.LogError("Attack");
+                StartCoroutine(Attack());
+            }
+        }
+    }
+
+    private IEnumerator Attack()
+    {
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            AttackRange.SetActive(isAttacking);
+
+            yield return new WaitForSeconds(PlayerStats.AttackSpeed);
+
+            isAttacking = false;
+            AttackRange.SetActive(isAttacking);
+        }
     }
 
     private void FixedUpdate()
@@ -89,5 +114,34 @@ public class Player : MonoBehaviour {
         {
             m_YPositionBeforeJump = transform.position.y;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            var enemyStats = GetStats(collision);
+
+            if (enemyStats != null)
+            {
+                enemyStats.TakeDamage(PlayerStats.DamageAmount);
+            }
+        }
+    }
+
+    private Stats GetStats(Collider2D collision)
+    {
+        Stats enemyStats = null;
+
+        if (collision.GetComponent<PatrolEnemy>() != null)
+        {
+            enemyStats = collision.GetComponent<PatrolEnemy>().EnemyStats;
+        }
+        else if (collision.GetComponent<RangeEnemy>() != null)
+        {
+            enemyStats = collision.GetComponent<RangeEnemy>().EnemyStats;
+        }
+
+        return enemyStats;
     }
 }

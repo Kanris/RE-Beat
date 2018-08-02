@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets._2D;
+using UnityEditor;
 
 public class DialogueTrigger : MonoBehaviour {
 
     [SerializeField] private Dialogue dialogue;
 
     [HideInInspector] public bool m_isPlayerNear = false;
+
     private GameObject m_UI;
+    private GameObject m_Player;
 
     private void Start()
     {
@@ -44,17 +48,23 @@ public class DialogueTrigger : MonoBehaviour {
                 {
                     if (!m_UI.activeSelf)
                         DisplayUI(true);
+
+                    EnableUserControl(true);
                 }
             }
-        }
-        else
-        {
-            if (DialogueManager.Instance.isDialogueInProgress)
-            {
-                DialogueManager.Instance.StopDialogue();
-            }
+            else
+                EnableUserControl(false);
         }
 	}
+
+    private void EnableUserControl(bool active)
+    {
+        if (!active)
+            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false);
+
+        if (m_Player != null & m_Player.GetComponent<Platformer2DUserControl>().enabled != active)
+            m_Player.GetComponent<Platformer2DUserControl>().enabled = active;
+    }
 
     private void StartDialogue()
     {
@@ -68,6 +78,7 @@ public class DialogueTrigger : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_isPlayerNear)
         {
             m_isPlayerNear = true;
+            m_Player = collision.gameObject;
             DisplayUI(m_isPlayerNear);
         }
     }
@@ -77,6 +88,7 @@ public class DialogueTrigger : MonoBehaviour {
         if (collision.CompareTag("Player") & m_isPlayerNear)
         {
             m_isPlayerNear = false;
+            m_Player = null;
             DisplayUI(m_isPlayerNear);
         }
     }

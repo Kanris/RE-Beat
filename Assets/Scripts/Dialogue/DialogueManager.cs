@@ -104,11 +104,10 @@ public class DialogueManager : MonoBehaviour {
     {
         if (isDialogueInProgress)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Jump"))
             {
                 if (m_IsSentenceTyping)
                 {
-                    Debug.LogError("Skip typing");
                     m_IsSentenceTyping = false;
                 }
                 else if (!m_AnwswerChoose)
