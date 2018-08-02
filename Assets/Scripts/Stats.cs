@@ -72,7 +72,9 @@ public class Stats {
         }
 
         if (CurrentHealth > 0)
+        {
             GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
+        }
     }
 
     protected virtual IEnumerator PlayTakeDamageAnimation()

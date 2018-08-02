@@ -69,10 +69,6 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            /*m_IsPlayerInSight = false;
-            m_EnemyMovement.isWaiting = false;
-            EnableWarningSign(false);*/
-
             if (!m_IsPlayerInSight)
             {
                 m_EnemyMovement.TurnAround();
