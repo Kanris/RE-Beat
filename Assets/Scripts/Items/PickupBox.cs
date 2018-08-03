@@ -34,16 +34,8 @@ public class PickupBox : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButtonTransform = transform.GetChild(0);
-
-        if (interactionButtonTransform != null)
-        {
-            m_InteractionButton = interactionButtonTransform.gameObject;
-        }
-        else
-        {
-            Debug.LogError("PickupBox.InitializeInteractionButton: There is no child gameobject");
-        }
+        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
+        m_InteractionButton = Instantiate(interactionButton, transform);
     }
     
     private void OnApplicationQuit()

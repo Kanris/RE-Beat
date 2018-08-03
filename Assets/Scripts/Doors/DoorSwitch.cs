@@ -24,16 +24,10 @@ public class DoorSwitch : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var childTransform = transform.GetChild(0);
-
-        if (childTransform == null)
-        {
-            Debug.LogError("PickUpItem.InitializeInteractionButton: Can't find SpriteRenderer in child");
-        }
-        else
-            m_InteractionButton = childTransform.gameObject;
-
+        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
+        m_InteractionButton = Instantiate(interactionButton, transform);
     }
+
 
     private void InitializeAnimator()
     {

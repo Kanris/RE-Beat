@@ -34,14 +34,9 @@ public class Teleport : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        if (transform.childCount > 0)
-        {
-            m_InteractionButton = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("Teleport.InitializeInteractionButton: Can't find interaction button");
-        }
+        var interactionUI = Resources.Load("UI/InteractionUI") as GameObject;
+        m_InteractionButton = Instantiate(interactionUI, transform);
+
     }
 
     private void Update()

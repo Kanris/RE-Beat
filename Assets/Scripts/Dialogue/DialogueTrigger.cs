@@ -23,14 +23,8 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        if (transform.childCount > 0)
-        {
-            m_UI = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("DialogueTrigger.InitializeInteractionButton: DialogueTrigger has no interaction button");
-        }
+        var ui = Resources.Load("UI/NPCUI") as GameObject;
+        m_UI = Instantiate(ui, transform);
     }
 
     // Update is called once per frame

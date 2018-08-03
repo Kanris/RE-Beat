@@ -26,20 +26,13 @@ public class Door : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        if (transform.childCount > 0)
+        if (Type == DoorType.Key)
         {
-            m_InteractionButton = transform.GetChild(0).gameObject;
-
-            if (m_InteractionButton == null)
-            {
-                Debug.LogError("Door.InitializeInteractionButton: There is no Sprite Renderer on Gameobject.");
-            }
-        }
-        else if (Type == DoorType.Key)
-        {
-            Debug.LogError("Door.InitializeInteractionButton: Can't find SpriteRenderer in child");
+            var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
+            m_InteractionButton = Instantiate(interactionButton, transform);
         }
     }
+
 
     private void InitializeAnimator()
     {
@@ -57,7 +50,6 @@ public class Door : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                Debug.LogError("Button pressed");
                 if (Type == DoorType.Key)
                     OpenDoorWithKey();
             }

@@ -18,12 +18,8 @@ public class PickUpItem : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        m_InteractionButton = transform.GetChild(0).gameObject;
-
-        if (m_InteractionButton == null)
-        {
-            Debug.LogError("PickUpItem.InitializeInteractionButton: Can't find SpriteRenderer in child");
-        }
+        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
+        m_InteractionButton = Instantiate(interactionButton, transform);
     }
 
     private void Update()
