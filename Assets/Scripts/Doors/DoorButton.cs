@@ -7,9 +7,6 @@ public class DoorButton : MonoBehaviour {
     [SerializeField] private GameObject DoorToOpen;
 
     private Animator m_Animator;
-    public bool m_IsDoorOpen;
-    public bool m_IsPlayerNear;
-    public bool m_IsItemNear;
 
     private void Start()
     {
@@ -26,48 +23,16 @@ public class DoorButton : MonoBehaviour {
         }
     }
 
-    private void Update()
+    private IEnumerator OnCollisionEnter2D(Collision2D collision)
     {
-        if (m_IsPlayerNear)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                m_IsDoorOpen = !m_IsDoorOpen;
-
-                if (m_IsDoorOpen & m_IsItemNear)
-                {
-                    TriggerAnimation("Pressed");
-                    StartCoroutine(OpenDoor(m_IsDoorOpen));
-                }
-                else
-                {
-                    TriggerAnimation("Unpressed");
-                    StartCoroutine(OpenDoor(m_IsDoorOpen));
-                }
-            }
-        }
+        if (collision.transform.CompareTag("Item"))
+            yield return OpenDoor(true);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.CompareTag("Item"))
-            m_IsItemNear = true;
-
-        if (collision.CompareTag("Player"))
-        {
-            m_IsPlayerNear = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Item"))
-            m_IsItemNear = false;
-
-        if (collision.CompareTag("Player"))
-        {
-            m_IsPlayerNear = false;
-        }
+        if (collision.transform.CompareTag("Item"))
+            yield return OpenDoor(false);
     }
 
     private IEnumerator OpenDoor(bool open)
@@ -78,8 +43,12 @@ public class DoorButton : MonoBehaviour {
             {
                 DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
 
+                TriggerAnimation("Pressed");
+
                 yield return new WaitForSeconds(0.5f);
             }
+            else
+                TriggerAnimation("Unpressed");
 
             DoorToOpen.SetActive(!open);
         }

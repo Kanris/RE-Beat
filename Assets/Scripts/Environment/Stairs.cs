@@ -33,7 +33,7 @@ public class Stairs : MonoBehaviour {
 
                     m_Player.position += new Vector2(0, yPos);
                 }
-                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & CrossPlatformInputManager.GetButton("Jump") & !isJumping)
+                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & CrossPlatformInputManager.GetButtonDown("Jump") & !isJumping)
                 {
                     isJumping = true;
                     PlayerOnStairs(false, m_Player.gameObject);

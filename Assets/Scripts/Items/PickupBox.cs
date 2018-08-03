@@ -15,6 +15,8 @@ public class PickupBox : MonoBehaviour {
 
     public static bool isQuitting = false;
 
+    public float YRestrictions = -10f;
+
     [SerializeField] private BoxCollider2D m_BoxCollider;
 
 	// Use this for initialization
@@ -86,6 +88,9 @@ public class PickupBox : MonoBehaviour {
             }
         }
 
+        if (transform.position.y < YRestrictions)
+            Destroy(gameObject);
+
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -136,6 +141,12 @@ public class PickupBox : MonoBehaviour {
     {
         m_IsBoxUp = isActive;
         m_BoxCollider.enabled = !isActive;
+
+        if (isActive)
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        else
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
         transform.gameObject.layer = layerId;
         ActiveInteractionButton(!isActive);
     }
