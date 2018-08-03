@@ -148,7 +148,7 @@ public class DialogueManager : MonoBehaviour {
         return string.IsNullOrEmpty(sentence.Name) ? "Stranger" : sentence.Name;
     }
 
-    private void SetActiveUI(bool isActive)
+    public void SetActiveUI(bool isActive)
     {
         if (m_DialogueUI != null)
         {

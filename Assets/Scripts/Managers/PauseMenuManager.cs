@@ -58,6 +58,9 @@ public class PauseMenuManager : MonoBehaviour {
         {
             m_PauseGame.SetActive(active);
 
+            if (DialogueManager.Instance.isDialogueInProgress)
+                DialogueManager.Instance.SetActiveUI(!active);
+
             if (active == true)
             {
                 Time.timeScale = 0f;
