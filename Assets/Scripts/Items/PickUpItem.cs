@@ -7,7 +7,7 @@ public class PickUpItem : MonoBehaviour {
 
     [SerializeField] private Item item;
 
-    private SpriteRenderer m_InteractionButton;
+    private GameObject m_InteractionButton;
     private bool m_IsPlayerNearDoor = false;
 
     private void Start()
@@ -18,7 +18,7 @@ public class PickUpItem : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        m_InteractionButton = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        m_InteractionButton = transform.GetChild(0).gameObject;
 
         if (m_InteractionButton == null)
         {

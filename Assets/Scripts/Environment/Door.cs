@@ -11,7 +11,7 @@ public class Door : MonoBehaviour {
     [SerializeField] private Item KeyName;
     [SerializeField] private string DisplayMessage;
 
-    private SpriteRenderer m_InteractionButton;
+    private GameObject m_InteractionButton;
     public bool m_IsPlayerNearDoor = false;
     private Animator m_Animator;
 
@@ -28,7 +28,7 @@ public class Door : MonoBehaviour {
     {
         if (transform.childCount > 0)
         {
-            m_InteractionButton = transform.GetChild(0).GetComponent<SpriteRenderer>();
+            m_InteractionButton = transform.GetChild(0).gameObject;
 
             if (m_InteractionButton == null)
             {
