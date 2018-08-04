@@ -16,11 +16,11 @@ public class DisableBackground : MonoBehaviour {
 
     private void Start()
     {
-        InitializeBackground();
-
         InitializeTilemapRenderer();
 
         InitializeMist();
+
+        InitializeBackground();
     }
 
     private void Update()
@@ -115,8 +115,10 @@ public class DisableBackground : MonoBehaviour {
     private IEnumerator FadeTo(string trigger)
     {
         m_IsFading = true;
-        m_MistAnimator.SetTrigger(trigger);
-        m_BackgroundAnimator.SetTrigger(trigger);
+
+        if (m_MistAnimator != null) m_MistAnimator.SetTrigger(trigger);
+
+        if (m_BackgroundAnimator != null) m_BackgroundAnimator.SetTrigger(trigger);
 
         while (m_IsFading)
             yield return null;

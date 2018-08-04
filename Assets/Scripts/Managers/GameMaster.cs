@@ -34,7 +34,7 @@ public class GameMaster : MonoBehaviour {
         InitalizePlayerToRespawn();
         #endregion
 
-        InitializePlayerRespawn(false);
+        if (Camera.main.GetComponent<Camera2DFollow>().target == null) InitializePlayerRespawn(false);
 
         InitializeBackgroundMusic();
     }
