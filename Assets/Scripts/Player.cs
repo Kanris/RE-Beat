@@ -48,13 +48,16 @@ public class Player : MonoBehaviour {
 
         JumpHeightControl();
 
-        if (!AttackRange.activeSelf)
+        if (!PauseMenuManager.Instance.isGamePause & !DialogueManager.Instance.isDialogueInProgress)
         {
-            if (!isAttacking)
+            if (!AttackRange.activeSelf)
             {
-                if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                if (!isAttacking)
                 {
-                    StartCoroutine(Attack());
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                    {
+                        StartCoroutine(Attack());
+                    }
                 }
             }
         }
