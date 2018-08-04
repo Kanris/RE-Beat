@@ -19,6 +19,8 @@ public class PickupBox : MonoBehaviour {
 
     [SerializeField] private BoxCollider2D m_BoxCollider;
 
+    private float updateTime = 4f;
+
 	// Use this for initialization
 	void Start () {
 
@@ -81,9 +83,12 @@ public class PickupBox : MonoBehaviour {
         }
 
         if (transform.position.y < YRestrictions)
+        {
             Destroy(gameObject);
 
-	}
+        }
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -123,7 +128,7 @@ public class PickupBox : MonoBehaviour {
             ChangeBoxProperty(true, 15);   
         }
         else
-        {            
+        {
             transform.localScale = new Vector3(1, 1, 1);
             ChangeBoxProperty(false, 0);
         }
@@ -138,6 +143,7 @@ public class PickupBox : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         else
         {
+            GameMaster.Instance.SavePositionState(gameObject.name, transform.position);
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 

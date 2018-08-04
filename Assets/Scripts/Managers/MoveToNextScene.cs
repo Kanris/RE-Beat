@@ -8,6 +8,7 @@ public class MoveToNextScene : MonoBehaviour {
     [SerializeField] private Vector2 SpawnPosition;
 
     private bool isPlayerNear;
+    private bool isDestroyingItem;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +23,12 @@ public class MoveToNextScene : MonoBehaviour {
             }
             else
                 Debug.LogError("MoveToNextScene.OnTriggerEnter2D: NextScene variable is not initialized.");
+        }
+        else if (collision.CompareTag("Item") & !isDestroyingItem)
+        {
+            isDestroyingItem = true;
+            Destroy(collision);
+            isDestroyingItem = false;
         }
     }
 

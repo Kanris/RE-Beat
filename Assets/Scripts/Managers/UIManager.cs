@@ -91,8 +91,6 @@ public class UIManager : MonoBehaviour {
         }
 
         m_HealthInPanel.Clear();
-
-        Debug.LogError(m_HealthInPanel.Count);
     }
 
     private GameObject GetHealthObject()

@@ -6,11 +6,16 @@ using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
-    public static GameMaster Instance;
+    public Transform RespawnPoint;
+    public bool isPlayerDead;
 
-    private List<State> ScenesState;
+    private GameObject m_PlayerToRespawn;
+    private bool isPlayerRespawning;
 
     [SerializeField] private string Music = "Background";
+
+    #region Singleton
+    public static GameMaster Instance;
 
     public void Awake()
     {
@@ -51,9 +56,16 @@ public class GameMaster : MonoBehaviour {
 
         InitializeBackgroundMusic();
 
-        if (ScenesState == null)
-            ScenesState = new List<State>();
+        InitializeSceneState();
     }
+
+    #endregion
+
+
+    #region SceneRecreation
+    private List<State> ScenesState;
+
+    public string SceneName;
 
     private void Start()
     {
@@ -69,14 +81,6 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public Transform RespawnPoint;
-    private GameObject m_PlayerToRespawn;
-
-    public bool isPlayerDead;
-    private bool isPlayerRespawning;
-
-    public string SceneName;
-
     public void RecreateSceneState(string sceneName)
     {
         SceneName = sceneName;
@@ -86,6 +90,9 @@ public class GameMaster : MonoBehaviour {
         if (searchResult != null)
         {
             foreach (var item in searchResult.ObjectsState)
+                Recreate(item.Key, item.Value);
+
+            foreach (var item in searchResult.ObjectsPosition)
                 Recreate(item.Key, item.Value);
         }
     }
@@ -129,10 +136,51 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    public void SavePositionState(string name, Vector2 state)
+    {
+        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+
+        if (searchResult == null)
+        {
+            var newState = new State(SceneName);
+
+            newState.ObjectsPosition.Add(name, state);
+
+            ScenesState.Add(newState);
+        }
+        else
+        {
+            name = ClearName(name);
+
+            if (!searchResult.IsExistInPosition(name))
+            {
+                searchResult.ObjectsPosition.Add(name, state);
+            }
+            else
+            {
+                searchResult.ObjectsPosition[name] = state;
+            }
+        }
+    }
+
+    private string ClearName(string name)
+    {
+        return name.Replace("(Clone)", "");
+    }
+
+    #endregion
+
+    #region Initializers
     void Initialize(string name)
     {
         var gameObjectToInstantiate = Resources.Load(name);
         Instantiate(gameObjectToInstantiate);
+    }
+
+    private void InitializeSceneState()
+    {
+        if (ScenesState == null)
+            ScenesState = new List<State>();
     }
 
     void InitializeRespawnPoint()
@@ -205,6 +253,7 @@ public class GameMaster : MonoBehaviour {
             }
         }
     }
+    #endregion
 
     private IEnumerator RespawnWithFade()
     {
