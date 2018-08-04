@@ -74,19 +74,17 @@ public class LoadSceneManager : MonoBehaviour {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    public IEnumerator LoadWithFade(string sceneName, GameObject player, Vector2 spawnPosition)
+    public IEnumerator LoadWithFade(string sceneName, Vector2 spawnPosition)
     {
-        player.SetActive(false);
-
         yield return ScreenFaderManager.Instance.FadeToBlack();
-
-        player.transform.position = spawnPosition;
 
         yield return LoadSceneAsync(sceneName);
 
-        player.SetActive(true);
-
-        Camera.main.GetComponent<Camera2DFollow>().SetTarget(player.transform);
+        if (GameMaster.Instance != null)
+        {
+            GameMaster.Instance.SetPlayerPosition(spawnPosition);
+            GameMaster.Instance.RecreateSceneState(sceneName);
+        }
 
         yield return new WaitForSeconds(1.5f);
 

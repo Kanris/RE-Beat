@@ -112,6 +112,10 @@ public class Door : MonoBehaviour {
         {
             if (PlayerStats.PlayerInventory.Remove(KeyName))
                 AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(KeyName.Name + " was removed from inventory"));
+
+            if (GameMaster.Instance != null)
+                GameMaster.Instance.SaveBoolState(gameObject.name, true);
+
             Destroy(gameObject);
         }
         else

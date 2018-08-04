@@ -48,11 +48,7 @@ public class DisableBackground : MonoBehaviour {
     {
         var m_Background = GameObject.FindWithTag("BackgroundImage");
 
-        if (m_Background == null)
-        {
-            Debug.LogError("DisableBackground: Can't find gameObject with BackgroundImage tag");
-        }
-        else
+        if (m_Background != null)
         {
             m_BackgroundAnimator = m_Background.GetComponent<Animator>();
         }

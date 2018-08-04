@@ -83,6 +83,18 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    public void Clear()
+    {
+        foreach (var health in m_HealthInPanel)
+        {
+            Destroy(health);
+        }
+
+        m_HealthInPanel.Clear();
+
+        Debug.LogError(m_HealthInPanel.Count);
+    }
+
     private GameObject GetHealthObject()
     {
         var health = Resources.Load("Health") as GameObject;

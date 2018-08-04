@@ -137,7 +137,9 @@ public class PickupBox : MonoBehaviour {
         if (isActive)
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         else
+        {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        }
 
         transform.gameObject.layer = layerId;
         ActiveInteractionButton(!isActive);

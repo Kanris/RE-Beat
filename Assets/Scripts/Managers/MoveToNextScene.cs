@@ -18,7 +18,7 @@ public class MoveToNextScene : MonoBehaviour {
             {
                 PickupBox.isQuitting = true;
                 LoadSceneManager.Instance.StartCoroutine(
-                    LoadSceneManager.Instance.LoadWithFade(NextScene, collision.gameObject, SpawnPosition));
+                    LoadSceneManager.Instance.LoadWithFade(NextScene, SpawnPosition));
             }
             else
                 Debug.LogError("MoveToNextScene.OnTriggerEnter2D: NextScene variable is not initialized.");

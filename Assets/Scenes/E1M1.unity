@@ -772,8 +772,8 @@ Prefab:
       objectReference: {fileID: 77665800}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
-      propertyPath: Music
-      value: Background
+      propertyPath: SceneName
+      value: E1M1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
@@ -2219,7 +2219,7 @@ GameObject:
   - component: {fileID: 247247800}
   m_Layer: 0
   m_Name: BlueDoors
-  m_TagString: Untagged
+  m_TagString: BlueDoors
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18635,6 +18635,10 @@ Prefab:
       propertyPath: m_Name
       value: CaveDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_TagString
+      value: WorldDoor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_IsPrefabParent: 0
@@ -23423,7 +23427,7 @@ GameObject:
   - component: {fileID: 1387431273}
   m_Layer: 0
   m_Name: Switch
-  m_TagString: Untagged
+  m_TagString: BlueSwitch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

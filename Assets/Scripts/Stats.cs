@@ -140,6 +140,7 @@ public class PlayerStats : Stats
 
         base.Initialize(gameObject);
 
+        UIManager.Instance.Clear();
         UIManager.Instance.AddHealth(CurrentHealth);
     }
 

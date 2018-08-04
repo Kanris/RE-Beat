@@ -2,15 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
+using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
     public static GameMaster Instance;
+
+    private List<State> ScenesState;
+
     [SerializeField] private string Music = "Background";
 
     public void Awake()
     {
-        Instance = this;
+        if (Instance != null)
+        {
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
 
         #region Initialize Managers
         Initialize("Managers/EventSystem");
@@ -34,9 +49,24 @@ public class GameMaster : MonoBehaviour {
         InitalizePlayerToRespawn();
         #endregion
 
-        //if (Camera.main.GetComponent<Camera2DFollow>().target == null) InitializePlayerRespawn(false);
-
         InitializeBackgroundMusic();
+
+        if (ScenesState == null)
+            ScenesState = new List<State>();
+    }
+
+    private void Start()
+    {
+        if (Camera.main.GetComponent<Camera2DFollow>().target == null)
+            InitializePlayerRespawn(false);
+    }
+
+    public void SetPlayerPosition(Vector2 spawnPosition)
+    {
+        if (!GameObject.FindGameObjectWithTag("Player"))
+        {
+            RespawnWithoutFade(spawnPosition);
+        }
     }
 
     public Transform RespawnPoint;
@@ -44,6 +74,60 @@ public class GameMaster : MonoBehaviour {
 
     public bool isPlayerDead;
     private bool isPlayerRespawning;
+
+    public string SceneName;
+
+    public void RecreateSceneState(string sceneName)
+    {
+        SceneName = sceneName;
+
+        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+
+        if (searchResult != null)
+        {
+            foreach (var item in searchResult.ObjectsState)
+                Recreate(item.Key, item.Value);
+        }
+    }
+
+    private void Recreate(string name, bool state)
+    {
+        var searchGameObjectResult = GameObject.Find(name);
+
+        if (searchGameObjectResult != null)
+        {
+            Destroy(searchGameObjectResult);
+        }
+    }
+
+    private void Recreate(string name, Vector2 state)
+    {
+        var searchGameObjectResult = GameObject.Find(name);
+
+        if (searchGameObjectResult != null)
+        {
+            searchGameObjectResult.transform.position = state;
+        }
+    }
+
+    public void SaveBoolState(string name, bool state)
+    {
+        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+
+        if (searchResult == null)
+        {
+            var newState = new State(SceneName);
+
+            newState.ObjectsState.Add(name, state);
+
+            ScenesState.Add(newState);
+        }
+        else
+        {
+            if (!searchResult.IsExistInBool(name))
+                searchResult.ObjectsState.Add(name, state);
+        }
+    }
 
     void Initialize(string name)
     {
@@ -151,5 +235,13 @@ public class GameMaster : MonoBehaviour {
         isPlayerDead = false;
 
         return playerGameObject.transform;
+    }
+
+    private void RespawnWithoutFade(Vector2 respawnPosition)
+    {
+        var respawnPlayer = Instantiate(m_PlayerToRespawn);
+        respawnPlayer.transform.position = respawnPosition;
+
+        Camera.main.GetComponent<Camera2DFollow>().SetTarget(respawnPlayer.transform);
     }
 }

@@ -81,6 +81,7 @@ public class DoorSwitch : MonoBehaviour {
             Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
     }
 
+
     private IEnumerator OpenTheDoor()
     {
         if (DoorToOpen != null)
@@ -92,6 +93,12 @@ public class DoorSwitch : MonoBehaviour {
             DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
 
             yield return new WaitForSeconds(1f);
+
+            if (GameMaster.Instance != null)
+            {
+                GameMaster.Instance.SaveBoolState(DoorToOpen.name, true);
+                GameMaster.Instance.SaveBoolState(gameObject.name, true);
+            }
 
             Destroy(DoorToOpen);
 

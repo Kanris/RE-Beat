@@ -63,6 +63,10 @@ public class PickUpItem : MonoBehaviour {
     {
         PlayerStats.PlayerInventory.Add(item);
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
+
+        if (GameMaster.Instance != null)
+            GameMaster.Instance.SaveBoolState(gameObject.name, true);
+
         Destroy(gameObject);
     }
 
