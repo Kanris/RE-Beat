@@ -17,10 +17,10 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LookAheadPos;
 
         private float m_UpdateSearchTime = 0f;
-        [SerializeField, Range(0, -100)] private float YMinusPosition = -1f;
-        [SerializeField, Range(0, 100)] private float YPlusPosition = 3f;
-        [SerializeField, Range(0, 100)] private float XPlusPosition = 3f;
-        [SerializeField, Range(0, -100)] private float XMinusPosition = -60f;
+        [SerializeField, Range(-100, 100)] private float YMinusPosition = -1f;
+        [SerializeField, Range(-100, 100)] private float YPlusPosition = 3f;
+        [SerializeField, Range(-100, 100)] private float XPlusPosition = 3f;
+        [SerializeField, Range(-100, 100)] private float XMinusPosition = -60f;
 
         // Use this for initialization
         private void Start()
