@@ -96,8 +96,8 @@ public class DoorSwitch : MonoBehaviour {
 
             if (GameMaster.Instance != null)
             {
-                GameMaster.Instance.SaveBoolState(DoorToOpen.name, true);
-                GameMaster.Instance.SaveBoolState(gameObject.name, true);
+                GameMaster.Instance.SaveBoolState(DoorToOpen.name);
+                GameMaster.Instance.SaveBoolState(gameObject.name);
             }
 
             Destroy(DoorToOpen);

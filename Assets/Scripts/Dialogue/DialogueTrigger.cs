@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class DialogueTrigger : MonoBehaviour {
 
-    [SerializeField] private Dialogue dialogue;
+    public Dialogue dialogue;
 
     [HideInInspector] public bool m_isPlayerNear = false;
 
@@ -37,6 +37,7 @@ public class DialogueTrigger : MonoBehaviour {
                 if (CrossPlatformInputManager.GetButtonDown("Submit"))
                 {
                     StartDialogue();
+                    GameMaster.Instance.SaveDialogueState(gameObject.name);
                 }
                 else
                 {

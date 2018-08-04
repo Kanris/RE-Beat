@@ -90,14 +90,17 @@ public class GameMaster : MonoBehaviour {
         if (searchResult != null)
         {
             foreach (var item in searchResult.ObjectsState)
-                Recreate(item.Key, item.Value);
+                Recreate(item);
 
             foreach (var item in searchResult.ObjectsPosition)
                 Recreate(item.Key, item.Value);
+
+            foreach (var item in searchResult.DialogueIsComplete)
+                RecreateDialogue(item);
         }
     }
 
-    private void Recreate(string name, bool state)
+    private void Recreate(string name)
     {
         var searchGameObjectResult = GameObject.Find(name);
 
@@ -117,7 +120,17 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public void SaveBoolState(string name, bool state)
+    private void RecreateDialogue(string name)
+    {
+        var searchGameObjectResult = GameObject.Find(name);
+
+        if (searchGameObjectResult != null)
+        {
+            searchGameObjectResult.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
+        }
+    }
+
+    public void SaveBoolState(string name)
     {
         var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
@@ -125,14 +138,14 @@ public class GameMaster : MonoBehaviour {
         {
             var newState = new State(SceneName);
 
-            newState.ObjectsState.Add(name, state);
+            newState.ObjectsState.Add(name);
 
             ScenesState.Add(newState);
         }
         else
         {
             if (!searchResult.IsExistInBool(name))
-                searchResult.ObjectsState.Add(name, state);
+                searchResult.ObjectsState.Add(name);
         }
     }
 
@@ -160,6 +173,24 @@ public class GameMaster : MonoBehaviour {
             {
                 searchResult.ObjectsPosition[name] = state;
             }
+        }
+    }
+
+    public void SaveDialogueState(string name)
+    {
+        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+
+        if (searchResult == null)
+        {
+            var newState = new State(SceneName);
+
+            newState.DialogueIsComplete.Add(name);
+
+            ScenesState.Add(newState);
+        }
+        else
+        {
+            searchResult.DialogueIsComplete.Add(name);
         }
     }
 

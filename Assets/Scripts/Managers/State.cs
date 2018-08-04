@@ -6,22 +6,26 @@ public class State {
 
     public string SceneName;
 
-    public Dictionary<string, bool> ObjectsState;
+    public List<string> ObjectsState;
 
     public Dictionary<string, Vector2> ObjectsPosition;
+
+    public List<string> DialogueIsComplete;
 
     public State(string SceneName)
     {
         this.SceneName = SceneName;
 
-        ObjectsState = new Dictionary<string, bool>();
+        ObjectsState = new List<string>();
 
         ObjectsPosition = new Dictionary<string, Vector2>();
+
+        DialogueIsComplete = new List<string>();
     }
 
     public bool IsExistInBool(string name)
     {
-        return ObjectsState.ContainsKey(name);
+        return ObjectsState.Contains(name);
     }
 
     public bool IsExistInPosition(string name)
