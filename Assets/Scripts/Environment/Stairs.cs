@@ -33,7 +33,7 @@ public class Stairs : MonoBehaviour {
 
                     m_Player.position += new Vector2(0, yPos);
                 }
-                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & CrossPlatformInputManager.GetButtonDown("Jump") & !isJumping)
+                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & CrossPlatformInputManager.GetButton("Jump") & !isJumping)
                 {
                     isJumping = true;
                     PlayerOnStairs(false, m_Player.gameObject);
@@ -85,12 +85,12 @@ public class Stairs : MonoBehaviour {
         }
         else
         {
+            m_Player.bodyType = RigidbodyType2D.Dynamic;
+  
             if (isJumping)
             {
-                m_Player.velocity += new Vector2(0, 8f);
+                m_Player.velocity += new Vector2(0f, 8f);
             }
-
-            m_Player.bodyType = RigidbodyType2D.Dynamic;
         }
 
         collision.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs;

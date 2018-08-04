@@ -119,7 +119,7 @@ public class PickupBox : MonoBehaviour {
 
         if (parrent != null)
         {
-            transform.localPosition = new Vector3(0.5f, 0.6f);
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             ChangeBoxProperty(true, 15);   
         }
         else
