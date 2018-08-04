@@ -110,5 +110,11 @@ namespace UnityStandardAssets._2D
             }
 
         }
+
+        public void SetTarget(Transform player)
+        {
+            target = player.transform;
+            m_OffsetZ = (transform.position - target.position).z;
+        }
     }
 }

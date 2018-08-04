@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets._2D;
 
 public class LoadSceneManager : MonoBehaviour {
 
@@ -70,7 +71,26 @@ public class LoadSceneManager : MonoBehaviour {
 
     public void LoadWithFade(string sceneName)
     {
-        StartCoroutine(LoadSceneAsyncWithFade(sceneName));
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+
+    public IEnumerator LoadWithFade(string sceneName, GameObject player, Vector2 spawnPosition)
+    {
+        player.SetActive(false);
+
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        player.transform.position = spawnPosition;
+
+        yield return LoadSceneAsync(sceneName);
+
+        player.SetActive(true);
+
+        Camera.main.GetComponent<Camera2DFollow>().SetTarget(player.transform);
+
+        yield return new WaitForSeconds(1.5f);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     private IEnumerator LoadSceneAsyncWithUI(string sceneName)
@@ -82,16 +102,7 @@ public class LoadSceneManager : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToClear();
         //TODO: SaveGame
 
-        var operation = SceneManager.LoadSceneAsync(sceneName);
-
-        while (!operation.isDone)
-        {
-            var progress = Mathf.Clamp01(operation.progress / .9f);
-
-            if (m_LoadSlider != null) m_LoadSlider.value = progress;
-
-            yield return null;
-        }
+        yield return LoadSceneAsync(sceneName);
 
         yield return new WaitForSeconds(2f); //TODO: Remove 
 
@@ -102,10 +113,8 @@ public class LoadSceneManager : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
-    private IEnumerator LoadSceneAsyncWithFade(string sceneName)
+    private IEnumerator LoadSceneAsync(string sceneName)
     {
-        yield return ScreenFaderManager.Instance.FadeToBlack();
-
         var operation = SceneManager.LoadSceneAsync(sceneName);
 
         while (!operation.isDone)
@@ -118,8 +127,6 @@ public class LoadSceneManager : MonoBehaviour {
         }
 
         PickupBox.isQuitting = false;
-
-        yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     private void SetActiveLoadScene(bool active)

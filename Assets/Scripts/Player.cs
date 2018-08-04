@@ -6,6 +6,8 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
 
+    public static Player Instance;
+
     [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
     [SerializeField] private float ThrowX = 0.08f;
@@ -20,6 +22,22 @@ public class Player : MonoBehaviour {
     public PlayerStats playerStats;
     [HideInInspector] public bool isPlayerThrowingBack;
     [HideInInspector] public bool isTriggered;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+    }
 
     private void Start()
     {
