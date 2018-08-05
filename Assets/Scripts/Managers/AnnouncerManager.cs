@@ -36,25 +36,41 @@ public class AnnouncerManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        #region Initialize
+
+        InitializeUI();
+
+        InitializeMessageAnnouncer();
+
+        InitializeSceneAnnouncer();
+
+        #endregion
     }
     #endregion
 
+    private GameObject m_MessageAnnouncer;
+    private TextMeshProUGUI m_TextMessage;
+    private GameObject m_SceneAnnouncer;
+    private TextMeshProUGUI m_TextScene;
+
     private GameObject m_UI;
-    private TextMeshProUGUI m_Text;
     private List<Message> m_MessagePipeline;
     private bool m_isShowingPipeline = false;
 
     // Use this for initialization
     void Start () {
 
-        InitializeUI();
+        ActiveSceneAnnouncer(false);
 
-        InitializeText();
+        ActiveMessageAnnouncer(false);
 
         if (m_UI != null) ActiveAnnouncerUI(false);
 
         m_MessagePipeline = new List<Message>();
     }
+
+    #region Initialize
 
     private void InitializeUI()
     {
@@ -68,24 +84,37 @@ public class AnnouncerManager : MonoBehaviour {
         }
     }
 
-    private void InitializeText()
+    private void InitializeMessageAnnouncer()
     {
-        if (m_UI != null)
+        if (m_UI.transform.childCount > 1)
         {
-            m_Text = m_UI.GetComponentInChildren<TextMeshProUGUI>();
+            m_MessageAnnouncer = m_UI.transform.GetChild(0).gameObject;
 
-            if (m_Text == null)
-            {
-                Debug.LogError("AnnouncerManager.InitializeText: Can't find TextMeshProUGUI in m_UI child");
-            }
+            m_TextMessage = m_MessageAnnouncer.GetComponentInChildren<TextMeshProUGUI>();
         }
         else
         {
-            Debug.LogError("AnnouncerManager.InitializeText: Can't initialize text, because m_UI is equals to null");
+            Debug.LogError("AnnouncerManager.InitializeMessageAnnouncer: m_UI has only one children");
         }
     }
-	
-	public void DisplayAnnouncerMessage(Message message)
+
+    private void InitializeSceneAnnouncer()
+    {
+        if (m_UI.transform.childCount > 1)
+        {
+            m_SceneAnnouncer = m_UI.transform.GetChild(1).gameObject;
+
+            m_TextScene = m_SceneAnnouncer.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        else
+        {
+            Debug.LogError("AnnouncerManager.InitializeSceneAnnouncer: m_UI has only one children");
+        }
+    }
+
+    #endregion
+
+    public void DisplayAnnouncerMessage(Message message)
     {
         m_MessagePipeline.Add(message);
 
@@ -96,14 +125,37 @@ public class AnnouncerManager : MonoBehaviour {
         }
     }
 
+    public void DisplaySceneName(string sceneName)
+    {
+        StartCoroutine(DisplayScene(sceneName));
+    }
+
+    private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 2f)
+    {
+        ActiveAnnouncerUI(true);
+        ActiveSceneAnnouncer(true);
+
+        m_TextScene.text = sceneName;
+
+        yield return new WaitForSeconds(timeToDisplay);
+
+        ActiveSceneAnnouncer(false);
+        ActiveAnnouncerUI(false);
+    }
+
     private IEnumerator DisplayMessage()
     {
         if (!m_UI.activeSelf)
+        {
             ActiveAnnouncerUI(true);
+        }
+
+        if (!m_MessageAnnouncer.activeSelf)
+            ActiveMessageAnnouncer(true);
 
         var itemToDisplay = m_MessagePipeline[0];
 
-        m_Text.text = itemToDisplay.message;
+        m_TextMessage.text = itemToDisplay.message;
 
         yield return new WaitForSeconds(itemToDisplay.time);
 
@@ -115,11 +167,22 @@ public class AnnouncerManager : MonoBehaviour {
         {
             m_isShowingPipeline = false;
             ActiveAnnouncerUI(false);
+            ActiveMessageAnnouncer(false);
         }
     }
 
     private void ActiveAnnouncerUI(bool active)
     {
         m_UI.SetActive(active);
+    }
+
+    private void ActiveMessageAnnouncer(bool active)
+    {
+        m_MessageAnnouncer.SetActive(active);
+    }
+
+    private void ActiveSceneAnnouncer(bool active)
+    {
+        m_SceneAnnouncer.SetActive(active);
     }
 }

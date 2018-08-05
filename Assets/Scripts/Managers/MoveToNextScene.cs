@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveToNextScene : MonoBehaviour {
 
     [SerializeField] private string NextScene;
+    [SerializeField] private string NextScenename;
     [SerializeField] private Vector2 SpawnPosition;
 
     private bool isPlayerNear;
@@ -19,7 +20,7 @@ public class MoveToNextScene : MonoBehaviour {
             {
                 PickupBox.isQuitting = true;
                 LoadSceneManager.Instance.StartCoroutine(
-                    LoadSceneManager.Instance.LoadWithFade(NextScene, SpawnPosition));
+                    LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
             }
             else
                 Debug.LogError("MoveToNextScene.OnTriggerEnter2D: NextScene variable is not initialized.");

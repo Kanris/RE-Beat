@@ -74,7 +74,7 @@ public class LoadSceneManager : MonoBehaviour {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    public IEnumerator LoadWithFade(string sceneName, Vector2 spawnPosition)
+    public IEnumerator LoadWithFade(string sceneName, string nameToDisplay, Vector2 spawnPosition)
     {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
@@ -89,6 +89,9 @@ public class LoadSceneManager : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
+
+        if (!string.IsNullOrEmpty(nameToDisplay) & AnnouncerManager.Instance != null)
+            AnnouncerManager.Instance.DisplaySceneName(nameToDisplay);
     }
 
     private IEnumerator LoadSceneAsyncWithUI(string sceneName)
