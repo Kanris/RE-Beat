@@ -8,12 +8,11 @@ public class RangeEnemy : MonoBehaviour {
     
     public MageEnemyStats EnemyStats;
 
-    [SerializeField] private Canvas UI;
-
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
-    private Image m_AlarmImage;
     private bool m_CanCreateNewFireball = true;
+
+    [SerializeField] private SpriteRenderer m_AlarmImage;
 
     // Use this for initialization
     void Start()
@@ -24,15 +23,12 @@ public class RangeEnemy : MonoBehaviour {
 
         InitializeAnimator();
 
-        InitializeEnemyUI();
-
         m_AlarmImage.gameObject.SetActive(false);
     }
 
     private void InitializeStats()
     {
-        var parentGameObject = transform.parent.gameObject;
-        EnemyStats.Initialize(parentGameObject, GetComponent<Animator>());
+        EnemyStats.Initialize(gameObject, GetComponent<Animator>());
     }
 
     private void InitializeEnemyMovement()
@@ -46,22 +42,6 @@ public class RangeEnemy : MonoBehaviour {
 
         if (m_Animator == null)
             Debug.LogError("RangeEnemy.InitializeAnimator: Can't find animator on GameObject");
-    }
-
-    private void InitializeEnemyUI()
-    {
-        if (UI != null)
-        {
-            m_Text = UI.GetComponentInChildren<TextMeshProUGUI>();
-
-            if (m_Text == null)
-                Debug.LogError("Can't initizlize text");
-
-            m_AlarmImage = UI.GetComponentInChildren<Image>();
-
-            if (m_AlarmImage == null)
-                Debug.LogError("Can't initizlize image");
-        }
     }
 
     //simplify
