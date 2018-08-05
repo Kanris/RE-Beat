@@ -58,7 +58,6 @@ public class Stairs : MonoBehaviour {
             }
             else if (isJumping)
             {
-                isJumping = false;
                 PlayerOnStairs(false, m_Player.gameObject);
             }
             else
@@ -75,14 +74,21 @@ public class Stairs : MonoBehaviour {
         var yPos = 0.03f;
 
         if (CrossPlatformInputManager.GetAxis("Vertical") < 0f)
+        {
             yPos = -yPos;
-
-        var nextPlayerPosition = m_Player.transform.position.y + yPos;
-
-        if (nextPlayerPosition < m_StairsTop.position.y) 
             m_Player.position += new Vector2(0, yPos);
+        }
         else
-            m_Animator.SetBool("IsMovingOnStairs", false);
+        {
+
+            var nextPlayerPosition = m_Player.transform.position.y + yPos;
+
+            if (nextPlayerPosition < m_StairsTop.position.y)
+                m_Player.position += new Vector2(0, yPos);
+            else
+                m_Animator.SetBool("IsMovingOnStairs", false);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -109,30 +115,28 @@ public class Stairs : MonoBehaviour {
         GetComponentsOnPlayer(collision);
 
         m_Animator.SetBool("OnStairs", isOnstairs);
+        m_Player.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs;
 
         if (isOnstairs)
         {
-            collision.GetComponent<Platformer2DUserControl>().enabled = false;
             m_Player.gravityScale = 0f;
             m_Player.velocity = Vector3.zero;
         }
         else
         {
             m_Player.gravityScale = 3f;
-            m_Player.GetComponent<Platformer2DUserControl>().enabled = true;
 
             if (isJumping)
             {
-                /*var jumpVector = new Vector2(5f, 10f);
+                isJumping = false;
+                var jumpVector = new Vector2(5f, 10f);
 
                 if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
                 {
                     jumpVector = new Vector2(-5f, 10f);
                 }
 
-                m_Player.velocity = jumpVector;*/
-
-                //m_Player.GetComponent<Platformer2DUserControl>().m_Jump = true;
+                m_Player.velocity = jumpVector;
             }
         }
     }

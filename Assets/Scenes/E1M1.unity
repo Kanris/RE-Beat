@@ -18854,6 +18854,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &876427853
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 617258344}
+    m_Modifications:
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724270900901946, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_Name
+      value: CaveStairs
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &892244130
 GameObject:
   m_ObjectHideFlags: 0
@@ -22683,74 +22729,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1191494687
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1191494688}
-  - component: {fileID: 1191494690}
-  - component: {fileID: 1191494689}
-  m_Layer: 0
-  m_Name: CaveStairs
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1191494688
+--- !u!4 &1191494688 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1191494687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.16, y: 1.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1590885377}
-  m_Father: {fileID: 617258344}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1191494689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1191494687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9988b006b51ef4a41b27dd6c6b7656ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isJumping: 0
---- !u!61 &1191494690
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1191494687}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.13173771, y: -0.20470834}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.0086193085, y: 4.2261925}
-  m_EdgeRadius: 0
+  m_PrefabParentObject: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8,
+    type: 2}
+  m_PrefabInternal: {fileID: 876427853}
 --- !u!4 &1191740396 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4800598438569448, guid: 8bd951d101b1e7f45a7b14f34da9e868,
@@ -23449,34 +23432,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4435468150432506, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
     type: 2}
   m_PrefabInternal: {fileID: 1241499788}
---- !u!1 &1590885376
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1590885377}
-  m_Layer: 0
-  m_Name: StairsTop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1590885377
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1590885376}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: 1.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1191494688}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1620823399
 GameObject:
   m_ObjectHideFlags: 0
