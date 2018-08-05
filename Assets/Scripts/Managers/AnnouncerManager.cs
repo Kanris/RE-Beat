@@ -130,7 +130,7 @@ public class AnnouncerManager : MonoBehaviour {
         StartCoroutine(DisplayScene(sceneName));
     }
 
-    private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 2f)
+    private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 1f)
     {
         ActiveAnnouncerUI(true);
         ActiveSceneAnnouncer(true);
