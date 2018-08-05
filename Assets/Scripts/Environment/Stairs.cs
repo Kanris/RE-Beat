@@ -9,6 +9,7 @@ public class Stairs : MonoBehaviour {
     private Transform m_StairsTop;
     private Animator m_Animator;
     private Rigidbody2D m_Player;
+    private bool m_VerticalMove;
 
     [SerializeField] private bool isJumping;
 
@@ -32,21 +33,32 @@ public class Stairs : MonoBehaviour {
 
     private void Update()
     {
-        
+        if (m_Player != null)
+        {
+            if (CrossPlatformInputManager.GetAxis("Vertical") != 0f & !m_VerticalMove)
+            {
+                m_VerticalMove = true;
+            }
+            else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f &
+                CrossPlatformInputManager.GetButton("Jump") & !isJumping)
+            {
+                isJumping = true;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         if (m_Player != null)
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") != 0f)
+            if (m_VerticalMove)
             {
+                m_VerticalMove = false;
                 MoveOnStairs();
             }
-            else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f &
-                CrossPlatformInputManager.GetButton("Jump") & !isJumping)
+            else if (isJumping)
             {
-                isJumping = true;
+                isJumping = false;
                 PlayerOnStairs(false, m_Player.gameObject);
             }
             else
@@ -67,8 +79,10 @@ public class Stairs : MonoBehaviour {
 
         var nextPlayerPosition = m_Player.transform.position.y + yPos;
 
-        if ((m_Player.transform.position.y + yPos) < m_StairsTop.position.y) 
+        if (nextPlayerPosition < m_StairsTop.position.y) 
             m_Player.position += new Vector2(0, yPos);
+        else
+            m_Animator.SetBool("IsMovingOnStairs", false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
