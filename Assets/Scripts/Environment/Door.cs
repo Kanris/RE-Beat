@@ -51,7 +51,9 @@ public class Door : MonoBehaviour {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
                 if (Type == DoorType.Key)
+                {
                     OpenDoorWithKey();
+                }
             }
         }
     }
@@ -70,7 +72,7 @@ public class Door : MonoBehaviour {
         if (collision.CompareTag("Player") & m_IsPlayerNearDoor)
         {
             m_IsPlayerNearDoor = false;
-            ShowInteractionKey(m_IsPlayerNearDoor);
+            ShowInteractionKey(false);
         }
     }
 
@@ -88,6 +90,7 @@ public class Door : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player") & m_IsPlayerNearDoor)
         {
             m_IsPlayerNearDoor = false;
+            ShowInteractionKey(false);
         }
     }
 
