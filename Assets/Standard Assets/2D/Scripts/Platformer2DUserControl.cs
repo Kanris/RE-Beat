@@ -8,8 +8,7 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
-        private bool m_Jump;
-
+        public bool m_Jump;
 
         private void Awake()
         {
