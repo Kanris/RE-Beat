@@ -9,7 +9,7 @@ public class Stairs : MonoBehaviour {
     private Animator m_Animator;
     private bool isPlayerOnStairs;
     private Rigidbody2D m_Player;
-    private bool isJumping; 
+    [SerializeField] private bool isJumping; 
 
     private void Start()
     {
@@ -24,33 +24,41 @@ public class Stairs : MonoBehaviour {
             {
                 if (CrossPlatformInputManager.GetAxis("Vertical") != 0f)
                 {
-                    m_Animator.SetBool("IsMovingOnStairs", true);
-
-                    var yPos = 0.03f;
-
-                    if (CrossPlatformInputManager.GetAxis("Vertical") < 0f)
-                        yPos = -yPos;
-
-                    m_Player.position += new Vector2(0, yPos);
+                    MoveOnStairs();
                 }
-                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & CrossPlatformInputManager.GetButton("Jump") & !isJumping)
+                else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f & 
+                    CrossPlatformInputManager.GetButton("Jump") & !isJumping)
                 {
                     isJumping = true;
                     PlayerOnStairs(false, m_Player.gameObject);
                 }
                 else
                 {
-                    if (m_Player.bodyType == RigidbodyType2D.Dynamic)
-                    {
-                        m_Player.bodyType = RigidbodyType2D.Kinematic;
-                        isJumping = false;
-                    }
-
-                    m_Player.GetComponent<Platformer2DUserControl>().enabled = false;
                     m_Animator.SetBool("IsMovingOnStairs", false);
                 }
             }
         }
+        else if (isJumping & m_Player != null)
+        {
+            if (m_Animator.GetBool("Ground"))
+            {
+                isJumping = false;
+                m_Player.GetComponent<Platformer2DUserControl>().enabled = true;
+                m_Player = null;
+            }
+        }
+    }
+
+    private void MoveOnStairs()
+    {
+        m_Animator.SetBool("IsMovingOnStairs", true);
+
+        var yPos = 0.03f;
+
+        if (CrossPlatformInputManager.GetAxis("Vertical") < 0f)
+            yPos = -yPos;
+
+        m_Player.position += new Vector2(0, yPos);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -76,26 +84,29 @@ public class Stairs : MonoBehaviour {
     {
         isPlayerOnStairs = isOnstairs;
         GetComponentsOnPlayer(collision);
+
         m_Animator.SetBool("OnStairs", isPlayerOnStairs);
 
         if (isOnstairs)
         {
-            m_Player.bodyType = RigidbodyType2D.Kinematic;
+            collision.GetComponent<Platformer2DUserControl>().enabled = false;
+            m_Player.gravityScale = 0f;
             m_Player.velocity = Vector3.zero;
         }
         else
         {
-            m_Player.bodyType = RigidbodyType2D.Dynamic;
-  
+            m_Player.gravityScale = 3f;
+
             if (isJumping)
             {
-                m_Player.velocity += new Vector2(0f, 8f);
+                var jumpVector = new Vector2(5f, 10f);
+
+                if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
+                    jumpVector = new Vector2(-5f, 10f);
+
+                m_Player.velocity = jumpVector;
             }
         }
-
-        collision.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs;
-
-        isJumping = false;
     }
 
     private void GetComponentsOnPlayer(GameObject collision)
