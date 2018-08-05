@@ -529,8 +529,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NextScene: E1M1
-  SpawnPosition: {x: 45, y: -3.5}
   NextScenename: Forest
+  SpawnPosition: {x: 45, y: -3.5}
 --- !u!1 &800031439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,11 +2117,6 @@ Prefab:
     - target: {fileID: 4453175926413464, guid: d03b97e8fe71fac45b729a3bda9904e9, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114644796701489874, guid: d03b97e8fe71fac45b729a3bda9904e9,
-        type: 2}
-      propertyPath: MovingTime
-      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d03b97e8fe71fac45b729a3bda9904e9, type: 2}
