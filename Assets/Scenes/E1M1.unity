@@ -22888,6 +22888,8 @@ GameObject:
   - component: {fileID: 1252310218}
   - component: {fileID: 1252310222}
   - component: {fileID: 1252310220}
+  - component: {fileID: 1252310223}
+  - component: {fileID: 1252310221}
   m_Layer: 0
   m_Name: Stairs
   m_TagString: Untagged
@@ -23093,8 +23095,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9988b006b51ef4a41b27dd6c6b7656ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!19719996 &1252310222
-TilemapCollider2D:
+  isJumping: 0
+--- !u!66 &1252310221
+CompositeCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -23106,6 +23109,144 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1252310222}
+    m_ColliderPaths:
+    - - X: 273000000
+        Y: -5000000
+      - X: 272012704
+        Y: -5010586
+      - X: 272036800
+        Y: -10000000
+      - X: 272970368
+        Y: -10000000
+    - - X: 273000000
+        Y: -10000000
+      - X: 272012704
+        Y: -10010586
+      - X: 272036800
+        Y: -15000000
+      - X: 272970368
+        Y: -15000000
+    - - X: 273000000
+        Y: -15000000
+      - X: 272012704
+        Y: -15010586
+      - X: 272036800
+        Y: -20000000
+      - X: 272970368
+        Y: -20000000
+    - - X: 273000000
+        Y: -20000000
+      - X: 272012704
+        Y: -20010586
+      - X: 272036800
+        Y: -25000000
+      - X: 272970368
+        Y: -25000000
+    - - X: 273000000
+        Y: -25000000
+      - X: 272012704
+        Y: -25010586
+      - X: 272036800
+        Y: -30000000
+      - X: 272970368
+        Y: -30000000
+    - - X: 273000000
+        Y: -30000000
+      - X: 272012704
+        Y: -30010586
+      - X: 272036800
+        Y: -35000000
+      - X: 272970368
+        Y: -35000000
+    - - X: 273000000
+        Y: -35000000
+      - X: 272012704
+        Y: -35010584
+      - X: 272036800
+        Y: -40000000
+      - X: 272970368
+        Y: -40000000
+    - - X: 273000000
+        Y: -40000000
+      - X: 272012704
+        Y: -40010584
+      - X: 272036800
+        Y: -45000000
+      - X: 272970368
+        Y: -45000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 27.300001, y: -0.5}
+      - {x: 27.201271, y: -0.5010586}
+      - {x: 27.20368, y: -1}
+      - {x: 27.297037, y: -1}
+    - - {x: 27.300001, y: -1}
+      - {x: 27.201271, y: -1.0010586}
+      - {x: 27.20368, y: -1.5}
+      - {x: 27.297037, y: -1.5}
+    - - {x: 27.300001, y: -1.5}
+      - {x: 27.201271, y: -1.5010586}
+      - {x: 27.20368, y: -2}
+      - {x: 27.297037, y: -2}
+    - - {x: 27.300001, y: -2}
+      - {x: 27.201271, y: -2.0010586}
+      - {x: 27.20368, y: -2.5}
+      - {x: 27.297037, y: -2.5}
+    - - {x: 27.300001, y: -2.5}
+      - {x: 27.201271, y: -2.5010586}
+      - {x: 27.20368, y: -3}
+      - {x: 27.297037, y: -3}
+    - - {x: 27.300001, y: -3}
+      - {x: 27.201271, y: -3.0010586}
+      - {x: 27.20368, y: -3.5}
+      - {x: 27.297037, y: -3.5}
+    - - {x: 27.300001, y: -3.5}
+      - {x: 27.201271, y: -3.5010583}
+      - {x: 27.20368, y: -4}
+      - {x: 27.297037, y: -4}
+    - - {x: 27.300001, y: -4}
+      - {x: 27.201271, y: -4.0010586}
+      - {x: 27.20368, y: -4.5}
+      - {x: 27.297037, y: -4.5}
+  m_VertexDistance: 0.0005
+--- !u!19719996 &1252310222
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252310216}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 1
+  m_Offset: {x: 0, y: 0}
+--- !u!50 &1252310223
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252310216}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1258876530
 GameObject:
   m_ObjectHideFlags: 0

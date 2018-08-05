@@ -38,15 +38,6 @@ public class Stairs : MonoBehaviour {
                 }
             }
         }
-        else if (isJumping & m_Player != null)
-        {
-            if (m_Animator.GetBool("Ground"))
-            {
-                isJumping = false;
-                m_Player.GetComponent<Platformer2DUserControl>().enabled = true;
-                m_Player = null;
-            }
-        }
     }
 
     private void MoveOnStairs()
@@ -102,9 +93,16 @@ public class Stairs : MonoBehaviour {
                 var jumpVector = new Vector2(5f, 10f);
 
                 if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
+                {
                     jumpVector = new Vector2(-5f, 10f);
+                }
 
                 m_Player.velocity = jumpVector;
+
+                m_Player.GetComponent<Platformer2DUserControl>().enabled = true;
+
+                m_Player = null;
+                isJumping = false;
             }
         }
     }
