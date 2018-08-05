@@ -185,6 +185,17 @@ public class PlayerStats : Stats
 public class Enemy : Stats
 {
     public int DamageAmount = 1;
+    [HideInInspector] public bool IsPlayerNear;
+
+    public override void TakeDamage(int amount)
+    {
+        if (!IsPlayerNear)
+        {
+            m_GameObject.GetComponentInChildren<EnemyMovement>().TurnAround();
+        }
+
+        base.TakeDamage(amount);
+    }
 }
 
 [System.Serializable]

@@ -13,7 +13,6 @@ public class PatrolEnemy : MonoBehaviour {
     private TextMeshProUGUI m_Text;
     private Image m_AlarmImage;
     private float m_UpdateTime = 0f;
-    [SerializeField] private bool m_IsPlayerNear;
 
     [SerializeField] private Canvas UI;
     [SerializeField] private string Phrase;
@@ -33,11 +32,11 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNear)
+        if (EnemyStats.IsPlayerNear)
         {
             if (GameMaster.Instance.isPlayerDead)
             {
-                m_IsPlayerNear = false;
+                EnemyStats.IsPlayerNear = false;
                 StartCoroutine(PlayerSpot(false));
             }
         }
@@ -92,7 +91,7 @@ public class PatrolEnemy : MonoBehaviour {
         {
             AttackPlayer(collision);
 
-            if (!m_IsPlayerNear)
+            if (!EnemyStats.IsPlayerNear)
             {
                 m_EnemyMovement.TurnAround();
             }
@@ -103,9 +102,9 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = true;
+            EnemyStats.IsPlayerNear = true;
 
-            yield return PlayerSpot(m_IsPlayerNear);
+            yield return PlayerSpot(EnemyStats.IsPlayerNear);
         }
     }
 
@@ -113,11 +112,11 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = false;
+            EnemyStats.IsPlayerNear = false;
 
             yield return new WaitForSeconds(1f);
 
-            if (!m_IsPlayerNear)
+            if (!EnemyStats.IsPlayerNear)
                 yield return PlayerSpot(false);
         }
     }

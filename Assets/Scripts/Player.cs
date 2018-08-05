@@ -124,16 +124,10 @@ public class Player : MonoBehaviour {
     {
         if (collision.CompareTag("Enemy") & isAttacking)
         {
-            Debug.LogError("Attack");
             var enemyStats = GetStats(collision);
 
             if (enemyStats != null)
             {
-                if (collision.GetComponent<EnemyMovement>().Speed == 1f)
-                {
-                    collision.GetComponent<EnemyMovement>().TurnAround();
-                }
-
                 enemyStats.TakeDamage(PlayerStats.DamageAmount);
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RangeEnemy : MonoBehaviour {
-
+    
     public MageEnemyStats EnemyStats;
 
     [SerializeField] private Canvas UI;
@@ -13,8 +13,7 @@ public class RangeEnemy : MonoBehaviour {
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
     private Image m_AlarmImage;
-    public bool m_IsPlayerInSight = false;
-    public bool m_CanCreateNewFireball = true;
+    private bool m_CanCreateNewFireball = true;
 
     // Use this for initialization
     void Start()
@@ -70,7 +69,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!m_IsPlayerInSight)
+            if (!EnemyStats.IsPlayerNear)
             {
                 m_EnemyMovement.TurnAround();
             }
@@ -81,17 +80,17 @@ public class RangeEnemy : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerInSight)
+        if (collision.CompareTag("Player") & !EnemyStats.IsPlayerNear)
         {
-            m_IsPlayerInSight = true;
+            EnemyStats.IsPlayerNear = true;
         }
     }
 
     private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerInSight)
+        if (collision.CompareTag("Player") & EnemyStats.IsPlayerNear)
         {
-            m_IsPlayerInSight = false;
+            EnemyStats.IsPlayerNear = false;
 
             yield return ResetState();
         }
@@ -101,12 +100,12 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (GameMaster.Instance.isPlayerDead)
         {
-            m_IsPlayerInSight = false;
+            EnemyStats.IsPlayerNear = false;
             m_EnemyMovement.isWaiting = false;
             EnableWarningSign(false);
         }
 
-        if (m_IsPlayerInSight)
+        if (EnemyStats.IsPlayerNear)
         {
             m_EnemyMovement.isWaiting = true;
             EnableWarningSign(m_EnemyMovement.isWaiting);
@@ -120,7 +119,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private IEnumerator StartCast()
     {
-        if(m_IsPlayerInSight)
+        if(EnemyStats.IsPlayerNear)
         {
             if (m_CanCreateNewFireball)
             {
@@ -165,7 +164,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
-        if (!m_IsPlayerInSight)
+        if (!EnemyStats.IsPlayerNear)
         {
             m_EnemyMovement.isWaiting = false;
             EnableWarningSign(false);
