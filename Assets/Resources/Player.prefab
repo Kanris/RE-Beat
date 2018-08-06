@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 61027904959149508}
   m_Layer: 8
   m_Name: AttackRange
-  m_TagString: Untagged
+  m_TagString: PlayerAttackRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -376,12 +376,13 @@ MonoBehaviour:
   ThrowX: 0.08
   ThrowY: 0.1
   AttackRange: {fileID: 1378929303225844}
+  isPlayerBusy: 0
   playerStats:
     MaxHealth: 6
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
   isPlayerThrowingBack: 0
-  isTriggered: 0
+  IsDamageFromFace: 0
 --- !u!114 &114565561385868806
 MonoBehaviour:
   m_ObjectHideFlags: 1
