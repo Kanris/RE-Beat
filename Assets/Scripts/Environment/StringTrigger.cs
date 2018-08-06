@@ -44,6 +44,10 @@ public class StringTrigger : MonoBehaviour {
         {
             if (m_Box != null)
             {
+                m_Box.transform.SetParent(transform.parent);
+
+                m_Box.GetComponent<BoxCollider2D>().enabled = true;
+
                 m_Box.gravityScale = 3f;
 
                 m_Box.constraints = RigidbodyConstraints2D.FreezePositionX
