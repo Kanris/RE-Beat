@@ -6,7 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Chest : MonoBehaviour {
 
     private GameObject m_InteractionButton;
-    private bool m_IsPlayerNear;
+    private Player m_Player;
     private GameObject m_Inventory;
 
 	// Use this for initialization
@@ -45,10 +45,11 @@ public class Chest : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNear)
+        if (m_Player != null)
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
+                m_Player.isPlayerBusy = !m_Inventory.activeSelf;
                 ActiveInventory(!m_Inventory.activeSelf);
             }
         }
@@ -56,18 +57,18 @@ public class Chest : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
+        if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = true;
+            m_Player = collision.GetComponent<Player>();
             ActiveInteractionButton(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNear)
+        if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = false;
+            m_Player = null;
             ActiveInteractionButton(false);
             ActiveInventory(false);
         }

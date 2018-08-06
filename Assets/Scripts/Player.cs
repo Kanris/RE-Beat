@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
     private Vector2 m_ThrowBackVector;
     private Animator m_Animator;
     private bool isAttacking = false;
+    public bool isPlayerBusy = false;
 
     public PlayerStats playerStats;
     [HideInInspector] public bool isPlayerThrowingBack;
@@ -50,13 +51,16 @@ public class Player : MonoBehaviour {
 
         if (!PauseMenuManager.Instance.isGamePause & !DialogueManager.Instance.isDialogueInProgress)
         {
-            if (!AttackRange.activeSelf)
+            if (!isPlayerBusy)
             {
-                if (!isAttacking)
+                if (!AttackRange.activeSelf)
                 {
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                    if (!isAttacking)
                     {
-                        StartCoroutine(Attack());
+                        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                        {
+                            StartCoroutine(Attack());
+                        }
                     }
                 }
             }
