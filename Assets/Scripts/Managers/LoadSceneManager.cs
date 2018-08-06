@@ -127,7 +127,8 @@ public class LoadSceneManager : MonoBehaviour {
             yield return null;
         }
 
-        PickupBox.isQuitting = false;
+        /*PickupBox.isQuitting = false;
+        StringTrigger.isQuitting = false;*/
     }
 
     private void SetActiveLoadScene(bool active)

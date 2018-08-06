@@ -100,7 +100,12 @@ public class PauseMenuManager : MonoBehaviour {
     {
         ChangeUIState();
         PickupBox.isQuitting = true;
+        StringTrigger.isQuitting = true;
+
         LoadSceneManager.Instance.Load("StartScreen");
+
+        Destroy(GameMaster.Instance.gameObject);
+        Destroy(gameObject);
     }
 
     public void ExitGame()

@@ -19,6 +19,7 @@ public class MoveToNextScene : MonoBehaviour {
             if (!string.IsNullOrEmpty(NextScene))
             {
                 PickupBox.isQuitting = true;
+                StringTrigger.isQuitting = true;
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
             }
