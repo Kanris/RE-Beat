@@ -12,7 +12,7 @@ public class ChestItem : MonoBehaviour {
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
 
         if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveChestState(gameObject.name);
+            GameMaster.Instance.SaveChestState(transform.parent.parent.parent.name, gameObject.name);
 
         Destroy(gameObject);
     }

@@ -57,11 +57,6 @@ public class Chest : MonoBehaviour {
                     IsChestEmpty();
             }
         }
-
-        /*if (!isChestEmpty)
-        {
-            ChestEmpty();
-        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -86,16 +81,41 @@ public class Chest : MonoBehaviour {
         }
     }
 
-    private void IsChestEmpty()
+    public void IsChestEmpty()
     {
-        if (m_Inventory.transform.GetChild(0).childCount == 0)
+        if (m_Inventory.transform.GetChild(0).childCount == 0 & !isChestEmpty)
         {
-            isChestEmpty = true;
-            var openChestSprite = Resources.LoadAll<Sprite>("Sprites/Props")[9];
-
-            GetComponent<SpriteRenderer>().sprite = openChestSprite;
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f);
+            OpenChest();
         }
+    }
+
+    public void RemoveFromChest(string name)
+    {
+        var grid = m_Inventory.transform.GetChild(0);
+
+        for (int index = 0; index < grid.childCount; index++)
+        {
+            var gridChildren = grid.GetChild(index);
+            if (gridChildren.name == name)
+            {
+                gridChildren.SetParent(null);
+                Destroy(gridChildren.gameObject);
+
+                if (grid.childCount == 0)
+                    OpenChest();
+
+                break;
+            }
+        }
+    }
+
+    private void OpenChest()
+    {
+        isChestEmpty = true;
+        var openChestSprite = Resources.LoadAll<Sprite>("Sprites/Props")[9];
+
+        GetComponent<SpriteRenderer>().sprite = openChestSprite;
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f);
     }
 
     #region Active

@@ -12,7 +12,7 @@ public class State {
 
     public List<string> DialogueIsComplete;
 
-    public List<string> ChestItems;
+    public List<ItemInChest> ChestItems;
 
     public State(string SceneName)
     {
@@ -24,7 +24,7 @@ public class State {
 
         DialogueIsComplete = new List<string>();
 
-        ChestItems = new List<string>();
+        ChestItems = new List<ItemInChest>();
     }
 
     public bool IsExistInBool(string name)
@@ -36,9 +36,16 @@ public class State {
     {
         return ObjectsPosition.ContainsKey(name);
     }
+}
 
-    public bool IsExistInChest(string name)
+public class ItemInChest
+{
+    public string ChestName;
+    public string Item;
+
+    public ItemInChest(string chestName, string item)
     {
-        return ChestItems.Contains(name);
+        this.ChestName = chestName;
+        this.Item = item;
     }
 }

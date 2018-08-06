@@ -99,7 +99,7 @@ public class GameMaster : MonoBehaviour {
                 RecreateDialogue(item);
 
             foreach (var item in searchResult.ChestItems)
-                RecreateChest(item);
+                Recreate(item);
         }
     }
 
@@ -113,13 +113,13 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    private void RecreateChest(string name)
+    private void Recreate(ItemInChest item)
     {
-        var chestItem = Resources.FindObjectsOfTypeAll<ChestItem>().FirstOrDefault(x => x.name == name);
+        var searchGameObjectResult = GameObject.Find(item.ChestName);
 
-        if (chestItem != null)
+        if (searchGameObjectResult != null)
         {
-            Destroy(chestItem.gameObject);
+            searchGameObjectResult.GetComponent<Chest>().RemoveFromChest(item.Item);
         }
     }
 
@@ -207,7 +207,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public void SaveChestState(string name)
+    public void SaveChestState(string chestName, string item)
     {
         var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
@@ -215,13 +215,13 @@ public class GameMaster : MonoBehaviour {
         {
             var newState = new State(SceneName);
 
-            newState.ChestItems.Add(name);
+            newState.ChestItems.Add(new ItemInChest(chestName, item));
 
             ScenesState.Add(newState);
         }
         else
         {
-            searchResult.ChestItems.Add(name);
+            searchResult.ChestItems.Add(new ItemInChest(chestName, item));
         }
     }
 
