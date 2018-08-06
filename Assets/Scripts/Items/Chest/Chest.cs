@@ -8,6 +8,7 @@ public class Chest : MonoBehaviour {
     private GameObject m_InteractionButton;
     private Player m_Player;
     private GameObject m_Inventory;
+    private bool isChestEmpty;
 
 	// Use this for initialization
 	void Start () {
@@ -51,8 +52,16 @@ public class Chest : MonoBehaviour {
             {
                 m_Player.isPlayerBusy = !m_Inventory.activeSelf;
                 ActiveInventory(!m_Inventory.activeSelf);
+
+                if (!isChestEmpty)
+                    IsChestEmpty();
             }
         }
+
+        /*if (!isChestEmpty)
+        {
+            ChestEmpty();
+        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -71,6 +80,21 @@ public class Chest : MonoBehaviour {
             m_Player = null;
             ActiveInteractionButton(false);
             ActiveInventory(false);
+
+            if (!isChestEmpty)
+                IsChestEmpty();
+        }
+    }
+
+    private void IsChestEmpty()
+    {
+        if (m_Inventory.transform.GetChild(0).childCount == 0)
+        {
+            isChestEmpty = true;
+            var openChestSprite = Resources.LoadAll<Sprite>("Sprites/Props")[9];
+
+            GetComponent<SpriteRenderer>().sprite = openChestSprite;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f);
         }
     }
 

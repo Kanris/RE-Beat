@@ -1,23 +1,23 @@
 fileFormatVersion: 2
-guid: 545e3f6ad65c48d40a96534d4c3ecd84
+guid: 34cf08bae343aa7498d7be1f61fcb8da
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CrateSmall
-    21300002: BridgeAnchorLeft
-    21300004: BridgeAnchorRight
-    21300006: CrateBig
-    21300008: Barrel
-    21300010: BridgeSingle
-    21300012: BridgeDoubleLeft
-    21300014: BridgeDoubleRight
-    21300016: Lantern
+    21300000: Props_0
+    21300002: Props_1
+    21300004: Props_2
+    21300006: Props_3
+    21300008: Props_4
+    21300010: Props_5
+    21300012: Props_6
+    21300014: Props_7
+    21300016: Props_8
     21300018: Props_9
-    21300020: Cage
+    21300020: Props_10
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -40,8 +40,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
-    aniso: 16
+    filterMode: -1
+    aniso: -1
     mipBias: -1
     wrapU: 1
     wrapV: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -83,7 +83,40 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -93,7 +126,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CrateSmall
+      name: Props_0
       rect:
         serializedVersion: 2
         x: 0
@@ -104,20 +137,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -0.15866852, y: 0.12350464}
-        - {x: -0.14166832, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 0.112091064}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db0328347bf92a24fbdb2ec386de845e
+      spriteID: b57e7f395ae2f714d98ce3f521fad660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BridgeAnchorLeft
+      name: Props_1
       rect:
         serializedVersion: 2
         x: 64
@@ -131,13 +160,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63f5ba58e39d20e43a3596d245787063
+      spriteID: ad495a151d730b540bfb9f6b5aed7e50
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BridgeAnchorRight
+      name: Props_2
       rect:
         serializedVersion: 2
         x: 192
@@ -151,37 +180,33 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 838be353570fbe943b81050caeaacf8c
+      spriteID: e09dbe32a3f565444a055f72aecbe470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrateBig
+      name: Props_3
       rect:
         serializedVersion: 2
-        x: 18
+        x: 0
         y: 384
-        width: 46
-        height: 46
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -13.987507, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 14.105896}
-        - {x: -14.1183815, y: 13.987518}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99171395570a0f74481da2443d18345e
+      spriteID: 6f017aa6187171b4886dd84dae246565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Barrel
+      name: Props_4
       rect:
         serializedVersion: 2
         x: 64
@@ -192,24 +217,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -14.994461, y: 1.9889221}
-        - {x: -17.080338, y: -4.108032}
-        - {x: -17.080338, y: -26.542938}
-        - {x: -14.897514, y: -32}
-        - {x: 10.983383, y: -32}
-        - {x: 13.080338, y: -26.451508}
-        - {x: 13.080338, y: -3.839325}
-        - {x: 10.903046, y: 1.8974915}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8aa5fab773455347a29239618f11d8d
+      spriteID: 461645da4bf14e145b19f1280ab3e99b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BridgeSingle
+      name: Props_5
       rect:
         serializedVersion: 2
         x: 128
@@ -220,24 +237,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 14.19664, y: 29.92157}
-        - {x: -0.3154297, y: 28.470123}
-        - {x: -14.820908, y: 29.83496}
-        - {x: -32, y: 32}
-        - {x: -32, y: 22}
-        - {x: -0.8463135, y: 18.623749}
-        - {x: 32, y: 22.221802}
-        - {x: 32, y: 32}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b61432a220426194cadeb20e30bb011d
+      spriteID: 81213048be136694ca8a72bb2a55199b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BridgeDoubleLeft
+      name: Props_6
       rect:
         serializedVersion: 2
         x: 256
@@ -248,21 +257,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: 32, y: 15.190735}
-        - {x: 32, y: 25.834991}
-        - {x: -10.01059, y: 29.07724}
-        - {x: -32, y: 32}
-        - {x: -32, y: 22.0878}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89b624296a49dc148a72a2085d588e68
+      spriteID: 55decb23e22bddc409f67d78fe44ea4c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BridgeDoubleRight
+      name: Props_7
       rect:
         serializedVersion: 2
         x: 320
@@ -273,21 +277,16 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -4.2369385, y: 27.778198}
-        - {x: -32, y: 25.268005}
-        - {x: -32, y: 16.056793}
-        - {x: 32, y: 21.685822}
-        - {x: 32, y: 32}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39b11d45d7a36bb4a93804fe679aa8f1
+      spriteID: c0ce6e87d38d07a4eb21adcf72494b90
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lantern
+      name: Props_8
       rect:
         serializedVersion: 2
         x: 0
@@ -298,17 +297,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -0.7699375, y: -0.55529785}
-        - {x: -10.0224, y: -10.968506}
-        - {x: -10.928625, y: -26.352692}
-        - {x: -6.763479, y: -32}
-        - {x: 4.727791, y: -32}
-        - {x: 8.540241, y: -26.080505}
-        - {x: 8.151855, y: -11.312103}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9758ccc351d460145880c0de93a48157
+      spriteID: 05a4c33e21d4964429af5f5b4ce57880
       vertices: []
       indices: 
       edges: []
@@ -320,7 +312,7 @@ TextureImporter:
         x: 64
         y: 320
         width: 64
-        height: 36
+        height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -328,13 +320,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4c979a4192176649aa53a26cc2b5097
+      spriteID: ea942868f36732d4fae10f82ce2cf9c1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cage
+      name: Props_10
       rect:
         serializedVersion: 2
         x: 128
@@ -345,14 +337,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape:
-      - - {x: -31.187073, y: 31.864502}
-        - {x: -29.645096, y: -32}
-        - {x: 30.10315, y: -32}
-        - {x: 32, y: 32}
+      physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7771d4e19961c64fa01ca20b0ce5b79
+      spriteID: ee0a38a42a472894b90381f3d418dfe9
       vertices: []
       indices: 
       edges: []
@@ -360,7 +348,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3934058b15191be4a90954612cc9ad4b
+    spriteID: 8ba2a39334b2859458c7ba4b64cccf14
     vertices: []
     indices: 
     edges: []
