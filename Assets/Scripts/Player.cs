@@ -19,7 +19,7 @@ public class Player : MonoBehaviour {
 
     public PlayerStats playerStats;
     [HideInInspector] public bool isPlayerThrowingBack;
-    [HideInInspector] public bool isTriggered;
+    [HideInInspector] public bool IsDamageFromFace;
 
     private void Start()
     {
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
                     m_ThrowBackVector = new Vector2(ThrowX, ThrowY);
                 }
 
-                if (!isTriggered)
+                if (!IsDamageFromFace)
                 {
                     m_ThrowBackVector = new Vector2(-m_ThrowBackVector.x, m_ThrowBackVector.y);
                 }

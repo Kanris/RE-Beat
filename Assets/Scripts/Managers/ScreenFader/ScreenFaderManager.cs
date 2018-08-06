@@ -88,7 +88,9 @@ public class ScreenFaderManager : MonoBehaviour {
             yield return null;
 
         m_ChildUIGameObject.GetComponent<Canvas>().sortingOrder = -100;
-        //SetActiveUI(m_IsFading);
+
+        if (trigger == "FadeOut")
+            SetActiveUI(m_IsFading);
     }
 
     public void AnimationComplete()

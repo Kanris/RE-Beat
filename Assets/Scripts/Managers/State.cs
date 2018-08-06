@@ -12,6 +12,8 @@ public class State {
 
     public List<string> DialogueIsComplete;
 
+    public List<string> ChestItems;
+
     public State(string SceneName)
     {
         this.SceneName = SceneName;
@@ -21,6 +23,8 @@ public class State {
         ObjectsPosition = new Dictionary<string, Vector2>();
 
         DialogueIsComplete = new List<string>();
+
+        ChestItems = new List<string>();
     }
 
     public bool IsExistInBool(string name)
@@ -31,5 +35,10 @@ public class State {
     public bool IsExistInPosition(string name)
     {
         return ObjectsPosition.ContainsKey(name);
+    }
+
+    public bool IsExistInChest(string name)
+    {
+        return ChestItems.Contains(name);
     }
 }

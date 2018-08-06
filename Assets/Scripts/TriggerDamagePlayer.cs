@@ -10,7 +10,7 @@ public class TriggerDamagePlayer : MonoBehaviour {
     {
         if (collision.CompareTag("Enemy"))
         {
-            player.isTriggered = true;
+            player.IsDamageFromFace = true;
         }
     }
 
@@ -18,7 +18,7 @@ public class TriggerDamagePlayer : MonoBehaviour {
     {
         if (collision.CompareTag("Enemy"))
         {
-            player.isTriggered = false;
+            player.IsDamageFromFace = false;
         }
     }
 }
