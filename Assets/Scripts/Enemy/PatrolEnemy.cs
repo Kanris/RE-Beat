@@ -9,6 +9,9 @@ public class PatrolEnemy : MonoBehaviour {
 
     public Enemy EnemyStats;
 
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate OnPlayerSpot;
+
     private EnemyMovement m_EnemyMovement;
     private TextMeshProUGUI m_Text;
     private float m_UpdateTime = 0f;
@@ -32,7 +35,7 @@ public class PatrolEnemy : MonoBehaviour {
         {
             if (GameMaster.Instance.isPlayerDead)
             {
-                EnemyStats.IsPlayerNear = false;
+                EnemyStats.ChangeIsPlayerNear(false);
                 StartCoroutine(PlayerSpot(false));
             }
         }
@@ -65,7 +68,7 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            EnemyStats.IsPlayerNear = true;
+            EnemyStats.ChangeIsPlayerNear(true);
 
             yield return PlayerSpot(EnemyStats.IsPlayerNear);
         }
@@ -75,7 +78,7 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            EnemyStats.IsPlayerNear = false;
+            EnemyStats.ChangeIsPlayerNear(false);
 
             yield return new WaitForSeconds(1f);
 
@@ -95,11 +98,12 @@ public class PatrolEnemy : MonoBehaviour {
 
         m_AlarmImage.gameObject.SetActive(isSpot);
 
-        m_EnemyMovement.isWaiting = false;
+        if (OnPlayerSpot != null)
+            OnPlayerSpot(false);
 
         if (isSpot)
-            m_EnemyMovement.Speed = 2f;
+            EnemyStats.ChangeSpeed(2f);
         else
-            m_EnemyMovement.Speed = 1f;
+            EnemyStats.ChangeSpeed(1f);
     }
 }
