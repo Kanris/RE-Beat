@@ -26,7 +26,10 @@ public class PauseMenuManager : MonoBehaviour {
     }
     #endregion
 
-    public bool isGamePause = false;
+    public delegate void DelegateVoid(bool state);
+    public event DelegateVoid OnGamePause;
+
+    //public bool isGamePause = false;
     private GameObject m_PauseGame;
 
     [SerializeField] private GameObject m_FirstSelectedGameobject;
@@ -58,18 +61,22 @@ public class PauseMenuManager : MonoBehaviour {
         {
             m_PauseGame.SetActive(active);
 
-            if (DialogueManager.Instance.isDialogueInProgress)
-                DialogueManager.Instance.SetActiveUI(!active);
+            /*if (DialogueManager.Instance.isDialogueInProgress)
+                DialogueManager.Instance.SetActiveUI(!active);*/
 
             if (active == true)
             {
                 Time.timeScale = 0f;
 
                 if (m_FirstSelectedGameobject != null)
-                    GameObject.Find("EventSystem").GetComponent<EventSystem>().SetSelectedGameObject(m_FirstSelectedGameobject);
+                    GameObject.Find("EventSystem").GetComponent<EventSystem>().
+                              SetSelectedGameObject(m_FirstSelectedGameobject);
             }
             else
                 Time.timeScale = 1f;
+
+            if (OnGamePause != null)
+                OnGamePause(active);
         }
     }
 	
@@ -80,25 +87,19 @@ public class PauseMenuManager : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Cancel"))
             {
-                ChangeUIState();
+                SetActive(!m_PauseGame.activeSelf);
             }
         }
 	}
 
-    private void ChangeUIState()
-    {
-        isGamePause = !isGamePause;
-        SetActive(isGamePause);
-    }
-
     public void ResumeGame()
     {
-        ChangeUIState();
+        SetActive(!m_PauseGame.activeSelf);
     }
 
     public void ReturnToStartScreen()
     {
-        ChangeUIState();
+        SetActive(!m_PauseGame.activeSelf);
         PickupBox.isQuitting = true;
         StringTrigger.isQuitting = true;
 

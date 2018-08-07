@@ -125,10 +125,9 @@ public class Stats {
 [System.Serializable]
 public class PlayerStats : Stats
 {
-    public static string PlayerName = "Penny";
     public static int GemsAmount;
     public static int DamageAmount = 50;
-    public static float AttackSpeed = 0.1f;
+    public static float AttackSpeed = 0.6f;
     public static Inventory PlayerInventory;
 
     private bool isInvincible;

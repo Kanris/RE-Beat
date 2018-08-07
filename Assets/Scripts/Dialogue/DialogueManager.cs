@@ -28,7 +28,10 @@ public class DialogueManager : MonoBehaviour {
     }
     #endregion
 
-    [HideInInspector] public bool isDialogueInProgress = false;
+    //[HideInInspector] private bool isDialogueInProgress = false;
+
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate OnDialogueInProgressChange;
 
     private GameObject m_DialogueUI;
     private GameObject m_Buttons;
@@ -39,6 +42,7 @@ public class DialogueManager : MonoBehaviour {
     private Button m_SecondButton;
     private bool m_IsSentenceTyping;
     private bool m_AnwswerChoose;
+    private bool m_IsDialogueInProgress;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
@@ -99,7 +103,7 @@ public class DialogueManager : MonoBehaviour {
     // Update is called once per frame
     private void Update()
     {
-        if (isDialogueInProgress)
+        if (m_IsDialogueInProgress)
         {
             if (CrossPlatformInputManager.GetButtonDown("Jump"))
             {
@@ -174,7 +178,7 @@ public class DialogueManager : MonoBehaviour {
 
     private void DisplayNextSentence()
     {
-        if (isDialogueInProgress)
+        if (m_IsDialogueInProgress)
         {
             if (m_Sentences.Count == 0)
             {
@@ -218,7 +222,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (dialogue != null)
         {
-            isDialogueInProgress = true;
+            ChangeIsDialogueInProgress(true);
             m_Dialogue = dialogue;
 
             InitializeSentences();
@@ -235,7 +239,7 @@ public class DialogueManager : MonoBehaviour {
 
     public void StartDialogue(Sentence[] dialogueToDisplay)
     {
-        isDialogueInProgress = true;
+        ChangeIsDialogueInProgress(true);
         m_Sentences.Clear();
 
         foreach (var sentence in dialogueToDisplay)
@@ -250,7 +254,7 @@ public class DialogueManager : MonoBehaviour {
     public void StopDialogue()
     {
         m_AnwswerChoose = false;
-        isDialogueInProgress = false;
+        ChangeIsDialogueInProgress(false);
 
         SetActiveAnswerButtons(false);
         SetActiveUI(false);
@@ -272,5 +276,13 @@ public class DialogueManager : MonoBehaviour {
         m_AnwswerChoose = false;
 
         StartDialogue(sentenceToStart);
+    }
+
+    private void ChangeIsDialogueInProgress(bool value)
+    {
+        m_IsDialogueInProgress = value;
+
+        if (OnDialogueInProgressChange != null)
+            OnDialogueInProgressChange(value);
     }
 }

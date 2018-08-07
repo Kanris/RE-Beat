@@ -12,13 +12,16 @@ public class DialogueTrigger : MonoBehaviour {
     [HideInInspector] public bool m_isPlayerNear = false;
 
     private GameObject m_UI;
-    private GameObject m_Player;
+    private Platformer2DUserControl m_Player;
+    private bool m_IsDialogueInProcess;
 
     private void Start()
     {
         InitializeInteractionButton();
 
         DisplayUI(false);
+
+        DialogueManager.Instance.OnDialogueInProgressChange += ChangeDialogueInProcess;
     }
 
     private void InitializeInteractionButton()
@@ -32,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour {
 		
         if (m_isPlayerNear)
         {
-            if (!DialogueManager.Instance.isDialogueInProgress)
+            if (!m_IsDialogueInProcess)
             {
                 if (CrossPlatformInputManager.GetButtonDown("Submit"))
                 {
@@ -57,8 +60,8 @@ public class DialogueTrigger : MonoBehaviour {
         if (!active)
             m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false);
 
-        if (m_Player != null & m_Player.GetComponent<Platformer2DUserControl>().enabled != active)
-            m_Player.GetComponent<Platformer2DUserControl>().enabled = active;
+        if (m_Player != null & m_Player.enabled != active)
+            m_Player.enabled = active;
     }
 
     private void StartDialogue()
@@ -73,7 +76,7 @@ public class DialogueTrigger : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_isPlayerNear)
         {
             m_isPlayerNear = true;
-            m_Player = collision.gameObject;
+            m_Player = collision.GetComponent<Platformer2DUserControl>();
             DisplayUI(m_isPlayerNear);
         }
     }
@@ -98,5 +101,10 @@ public class DialogueTrigger : MonoBehaviour {
         {
             Debug.LogError("DialogueTrigger.DisplayInteractionButton: m_InteractionButton is not initialized.");
         }
+    }
+
+    private void ChangeDialogueInProcess(bool value)
+    {
+        m_IsDialogueInProcess = value;
     }
 }
