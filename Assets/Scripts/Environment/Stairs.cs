@@ -18,6 +18,8 @@ public class Stairs : MonoBehaviour {
         
     }
 
+    #region Initialize
+
     private void InitializeStairsTop()
     {
         if (transform.childCount > 0)
@@ -29,6 +31,8 @@ public class Stairs : MonoBehaviour {
             Debug.LogError("Stairs.InitializeStairsTop: Can't find top of the stairs");
         }
     }
+
+    #endregion
 
     private void Update()
     {
