@@ -10,8 +10,7 @@ public class Stairs : MonoBehaviour {
     private Animator m_Animator;
     private Rigidbody2D m_Player;
     private bool m_VerticalMove;
-
-    [SerializeField] private bool isJumping;
+    private bool isJumping;
 
     private void Start()
     {
@@ -120,6 +119,7 @@ public class Stairs : MonoBehaviour {
         if (isOnstairs)
         {
             m_Player.gravityScale = 0f;
+            m_Player.position = new Vector2(m_StairsTop.position.x + 0.1f, m_Player.position.y);
             m_Player.velocity = Vector3.zero;
         }
         else
