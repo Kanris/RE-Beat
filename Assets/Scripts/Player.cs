@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
     private Animator m_Animator;
     private Vector2 m_ThrowBackVector;
     private bool m_IsAttacking = false;
+    private bool m_IsInCooldown = false;
 
     public PlayerStats playerStats;
 
@@ -50,11 +51,6 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (transform.position.y <= YBoundaries)
-        {
-            playerStats.TakeDamage(playerStats.MaxHealth);
-        }
-
         JumpHeightControl();
 
         if (IsPlayerCanAttack())
@@ -70,12 +66,19 @@ public class Player : MonoBehaviour {
     {
         if (!m_IsAttacking)
         {
+
+            m_IsInCooldown = true;
+
             m_IsAttacking = true;
             AttackRange.SetActive(true);
 
-            yield return new WaitForSeconds(PlayerStats.AttackSpeed);
+            yield return new WaitForSeconds(0.1f);
 
             m_IsAttacking = false;
+
+            yield return new WaitForSeconds(PlayerStats.AttackSpeed);
+
+            m_IsInCooldown = false;
             AttackRange.SetActive(m_IsAttacking);
         }
     }
@@ -85,7 +88,7 @@ public class Player : MonoBehaviour {
         var isPlayerCanAttack = false;
 
         if (!isPlayerBusy)
-            if (!m_IsAttacking)
+            if (!m_IsAttacking & !m_IsInCooldown)
                 isPlayerCanAttack = true;
 
         return isPlayerCanAttack;
@@ -130,6 +133,11 @@ public class Player : MonoBehaviour {
 
     private void JumpHeightControl()
     {
+        if (transform.position.y <= YBoundaries)
+        {
+            playerStats.TakeDamage(playerStats.MaxHealth);
+        }
+
         if (!m_Animator.GetBool("Ground"))
         {
             if (m_YPositionBeforeJump + YFallDeath >= transform.position.y & !GameMaster.Instance.isPlayerDead)
