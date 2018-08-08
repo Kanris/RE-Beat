@@ -95,6 +95,7 @@ public class MagneticBox : MonoBehaviour {
         {
             transform.SetParent(null);
             transform.gameObject.layer = 0;
+            GameMaster.Instance.SavePositionState(transform.name, transform.position);
         }
 
         m_IsBoxPickedUp = value;
