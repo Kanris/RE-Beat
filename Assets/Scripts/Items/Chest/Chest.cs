@@ -50,7 +50,6 @@ public class Chest : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                m_Player.TriggerPlayerBussy(!m_Inventory.activeSelf);
                 ActiveInventory(!m_Inventory.activeSelf);
 
                 if (!isChestEmpty)
@@ -72,9 +71,10 @@ public class Chest : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_Player = null;
             ActiveInteractionButton(false);
             ActiveInventory(false);
+
+            m_Player = null;
 
             if (!isChestEmpty)
                 IsChestEmpty();
@@ -127,6 +127,8 @@ public class Chest : MonoBehaviour {
 
     private void ActiveInventory(bool active)
     {
+        if (m_Player != null) m_Player.TriggerPlayerBussy(active);
+
         m_Inventory.SetActive(active);
     }
 
