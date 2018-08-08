@@ -13,20 +13,27 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject AttackRange;
 
     private float m_YPositionBeforeJump;
-    private Vector2 m_ThrowBackVector;
     private Animator m_Animator;
-    private bool isAttacking = false;
-    public bool isPlayerBusy = false;
+    private Vector2 m_ThrowBackVector;
+    private bool m_IsAttacking = false;
+    private bool m_IsInCooldown = false;
 
     public PlayerStats playerStats;
+
+    private bool isPlayerBusy = false;
     [HideInInspector] public bool isPlayerThrowingBack;
     [HideInInspector] public bool IsDamageFromFace;
+
+    #region Initialize
 
     private void Start()
     {
         playerStats.Initialize(gameObject);
 
         InitializeAnimator();
+
+        PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
+        DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
     }
 
     private void InitializeAnimator()
@@ -39,45 +46,52 @@ public class Player : MonoBehaviour {
         }
     }
 
+    #endregion
+
     // Update is called once per frame
     private void Update () {
 		
-        if (transform.position.y <= YBoundaries)
-        {
-            playerStats.TakeDamage(playerStats.MaxHealth);
-        }
-
         JumpHeightControl();
 
-        if (!PauseMenuManager.Instance.isGamePause & !DialogueManager.Instance.isDialogueInProgress)
+        if (IsPlayerCanAttack())
         {
-            if (!isPlayerBusy)
+            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
             {
-                if (!AttackRange.activeSelf)
-                {
-                    if (!isAttacking)
-                    {
-                        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
-                        {
-                            StartCoroutine(Attack());
-                        }
-                    }
-                }
+                StartCoroutine(Attack());
             }
         }
     }
 
     private IEnumerator Attack()
     {
-        if (!isAttacking)
+        if (!m_IsAttacking)
         {
-            isAttacking = true;
+
+            m_IsInCooldown = true;
+
+            m_IsAttacking = true;
             AttackRange.SetActive(true);
 
+            yield return new WaitForSeconds(0.1f);
+
+            m_IsAttacking = false;
+
             yield return new WaitForSeconds(PlayerStats.AttackSpeed);
-            isAttacking = false;
-            AttackRange.SetActive(isAttacking);
+
+            m_IsInCooldown = false;
+            AttackRange.SetActive(m_IsAttacking);
         }
+    }
+
+    private bool IsPlayerCanAttack()
+    {
+        var isPlayerCanAttack = false;
+
+        if (!isPlayerBusy)
+            if (!m_IsAttacking & !m_IsInCooldown)
+                isPlayerCanAttack = true;
+
+        return isPlayerCanAttack;
     }
 
     private void FixedUpdate()
@@ -86,20 +100,7 @@ public class Player : MonoBehaviour {
         {
             if (!isPlayerThrowingBack)
             {
-                if (transform.localScale.x == 1)
-                {
-                    m_ThrowBackVector = new Vector2(-ThrowX, ThrowY);
-                }
-                else
-                {
-                    m_ThrowBackVector = new Vector2(ThrowX, ThrowY);
-                }
-
-                if (!IsDamageFromFace)
-                {
-                    m_ThrowBackVector = new Vector2(-m_ThrowBackVector.x, m_ThrowBackVector.y);
-                }
-
+                m_ThrowBackVector = GetThrowBackVector();
                 isPlayerThrowingBack = true;
             }
             else
@@ -109,8 +110,34 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private Vector2 GetThrowBackVector()
+    {
+        var throwBackVector = Vector2.zero;
+
+        if (transform.localScale.x.CompareTo(1f) == 0)
+        {
+            throwBackVector = new Vector2(-ThrowX, ThrowY);
+        }
+        else
+        {
+            throwBackVector = new Vector2(ThrowX, ThrowY);
+        }
+
+        if (!IsDamageFromFace)
+        {
+            throwBackVector = new Vector2(-throwBackVector.x, throwBackVector.y);
+        }
+
+        return throwBackVector;
+    }
+
     private void JumpHeightControl()
     {
+        if (transform.position.y <= YBoundaries)
+        {
+            playerStats.TakeDamage(playerStats.MaxHealth);
+        }
+
         if (!m_Animator.GetBool("Ground"))
         {
             if (m_YPositionBeforeJump + YFallDeath >= transform.position.y & !GameMaster.Instance.isPlayerDead)
@@ -126,7 +153,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") & isAttacking)
+        if (collision.CompareTag("Enemy") & m_IsAttacking)
         {
             var enemyStats = GetStats(collision);
 
@@ -151,5 +178,10 @@ public class Player : MonoBehaviour {
         }
 
         return enemyStats;
+    }
+
+    public void TriggerPlayerBussy(bool value)
+    {
+        isPlayerBusy = value;
     }
 }

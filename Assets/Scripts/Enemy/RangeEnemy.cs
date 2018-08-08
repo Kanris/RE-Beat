@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class RangeEnemy : MonoBehaviour {
     
     public MageEnemyStats EnemyStats;
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate OnPlayerSpot;
 
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
@@ -62,7 +64,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !EnemyStats.IsPlayerNear)
         {
-            EnemyStats.IsPlayerNear = true;
+            EnemyStats.ChangeIsPlayerNear(true);
         }
     }
 
@@ -70,7 +72,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & EnemyStats.IsPlayerNear)
         {
-            EnemyStats.IsPlayerNear = false;
+            EnemyStats.ChangeIsPlayerNear(false);
 
             yield return ResetState();
         }
@@ -80,21 +82,25 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (GameMaster.Instance.isPlayerDead)
         {
-            EnemyStats.IsPlayerNear = false;
-            m_EnemyMovement.isWaiting = false;
-            EnableWarningSign(false);
+            EnemyStats.ChangeIsPlayerNear(false);
+            ChangeAlertStatus(false);
         }
 
         if (EnemyStats.IsPlayerNear)
         {
-            m_EnemyMovement.isWaiting = true;
-            EnableWarningSign(m_EnemyMovement.isWaiting);
+            ChangeAlertStatus(true);
 
             if (m_CanCreateNewFireball)
             {
                 StartCoroutine(StartCast());
             }
         }
+    }
+
+    private void ChangeAlertStatus(bool value)
+    {
+        OnPlayerSpot(value);
+        EnableWarningSign(value);
     }
 
     private IEnumerator StartCast()
@@ -146,8 +152,7 @@ public class RangeEnemy : MonoBehaviour {
 
         if (!EnemyStats.IsPlayerNear)
         {
-            m_EnemyMovement.isWaiting = false;
-            EnableWarningSign(false);
+            ChangeAlertStatus(false);
         }
     }
 

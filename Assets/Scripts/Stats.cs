@@ -125,10 +125,9 @@ public class Stats {
 [System.Serializable]
 public class PlayerStats : Stats
 {
-    public static string PlayerName = "Penny";
     public static int GemsAmount;
     public static int DamageAmount = 50;
-    public static float AttackSpeed = 0.1f;
+    public static float AttackSpeed = 0.6f;
     public static Inventory PlayerInventory;
 
     private bool isInvincible;
@@ -184,17 +183,48 @@ public class PlayerStats : Stats
 [System.Serializable]
 public class Enemy : Stats
 {
+    public delegate void VoidFloatDelegate(float value);
+    public event VoidFloatDelegate OnSpeedChange;
+
+    public delegate void VoidBoolDelegate(bool value);
+    public event VoidBoolDelegate OnEnemyTakeDamage;
+
     public int DamageAmount = 1;
-    [HideInInspector] public bool IsPlayerNear;
+    public float Speed = 1f;
+
+    private bool m_IsPlayerNear;
+
+    public bool IsPlayerNear
+    {
+        get    
+        {
+            return m_IsPlayerNear;
+        }
+    }
 
     public override void TakeDamage(int amount)
     {
-        if (!IsPlayerNear)
+        /*if (!IsPlayerNear)
         {
             m_GameObject.GetComponentInChildren<EnemyMovement>().TurnAround();
-        }
+        }*/
+        if (OnEnemyTakeDamage != null)
+            OnEnemyTakeDamage(m_IsPlayerNear);
 
         base.TakeDamage(amount);
+    }
+
+    public void ChangeIsPlayerNear(bool value)
+    {
+        m_IsPlayerNear = value;
+    }
+
+    public void ChangeSpeed(float value)
+    {
+        Speed = value;
+
+        if (OnSpeedChange != null)
+            OnSpeedChange(value);
     }
 }
 

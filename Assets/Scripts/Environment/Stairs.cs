@@ -10,14 +10,15 @@ public class Stairs : MonoBehaviour {
     private Animator m_Animator;
     private Rigidbody2D m_Player;
     private bool m_VerticalMove;
-
-    [SerializeField] private bool isJumping;
+    private bool isJumping;
 
     private void Start()
     {
         InitializeStairsTop();
         
     }
+
+    #region Initialize
 
     private void InitializeStairsTop()
     {
@@ -30,6 +31,8 @@ public class Stairs : MonoBehaviour {
             Debug.LogError("Stairs.InitializeStairsTop: Can't find top of the stairs");
         }
     }
+
+    #endregion
 
     private void Update()
     {
@@ -120,6 +123,7 @@ public class Stairs : MonoBehaviour {
         if (isOnstairs)
         {
             m_Player.gravityScale = 0f;
+            m_Player.position = new Vector2(m_StairsTop.position.x + 0.1f, m_Player.position.y);
             m_Player.velocity = Vector3.zero;
         }
         else

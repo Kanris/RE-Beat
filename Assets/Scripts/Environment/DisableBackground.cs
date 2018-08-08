@@ -6,19 +6,15 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(TilemapRenderer))]
 public class DisableBackground : MonoBehaviour {
 
-    private bool m_PlayerInCave;
-    private Animator m_BackgroundAnimator;
-    private TilemapRenderer m_TilemapRenderer;
+    public Animator BackgroundAnimator;
+    public Animator MistAnimator;
 
+    private bool m_PlayerInCave;
     private Tilemap m_MistTilemap;
-    private Animator m_MistAnimator;
     private bool m_IsFading;
 
     private void Start()
     {
-        InitializeTilemapRenderer();
-
-        InitializeMist();
 
         InitializeBackground();
     }
@@ -31,18 +27,7 @@ public class DisableBackground : MonoBehaviour {
         }
     }
 
-    private void InitializeMist()
-    {
-        var mistGameObject = GameObject.FindWithTag("Mist");
-
-        if (mistGameObject != null)
-        {
-            m_MistTilemap = mistGameObject.GetComponent<Tilemap>();
-            m_MistAnimator = mistGameObject.GetComponent<Animator>();
-        }
-        else
-            Debug.LogError("DisableBackground.InitializeMist: Can't find Gameobject with tag - Mist");
-    }
+    #region Initialize
 
     private void InitializeBackground()
     {
@@ -50,19 +35,11 @@ public class DisableBackground : MonoBehaviour {
 
         if (m_Background != null)
         {
-            m_BackgroundAnimator = m_Background.GetComponent<Animator>();
+            BackgroundAnimator = m_Background.GetComponent<Animator>();
         }
     }
 
-    private void InitializeTilemapRenderer()
-    {
-        m_TilemapRenderer = GetComponent<TilemapRenderer>();
-
-        if (m_TilemapRenderer == null)
-        {
-            Debug.LogError("DisableBackground.InitializeTilemapRenderer: Can't find component - TilemapRenderer");
-        }
-    }
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -112,9 +89,9 @@ public class DisableBackground : MonoBehaviour {
     {
         m_IsFading = true;
 
-        if (m_MistAnimator != null) m_MistAnimator.SetTrigger(trigger);
+        if (MistAnimator != null) MistAnimator.SetTrigger(trigger);
 
-        if (m_BackgroundAnimator != null) m_BackgroundAnimator.SetTrigger(trigger);
+        if (BackgroundAnimator != null) BackgroundAnimator.SetTrigger(trigger);
 
         while (m_IsFading)
             yield return null;

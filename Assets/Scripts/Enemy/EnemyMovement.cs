@@ -8,13 +8,15 @@ public class EnemyMovement : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
     private Vector2 m_PreviousPosition = Vector2.zero;
+    private bool m_IsWaiting = false;
+    private float m_Speed;
 
     [SerializeField] private float IdleTime = 2f;
 
-    [HideInInspector] public bool isWaiting = false;
     [HideInInspector] public float m_PosX = -1f;
 
-    public float Speed = 1f;
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate OnWaitingStateChange;
 
     // Use this for initialization
     void Start () {
@@ -22,8 +24,13 @@ public class EnemyMovement : MonoBehaviour {
         InitializeRigidBody();
 
         InitializeAnimator();
+
+        SubscribeOnEvents();
+
+        SpeedChange(GetDefaultSpeed());
     }
 
+    #region Initialize
     private void InitializeRigidBody()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -44,17 +51,63 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
+    private void SubscribeOnEvents()
+    {
+        if (GetComponent<PatrolEnemy>() != null)
+        {
+            var patrolEnemy = GetComponent<PatrolEnemy>();
+
+            patrolEnemy.OnPlayerSpot += ChangeWaitingState;
+            patrolEnemy.EnemyStats.OnSpeedChange += SpeedChange;
+            patrolEnemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
+            {
+                if (!isPlayerNear)
+                    TurnAround();
+            };
+        }
+        else
+        {
+            var rangeEnemy = GetComponent<RangeEnemy>();
+
+            rangeEnemy.OnPlayerSpot += ChangeWaitingState;
+            rangeEnemy.EnemyStats.OnSpeedChange += SpeedChange;
+            rangeEnemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
+            {
+                if (!isPlayerNear)
+                    TurnAround();
+            };
+        }
+    }
+
+    private float GetDefaultSpeed()
+    {
+        var defaultSpeed = 0f;
+
+        if (GetComponent<PatrolEnemy>() != null)
+        {
+            defaultSpeed = GetComponent<PatrolEnemy>().EnemyStats.Speed;
+        }
+        else
+        {
+            defaultSpeed = GetComponent<RangeEnemy>().EnemyStats.Speed;
+        }
+
+        return defaultSpeed;
+    }
+
+    #endregion
+
     private void FixedUpdate()
     {
-        if (!isWaiting)
+        if (!m_IsWaiting)
         {
             if (!m_Animator.GetBool("isWalking"))
                 SetAnimation();
 
-            m_Rigidbody2D.position += new Vector2(m_PosX, 0) * Time.fixedDeltaTime * Speed;
+            m_Rigidbody2D.position += new Vector2(m_PosX, 0) * Time.fixedDeltaTime * m_Speed;
             SetAnimation();
 
-            if (m_Rigidbody2D.position == m_PreviousPosition & !isWaiting)
+            if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting)
             {
                 StartCoroutine(Idle());
             }
@@ -67,6 +120,11 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
+    private void SpeedChange(float speed)
+    {
+        m_Speed = speed;
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -77,15 +135,16 @@ public class EnemyMovement : MonoBehaviour {
 
     private IEnumerator Idle()
     {
-        if (!isWaiting)
+        if (!m_IsWaiting)
         {
-            isWaiting = true;
+            ChangeWaitingState(true);
+
             TurnAround();
             SetAnimation();
 
             yield return new WaitForSeconds(IdleTime);
 
-            isWaiting = false;
+            ChangeWaitingState(false);
         }
     }
 
@@ -97,6 +156,14 @@ public class EnemyMovement : MonoBehaviour {
 
     private void SetAnimation()
     {
-        m_Animator.SetBool("isWalking", !isWaiting);
+        m_Animator.SetBool("isWalking", !m_IsWaiting);
+    }
+
+    private void ChangeWaitingState(bool value)
+    {
+        m_IsWaiting = value;
+
+        if (OnWaitingStateChange != null)
+            OnWaitingStateChange(value);
     }
 }
