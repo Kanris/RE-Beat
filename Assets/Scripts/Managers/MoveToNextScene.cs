@@ -20,6 +20,7 @@ public class MoveToNextScene : MonoBehaviour {
             {
                 PickupBox.isQuitting = true;
                 StringTrigger.isQuitting = true;
+                MagneticBox.isQuitting = true;
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
             }

@@ -100,6 +100,7 @@ public class PauseMenuManager : MonoBehaviour {
     {
         ChangeUIState();
         PickupBox.isQuitting = true;
+        MagneticBox.isQuitting = true;
         StringTrigger.isQuitting = true;
 
         LoadSceneManager.Instance.Load("StartScreen");

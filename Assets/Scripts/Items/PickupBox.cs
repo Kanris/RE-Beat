@@ -9,8 +9,7 @@ public class PickupBox : MonoBehaviour {
     private Vector3 m_SpawnPosition;
     private Quaternion m_SpawnRotation;
     private Transform m_Player;
-
-    private bool m_IsPlayerNear;
+    
     private bool m_IsBoxUp;
 
     public static bool isQuitting = false;
@@ -57,7 +56,7 @@ public class PickupBox : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
-        if (m_IsPlayerNear)
+        if (m_Player != null)
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
@@ -85,16 +84,14 @@ public class PickupBox : MonoBehaviour {
         if (transform.position.y < YRestrictions)
         {
             Destroy(gameObject);
-
         }
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
+        if (collision.CompareTag("Player") & m_Player == null)
         {
-            m_IsPlayerNear = true;
             ActiveInteractionButton(true);
             m_Player = collision.transform;
         }
@@ -102,9 +99,8 @@ public class PickupBox : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNear)
+        if (collision.CompareTag("Player") & m_Player != null)
         {
-            m_IsPlayerNear = false;
             ActiveInteractionButton(false);
             m_Player = null;
         }
@@ -129,7 +125,6 @@ public class PickupBox : MonoBehaviour {
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
             ChangeBoxProperty(false, 0);
         }
     }
