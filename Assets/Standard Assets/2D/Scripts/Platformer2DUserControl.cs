@@ -10,18 +10,24 @@ namespace UnityStandardAssets._2D
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
 
+        public bool IsCanJump;
+
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
-        }
 
+            IsCanJump = true;
+        }
 
         private void Update()
         {
-            if (!m_Jump)
+            if (IsCanJump)
             {
-                // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                if (!m_Jump)
+                {
+                    // Read the jump input in Update so button presses aren't missed.
+                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                }
             }
         }
 
