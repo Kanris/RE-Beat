@@ -43,6 +43,7 @@ public class DialogueManager : MonoBehaviour {
     private bool m_IsSentenceTyping;
     private bool m_AnwswerChoose;
     private bool m_IsDialogueInProgress;
+    private bool m_IsDisplayingSentence;
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private TextMeshProUGUI m_NameText;
@@ -111,9 +112,15 @@ public class DialogueManager : MonoBehaviour {
                 {
                     m_IsSentenceTyping = false;
                 }
-                else if (!m_AnwswerChoose)
+                else if (!m_AnwswerChoose & !m_IsDisplayingSentence)
                 {
                     DisplayNextSentence();
+
+                } else if (m_IsDisplayingSentence)
+                {
+                    ChangeIsDialogueInProgress(false);
+                    m_IsDisplayingSentence = false;
+                    SetActiveUI(false);
                 }
             }
         }
@@ -234,6 +241,30 @@ public class DialogueManager : MonoBehaviour {
         {
             Debug.LogError("DialogueManager.StartDialogue: Can't start empty dialogue");
         }
+    }
+
+    public IEnumerator DisplaySentence(string sentence, string name)
+    {
+        SetActiveUI(true);
+        ChangeIsDialogueInProgress(true);
+        m_IsDisplayingSentence = true;
+
+        m_NameText.text = name;
+        m_Text.text = "";
+        SetActiveNextImage(false);
+
+        m_IsSentenceTyping = true;
+
+        foreach (var letter in sentence)
+        {
+            if (m_IsSentenceTyping)
+                yield return new WaitForSeconds(0.05f);
+
+            m_Text.text += letter;
+        }
+
+        m_IsSentenceTyping = false;
+        SetActiveNextImage(true);
     }
 
 
