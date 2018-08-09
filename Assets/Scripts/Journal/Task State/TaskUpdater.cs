@@ -6,6 +6,7 @@ public class TaskUpdater : MonoBehaviour {
 
     [SerializeField] private string Name;
     [SerializeField, TextArea(2, 20)] private string UpdateText;
+    [SerializeField] private bool DestroyEntireObject;
 
     private bool m_IsPlayerNear;
 
@@ -32,9 +33,18 @@ public class TaskUpdater : MonoBehaviour {
             if (JournalManager.Instance.UpdateTask(Name, UpdateText))
             {
                 m_IsPlayerNear = false;
-                Destroy(this);
+                GameMaster.Instance.SaveTaskState(name);
+                DestroyTaskGiver();
             }
         }
+    }
+
+    public void DestroyTaskGiver()
+    {
+        if (DestroyEntireObject)
+            Destroy(gameObject);
+        else
+            Destroy(this);
     }
 
     private bool CheckTask()

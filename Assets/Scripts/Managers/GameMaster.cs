@@ -154,7 +154,10 @@ public class GameMaster : MonoBehaviour {
 
         if (searchGameObjectResult != null)
         {
-            searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
+            if (searchGameObjectResult.GetComponent<TaskGiver>() != null)
+                searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
+            else
+                searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskGiver();
         }
     }
 

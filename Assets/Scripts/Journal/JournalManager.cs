@@ -159,7 +159,7 @@ public class Task
         this.ButtonTask = buttonTask;
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been added to journal", 3f));
+            new AnnouncerManager.Message(Name + " task has been added to journal <#000000>J</color>", 3f));
     }
 
     public void TaskComplete()
