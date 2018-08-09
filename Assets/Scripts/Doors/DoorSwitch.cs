@@ -5,6 +5,9 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class DoorSwitch : MonoBehaviour {
 
+    public delegate void VoidDelegate();
+    public event VoidDelegate OnSwitchPressed;
+
     [SerializeField] private GameObject DoorToOpen;
 
     private GameObject m_InteractionButton;
@@ -48,6 +51,8 @@ public class DoorSwitch : MonoBehaviour {
             {
                 m_IsPlayerNearSwitch = false;
                 ShowInteractionKey(false);
+
+                if (OnSwitchPressed != null) OnSwitchPressed();
 
                 StartCoroutine(OpenTheDoor());
             }

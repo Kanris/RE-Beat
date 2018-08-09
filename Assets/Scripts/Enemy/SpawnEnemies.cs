@@ -5,26 +5,21 @@ using UnityEngine;
 public class SpawnEnemies : MonoBehaviour {
 
     [SerializeField] private float TimeToUpdate = 1f;
-    [SerializeField] private GameObject ObjectToObserve;
+    [SerializeField] private DoorSwitch SwitchToObserve;
 
     private float m_UpdateTime;
-    private bool m_IsSpawned;
 
-    private void Update()
+    private void Start()
     {
-        if (!m_IsSpawned)
-        {
-            if (m_UpdateTime < Time.time)
-            {
-                m_UpdateTime = Time.time + TimeToUpdate;
+        InitializeEvent();
+    }
 
-                if (ObjectToObserve == null)
-                {
-                    m_IsSpawned = true;
-                    SpawnOnChildren();
-                }
-            }
-        }
+    private void InitializeEvent()
+    {
+        if (SwitchToObserve != null)
+            SwitchToObserve.OnSwitchPressed += SpawnOnChildren;
+        else
+            SpawnOnChildren();
     }
 
     private void SpawnOnChildren()
