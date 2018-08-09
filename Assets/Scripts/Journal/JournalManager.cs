@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class JournalManager : MonoBehaviour {
 
@@ -77,21 +78,21 @@ public class JournalManager : MonoBehaviour {
         m_JournalUI.SetActive(value);
     }
 
-    public void DisplayTaskText(string name)
+    public void DisplayTaskText(string taskName)
     {
-        if (TaskJournal.ContainsKey(name))
+        if (TaskJournal.ContainsKey(taskName))
         {
-            page.ShowText(TaskJournal[name].Text);
+            page.ShowText(TaskJournal[taskName].Text);
         }
     }
 
-    public bool AddTask(string name, string task)
+    public bool AddTask(string taskName, string taskText)
     {
-        if (!TaskJournal.ContainsKey(name))
+        if (!TaskJournal.ContainsKey(taskName))
         {
-            var taskButton = CreateTaskButton(name);
-            var newTask = CreateNewTask(name, task, taskButton);
-            TaskJournal.Add(name, newTask);
+            var taskButton = CreateTaskButton(taskName);
+            var newTask = CreateNewTask(taskName, taskText, taskButton);
+            TaskJournal.Add(taskName, newTask);
 
             return true;
         }
@@ -99,11 +100,11 @@ public class JournalManager : MonoBehaviour {
         return false;
     }
 
-    public bool UpdateTask(string name, string task)
+    public bool UpdateTask(string taskName, string taskText)
     {
-        if (TaskJournal.ContainsKey(name))
+        if (TaskJournal.ContainsKey(taskName))
         {
-            TaskJournal[name].TaskUpdate(task);
+            TaskJournal[taskName].TaskUpdate(taskText);
 
             return true;
         }
@@ -111,12 +112,12 @@ public class JournalManager : MonoBehaviour {
         return false;
     }
 
-    public bool CompleteTask(string name)
+    public bool CompleteTask(string taskname)
     {
-        if (TaskJournal.ContainsKey(name))
+        if (TaskJournal.ContainsKey(taskname))
         {
-            TaskJournal[name].TaskComplete();
-            TaskJournal.Remove(name);
+            TaskJournal[taskname].TaskComplete();
+            TaskJournal.Remove(taskname);
 
             return true;
         }
@@ -124,9 +125,9 @@ public class JournalManager : MonoBehaviour {
         return false;
     }
 
-    private Task CreateNewTask(string name, string task, Button buttonTask)
+    private Task CreateNewTask(string taskName, string taskText, Button buttonTask)
     {
-        return new Task(name, task, buttonTask);
+        return new Task(taskName, taskText, buttonTask);
     }
 
     private Button CreateTaskButton(string name)
@@ -135,6 +136,7 @@ public class JournalManager : MonoBehaviour {
         var instantiateTaskButton = Instantiate(buttonFromResources, taskGrid) as GameObject;
 
         instantiateTaskButton.name = name;
+        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = name;
 
         return instantiateTaskButton.GetComponent<Button>();
     }
@@ -145,21 +147,21 @@ public class Task
 {
     public string Name;
     public string Text;
-    public Button ButtonTask;
+    public Button TaskButton;
     public bool IsTaskComplete;
 
     public delegate void VoidDelegate();
     public event VoidDelegate OnTaskComplete;
     public event VoidDelegate OnTaskUpdate;
 
-    public Task(string name, string text, Button buttonTask)
+    public Task(string taskName, string taskText, Button taskButton)
     {
-        this.Name = name;
-        this.Text = text;
-        this.ButtonTask = buttonTask;
+        this.Name = taskName;
+        this.Text = taskText;
+        this.TaskButton = taskButton;
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been added to journal - <#000000>J</color>", 3f));
+            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been added to journal - <#000000>J</color>", 3f));
     }
 
     public void TaskComplete()
@@ -168,9 +170,9 @@ public class Task
         if(OnTaskComplete != null) OnTaskComplete();
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been complete - <#000000>J</color>", 3f));
+            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been complete - <#000000>J</color>", 3f));
 
-        JournalManager.Destroy(ButtonTask.gameObject);
+        JournalManager.Destroy(TaskButton.gameObject);
     }
 
     public void TaskUpdate(string text)
@@ -179,6 +181,6 @@ public class Task
         if (OnTaskUpdate != null) OnTaskUpdate();
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been updated - <#000000>J</color>", 3f));
+            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been updated - <#000000>J</color>", 3f));
     }
 }
