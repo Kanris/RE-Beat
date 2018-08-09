@@ -32,7 +32,6 @@ public class TaskUpdater : MonoBehaviour {
             if (JournalManager.Instance.UpdateTask(Name, UpdateText))
             {
                 m_IsPlayerNear = false;
-                //TODO: Save update state
                 Destroy(this);
             }
         }

@@ -14,6 +14,8 @@ public class State {
 
     public List<ItemInChest> ChestItems;
 
+    public List<string> Tasks;
+
     public State(string SceneName)
     {
         this.SceneName = SceneName;
@@ -25,6 +27,8 @@ public class State {
         DialogueIsComplete = new List<string>();
 
         ChestItems = new List<ItemInChest>();
+
+        Tasks = new List<string>();
     }
 
     public bool IsExistInBool(string name)

@@ -6,6 +6,7 @@ public class TaskGiver : MonoBehaviour {
 
     [SerializeField] private string Name;
     [SerializeField, TextArea(2, 20)] private string TaskText;
+    [SerializeField] private bool DestroyEntireObject;
 
     private bool m_IsPlayerNear;
 
@@ -24,10 +25,18 @@ public class TaskGiver : MonoBehaviour {
             if (JournalManager.Instance.AddTask(Name, TaskText))
             {
                 m_IsPlayerNear = false;
-                //TODO: Save task state
-                Destroy(gameObject);
+                GameMaster.Instance.SaveTaskState(name);
+                DestroyTaskGiver();
             }
         }
+    }
+
+    public void DestroyTaskGiver()
+    {
+        if (DestroyEntireObject)
+            Destroy(gameObject);
+        else
+            Destroy(this);
     }
 
     private bool CheckTask()

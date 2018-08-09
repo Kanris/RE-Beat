@@ -102,6 +102,9 @@ public class GameMaster : MonoBehaviour {
 
             foreach (var item in searchResult.ChestItems)
                 Recreate(item);
+
+            foreach (var item in searchResult.Tasks)
+                RecreateTaskState(item);
         }
     }
 
@@ -142,6 +145,16 @@ public class GameMaster : MonoBehaviour {
         if (searchGameObjectResult != null)
         {
             searchGameObjectResult.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
+        }
+    }
+
+    public void RecreateTaskState(string taskName)
+    {
+        var searchGameObjectResult = GameObject.Find(taskName);
+
+        if (searchGameObjectResult != null)
+        {
+            searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
         }
     }
 
@@ -224,6 +237,24 @@ public class GameMaster : MonoBehaviour {
         else
         {
             searchResult.ChestItems.Add(new ItemInChest(chestName, item));
+        }
+    }
+
+    public void SaveTaskState(string taskName)
+    {
+        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+        
+        if (searchResult == null)
+        {
+            var newState = new State(SceneName);
+
+            newState.Tasks.Add(taskName);
+
+            ScenesState.Add(newState);
+        }
+        else
+        {
+            searchResult.Tasks.Add(taskName);
         }
     }
 

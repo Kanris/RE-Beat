@@ -386,35 +386,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4777398186216950, guid: 17cb9ad14508e504f9030a8bc492db8b,
     type: 2}
   m_PrefabInternal: {fileID: 2039272099}
---- !u!1 &620097785
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 620097786}
-  m_Layer: 0
-  m_Name: Tasks
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &620097786
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620097785}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1802110611}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800031439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,6 +2051,11 @@ Prefab:
       propertyPath: RespawnPoint
       value: 
       objectReference: {fileID: 1485157930}
+    - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
+        type: 2}
+      propertyPath: SceneName
+      value: E1M2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -3240,6 +3216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Find out
   TaskText: I have to <#000000>find out</color> what is going on
+  DestroyEntireObject: 1
 --- !u!61 &1802110610
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3272,10 +3249,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1802110608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 2.47, z: 0.087890625}
+  m_LocalPosition: {x: -14.396913, y: 0.71167326, z: 0.15429688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 620097786}
+  m_Father: {fileID: 1875735399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1865442589
@@ -3412,6 +3389,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ce0ca094881874c8e31cbc64519f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1875735398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1875735399}
+  m_Layer: 0
+  m_Name: Tasks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875735399
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1875735398}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.996913, y: 1.7583268, z: -0.06640625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1802110611}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2016377324
 GameObject:
   m_ObjectHideFlags: 0
