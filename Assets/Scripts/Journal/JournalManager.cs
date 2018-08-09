@@ -159,7 +159,7 @@ public class Task
         this.ButtonTask = buttonTask;
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been added to journal <#000000>J</color>", 3f));
+            new AnnouncerManager.Message(Name + " task has been added to journal - <#000000>J</color>", 3f));
     }
 
     public void TaskComplete()
@@ -168,7 +168,7 @@ public class Task
         if(OnTaskComplete != null) OnTaskComplete();
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been complete", 3f));
+            new AnnouncerManager.Message(Name + " task has been complete - <#000000>J</color>", 3f));
 
         JournalManager.Destroy(ButtonTask.gameObject);
     }
@@ -179,6 +179,6 @@ public class Task
         if (OnTaskUpdate != null) OnTaskUpdate();
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(Name + " task has been updated", 3f));
+            new AnnouncerManager.Message(Name + " task has been updated - <#000000>J</color>", 3f));
     }
 }
