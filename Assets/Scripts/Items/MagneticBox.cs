@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(Animator))]
 public class MagneticBox : MonoBehaviour {
 
     public static bool isQuitting = false;
@@ -10,6 +11,7 @@ public class MagneticBox : MonoBehaviour {
     public string NeededItem = "Magnetic Arm";
 
     private bool m_IsBoxPickedUp;
+    private Animator m_Animator;
     private Transform m_Player;
     private GameObject m_InteractionButton;
     private Vector2 m_RespawnPosition;
@@ -21,6 +23,8 @@ public class MagneticBox : MonoBehaviour {
         InitializeInteractionButton();
 
         InitializeRespawnValues();
+
+        InitializeAnimator();
 
         SetActiveInteractionButton(false);
 
@@ -39,6 +43,16 @@ public class MagneticBox : MonoBehaviour {
     {
         m_RespawnPosition = transform.position;
         m_RespawnRotation = transform.rotation;
+    }
+
+    private void InitializeAnimator()
+    {
+        m_Animator = GetComponent<Animator>();
+
+        if (m_Animator == null)
+        {
+            Debug.LogError("MagneticBox.InitializeAnimator: can't find animator on gameObject");
+        }
     }
 
     #endregion
@@ -90,11 +104,13 @@ public class MagneticBox : MonoBehaviour {
             transform.SetParent(m_Player);
             transform.localPosition = new Vector2(0.5f, 0.5f);
             transform.gameObject.layer = 15;
+            SetAnimation("Active");
         }
         else
         {
             transform.SetParent(null);
             transform.gameObject.layer = 0;
+            SetAnimation("Inactive");
             GameMaster.Instance.SavePositionState(transform.name, transform.position);
         }
 
@@ -135,5 +151,10 @@ public class MagneticBox : MonoBehaviour {
     private void SetActiveInteractionButton(bool value)
     {
         m_InteractionButton.SetActive(value);
+    }
+
+    private void SetAnimation(string name)
+    {
+        m_Animator.SetTrigger(name);
     }
 }
