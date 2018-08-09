@@ -33,11 +33,11 @@ public class DialogueManager : MonoBehaviour {
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnDialogueInProgressChange;
 
-    private GameObject m_DialogueUI;
-    private GameObject m_Buttons;
     private Queue<Sentence> m_Sentences = new Queue<Sentence>();
     private Dialogue m_Dialogue;
     private Sentence m_CurrentSentence;
+    private GameObject m_DialogueUI;
+    private GameObject m_Buttons;
     private Button m_FirstButton;
     private Button m_SecondButton;
     private bool m_IsSentenceTyping;

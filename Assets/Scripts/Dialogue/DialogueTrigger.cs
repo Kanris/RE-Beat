@@ -24,11 +24,15 @@ public class DialogueTrigger : MonoBehaviour {
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeDialogueInProcess;
     }
 
+    #region Initialize
+
     private void InitializeInteractionButton()
     {
         var ui = Resources.Load("UI/NPCUI") as GameObject;
         m_UI = Instantiate(ui, transform);
     }
+
+    #endregion
 
     // Update is called once per frame
     void Update () {

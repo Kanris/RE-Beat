@@ -49,6 +49,8 @@ public class GameMaster : MonoBehaviour {
 
         Initialize("Managers/UIManager");
 
+        Initialize("Managers/JournalManager");
+
         InitializeRespawnPoint();
 
         InitalizePlayerToRespawn();
