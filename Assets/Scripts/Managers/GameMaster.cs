@@ -63,12 +63,6 @@ public class GameMaster : MonoBehaviour {
 
     #endregion
 
-
-    #region SceneRecreation
-    private List<State> ScenesState;
-
-    public string SceneName;
-
     private void Start()
     {
         if (Camera.main.GetComponent<Camera2DFollow>().target == null)
@@ -83,6 +77,13 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    #region SceneRecreation
+    private List<State> ScenesState;
+
+    public string SceneName;
+
+    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
+
     public void RecreateSceneState(string sceneName)
     {
         SceneName = sceneName;
@@ -91,21 +92,38 @@ public class GameMaster : MonoBehaviour {
 
         if (searchResult != null)
         {
+            /* Recreate(searchResult.ObjectsState, RecreateType.Object);
+             Recreate(searchResult.ObjectsPosition, RecreateType.Position);
+             Recreate(searchResult.DialogueIsComplete, RecreateType.Dialogue);
+             Recreate(searchResult.ChestItems, RecreateType.ChestItem);
+             Recreate(searchResult.Tasks, RecreateType.Task);*/
+
+
             foreach (var item in searchResult.ObjectsState)
-                Recreate(item);
+                 Recreate(item);
 
-            foreach (var item in searchResult.ObjectsPosition)
-                Recreate(item.Key, item.Value);
+             foreach (var item in searchResult.ObjectsPosition)
+                 Recreate(item.Key, item.Value);
 
-            foreach (var item in searchResult.DialogueIsComplete)
-                RecreateDialogue(item);
+             foreach (var item in searchResult.DialogueIsComplete)
+                 RecreateDialogue(item);
 
-            foreach (var item in searchResult.ChestItems)
-                Recreate(item);
+             foreach (var item in searchResult.ChestItems)
+                 Recreate(item);
 
-            foreach (var item in searchResult.Tasks)
-                RecreateTaskState(item);
+             foreach (var item in searchResult.Tasks)
+                 RecreateTaskState(item);
         }
+    }
+
+    private void Recreate<T>(List<T> list, RecreateType recreateType)
+    {
+
+    }
+
+    private void Recreate<K,V>(Dictionary<K,V> list, RecreateType recreateType)
+    {
+
     }
 
     private void Recreate(string name)
@@ -157,7 +175,7 @@ public class GameMaster : MonoBehaviour {
             if (searchGameObjectResult.GetComponent<TaskGiver>() != null)
                 searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
             else
-                searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskGiver();
+                searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskUpdater();
         }
     }
 

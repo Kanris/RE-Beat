@@ -34,12 +34,12 @@ public class TaskUpdater : MonoBehaviour {
             {
                 m_IsPlayerNear = false;
                 GameMaster.Instance.SaveTaskState(name);
-                DestroyTaskGiver();
+                DestroyTaskUpdater();
             }
         }
     }
 
-    public void DestroyTaskGiver()
+    public void DestroyTaskUpdater()
     {
         if (DestroyEntireObject)
             Destroy(gameObject);
