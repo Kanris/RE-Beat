@@ -61,16 +61,12 @@ public class PauseMenuManager : MonoBehaviour {
         {
             m_PauseGame.SetActive(active);
 
-            /*if (DialogueManager.Instance.isDialogueInProgress)
-                DialogueManager.Instance.SetActiveUI(!active);*/
-
             if (active == true)
             {
                 Time.timeScale = 0f;
 
                 if (m_FirstSelectedGameobject != null)
-                    GameObject.Find("EventSystem").GetComponent<EventSystem>().
-                              SetSelectedGameObject(m_FirstSelectedGameobject);
+                    EventSystem.current.SetSelectedGameObject(m_FirstSelectedGameobject);
             }
             else
                 Time.timeScale = 1f;
@@ -103,6 +99,7 @@ public class PauseMenuManager : MonoBehaviour {
         PickupBox.isQuitting = true;
         MagneticBox.isQuitting = true;
         StringTrigger.isQuitting = true;
+        DoorSwitch.isQuitting = true;
 
         LoadSceneManager.Instance.Load("StartScreen");
 

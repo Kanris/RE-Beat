@@ -21,6 +21,7 @@ public class MoveToNextScene : MonoBehaviour {
                 PickupBox.isQuitting = true;
                 StringTrigger.isQuitting = true;
                 MagneticBox.isQuitting = true;
+                DoorSwitch.isQuitting = true;
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
             }

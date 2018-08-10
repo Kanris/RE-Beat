@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour {
-
-    [SerializeField] private float TimeToUpdate = 1f;
+    
     [SerializeField] private DoorSwitch SwitchToObserve;
 
     private float m_UpdateTime;

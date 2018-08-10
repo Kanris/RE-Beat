@@ -84,6 +84,10 @@ public class GameMaster : MonoBehaviour {
 
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
 
+    public delegate void VoidDelegate<T>(GameObject gameObject, T value);
+
+    #region Recreate
+
     public void RecreateSceneState(string sceneName)
     {
         SceneName = sceneName;
@@ -92,93 +96,98 @@ public class GameMaster : MonoBehaviour {
 
         if (searchResult != null)
         {
-            /* Recreate(searchResult.ObjectsState, RecreateType.Object);
-             Recreate(searchResult.ObjectsPosition, RecreateType.Position);
-             Recreate(searchResult.DialogueIsComplete, RecreateType.Dialogue);
-             Recreate(searchResult.ChestItems, RecreateType.ChestItem);
-             Recreate(searchResult.Tasks, RecreateType.Task);*/
+            Recreate(searchResult.ObjectsState, RecreateType.Object);
+            Recreate(searchResult.ObjectsPosition, RecreateType.Position);
+            Recreate(searchResult.Tasks, RecreateType.Task);
 
-
-            foreach (var item in searchResult.ObjectsState)
-                 Recreate(item);
-
-             foreach (var item in searchResult.ObjectsPosition)
-                 Recreate(item.Key, item.Value);
-
-             foreach (var item in searchResult.DialogueIsComplete)
-                 RecreateDialogue(item);
-
-             foreach (var item in searchResult.ChestItems)
-                 Recreate(item);
-
-             foreach (var item in searchResult.Tasks)
-                 RecreateTaskState(item);
+            Recreate(searchResult.DialogueIsComplete, RecreateType.Dialogue);
+            Recreate(searchResult.ChestItems, RecreateType.ChestItem);
         }
     }
 
-    private void Recreate<T>(List<T> list, RecreateType recreateType)
+    private void Recreate(List<string> list, RecreateType recreateType)
     {
+        var methodToExecute = GetMethodToExecute<int>(recreateType);
 
+        foreach (var item in list)
+        {
+            Recreate(item, methodToExecute, 0);
+        }
     }
 
-    private void Recreate<K,V>(Dictionary<K,V> list, RecreateType recreateType)
+    private void Recreate<T>(Dictionary<string, T> list, RecreateType recreateType)
     {
+        if (recreateType == RecreateType.Position)
+        {
+            var methodToExecute = GetMethodToExecute<Vector2>(recreateType);
 
+            foreach (var item in list)
+            {
+                Recreate(item.Key, methodToExecute, (Vector2)(object)item.Value);
+            }
+        }
+        else if (recreateType == RecreateType.ChestItem)
+        {
+            var methodToExecute = GetMethodToExecute<string>(recreateType);
+            foreach (var item in list)
+            {
+                Recreate((string)(object)item.Value, methodToExecute, item.Key);
+            }
+        }
     }
 
-    private void Recreate(string name)
+    private VoidDelegate<T> GetMethodToExecute<T>(RecreateType recreateType)
     {
-        var searchGameObjectResult = GameObject.Find(name);
-        
+        VoidDelegate<T> methodToExecute = null;
+
+        switch (recreateType)
+        {
+            case RecreateType.Object:
+                methodToExecute = (x, v) => Destroy(x);
+                break;
+
+            case RecreateType.Dialogue:
+                methodToExecute = (x, v) => x.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
+                break;
+
+            case RecreateType.Task:
+                methodToExecute = (x, v) =>
+                {
+                    if (x.GetComponent<TaskGiver>() != null)
+                        x.GetComponent<TaskGiver>().DestroyTaskGiver();
+                    else
+                        x.GetComponent<TaskUpdater>().DestroyTaskUpdater();
+                };
+                break;
+
+            case RecreateType.Position:
+                methodToExecute = (x, v) =>
+                    x.transform.position = (Vector2)(object)v;
+                break;
+
+            case RecreateType.ChestItem:
+                methodToExecute = (x, v) =>
+                    x.GetComponent<Chest>().RemoveFromChest((string)(object)v);
+                break;
+        }
+
+        return methodToExecute;
+    }
+
+    private void Recreate<T>(string objectToFind, VoidDelegate<T> methodToExecute, T value)
+    {
+        var searchGameObjectResult = GameObject.Find(objectToFind);
+
         if (searchGameObjectResult != null)
         {
-            Destroy(searchGameObjectResult);
+            if (methodToExecute != null)
+                methodToExecute(searchGameObjectResult, value);
         }
     }
 
-    private void Recreate(ItemInChest item)
-    {
-        var searchGameObjectResult = GameObject.Find(item.ChestName);
+    #endregion
 
-        if (searchGameObjectResult != null)
-        {
-            searchGameObjectResult.GetComponent<Chest>().RemoveFromChest(item.Item);
-        }
-    }
-
-    private void Recreate(string name, Vector2 state)
-    {
-        var searchGameObjectResult = GameObject.Find(name);
-
-        if (searchGameObjectResult != null)
-        {
-            searchGameObjectResult.transform.position = state;
-        }
-    }
-
-    private void RecreateDialogue(string name)
-    {
-        var searchGameObjectResult = GameObject.Find(name);
-
-        if (searchGameObjectResult != null)
-        {
-            searchGameObjectResult.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
-        }
-    }
-
-    public void RecreateTaskState(string taskName)
-    {
-        var searchGameObjectResult = GameObject.Find(taskName);
-
-        if (searchGameObjectResult != null)
-        {
-            if (searchGameObjectResult.GetComponent<TaskGiver>() != null)
-                searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
-            else
-                searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskUpdater();
-        }
-    }
-
+    #region SaveState
     public void SaveBoolState(string name)
     {
         var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
@@ -251,13 +260,13 @@ public class GameMaster : MonoBehaviour {
         {
             var newState = new State(SceneName);
 
-            newState.ChestItems.Add(new ItemInChest(chestName, item));
+            newState.ChestItems.Add(item, chestName);
 
             ScenesState.Add(newState);
         }
         else
         {
-            searchResult.ChestItems.Add(new ItemInChest(chestName, item));
+            searchResult.ChestItems.Add(item, chestName);
         }
     }
 
@@ -278,6 +287,8 @@ public class GameMaster : MonoBehaviour {
             searchResult.Tasks.Add(taskName);
         }
     }
+
+    #endregion
 
     private string ClearName(string name)
     {

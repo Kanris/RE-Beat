@@ -8,6 +8,8 @@ public class DoorSwitch : MonoBehaviour {
     public delegate void VoidDelegate();
     public event VoidDelegate OnSwitchPressed;
 
+    public static bool isQuitting;
+
     [SerializeField] private GameObject DoorToOpen;
 
     private GameObject m_InteractionButton;
@@ -22,6 +24,8 @@ public class DoorSwitch : MonoBehaviour {
         InitializeInteractionButton();
 
         ShowInteractionKey(false);
+
+        isQuitting = false;
 
     }
 
@@ -51,8 +55,6 @@ public class DoorSwitch : MonoBehaviour {
             {
                 m_IsPlayerNearSwitch = false;
                 ShowInteractionKey(false);
-
-                if (OnSwitchPressed != null) OnSwitchPressed();
 
                 StartCoroutine(OpenTheDoor());
             }
@@ -114,5 +116,18 @@ public class DoorSwitch : MonoBehaviour {
             Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
         }
 
+    }
+
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
+
+    private void OnDestroy()
+    {
+        if (!isQuitting)
+        {
+            OnSwitchPressed();
+        }
     }
 }
