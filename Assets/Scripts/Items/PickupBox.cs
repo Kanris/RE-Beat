@@ -138,7 +138,7 @@ public class PickupBox : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         else
         {
-            GameMaster.Instance.SavePositionState(gameObject.name, transform.position);
+            GameMaster.Instance.SaveState(gameObject.name, transform.position, GameMaster.RecreateType.Position);
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 

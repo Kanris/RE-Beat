@@ -84,8 +84,6 @@ public class GameMaster : MonoBehaviour {
 
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
 
-    public delegate void VoidDelegate<T>(GameObject gameObject, T value);
-
     #region Recreate
 
     public void RecreateSceneState(string sceneName)
@@ -107,11 +105,9 @@ public class GameMaster : MonoBehaviour {
 
     private void Recreate(List<string> list, RecreateType recreateType)
     {
-        var methodToExecute = GetMethodToExecute<int>(recreateType);
-
         foreach (var item in list)
         {
-            Recreate(item, methodToExecute, 0);
+            RecreateObjectState(item, 0, recreateType);
         }
     }
 
@@ -119,172 +115,117 @@ public class GameMaster : MonoBehaviour {
     {
         if (recreateType == RecreateType.Position)
         {
-            var methodToExecute = GetMethodToExecute<Vector2>(recreateType);
-
             foreach (var item in list)
             {
-                Recreate(item.Key, methodToExecute, (Vector2)(object)item.Value);
+                RecreateObjectState(item.Key, item.Value, recreateType);
             }
         }
         else if (recreateType == RecreateType.ChestItem)
         {
-            var methodToExecute = GetMethodToExecute<string>(recreateType);
             foreach (var item in list)
             {
-                Recreate((string)(object)item.Value, methodToExecute, item.Key);
+                RecreateObjectState((string)(object)item.Value, item.Key, recreateType);
             }
         }
     }
 
-    private VoidDelegate<T> GetMethodToExecute<T>(RecreateType recreateType)
-    {
-        VoidDelegate<T> methodToExecute = null;
-
-        switch (recreateType)
-        {
-            case RecreateType.Object:
-                methodToExecute = (x, v) => Destroy(x);
-                break;
-
-            case RecreateType.Dialogue:
-                methodToExecute = (x, v) => x.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
-                break;
-
-            case RecreateType.Task:
-                methodToExecute = (x, v) =>
-                {
-                    if (x.GetComponent<TaskGiver>() != null)
-                        x.GetComponent<TaskGiver>().DestroyTaskGiver();
-                    else
-                        x.GetComponent<TaskUpdater>().DestroyTaskUpdater();
-                };
-                break;
-
-            case RecreateType.Position:
-                methodToExecute = (x, v) =>
-                    x.transform.position = (Vector2)(object)v;
-                break;
-
-            case RecreateType.ChestItem:
-                methodToExecute = (x, v) =>
-                    x.GetComponent<Chest>().RemoveFromChest((string)(object)v);
-                break;
-        }
-
-        return methodToExecute;
-    }
-
-    private void Recreate<T>(string objectToFind, VoidDelegate<T> methodToExecute, T value)
+    private void RecreateObjectState<T>(string objectToFind, T value, RecreateType recreateType)
     {
         var searchGameObjectResult = GameObject.Find(objectToFind);
 
         if (searchGameObjectResult != null)
-        {
-            if (methodToExecute != null)
-                methodToExecute(searchGameObjectResult, value);
+        { 
+            switch (recreateType)
+            {
+                case RecreateType.Object:
+                    Destroy(searchGameObjectResult);
+                    break;
+
+                case RecreateType.Dialogue:
+                    searchGameObjectResult.GetComponent<DialogueTrigger>().dialogue.IsDialogueFinished = true;
+                    break;
+
+                case RecreateType.Task:
+                    if (searchGameObjectResult.GetComponent<TaskGiver>() != null)
+                        searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
+                    else
+                        searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskUpdater();
+                    break;
+
+                case RecreateType.Position:
+                    searchGameObjectResult.transform.position = (Vector2)(object)value;
+                    break;
+
+                case RecreateType.ChestItem:
+                    searchGameObjectResult.GetComponent<Chest>().RemoveFromChest((string)(object)value);
+                    break;
+            }
         }
     }
 
     #endregion
 
     #region SaveState
-    public void SaveBoolState(string name)
+
+    private State GetState()
     {
         var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
         if (searchResult == null)
         {
-            var newState = new State(SceneName);
+            searchResult = new State(SceneName);
 
-            newState.ObjectsState.Add(name);
+            ScenesState.Add(searchResult);
+        }
 
-            ScenesState.Add(newState);
-        }
-        else
-        {
-            if (!searchResult.IsExistInBool(name))
-                searchResult.ObjectsState.Add(name);
-        }
+        return searchResult;
     }
 
-    public void SavePositionState(string name, Vector2 state)
+    public void SaveState<T>(string name, T value, RecreateType recreateType)
     {
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
-
-        if (searchResult == null)
-        {
-            var newState = new State(SceneName);
-
-            newState.ObjectsPosition.Add(name, state);
-
-            ScenesState.Add(newState);
-        }
-        else
-        {
-            name = ClearName(name);
-
-            if (!searchResult.IsExistInPosition(name))
-            {
-                searchResult.ObjectsPosition.Add(name, state);
-            }
-            else
-            {
-                searchResult.ObjectsPosition[name] = state;
-            }
-        }
-    }
-
-    public void SaveDialogueState(string name)
-    {
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
-
-        if (searchResult == null)
-        {
-            var newState = new State(SceneName);
-
-            newState.DialogueIsComplete.Add(name);
-
-            ScenesState.Add(newState);
-        }
-        else
-        {
-            searchResult.DialogueIsComplete.Add(name);
-        }
-    }
-
-    public void SaveChestState(string chestName, string item)
-    {
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
-
-        if (searchResult == null)
-        {
-            var newState = new State(SceneName);
-
-            newState.ChestItems.Add(item, chestName);
-
-            ScenesState.Add(newState);
-        }
-        else
-        {
-            searchResult.ChestItems.Add(item, chestName);
-        }
-    }
-
-    public void SaveTaskState(string taskName)
-    {
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+        var state = GetState();
         
-        if (searchResult == null)
+        switch (recreateType)
         {
-            var newState = new State(SceneName);
+            case RecreateType.Object:
 
-            newState.Tasks.Add(taskName);
+                if (!state.IsExistInBool(name))
+                    state.ObjectsState.Add(name);
 
-            ScenesState.Add(newState);
-        }
-        else
-        {
-            searchResult.Tasks.Add(taskName);
+                break;
+
+            case RecreateType.Dialogue:
+
+                state.DialogueIsComplete.Add(name);
+
+                break;
+
+            case RecreateType.Task:
+
+                state.Tasks.Add(name);
+
+                break;
+
+            case RecreateType.ChestItem:
+
+                state.ChestItems.Add((string)(object)value, name);
+
+                break;
+
+            case RecreateType.Position:
+
+                name = ClearName(name);
+
+                if (!state.IsExistInPosition(name))
+                {
+                    state.ObjectsPosition.Add(name, (Vector3)(object)value);
+                }
+                else
+                {
+                    state.ObjectsPosition[name] = (Vector3)(object)value;
+                }
+
+                break;
         }
     }
 

@@ -44,7 +44,7 @@ public class DialogueTrigger : MonoBehaviour {
                 if (CrossPlatformInputManager.GetButtonDown("Submit"))
                 {
                     StartDialogue();
-                    GameMaster.Instance.SaveDialogueState(gameObject.name);
+                    GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue);
                 }
                 else
                 {

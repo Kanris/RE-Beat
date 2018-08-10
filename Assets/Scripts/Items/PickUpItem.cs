@@ -65,7 +65,7 @@ public class PickUpItem : MonoBehaviour {
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
 
         if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveBoolState(gameObject.name);
+            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
 
         Destroy(gameObject);
     }

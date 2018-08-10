@@ -26,7 +26,7 @@ public class StringTrigger : MonoBehaviour {
         }
         else if (collision.CompareTag("PlayerAttackRange"))
         {
-            GameMaster.Instance.SaveBoolState(gameObject.name);
+            GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object);
             Destroy(gameObject);
         }
     }

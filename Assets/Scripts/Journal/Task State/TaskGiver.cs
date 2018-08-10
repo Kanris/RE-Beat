@@ -25,7 +25,7 @@ public class TaskGiver : MonoBehaviour {
             if (JournalManager.Instance.AddTask(Name, TaskText))
             {
                 m_IsPlayerNear = false;
-                GameMaster.Instance.SaveTaskState(name);
+                GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task);
                 DestroyTaskGiver();
             }
         }

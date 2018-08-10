@@ -111,7 +111,7 @@ public class MagneticBox : MonoBehaviour {
             transform.SetParent(null);
             transform.gameObject.layer = 0;
             SetAnimation("Inactive");
-            GameMaster.Instance.SavePositionState(transform.name, transform.position);
+            GameMaster.Instance.SaveState(transform.name, transform.position, GameMaster.RecreateType.Position);
         }
 
         m_IsBoxPickedUp = value;

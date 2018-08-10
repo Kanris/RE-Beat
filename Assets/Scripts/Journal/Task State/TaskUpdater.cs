@@ -33,7 +33,7 @@ public class TaskUpdater : MonoBehaviour {
             if (JournalManager.Instance.UpdateTask(Name, UpdateText))
             {
                 m_IsPlayerNear = false;
-                GameMaster.Instance.SaveTaskState(name);
+                GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task);
                 DestroyTaskUpdater();
             }
         }
