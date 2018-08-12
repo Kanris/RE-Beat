@@ -123,18 +123,18 @@ public class MagneticBox : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player == null)
+        if (collision.transform.CompareTag("Player") & m_Player == null)
         {
             m_Player = collision.transform;
             ActiveInteractionButton(true);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player != null)
+        if (collision.transform.CompareTag("Player") & m_Player != null)
         {
             m_Player = null;
             ActiveInteractionButton(false);
