@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 114248057191475854}
   m_Layer: 8
   m_Name: Face
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587882821856884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.736249, y: -0.15606809, z: 0}
+  m_LocalPosition: {x: -16.307827, y: 0.52659976, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4758340766805514}
@@ -254,7 +254,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.123226225, y: 0.37848067}
+  m_Offset: {x: -0.054332733, y: 0.43393117}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -265,7 +265,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.13741577, y: 0.87677336}
+  m_Size: {x: 0.033237457, y: 0.90029776}
   m_EdgeRadius: 0
 --- !u!70 &70465107185959750
 CapsuleCollider2D:
@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d7b34a3bb2d4e4b926e7e729d3d410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsCanJump: 0
 --- !u!212 &212191104126831080
 SpriteRenderer:
   m_ObjectHideFlags: 1

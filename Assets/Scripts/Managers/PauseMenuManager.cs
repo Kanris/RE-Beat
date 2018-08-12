@@ -28,6 +28,7 @@ public class PauseMenuManager : MonoBehaviour {
 
     public delegate void DelegateVoid(bool state);
     public event DelegateVoid OnGamePause;
+    public event DelegateVoid OnReturnToStartSceen;
 
     //public bool isGamePause = false;
     private GameObject m_PauseGame;
@@ -96,10 +97,9 @@ public class PauseMenuManager : MonoBehaviour {
     public void ReturnToStartScreen()
     {
         SetActive(!m_PauseGame.activeSelf);
-        PickupBox.isQuitting = true;
-        MagneticBox.isQuitting = true;
-        StringTrigger.isQuitting = true;
-        DoorSwitch.isQuitting = true;
+
+        if (OnReturnToStartSceen != null)
+            OnReturnToStartSceen(true);
 
         LoadSceneManager.Instance.Load("StartScreen");
 

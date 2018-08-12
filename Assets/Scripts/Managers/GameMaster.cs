@@ -146,10 +146,8 @@ public class GameMaster : MonoBehaviour {
                     break;
 
                 case RecreateType.Task:
-                    if (searchGameObjectResult.GetComponent<TaskGiver>() != null)
-                        searchGameObjectResult.GetComponent<TaskGiver>().DestroyTaskGiver();
-                    else
-                        searchGameObjectResult.GetComponent<TaskUpdater>().DestroyTaskUpdater();
+                    if (searchGameObjectResult.GetComponent<TaskManager>() != null)
+                        searchGameObjectResult.GetComponent<TaskManager>().DestroyObject();
                     break;
 
                 case RecreateType.Position:

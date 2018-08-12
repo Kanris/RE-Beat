@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-[RequireComponent(typeof(Animator))]
 public class MagneticBox : MonoBehaviour {
-
-    public static bool isQuitting = false;
 
     public string NeededItem = "Magnetic Arm";
 
     private bool m_IsBoxPickedUp;
+    private bool m_IsQuitting;
     private Animator m_Animator;
     private Transform m_Player;
-    private GameObject m_InteractionButton;
     private Vector2 m_RespawnPosition;
     private Quaternion m_RespawnRotation;
+    private GameObject m_InteractionButton;
 
 	// Use this for initialization
 	void Start () {
@@ -26,17 +24,19 @@ public class MagneticBox : MonoBehaviour {
 
         InitializeAnimator();
 
-        SetActiveInteractionButton(false);
+        ChangeIsQuitting(false);
 
-        isQuitting = false;
+        ActiveInteractionButton(false);
+
+        SubscribeToEvents();
     }
 
     #region Initialize
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI");
-        m_InteractionButton = Instantiate(interactionButton, transform) as GameObject;
+        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
+        m_InteractionButton = Instantiate(interactionButton, transform);
     }
 
     private void InitializeRespawnValues()
@@ -55,21 +55,27 @@ public class MagneticBox : MonoBehaviour {
         }
     }
 
-    #endregion
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
+        if (MoveToNextScene.Instance != null)
+            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+    }
 
     private void OnApplicationQuit()
     {
-        isQuitting = true;
+        ChangeIsQuitting(true);
     }
 
     private void OnDestroy()
     {
-        if (!isQuitting)
+        if (!m_IsQuitting)
         {
             var objectToRespawn = Resources.Load("Items/MagneticBox");
             Instantiate(objectToRespawn, m_RespawnPosition, m_RespawnRotation);
         }
     }
+    #endregion
 
     private void Update()
     {
@@ -99,6 +105,8 @@ public class MagneticBox : MonoBehaviour {
 
     private void PickUpBox(bool value)
     {
+        m_IsBoxPickedUp = value;
+
         if (value)
         {
             transform.SetParent(m_Player);
@@ -113,15 +121,14 @@ public class MagneticBox : MonoBehaviour {
             SetAnimation("Inactive");
             GameMaster.Instance.SaveState(transform.name, transform.position, GameMaster.RecreateType.Position);
         }
-
-        m_IsBoxPickedUp = value;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & m_Player == null)
         {
-            ChangeProperties(true, collision);
+            m_Player = collision.transform;
+            ActiveInteractionButton(true);
         }
     }
 
@@ -129,18 +136,9 @@ public class MagneticBox : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_Player != null)
         {
-            ChangeProperties(false, collision);
-        }
-    }
-
-    private void ChangeProperties(bool value, Collider2D collision)
-    {
-        SetActiveInteractionButton(value);
-
-        if (value)
-            m_Player = collision.transform;
-        else
             m_Player = null;
+            ActiveInteractionButton(false);
+        }
     }
 
     private bool IsPlayerHaveItem()
@@ -148,13 +146,21 @@ public class MagneticBox : MonoBehaviour {
         return PlayerStats.PlayerInventory.IsInBag(NeededItem);
     }
 
-    private void SetActiveInteractionButton(bool value)
+    private void ActiveInteractionButton(bool isActive)
     {
-        m_InteractionButton.SetActive(value);
+        if (m_InteractionButton != null)
+        {
+            m_InteractionButton.SetActive(isActive);
+        }
     }
 
     private void SetAnimation(string name)
     {
         m_Animator.SetTrigger(name);
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 }

@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class MoveToNextScene : MonoBehaviour {
 
+    public static MoveToNextScene Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate IsMoveToNextScene;
+
     [SerializeField] private string NextScene;
     [SerializeField] private string NextScenename;
     [SerializeField] private Vector2 SpawnPosition;
@@ -18,10 +28,9 @@ public class MoveToNextScene : MonoBehaviour {
             isPlayerNear = true;
             if (!string.IsNullOrEmpty(NextScene))
             {
-                PickupBox.isQuitting = true;
-                StringTrigger.isQuitting = true;
-                MagneticBox.isQuitting = true;
-                DoorSwitch.isQuitting = true;
+                if (IsMoveToNextScene != null)
+                    IsMoveToNextScene(true);
+
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
             }

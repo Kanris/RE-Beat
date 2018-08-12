@@ -6,11 +6,20 @@ public class StringTrigger : MonoBehaviour {
 
     private Rigidbody2D m_Box;
 
-    public static bool isQuitting;
+    public bool m_IsQuitting;
 
     private void Start()
     {
-        isQuitting = false;
+        ChangeIsQuitting(false);
+
+        SubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
+        if (MoveToNextScene.Instance != null)
+            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,12 +42,12 @@ public class StringTrigger : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        isQuitting = true;
+        ChangeIsQuitting(true);
     }
 
     private void OnDestroy()
     {
-        if (!isQuitting)
+        if (!m_IsQuitting)
         {
             if (m_Box != null)
             {
@@ -50,5 +59,10 @@ public class StringTrigger : MonoBehaviour {
                     | RigidbodyConstraints2D.FreezeRotation;
             }
         }
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 }

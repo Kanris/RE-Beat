@@ -11,15 +11,12 @@ public class PickupBox : MonoBehaviour {
     private Transform m_Player;
     
     private bool m_IsBoxUp;
-
-    public static bool isQuitting = false;
+    private bool m_IsQuitting = false;
 
     public float YRestrictions = -10f;
 
     [SerializeField] private BoxCollider2D m_BoxCollider;
-
-    private float updateTime = 4f;
-
+    
 	// Use this for initialization
 	void Start () {
 
@@ -30,23 +27,36 @@ public class PickupBox : MonoBehaviour {
         m_SpawnPosition = transform.position;
         m_SpawnRotation = transform.rotation;
 
-        isQuitting = false;
+        ChangeIsQuitting(false);
+
+        SubscribeToEvents();
     }
+
+    #region Initialize
 
     private void InitializeInteractionButton()
     {
         var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
         m_InteractionButton = Instantiate(interactionButton, transform);
     }
-    
+
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
+        if (MoveToNextScene.Instance != null)
+            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+    }
+
+    #endregion
+
     private void OnApplicationQuit()
     {
-        isQuitting = true;
+        ChangeIsQuitting(true);
     }
 
     private void OnDestroy()
     {
-         if (!isQuitting)
+         if (!m_IsQuitting)
          {
              var newBox = Resources.Load("Items/Box") as GameObject;
              Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
@@ -144,5 +154,10 @@ public class PickupBox : MonoBehaviour {
 
         transform.gameObject.layer = layerId;
         ActiveInteractionButton(!isActive);
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 }

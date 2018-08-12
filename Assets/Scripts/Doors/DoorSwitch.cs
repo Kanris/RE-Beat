@@ -8,7 +8,7 @@ public class DoorSwitch : MonoBehaviour {
     public delegate void VoidDelegate();
     public event VoidDelegate OnSwitchPressed;
 
-    public static bool isQuitting;
+    public bool m_IsQuitting;
 
     [SerializeField] private GameObject DoorToOpen;
 
@@ -25,9 +25,13 @@ public class DoorSwitch : MonoBehaviour {
 
         ShowInteractionKey(false);
 
-        isQuitting = false;
+        ChangeIsQuitting(false);
+
+        SubscribeToEvents();
 
     }
+
+    #region Initialize
 
     private void InitializeInteractionButton()
     {
@@ -45,6 +49,16 @@ public class DoorSwitch : MonoBehaviour {
             Debug.LogError("DoorSwitch.InitializeAnimator: Can't find Animator component on gameobject");
         }
     }
+
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
+        if (MoveToNextScene.Instance != null)
+            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+    }
+
+
+    #endregion
 
     // Update is called once per frame
     void Update () {
@@ -120,14 +134,19 @@ public class DoorSwitch : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        isQuitting = true;
+        ChangeIsQuitting(true);
     }
 
     private void OnDestroy()
     {
-        if (!isQuitting)
+        if (!m_IsQuitting)
         {
             OnSwitchPressed();
         }
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 }
