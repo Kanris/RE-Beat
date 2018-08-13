@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StartScreenManager : MonoBehaviour {
 
+    [SerializeField] private string BackgroundMusic;
+
     private void Awake()
     {
         #region Initialize Managers
@@ -14,6 +16,9 @@ public class StartScreenManager : MonoBehaviour {
         Initialize("Managers/LoadSceneManager");
 
         Initialize("Managers/ScreenFaderManager");
+
+        InitializeBackgroundMusic();
+
         #endregion
     }
 
@@ -21,6 +26,12 @@ public class StartScreenManager : MonoBehaviour {
     {
         var gameObjectToInstantiate = Resources.Load(name);
         Instantiate(gameObjectToInstantiate);
+    }
+
+    private void InitializeBackgroundMusic()
+    {
+        if (!string.IsNullOrEmpty(BackgroundMusic))
+            AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
     }
 
     public void LoadScene(string name)

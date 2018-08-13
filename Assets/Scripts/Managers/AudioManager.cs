@@ -167,7 +167,6 @@ public class AudioManager : MonoBehaviour {
 
     public void SetBackgroundMusic(string name)
     {
-        Debug.LogError("Change - " + m_BackgroundMusic + " to " + name);
         if (m_BackgroundMusic != name)
         {
             if (!string.IsNullOrEmpty(m_BackgroundMusic))
