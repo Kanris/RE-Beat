@@ -19586,6 +19586,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.size
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -19617,6 +19622,36 @@ Prefab:
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_RootOrder
       value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].Name
+      value: Player Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8fd1181e305ccd74f95e3135414a9658, type: 3}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].Volume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].VolumeOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[15].PitchOffset
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}

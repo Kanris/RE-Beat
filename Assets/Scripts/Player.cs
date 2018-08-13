@@ -72,6 +72,8 @@ public class Player : MonoBehaviour {
             m_IsAttacking = true;
             AttackRange.SetActive(true);
 
+            AudioManager.Instance.Play("Player Attack");
+
             yield return new WaitForSeconds(0.1f);
 
             m_IsAttacking = false;
