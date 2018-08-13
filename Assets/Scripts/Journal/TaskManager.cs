@@ -103,7 +103,7 @@ public class TaskManager : MonoBehaviour {
                     break;
 
                 case TaskType.Finisher:
-                    isSuccess = JournalManager.Instance.CompleteTask(Name);
+                    isSuccess = JournalManager.Instance.CompleteTask(Name, TaskText);
                     break;
             }
 

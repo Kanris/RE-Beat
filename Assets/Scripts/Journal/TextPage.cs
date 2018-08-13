@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Page : MonoBehaviour {
+public class TextPage : MonoBehaviour {
 
     [SerializeField] private GameObject m_NextPageButton;
     [SerializeField] private GameObject m_PreviousButton;

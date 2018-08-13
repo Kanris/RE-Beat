@@ -28,11 +28,14 @@ public class JournalManager : MonoBehaviour {
 
     #endregion
 
-    [SerializeField] private Page page;
-    [SerializeField] private Transform taskGrid;
+    public TextMeshProUGUI buttonTitle;
+
+    [SerializeField] private TextPage page;
+    [SerializeField] private Transform content;
 
     private GameObject m_JournalUI;
-    private Dictionary<string, Task> TaskJournal;
+    private Dictionary<string, Task> CurrentTasks;
+    private Dictionary<string, Task> CompletedTasks;
 
 	// Use this for initialization
 	void Start () {
@@ -41,7 +44,9 @@ public class JournalManager : MonoBehaviour {
 
         page.ClearText();
 
-        TaskJournal = new Dictionary<string, Task>();
+        CurrentTasks = new Dictionary<string, Task>();
+
+        CompletedTasks = new Dictionary<string, Task>();
 
         SetActiveUI(false);
 
@@ -80,19 +85,23 @@ public class JournalManager : MonoBehaviour {
 
     public void DisplayTaskText(string taskName)
     {
-        if (TaskJournal.ContainsKey(taskName))
+        if (CurrentTasks.ContainsKey(taskName))
         {
-            page.ShowText(TaskJournal[taskName].Text);
+            page.ShowText(CurrentTasks[taskName].Text);
+        }
+        else if (CompletedTasks.ContainsKey(taskName))
+        {
+            page.ShowText(CompletedTasks[taskName].Text);
         }
     }
 
     public bool AddTask(string taskName, string taskText)
     {
-        if (!TaskJournal.ContainsKey(taskName))
+        if (!CurrentTasks.ContainsKey(taskName))
         {
             var taskButton = CreateTaskButton(taskName);
             var newTask = CreateNewTask(taskName, taskText, taskButton);
-            TaskJournal.Add(taskName, newTask);
+            CurrentTasks.Add(taskName, newTask);
 
             return true;
         }
@@ -102,9 +111,9 @@ public class JournalManager : MonoBehaviour {
 
     public bool UpdateTask(string taskName, string taskText)
     {
-        if (TaskJournal.ContainsKey(taskName))
+        if (CurrentTasks.ContainsKey(taskName))
         {
-            TaskJournal[taskName].TaskUpdate(taskText);
+            CurrentTasks[taskName].TaskUpdate(taskText);
 
             return true;
         }
@@ -112,17 +121,52 @@ public class JournalManager : MonoBehaviour {
         return false;
     }
 
-    public bool CompleteTask(string taskname)
+    public bool CompleteTask(string taskname, string taskText)
     {
-        if (TaskJournal.ContainsKey(taskname))
+        if (CurrentTasks.ContainsKey(taskname))
         {
-            TaskJournal[taskname].TaskComplete();
-            TaskJournal.Remove(taskname);
+            CurrentTasks[taskname].TaskComplete(taskText);
+
+            CompletedTasks.Add(taskname, CurrentTasks[taskname]);
+            CurrentTasks.Remove(taskname);
+
+            MoveToNextButtonsPage();
 
             return true;
         }
 
         return false;
+    }
+
+    public void MoveToNextButtonsPage()
+    {
+        page.ClearText();
+
+        if (buttonTitle.text == "current")
+        {
+            ChangeButtonsTitle("completed");
+            ChangeButtonsVision(false, CurrentTasks.Values);
+            ChangeButtonsVision(true, CompletedTasks.Values);
+        }
+        else
+        {
+            ChangeButtonsTitle("current");
+            ChangeButtonsVision(true, CurrentTasks.Values);
+            ChangeButtonsVision(false, CompletedTasks.Values);
+        }
+    }
+
+    private void ChangeButtonsVision(bool value, IEnumerable<Task> tasks)
+    {
+        foreach (var item in tasks)
+        {
+            item.TaskButton.gameObject.SetActive(value);
+        }
+    }
+
+    private void ChangeButtonsTitle(string title)
+    {
+        buttonTitle.text = title;
     }
 
     private Task CreateNewTask(string taskName, string taskText, Button buttonTask)
@@ -133,7 +177,7 @@ public class JournalManager : MonoBehaviour {
     private Button CreateTaskButton(string name)
     {
         var buttonFromResources = Resources.Load("TaskButton");
-        var instantiateTaskButton = Instantiate(buttonFromResources, taskGrid) as GameObject;
+        var instantiateTaskButton = Instantiate(buttonFromResources, content) as GameObject;
 
         instantiateTaskButton.name = name;
         instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = name;
@@ -164,17 +208,6 @@ public class Task
             new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been added to journal - <#000000>J</color>", 3f));
     }
 
-    public void TaskComplete()
-    {
-        IsTaskComplete = true;
-        if(OnTaskComplete != null) OnTaskComplete();
-
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been complete - <#000000>J</color>", 3f));
-
-        JournalManager.Destroy(TaskButton.gameObject);
-    }
-
     public void TaskUpdate(string text)
     {
         this.Text = text + this.Text;
@@ -182,5 +215,16 @@ public class Task
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
             new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been updated - <#000000>J</color>", 3f));
+    }
+
+    public void TaskComplete(string text)
+    {
+        IsTaskComplete = true;
+        this.Text = text + this.Text;
+
+        if (OnTaskComplete != null) OnTaskComplete();
+
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(
+            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been complete - <#000000>J</color>", 3f));
     }
 }
