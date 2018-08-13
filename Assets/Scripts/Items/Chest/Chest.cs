@@ -124,7 +124,7 @@ public class Chest : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             ActiveInteractionButton(false);
-            ActiveInventory(false);
+            if (m_Inventory.activeSelf) ActiveInventory(false);
 
             m_Player = null;
 
