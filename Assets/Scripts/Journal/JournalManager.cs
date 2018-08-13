@@ -27,18 +27,21 @@ public class JournalManager : MonoBehaviour {
     }
 
     #endregion
-
-    public TextMeshProUGUI buttonTitle;
-
+    
     [SerializeField] private TextPage page;
     [SerializeField] private Transform content;
+    [SerializeField] private Transform completeButton;
+    [SerializeField] private Transform currentButton;
 
     private GameObject m_JournalUI;
     private Dictionary<string, Task> CurrentTasks;
     private Dictionary<string, Task> CompletedTasks;
+    private string m_CurrentOpenPage;
+    private float m_UpdateSearchTime;
+    private Player m_Player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         InitializeJournalUI();
 
@@ -74,14 +77,38 @@ public class JournalManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.J))
         {
             page.ClearText();
+
             AudioManager.Instance.Play("OpenJournal");
+            m_Player.TriggerPlayerBussy(!m_JournalUI.activeSelf);
+
             SetActiveUI(!m_JournalUI.activeSelf);
+        }
+
+        if (m_Player == null)
+        {
+            if (m_UpdateSearchTime < Time.time)
+            {
+                SearchForTarget();
+            }
         }
 	}
 
     private void SetActiveUI(bool value)
     {
         m_JournalUI.SetActive(value);
+    }
+
+    private void SearchForTarget()
+    {
+        var player = GameObject.FindWithTag("Player");
+
+        if (player == null)
+            m_UpdateSearchTime = Time.time + 1f;
+        else
+        {
+            m_Player = player.GetComponent<Player>();
+        }
+
     }
 
     public void DisplayTaskText(string taskName)
@@ -131,7 +158,7 @@ public class JournalManager : MonoBehaviour {
             CompletedTasks.Add(taskname, CurrentTasks[taskname]);
             CurrentTasks.Remove(taskname);
 
-            MoveToNextButtonsPage();
+            OpenPage("completed");
 
             return true;
         }
@@ -139,21 +166,43 @@ public class JournalManager : MonoBehaviour {
         return false;
     }
 
-    public void MoveToNextButtonsPage()
+    public void OpenPage(string name)
     {
-        page.ClearText();
-
-        if (buttonTitle.text == "current")
+        if (m_CurrentOpenPage != name)
         {
-            ChangeButtonsTitle("completed");
-            ChangeButtonsVision(false, CurrentTasks.Values);
-            ChangeButtonsVision(true, CompletedTasks.Values);
+            m_CurrentOpenPage = name;
+            page.ClearText();
+
+
+            AudioManager.Instance.Play("OpenJournal");
+
+            if (name == "completed")
+            {
+                OpenPage(false);
+            }
+            else
+            {
+                OpenPage(true);
+            }
+        }
+    }
+
+    private void OpenPage(bool isCurrentPressed)
+    {
+        ChangeButtonsVision(isCurrentPressed, CurrentTasks.Values);
+        ChangeButtonsVision(!isCurrentPressed, CompletedTasks.Values);
+
+        var moveVector = new Vector3(10, 0);
+
+        if (isCurrentPressed)
+        {
+            currentButton.position -= moveVector;
+            completeButton.position += moveVector;
         }
         else
         {
-            ChangeButtonsTitle("current");
-            ChangeButtonsVision(true, CurrentTasks.Values);
-            ChangeButtonsVision(false, CompletedTasks.Values);
+            completeButton.position -= moveVector;
+            currentButton.position += moveVector;
         }
     }
 
@@ -163,11 +212,6 @@ public class JournalManager : MonoBehaviour {
         {
             item.TaskButton.gameObject.SetActive(value);
         }
-    }
-
-    private void ChangeButtonsTitle(string title)
-    {
-        buttonTitle.text = title;
     }
 
     private Task CreateNewTask(string taskName, string taskText, Button buttonTask)
