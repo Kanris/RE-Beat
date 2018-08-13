@@ -30,7 +30,10 @@ public class RespawnPoint : MonoBehaviour {
             GameMaster.Instance.ChangeRespawnPoint(gameObject.transform);
 
             if (!m_Flame.gameObject.activeSelf)
+            {
                 SetActiveFlame(true);
+                AudioManager.Instance.Play("Respawn Torch Activation");
+            }
         }
     }
 

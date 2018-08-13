@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4876909903381912}
   - component: {fileID: 61329916390758002}
   - component: {fileID: 114316812324221942}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sound on trigger with fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779154518683692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -58.09, y: 6.09, z: 0}
+  m_LocalPosition: {x: -13.78, y: 6.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,7 +53,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 16.434149, y: -7.5407543}
+  m_Offset: {x: 14.016964, y: -8.9860735}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -64,7 +64,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 36.84403, y: 16.081509}
+  m_Size: {x: 28.819992, y: 13.19087}
   m_EdgeRadius: 0
 --- !u!114 &114316812324221942
 MonoBehaviour:

@@ -130,7 +130,7 @@ MonoBehaviour:
     PitchOffset: 0.1
     Loop: 0
   - Name: Task
-    Clip: {fileID: 8300000, guid: ac86f15067cd9c04780c59db94cbd6c7, type: 3}
+    Clip: {fileID: 8300000, guid: a460732f3e0e5754c8a24454f290e93e, type: 3}
     Volume: 0.6
     Pitch: 1
     VolumeOffset: 0.1
@@ -139,6 +139,13 @@ MonoBehaviour:
   - Name: Background-Dark
     Clip: {fileID: 8300000, guid: 2d26a2278756b2f44883b5011c0f417d, type: 3}
     Volume: 0.2
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 1
+  - Name: Respawn Torch Activation
+    Clip: {fileID: 8300000, guid: 3a36f45b865789344b6a44da0e3ef9a5, type: 3}
+    Volume: 0.6
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
