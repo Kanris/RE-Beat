@@ -192,18 +192,15 @@ public class JournalManager : MonoBehaviour {
         ChangeButtonsVision(isCurrentPressed, CurrentTasks.Values);
         ChangeButtonsVision(!isCurrentPressed, CompletedTasks.Values);
 
-        var moveVector = new Vector3(10, 0);
+        var moveVector = new Vector3(-10, 0);
 
-        if (isCurrentPressed)
+        if (!isCurrentPressed)
         {
-            currentButton.position -= moveVector;
-            completeButton.position += moveVector;
+            moveVector = new Vector3(10, 0);
         }
-        else
-        {
-            completeButton.position -= moveVector;
-            currentButton.position += moveVector;
-        }
+
+        currentButton.position += moveVector;
+        completeButton.position -= moveVector;
     }
 
     private void ChangeButtonsVision(bool value, IEnumerable<Task> tasks)
