@@ -17,6 +17,7 @@ public class MoveToNextScene : MonoBehaviour {
     [SerializeField] private string NextScene;
     [SerializeField] private string NextScenename;
     [SerializeField] private Vector2 SpawnPosition;
+    [SerializeField] private string BackgroundMusic;
 
     private bool isPlayerNear;
     private bool isDestroyingItem;
@@ -33,6 +34,9 @@ public class MoveToNextScene : MonoBehaviour {
 
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));
+
+                if (!string.IsNullOrEmpty(BackgroundMusic))
+                    AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
             }
             else
                 Debug.LogError("MoveToNextScene.OnTriggerEnter2D: NextScene variable is not initialized.");

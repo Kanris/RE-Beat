@@ -81,7 +81,6 @@ public class AudioManager : MonoBehaviour {
 
         }
        
-
         public static implicit operator string(Audio audio)
         {
             return audio.Name;
@@ -121,11 +120,6 @@ public class AudioManager : MonoBehaviour {
     public Audio[] AudioArray;
 
     private string m_BackgroundMusic;
-
-    private void Start()
-    {
-        SetBackgroundMusic("Background");
-    }
 
     private void InitializeAudioPlaylist()
     {
@@ -173,11 +167,12 @@ public class AudioManager : MonoBehaviour {
 
     public void SetBackgroundMusic(string name)
     {
+        Debug.LogError("Change - " + m_BackgroundMusic + " to " + name);
         if (m_BackgroundMusic != name)
         {
             if (!string.IsNullOrEmpty(m_BackgroundMusic))
             {
-                var sound = GetAudioFromArray(name);
+                var sound = GetAudioFromArray(m_BackgroundMusic);
 
                 if (sound != null)
                     StartCoroutine(sound.FadeOut());
@@ -205,9 +200,9 @@ public class AudioManager : MonoBehaviour {
     private Audio GetAudioFromArray(string name)
     {
         Audio returnAudio = null;
-        
+
         if (!string.IsNullOrEmpty(name))
-            returnAudio = AudioArray.First(x => x == name);
+            returnAudio = AudioArray.FirstOrDefault(x => x.Name == name);
 
         return returnAudio;
     }
