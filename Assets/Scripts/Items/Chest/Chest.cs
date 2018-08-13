@@ -186,6 +186,8 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) m_Player.TriggerPlayerBussy(active);
 
+        AudioManager.Instance.Play("Chest Open");
+
         m_Inventory.SetActive(active);
     }
 

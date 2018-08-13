@@ -58,7 +58,7 @@ MonoBehaviour:
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
-    Loop: 0
+    Loop: 1
   - Name: GrassRunning
     Clip: {fileID: 8300000, guid: 126bcadb6881045c5a38ff4cf3432502, type: 3}
     Volume: 0.2
@@ -143,6 +143,13 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
+  - Name: Chest Open
+    Clip: {fileID: 8300000, guid: 78106635abbd7e8438a786fd41f5694f, type: 3}
+    Volume: 0.6
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 0
   - Name: Respawn Torch Activation
     Clip: {fileID: 8300000, guid: 3a36f45b865789344b6a44da0e3ef9a5, type: 3}
     Volume: 0.6
