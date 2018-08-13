@@ -74,6 +74,7 @@ public class JournalManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.J))
         {
             page.ClearText();
+            AudioManager.Instance.Play("OpenJournal");
             SetActiveUI(!m_JournalUI.activeSelf);
         }
 	}

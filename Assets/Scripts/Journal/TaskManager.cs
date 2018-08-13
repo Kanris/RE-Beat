@@ -109,6 +109,7 @@ public class TaskManager : MonoBehaviour {
 
             if (isSuccess)
             {
+                AudioManager.Instance.Play("Task");
                 GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task);
                 DestroyObject();
             }
