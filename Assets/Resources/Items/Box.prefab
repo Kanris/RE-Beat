@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248686669654070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 40.43, y: -2.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,6 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   YRestrictions: -10
   m_BoxCollider: {fileID: 61593544100186622}
+  DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
+    type: 2}
+  DestroySound: Box Destroy
 --- !u!212 &212225322645907360
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -8,6 +8,7 @@ public class MagneticBox : MonoBehaviour {
     public string NeededItem = "Magnetic Arm";
 
     [SerializeField] private GameObject DeathParticles;
+    [SerializeField] private string DestroySound;
 
     private bool m_IsBoxPickedUp;
     private bool m_IsQuitting;
@@ -75,6 +76,8 @@ public class MagneticBox : MonoBehaviour {
         if (!m_IsQuitting)
         {
             ShowDeathParticles();
+            PlayDestroySound();
+
             var objectToRespawn = Resources.Load("Items/MagneticBox");
             Instantiate(objectToRespawn, m_RespawnPosition, m_RespawnRotation);
         }
@@ -89,6 +92,14 @@ public class MagneticBox : MonoBehaviour {
                 var deathParticles = GameMaster.Instantiate(DeathParticles, transform.position, transform.rotation);
                 GameMaster.Destroy(deathParticles, 1f);
             }
+        }
+    }
+
+    private void PlayDestroySound()
+    {
+        if (!string.IsNullOrEmpty(DestroySound))
+        {
+            AudioManager.Instance.Play(DestroySound);
         }
     }
 

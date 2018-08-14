@@ -17,6 +17,7 @@ public class PickupBox : MonoBehaviour {
 
     [SerializeField] private BoxCollider2D m_BoxCollider;
     [SerializeField] private GameObject DeathParticle;
+    [SerializeField] private string DestroySound;
 
     // Use this for initialization
     void Start () {
@@ -59,9 +60,11 @@ public class PickupBox : MonoBehaviour {
     {
          if (!m_IsQuitting)
          {
-             ShowDeathParticles();
-             var newBox = Resources.Load("Items/Box") as GameObject;
-             Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
+            ShowDeathParticles();
+            PlayDestroySound();
+
+            var newBox = Resources.Load("Items/Box") as GameObject;
+            Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
          }
      }
 
@@ -74,6 +77,14 @@ public class PickupBox : MonoBehaviour {
                 var deathParticles = GameMaster.Instantiate(DeathParticle, transform.position, transform.rotation);
                 GameMaster.Destroy(deathParticles, 1f);
             }
+        }
+    }
+
+    private void PlayDestroySound()
+    {
+        if (!string.IsNullOrEmpty(DestroySound))
+        {
+            AudioManager.Instance.Play(DestroySound);
         }
     }
 

@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1104603196120006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -17.33, y: 1.08, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NeededItem: Magnetic Arm
+  DeathParticles: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
+    type: 2}
+  DestroySound: Box Destroy
 --- !u!212 &212143034664438306
 SpriteRenderer:
   m_ObjectHideFlags: 1
