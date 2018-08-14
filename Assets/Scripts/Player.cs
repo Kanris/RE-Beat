@@ -17,10 +17,10 @@ public class Player : MonoBehaviour {
     private Vector2 m_ThrowBackVector;
     private bool m_IsAttacking = false;
     private bool m_IsInCooldown = false;
+    private bool isPlayerBusy = false;
 
     public PlayerStats playerStats;
 
-    private bool isPlayerBusy = false;
     [HideInInspector] public bool isPlayerThrowingBack;
     [HideInInspector] public bool IsDamageFromFace;
 

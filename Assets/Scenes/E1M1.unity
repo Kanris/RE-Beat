@@ -19586,6 +19586,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.size
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -19617,6 +19622,36 @@ Prefab:
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_RootOrder
       value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].Name
+      value: Player Death
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3dd81414053ec0747a899cfac90d8d5c, type: 3}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].Volume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].VolumeOffset
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[19].PitchOffset
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
@@ -23496,17 +23531,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114542258117731564, guid: 7a9fbb9a12e09d94f8c99803988eebae,
-        type: 2}
-      propertyPath: DeathParticles
-      value: 
-      objectReference: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
-        type: 2}
-    - target: {fileID: 114542258117731564, guid: 7a9fbb9a12e09d94f8c99803988eebae,
-        type: 2}
-      propertyPath: DestroySound
-      value: Box Destroy
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a9fbb9a12e09d94f8c99803988eebae, type: 2}
   m_IsPrefabParent: 0
@@ -25041,22 +25065,6 @@ Prefab:
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 61081233230262306, guid: 74393718dd00ee1439233ebe530cb04c,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114556497925562608, guid: 74393718dd00ee1439233ebe530cb04c,
-        type: 2}
-      propertyPath: DeathParticle
-      value: 
-      objectReference: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
-        type: 2}
-    - target: {fileID: 114556497925562608, guid: 74393718dd00ee1439233ebe530cb04c,
-        type: 2}
-      propertyPath: DestroySound
-      value: Box Destroy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
