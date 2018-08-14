@@ -7,6 +7,8 @@ public class MagneticBox : MonoBehaviour {
 
     public string NeededItem = "Magnetic Arm";
 
+    [SerializeField] private GameObject DeathParticles;
+
     private bool m_IsBoxPickedUp;
     private bool m_IsQuitting;
     private Animator m_Animator;
@@ -61,6 +63,7 @@ public class MagneticBox : MonoBehaviour {
         if (MoveToNextScene.Instance != null)
             MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
     }
+    #endregion
 
     private void OnApplicationQuit()
     {
@@ -71,11 +74,23 @@ public class MagneticBox : MonoBehaviour {
     {
         if (!m_IsQuitting)
         {
+            ShowDeathParticles();
             var objectToRespawn = Resources.Load("Items/MagneticBox");
             Instantiate(objectToRespawn, m_RespawnPosition, m_RespawnRotation);
         }
     }
-    #endregion
+
+    private void ShowDeathParticles()
+    {
+        if (DeathParticles != null)
+        {
+            if (transform != null)
+            {
+                var deathParticles = GameMaster.Instantiate(DeathParticles, transform.position, transform.rotation);
+                GameMaster.Destroy(deathParticles, 1f);
+            }
+        }
+    }
 
     private void Update()
     {

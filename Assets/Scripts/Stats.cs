@@ -9,10 +9,11 @@ public class Stats {
     public int MaxHealth = 200;
 
     protected GameObject m_GameObject;
+    protected Animator m_Animator;
 
     private int m_CurrentHealth;
+
     [SerializeField] private GameObject DeathParticle;
-    protected Animator m_Animator;
 
     public int CurrentHealth
     {

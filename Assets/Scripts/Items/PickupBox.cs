@@ -16,9 +16,10 @@ public class PickupBox : MonoBehaviour {
     public float YRestrictions = -10f;
 
     [SerializeField] private BoxCollider2D m_BoxCollider;
-    
-	// Use this for initialization
-	void Start () {
+    [SerializeField] private GameObject DeathParticle;
+
+    // Use this for initialization
+    void Start () {
 
         InitializeInteractionButton();
 
@@ -58,10 +59,23 @@ public class PickupBox : MonoBehaviour {
     {
          if (!m_IsQuitting)
          {
+             ShowDeathParticles();
              var newBox = Resources.Load("Items/Box") as GameObject;
              Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
          }
      }
+
+    private void ShowDeathParticles()
+    {
+        if (DeathParticle != null)
+        {
+            if (transform != null)
+            {
+                var deathParticles = GameMaster.Instantiate(DeathParticle, transform.position, transform.rotation);
+                GameMaster.Destroy(deathParticles, 1f);
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update () {

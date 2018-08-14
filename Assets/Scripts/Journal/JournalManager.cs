@@ -196,7 +196,7 @@ public class JournalManager : MonoBehaviour {
 
         if (!isCurrentPressed)
         {
-            moveVector = new Vector3(10, 0);
+            moveVector *= -1;
         }
 
         currentButton.position += moveVector;

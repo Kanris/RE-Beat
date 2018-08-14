@@ -250,9 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdleTime: 2
-  isWaiting: 0
   m_PosX: -1
-  Speed: 1
 --- !u!114 &114450152582583560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,9 +264,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyStats:
     MaxHealth: 200
-    DeathParticle: {fileID: 0}
+    DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
+      type: 2}
     DamageAmount: 1
-    IsPlayerNear: 0
+    Speed: 1
   m_AlarmImage: {fileID: 212575243324112112}
   WaitTimeAfterSpot: 2
 --- !u!212 &212533038501834828
