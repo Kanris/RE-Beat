@@ -54,7 +54,7 @@ MonoBehaviour:
   AudioArray:
   - Name: Waterfall
     Clip: {fileID: 8300000, guid: f747fc0bdc95e4dc28f9a53b874ebaad, type: 3}
-    Volume: 0.1
+    Volume: 0.05
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
@@ -82,7 +82,7 @@ MonoBehaviour:
     Loop: 1
   - Name: Background-Mushroom
     Clip: {fileID: 8300000, guid: ca454120fe6800e41806d119bc2ee9e0, type: 3}
-    Volume: 0.2
+    Volume: 0.1
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
@@ -138,7 +138,7 @@ MonoBehaviour:
     Loop: 0
   - Name: Background-Dark
     Clip: {fileID: 8300000, guid: 2d26a2278756b2f44883b5011c0f417d, type: 3}
-    Volume: 0.2
+    Volume: 0.1
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
@@ -180,6 +180,13 @@ MonoBehaviour:
     Loop: 0
   - Name: Box Destroy
     Clip: {fileID: 8300000, guid: 8a2a79ff15bcffd4c8d52f509dd57cf5, type: 3}
+    Volume: 0.6
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 0
+  - Name: Player Death
+    Clip: {fileID: 8300000, guid: 3dd81414053ec0747a899cfac90d8d5c, type: 3}
     Volume: 0.6
     Pitch: 1
     VolumeOffset: 0.1

@@ -3065,11 +3065,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 424000591}
     m_ColliderPaths:
-    - - X: 242343744
-        Y: -100000000
-      - X: 399531264
-        Y: -100000000
-      - X: 400000000
+    - - X: 400000000
         Y: -99375000
       - X: 400000000
         Y: -100000000
@@ -3153,6 +3149,10 @@ CompositeCollider2D:
         Y: -70312496
       - X: 240000000
         Y: -98437504
+      - X: 242343744
+        Y: -100000000
+      - X: 399531264
+        Y: -100000000
   m_CompositePaths:
     m_Paths:
     - - {x: 40, y: -9.9375}
@@ -3357,8 +3357,8 @@ Tilemap:
       m_ColliderType: 1
   - first: {x: 32, y: -10, z: 0}
     second:
-      m_TileIndex: 10
-      m_TileSpriteIndex: 10
+      m_TileIndex: 9
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -3987,10 +3987,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 3d2f6235d1ce74bf9a80598973a62070, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: c0897b78effdf45d3b4a956aec1da09e, type: 2}
-  - m_RefCount: 13
+  - m_RefCount: 14
     m_Data: {fileID: 11400000, guid: d505354f76f694f1592a5911131351d7, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 07b17abf7bc1b45a4817085145ad7ea3, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: e0f04b51d13fb4a5ca9866a1c41cbd2a, type: 2}
   - m_RefCount: 19
@@ -4014,10 +4014,10 @@ Tilemap:
     m_Data: {fileID: 21300002, guid: 10185ae17add6214faa63c4225f5d6c1, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300010, guid: 77060c312d1289b41a98bf743963e44c, type: 3}
-  - m_RefCount: 13
+  - m_RefCount: 14
     m_Data: {fileID: 21300014, guid: 77060c312d1289b41a98bf743963e44c, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300034, guid: 77060c312d1289b41a98bf743963e44c, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300012, guid: 77060c312d1289b41a98bf743963e44c, type: 3}
   - m_RefCount: 19
@@ -19586,11 +19586,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.size
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -19622,36 +19617,6 @@ Prefab:
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_RootOrder
       value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].Name
-      value: Player Death
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 3dd81414053ec0747a899cfac90d8d5c, type: 3}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].Volume
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].VolumeOffset
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[19].PitchOffset
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
