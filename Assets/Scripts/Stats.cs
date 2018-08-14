@@ -14,6 +14,8 @@ public class Stats {
     private int m_CurrentHealth;
 
     [SerializeField] private GameObject DeathParticle;
+    [SerializeField] private string HitSound;
+    [SerializeField] private string DeathSound;
 
     public int CurrentHealth
     {
@@ -26,6 +28,8 @@ public class Stats {
             m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
     }
+
+    #region Initialize
 
     public virtual void Initialize(GameObject gameObject, Animator animator = null)
     {
@@ -67,18 +71,22 @@ public class Stats {
             m_CurrentHealth = MaxHealth;
     }
 
+    #endregion
+
     public virtual void TakeDamage(int amount)
     {
         CurrentHealth -= amount;
 
         if (CurrentHealth == 0)
         {
+            PlayDeathSound();
             KillObject();
         }
 
         if (CurrentHealth > 0)
         {
             GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
+            PlayHitSound();
         }
     }
 
@@ -99,6 +107,22 @@ public class Stats {
 
             if (isHit)
                 m_Animator.SetTrigger("DamageTrigger");
+        }
+    }
+
+    private void PlayHitSound()
+    {
+        if (!string.IsNullOrEmpty(HitSound))
+        {
+            AudioManager.Instance.Play(HitSound);
+        }
+    }
+
+    private void PlayDeathSound()
+    {
+        if (!string.IsNullOrEmpty(DeathSound))
+        {
+            AudioManager.Instance.Play(DeathSound);
         }
     }
 
