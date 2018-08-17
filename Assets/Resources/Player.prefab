@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 114480270307775108}
   - component: {fileID: 114373477224957708}
   - component: {fileID: 70465107185959750}
+  - component: {fileID: 114985210751523218}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -378,8 +379,6 @@ MonoBehaviour:
   ThrowX: 0.08
   ThrowY: 0.1
   AttackRange: {fileID: 1378929303225844}
-  DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   playerStats:
     MaxHealth: 6
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
@@ -400,6 +399,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsCanJump: 0
+--- !u!114 &114985210751523218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587882821856884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8995f8c1bc1f68447bbf962d04943565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
 --- !u!212 &212191104126831080
 SpriteRenderer:
   m_ObjectHideFlags: 1

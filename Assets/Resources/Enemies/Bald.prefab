@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 70047365660296966}
   - component: {fileID: 114077754354735496}
   - component: {fileID: 114450152582583560}
+  - component: {fileID: 114777930182066012}
   m_Layer: 0
   m_Name: Bald
   m_TagString: Enemy
@@ -272,6 +273,19 @@ MonoBehaviour:
     Speed: 1
   m_AlarmImage: {fileID: 212575243324112112}
   WaitTimeAfterSpot: 2
+--- !u!114 &114777930182066012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355790987852450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8995f8c1bc1f68447bbf962d04943565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
 --- !u!212 &212533038501834828
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -6,8 +6,10 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(TilemapRenderer))]
 public class DisableBackground : MonoBehaviour {
 
-    public Animator BackgroundAnimator;
-    public Animator MistAnimator;
+    [SerializeField] private Animator BackgroundAnimator;
+    [SerializeField] private Animator MistAnimator;
+    [SerializeField] private bool isLight;
+    [SerializeField] private GameObject Light;
 
     private bool m_PlayerInCave;
     private Tilemap m_MistTilemap;
@@ -15,8 +17,8 @@ public class DisableBackground : MonoBehaviour {
 
     private void Start()
     {
-
         InitializeBackground();
+        ChangeLightState(false);
     }
 
     private void Update()
@@ -46,6 +48,12 @@ public class DisableBackground : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_PlayerInCave)
         {
             PlayerEnterCave();
+            ChangeLightState(true);
+        }
+
+        if (collision.CompareTag("Player") | collision.CompareTag("Enemy") | collision.CompareTag("Item"))
+        {
+            ChangeObjectMaterial(collision, true);
         }
     }
 
@@ -54,6 +62,12 @@ public class DisableBackground : MonoBehaviour {
         if (collision.CompareTag("Player") & m_PlayerInCave)
         {
             yield return PlayerLeaveCave(false);
+            ChangeLightState(false);
+        }
+
+        if (collision.CompareTag("Player") | collision.CompareTag("Enemy") | collision.CompareTag("Item"))
+        {
+            ChangeObjectMaterial(collision, false);
         }
     }
 
@@ -97,8 +111,31 @@ public class DisableBackground : MonoBehaviour {
             yield return null;
     }
 
+    private void ChangeObjectMaterial(Collider2D collision, bool isEnter)
+    {
+        if (isLight)
+        {
+            var objectMaterialChange = collision.GetComponent<MaterialChange>();
+
+            if (objectMaterialChange != null)
+                objectMaterialChange.Change(isEnter);
+        }
+
+    }
+
     public void AnimationComplete()
     {
         m_IsFading = false;
+    }
+
+    private void ChangeLightState(bool isPlayerNear)
+    {
+        if (isLight)
+        {
+            if (Light != null)
+            {
+                Light.SetActive(isPlayerNear);
+            }
+        }
     }
 }

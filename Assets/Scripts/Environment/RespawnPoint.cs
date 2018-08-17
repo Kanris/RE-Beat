@@ -47,6 +47,6 @@ public class RespawnPoint : MonoBehaviour {
 
     private void ChangePlayerMaterial(Collider2D collision)
     {
-        collision.GetComponent<Player>().ChangePlayerSpriteMateraial(isLight);
+        collision.GetComponent<MaterialChange>().Change(isLight);
     }
 }

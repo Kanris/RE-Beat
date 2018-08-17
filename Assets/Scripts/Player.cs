@@ -11,13 +11,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private float ThrowX = 0.08f;
     [SerializeField] private float ThrowY = 0.1f;
     [SerializeField] private GameObject AttackRange;
-    [SerializeField] private Material DefaultMaterial;
-    [SerializeField] private Material LightMaterial;
 
     private float m_YPositionBeforeJump;
     private Animator m_Animator;
     private Vector2 m_ThrowBackVector;
-    private SpriteRenderer m_PlayerSprite;
     private bool m_IsAttacking = false;
     private bool m_IsInCooldown = false;
     private bool isPlayerBusy = false;
@@ -35,20 +32,8 @@ public class Player : MonoBehaviour {
 
         InitializeAnimator();
 
-        InitializeSpriteRenderer();
-
         PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
-    }
-
-    private void InitializeSpriteRenderer()
-    {
-        m_PlayerSprite = GetComponent<SpriteRenderer>();
-
-        if (m_PlayerSprite == null)
-        {
-            Debug.LogError("Player.InitializeSpriteRenderer: Can't find sprite renderer on player gameobject");
-        }
     }
 
     private void InitializeAnimator()
@@ -195,18 +180,6 @@ public class Player : MonoBehaviour {
         }
 
         return enemyStats;
-    }
-
-    public void ChangePlayerSpriteMateraial(bool isLight)
-    {
-        if (isLight)
-        {
-            m_PlayerSprite.material = LightMaterial;
-        }
-        else
-        {
-            m_PlayerSprite.material = DefaultMaterial;
-        }
     }
 
     public void TriggerPlayerBussy(bool value)
