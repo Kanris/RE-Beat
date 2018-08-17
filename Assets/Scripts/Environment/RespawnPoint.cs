@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RespawnPoint : MonoBehaviour {
 
+    [SerializeField] private bool isLight;
+
     private Transform m_Flame;
 
     private void Start()
@@ -32,6 +34,7 @@ public class RespawnPoint : MonoBehaviour {
             if (!m_Flame.gameObject.activeSelf)
             {
                 SetActiveFlame(true);
+                ChangePlayerMaterial(collision);
                 AudioManager.Instance.Play("Respawn Torch Activation");
             }
         }
@@ -40,5 +43,10 @@ public class RespawnPoint : MonoBehaviour {
     public void SetActiveFlame(bool value)
     {
         m_Flame.gameObject.SetActive(value);
+    }
+
+    private void ChangePlayerMaterial(Collider2D collision)
+    {
+        collision.GetComponent<Player>().ChangePlayerSpriteMateraial(isLight);
     }
 }
