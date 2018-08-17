@@ -6,6 +6,7 @@ public class MaterialChange : MonoBehaviour {
 
     [SerializeField] private Material DefaultMaterial;
     [SerializeField] private Material LightMaterial;
+    [SerializeField] private GameObject LightOnObject;
 
     private SpriteRenderer m_SpriteRenderer;
 
@@ -30,13 +31,28 @@ public class MaterialChange : MonoBehaviour {
 
     public void Change(bool isLight)
     {
-        if (isLight)
+        ChangeLight(isLight);
+        ChangeMaterial(isLight);
+    }
+
+    public void ChangeMaterial(bool isLight)
+    {
+        if (m_SpriteRenderer != null)
         {
-            m_SpriteRenderer.material = LightMaterial;
+            if (isLight)
+            {
+                m_SpriteRenderer.material = LightMaterial;
+            }
+            else
+            {
+                m_SpriteRenderer.material = DefaultMaterial;
+            }
         }
-        else
-        {
-            m_SpriteRenderer.material = DefaultMaterial;
-        }
+    }
+
+    public void ChangeLight(bool isLight)
+    {
+        if (LightOnObject != null)
+            LightOnObject.SetActive(isLight);
     }
 }
