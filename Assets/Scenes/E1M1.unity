@@ -1074,7 +1074,7 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2568,7 +2568,7 @@ Tilemap:
   - m_RefCount: 151
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
-  m_Color: {r: 0.18823531, g: 0.19215688, b: 0.21176472, a: 1}
+  m_Color: {r: 0.11764707, g: 0.09411766, b: 0.1137255, a: 1}
   m_Origin: {x: -62, y: -8, z: 0}
   m_Size: {x: 111, y: 15, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -25283,7 +25283,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1620843117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.016971588, y: 0.07101631, z: -1.515625}
+  m_LocalPosition: {x: -0.03, y: -0.23, z: -1.515625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1387431271}
@@ -25299,8 +25299,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0, g: 0.31783986, b: 1, a: 1}
-  m_Intensity: 100
-  m_Range: 1.6547203
+  m_Intensity: 40
+  m_Range: 1.55
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
