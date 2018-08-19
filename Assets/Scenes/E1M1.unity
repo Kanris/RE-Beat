@@ -1074,7 +1074,7 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2568,7 +2568,7 @@ Tilemap:
   - m_RefCount: 151
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
-  m_Color: {r: 0.11764707, g: 0.09411766, b: 0.1137255, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -62, y: -8, z: 0}
   m_Size: {x: 111, y: 15, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -14970,8 +14970,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 675424337}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -33, y: -1.6, z: 0}
+  m_LocalScale: {x: 2, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 1790738710}
   m_RootOrder: 2
@@ -15038,16 +15038,7 @@ Tilemap:
   - first: {x: 33, y: -9, z: 0}
     second:
       m_TileIndex: 3
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_ObjectToInstantiate: {fileID: 0}
-      m_TileFlags: 2
-      m_ColliderType: 2
-  - first: {x: 34, y: -9, z: 0}
-    second:
-      m_TileIndex: 3
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -15068,20 +15059,6 @@ Tilemap:
       m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
-  - first: {x: 34, y: -9, z: 0}
-    second:
-      m_AnimatedSprites:
-      - {fileID: 21300034, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300036, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300038, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300074, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300076, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300078, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300114, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      - {fileID: 21300116, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
-      m_AnimationSpeed: 10
-      m_AnimationTimeOffset: 0
-      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -15089,23 +15066,23 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 576162674}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 2eee0fd44f1614651ba5830ce7546f42, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
-    m_Data: {fileID: 21300034, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 1
+    m_Data: {fileID: 21300034, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
+  - m_RefCount: 1
     m_Data: {fileID: 29183668}
   m_TileMatrixArray:
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data:
       e00: 1
       e01: 0
@@ -15124,7 +15101,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: 1.06e-43, g: 1.06e-43, b: 1.06e-43, a: 1.06e-43}
@@ -24854,6 +24831,7 @@ GameObject:
   - component: {fileID: 1387431269}
   - component: {fileID: 1387431272}
   - component: {fileID: 1387431273}
+  - component: {fileID: 1387431274}
   m_Layer: 0
   m_Name: BlueSwitch
   m_TagString: BlueSwitch
@@ -24976,6 +24954,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1387431274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1387431268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15734c532e236bd43b66600d77e0b4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightToControl: {fileID: 1620843119}
 --- !u!1 &1392632935
 GameObject:
   m_ObjectHideFlags: 0
