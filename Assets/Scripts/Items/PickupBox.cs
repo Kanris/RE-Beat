@@ -32,6 +32,8 @@ public class PickupBox : MonoBehaviour {
         ChangeIsQuitting(false);
 
         SubscribeToEvents();
+
+        GameMaster.Instance.SaveState(gameObject.name, transform.position, GameMaster.RecreateType.Position);
     }
 
     #region Initialize

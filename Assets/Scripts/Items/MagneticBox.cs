@@ -32,6 +32,8 @@ public class MagneticBox : MonoBehaviour {
         ActiveInteractionButton(false);
 
         SubscribeToEvents();
+
+        GameMaster.Instance.SaveState(transform.name, transform.position, GameMaster.RecreateType.Position);
     }
 
     #region Initialize
