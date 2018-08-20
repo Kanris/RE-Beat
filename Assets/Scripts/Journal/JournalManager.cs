@@ -218,7 +218,7 @@ public class JournalManager : MonoBehaviour {
 
     private Button CreateTaskButton(string name)
     {
-        var buttonFromResources = Resources.Load("TaskButton");
+        var buttonFromResources = Resources.Load("Managers/Journal/TaskButton");
         var instantiateTaskButton = Instantiate(buttonFromResources, content) as GameObject;
 
         instantiateTaskButton.name = name;
