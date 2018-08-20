@@ -6,8 +6,6 @@ public class SpawnEnemies : MonoBehaviour {
     
     [SerializeField] private DoorSwitch SwitchToObserve;
 
-    private float m_UpdateTime;
-
     private void Start()
     {
         InitializeEvent();

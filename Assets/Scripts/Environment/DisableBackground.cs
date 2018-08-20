@@ -8,16 +8,17 @@ public class DisableBackground : MonoBehaviour {
 
     [SerializeField] private Animator BackgroundAnimator;
     [SerializeField] private Animator MistAnimator;
-    [SerializeField] private bool isLight;
-    [SerializeField] private GameObject Light;
 
-    private bool m_PlayerInCave;
+    private GameObject[] LightsInCave;
     private Tilemap m_MistTilemap;
+    private bool m_PlayerInCave;
     private bool m_IsFading;
 
     private void Start()
     {
         InitializeBackground();
+        InitializeLight();
+
         ChangeLightState(false);
     }
 
@@ -30,6 +31,11 @@ public class DisableBackground : MonoBehaviour {
     }
 
     #region Initialize
+
+    private void InitializeLight()
+    {
+        LightsInCave = GameObject.FindGameObjectsWithTag("CaveLight");
+    }
 
     private void InitializeBackground()
     {
@@ -113,7 +119,7 @@ public class DisableBackground : MonoBehaviour {
 
     private void ChangeObjectMaterial(Collider2D collision, bool isEnter)
     {
-        if (isLight)
+        if (LightsInCave.Length != 0)
         {
             var objectMaterialChange = collision.GetComponent<MaterialChange>();
 
@@ -130,11 +136,12 @@ public class DisableBackground : MonoBehaviour {
 
     private void ChangeLightState(bool isPlayerNear)
     {
-        if (isLight)
+        if (LightsInCave.Length != 0)
         {
-            if (Light != null)
+            foreach (var light in LightsInCave)
             {
-                Light.SetActive(isPlayerNear);
+                if (light != null)
+                    light.SetActive(isPlayerNear);
             }
         }
     }
