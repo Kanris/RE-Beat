@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour {
 
     private GameObject GetHealthObject()
     {
-        var health = Resources.Load("Health") as GameObject;
+        var health = Resources.Load("UI/Health") as GameObject;
         var healthGameObject = Instantiate(health);
         healthGameObject.transform.SetParent(m_LayoutGrid.transform);
         
