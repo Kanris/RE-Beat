@@ -58,6 +58,15 @@ public class FireballTrigger : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") & !isCreatingFireballs)
+        {
+            PlayTriggerSound();
+            PrepareFireball();
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & isPlayerNear)
@@ -99,7 +108,9 @@ public class FireballTrigger : MonoBehaviour {
             }
         }
 
-        ButtonAnimation();
+        if (!isPlayerNear)
+            ButtonAnimation();
+
         isCreatingFireballs = false;
     }
 

@@ -7,9 +7,7 @@ public class SawTrigger : MonoBehaviour {
 
     [SerializeField] private float SawMoveTime = 2.5f;
 
-    private GameObject m_Saw;
-    private Animator m_SawAnimator;
-    private PlayerStats m_Player;
+    private Saw m_Saw;
     private Animator m_Animator;
     private bool m_IsTriggered;
     private bool m_IsSawMove;
@@ -18,9 +16,7 @@ public class SawTrigger : MonoBehaviour {
 	void Start () {
 
         InitializeSaw();
-
-        InitializeSawAnimator();
-
+        
         InitializeAnimator();
     }
 
@@ -28,21 +24,11 @@ public class SawTrigger : MonoBehaviour {
 
     private void InitializeSaw()
     {
-        m_Saw = transform.GetChild(0).gameObject;
+        m_Saw = transform.GetChild(0).gameObject.GetComponent<Saw>();
 
         if (m_Saw == null)
         {
             Debug.LogError("SawTrigger.InitializeSaw: Can't find saw in child");
-        }
-    }
-
-    private void InitializeSawAnimator()
-    {
-        m_SawAnimator = m_Saw.GetComponent<Animator>();
-
-        if (m_SawAnimator == null)
-        {
-            Debug.LogError("SawTrigger.InitializeSawAnimator: Can't find animator on m_Saw or m_Saw is null");
         }
     }
 
@@ -64,11 +50,21 @@ public class SawTrigger : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !m_IsTriggered)
         {
-            m_Player = collision.GetComponent<Player>().playerStats;
             m_IsTriggered = true;
 
             PlayTriggerSound();
-            ButtonAnimation();
+            ButtonAnimation("Pressed");
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") & !m_IsTriggered)
+        {
+            m_IsTriggered = true;
+
+            PlayTriggerSound();
+            ButtonAnimation("Pressed");
         }
     }
 
@@ -76,10 +72,8 @@ public class SawTrigger : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_Player = null;
-
-            if (!m_IsSawMove)
-                ButtonAnimation();
+            if (!m_IsSawMove & !m_IsTriggered)
+                ButtonAnimation("Unpressed");
         }
     }
 
@@ -87,12 +81,9 @@ public class SawTrigger : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (m_Player != null)
+        if (m_IsTriggered & !m_IsSawMove)
         {
-            if (m_IsTriggered & !m_IsSawMove)
-            {
-                StartCoroutine(MoveSaw());
-            }
+            StartCoroutine(MoveSaw());
         }
     }
 
@@ -110,22 +101,17 @@ public class SawTrigger : MonoBehaviour {
     {
         m_IsSawMove = true;
 
-        yield return m_Saw.GetComponent<Saw>().MoveWithHide(WhereToMove());
+        yield return m_Saw.MoveWithHide(WhereToMove());
 
         m_IsSawMove = false;
         m_IsTriggered = false;
 
-        if (m_Player == null)
-            ButtonAnimation();
+        ButtonAnimation("Unpressed");
     }
 
-
-
-    private void ButtonAnimation()
+    private void ButtonAnimation(string animation)
     {
-        var animationTrigger = m_Player != null ? "Pressed" : "Unpressed";
-
-        m_Animator.SetTrigger(animationTrigger);
+        m_Animator.SetTrigger(animation);
     }
 
     private void PlayTriggerSound()
