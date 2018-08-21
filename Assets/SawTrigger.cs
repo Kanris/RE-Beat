@@ -109,23 +109,9 @@ public class SawTrigger : MonoBehaviour {
     private IEnumerator MoveSaw()
     {
         m_IsSawMove = true;
-        SawAnimation("Move");
-        AddSawCollision(true);
 
-        var whereToMoveX = 2f * WhereToMove();
+        yield return m_Saw.GetComponent<Saw>().MoveWithHide(WhereToMove());
 
-        yield return Move(0f, 1f, 0.5f);
-
-        yield return Move(whereToMoveX, 0f, SawMoveTime);
-        
-        yield return Move(-whereToMoveX, 0f, SawMoveTime);
-
-        yield return new WaitForSeconds(0.1f);
-
-        yield return Move(0f, -1f, 0.5f);
-
-        SawAnimation("Idle");
-        AddSawCollision(false);
         m_IsSawMove = false;
         m_IsTriggered = false;
 
@@ -133,34 +119,7 @@ public class SawTrigger : MonoBehaviour {
             ButtonAnimation();
     }
 
-    #region Saw move
 
-    private IEnumerator Move(float posX, float posY, float time)
-    {
-        if (m_Saw != null)
-        {
-            m_Saw.GetComponent<Rigidbody2D>().velocity = new Vector2(posX, posY);
-
-            yield return new WaitForSeconds(time);
-
-            m_Saw.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
-    }
-
-    #endregion
-
-    private void AddSawCollision(bool isAdd)
-    {
-        if (isAdd)
-            m_Saw.AddComponent<CircleCollider2D>();
-        else
-            Destroy(m_Saw.GetComponent<CircleCollider2D>());
-    }
-
-    private void SawAnimation(string animation)
-    {
-        m_SawAnimator.SetTrigger(animation);
-    }
 
     private void ButtonAnimation()
     {
