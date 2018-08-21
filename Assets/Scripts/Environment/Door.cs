@@ -12,7 +12,7 @@ public class Door : MonoBehaviour {
     [SerializeField] private string DisplayMessage;
 
     private GameObject m_InteractionButton;
-    public bool m_IsPlayerNearDoor = false;
+    private bool m_IsPlayerNearDoor = false;
     private Animator m_Animator;
 
     private void Start()

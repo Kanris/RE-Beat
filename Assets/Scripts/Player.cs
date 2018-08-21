@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float ThrowX = 0.08f;
     [SerializeField] private float ThrowY = 0.1f;
     [SerializeField] private GameObject AttackRange;
+    [SerializeField] private string AttackSound = "Player Attack";
 
     private float m_YPositionBeforeJump;
     private Animator m_Animator;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour {
             m_IsAttacking = true;
             AttackRange.SetActive(true);
 
-            AudioManager.Instance.Play("Player Attack");
+            AudioManager.Instance.Play(AttackSound);
 
             yield return new WaitForSeconds(0.1f);
 
