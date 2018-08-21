@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class SpikesTrap : MonoBehaviour {
 
     public int DamageAmount = 2;
@@ -11,10 +12,12 @@ public class SpikesTrap : MonoBehaviour {
     private bool m_IsShake;
     private bool m_IsDanger;
     private float m_ShakePosX;
+    private Rigidbody2D m_Rigidbody;
 
     private void Start()
     {
-        m_ShakePosX = 0.05f;
+        m_ShakePosX = 0.3f;
+        m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
     #region trigger
@@ -62,9 +65,9 @@ public class SpikesTrap : MonoBehaviour {
         m_IsTriggered = false;
         m_IsShake = true;
 
-        yield return ShakeHorizontal(5);
+        yield return Shake(5);
 
-        yield return VerticalMovement(4, true);
+        yield return VerticalMovement(0.5f, 0.5f);
 
         m_IsShake = false;
 
@@ -72,36 +75,34 @@ public class SpikesTrap : MonoBehaviour {
 
         yield return new WaitForSeconds(0.5f);
         
-        yield return VerticalMovement(4, false);
+        yield return VerticalMovement(-0.5f, 0.5f);
 
         m_IsDanger = false;
     }
 
     #region position movement
 
-    private IEnumerator VerticalMovement(int iterations, bool isUp)
+    private IEnumerator Shake(int iterations)
     {
-        var posY = -0.05f;
-
-        if (isUp)
-            posY *= -1;
-
         for (int index = 0; index < iterations; index++)
         {
-            transform.position += new Vector3(0f, posY);
-            yield return new WaitForSeconds(0.1f);
+
+            m_ShakePosX = -m_ShakePosX;
+            m_Rigidbody.velocity = new Vector2(m_ShakePosX, 0f);
+
+            yield return new WaitForSeconds(0.2f);
+
+            m_Rigidbody.velocity = Vector2.zero;
         }
     }
 
-    private IEnumerator ShakeHorizontal(int iterations)
+    private IEnumerator VerticalMovement(float posY, float time)
     {
-        for (int index = 0; index < iterations; index++)
-        {
-            m_ShakePosX = -m_ShakePosX;
-            transform.position += new Vector3(m_ShakePosX, 0f);
+        m_Rigidbody.velocity = new Vector2(0f, posY);
 
-            yield return new WaitForSeconds(0.2f);
-        }
+        yield return new WaitForSeconds(time);
+
+        m_Rigidbody.velocity = Vector2.zero;
     }
 
     #endregion

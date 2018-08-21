@@ -128,5 +128,4 @@ public class FireballTrigger : MonoBehaviour {
     {
         AudioManager.Instance.Play("Button Switch");
     }
-
 }
