@@ -240,6 +240,8 @@ public class ArchlightBoss : MonoBehaviour
 
     private void CrossAttack()
     {
+        PlayAttackSound();
+
         CreateFireball(Vector3.up);
 
         CreateFireball(Vector3.down);
@@ -251,6 +253,8 @@ public class ArchlightBoss : MonoBehaviour
 
     private void WeirdAttack()
     {
+        PlayAttackSound();
+
         CreateFireball(new Vector3(1, 1, 0));
 
         CreateFireball(new Vector3(-1, 1, 0));
@@ -265,6 +269,11 @@ public class ArchlightBoss : MonoBehaviour
         var fireballGO = Resources.Load("GreenFireball");
         var fireball = Instantiate(fireballGO, transform.position, transform.rotation) as GameObject;
         fireball.GetComponent<Fireball>().Direction = direction;
+    }
+
+    private void PlayAttackSound()
+    {
+        AudioManager.Instance.Play("Archlight-attack");
     }
 
     #endregion
