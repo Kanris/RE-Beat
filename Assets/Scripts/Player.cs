@@ -171,13 +171,9 @@ public class Player : MonoBehaviour {
     {
         Stats enemyStats = null;
 
-        if (collision.GetComponent<PatrolEnemy>() != null)
+        if (collision.GetComponent<EnemyStatsGO>() != null)
         {
-            enemyStats = collision.GetComponent<PatrolEnemy>().EnemyStats;
-        }
-        else if (collision.GetComponent<RangeEnemy>() != null)
-        {
-            enemyStats = collision.GetComponent<RangeEnemy>().EnemyStats;
+            enemyStats = collision.GetComponent<EnemyStatsGO>().EnemyStats;
         }
 
         return enemyStats;

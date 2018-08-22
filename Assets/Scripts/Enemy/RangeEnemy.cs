@@ -4,12 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(EnemyStatsGO))]
 public class RangeEnemy : MonoBehaviour {
-    
-    public MageEnemyStats EnemyStats;
+
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnPlayerSpot;
 
+    private Enemy m_EnemyStats;
     private EnemyMovement m_EnemyMovement; private Animator m_Animator;
     private TextMeshProUGUI m_Text;
     private bool m_CanCreateNewFireball = true;
@@ -30,7 +31,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private void InitializeStats()
     {
-        EnemyStats.Initialize(gameObject, GetComponent<Animator>());
+        m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
     }
 
     private void InitializeEnemyMovement()
@@ -51,28 +52,28 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!EnemyStats.IsPlayerNear)
+            if (!m_EnemyStats.IsPlayerNear)
             {
                 m_EnemyMovement.TurnAround();
             }
 
-            collision.transform.GetComponent<Player>().playerStats.TakeDamage(EnemyStats.DamageAmount);
+            collision.transform.GetComponent<Player>().playerStats.TakeDamage(m_EnemyStats.DamageAmount);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !EnemyStats.IsPlayerNear)
+        if (collision.CompareTag("Player") & !m_EnemyStats.IsPlayerNear)
         {
-            EnemyStats.ChangeIsPlayerNear(true);
+            m_EnemyStats.ChangeIsPlayerNear(true);
         }
     }
 
     private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & EnemyStats.IsPlayerNear)
+        if (collision.CompareTag("Player") & m_EnemyStats.IsPlayerNear)
         {
-            EnemyStats.ChangeIsPlayerNear(false);
+            m_EnemyStats.ChangeIsPlayerNear(false);
 
             yield return ResetState();
         }
@@ -82,11 +83,11 @@ public class RangeEnemy : MonoBehaviour {
     {
         if (GameMaster.Instance.isPlayerDead)
         {
-            EnemyStats.ChangeIsPlayerNear(false);
+            m_EnemyStats.ChangeIsPlayerNear(false);
             ChangeAlertStatus(false);
         }
 
-        if (EnemyStats.IsPlayerNear)
+        if (m_EnemyStats.IsPlayerNear)
         {
             ChangeAlertStatus(true);
 
@@ -105,7 +106,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private IEnumerator StartCast()
     {
-        if(EnemyStats.IsPlayerNear)
+        if(m_EnemyStats.IsPlayerNear)
         {
             if (m_CanCreateNewFireball)
             {
@@ -140,7 +141,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private IEnumerator CastCooldown()
     {
-        yield return new WaitForSeconds(EnemyStats.AttackSpeed);
+        yield return new WaitForSeconds(m_EnemyStats.AttackSpeed);
 
         m_CanCreateNewFireball = true;
     }
@@ -150,7 +151,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
 
-        if (!EnemyStats.IsPlayerNear)
+        if (!m_EnemyStats.IsPlayerNear)
         {
             ChangeAlertStatus(false);
         }

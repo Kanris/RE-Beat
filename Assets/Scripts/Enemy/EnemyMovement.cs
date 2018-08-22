@@ -53,43 +53,31 @@ public class EnemyMovement : MonoBehaviour {
 
     private void SubscribeOnEvents()
     {
+        if (GetComponent<EnemyStatsGO>() != null)
+        {
+            var enemy = GetComponent<EnemyStatsGO>();
+
+            enemy.EnemyStats.OnSpeedChange += SpeedChange;
+            enemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
+            {
+                if (!isPlayerNear)
+                    TurnAround();
+            };
+        }
+
         if (GetComponent<PatrolEnemy>() != null)
-        {
-            var patrolEnemy = GetComponent<PatrolEnemy>();
-
-            patrolEnemy.OnPlayerSpot += ChangeWaitingState;
-            patrolEnemy.EnemyStats.OnSpeedChange += SpeedChange;
-            patrolEnemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
-            {
-                if (!isPlayerNear)
-                    TurnAround();
-            };
-        }
+            GetComponent<PatrolEnemy>().OnPlayerSpot += ChangeWaitingState;
         else
-        {
-            var rangeEnemy = GetComponent<RangeEnemy>();
-
-            rangeEnemy.OnPlayerSpot += ChangeWaitingState;
-            rangeEnemy.EnemyStats.OnSpeedChange += SpeedChange;
-            rangeEnemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
-            {
-                if (!isPlayerNear)
-                    TurnAround();
-            };
-        }
+            GetComponent<RangeEnemy>().OnPlayerSpot += ChangeWaitingState;
     }
 
     private float GetDefaultSpeed()
     {
         var defaultSpeed = 0f;
 
-        if (GetComponent<PatrolEnemy>() != null)
+        if (GetComponent<EnemyStatsGO>() != null)
         {
-            defaultSpeed = GetComponent<PatrolEnemy>().EnemyStats.Speed;
-        }
-        else
-        {
-            defaultSpeed = GetComponent<RangeEnemy>().EnemyStats.Speed;
+            defaultSpeed = GetComponent<EnemyStatsGO>().EnemyStats.Speed;
         }
 
         return defaultSpeed;

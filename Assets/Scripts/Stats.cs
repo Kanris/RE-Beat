@@ -17,6 +17,9 @@ public class Stats {
     [SerializeField] private string HitSound;
     [SerializeField] private string DeathSound;
 
+    public delegate void DeathDelegate();
+    public event DeathDelegate OnObjectDeath;
+
     public int CurrentHealth
     {
         get
@@ -79,6 +82,9 @@ public class Stats {
 
         if (CurrentHealth == 0)
         {
+            if (OnObjectDeath != null)
+                OnObjectDeath();
+
             PlayDeathSound();
             KillObject();
         }
@@ -217,6 +223,8 @@ public class Enemy : Stats
     public int DamageAmount = 1;
     public float Speed = 1f;
 
+    public float AttackSpeed = 2f;
+
     private bool m_IsPlayerNear;
 
     public bool IsPlayerNear
@@ -229,12 +237,10 @@ public class Enemy : Stats
 
     public override void TakeDamage(int amount)
     {
-        /*if (!IsPlayerNear)
-        {
-            m_GameObject.GetComponentInChildren<EnemyMovement>().TurnAround();
-        }*/
         if (OnEnemyTakeDamage != null)
+        {
             OnEnemyTakeDamage(m_IsPlayerNear);
+        }
 
         base.TakeDamage(amount);
     }
@@ -251,10 +257,4 @@ public class Enemy : Stats
         if (OnSpeedChange != null)
             OnSpeedChange(value);
     }
-}
-
-[System.Serializable]
-public class MageEnemyStats : Enemy
-{
-    public float AttackSpeed = 2f;
 }

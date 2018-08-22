@@ -23,11 +23,27 @@ public class Fireball : MonoBehaviour {
 
     private void InitializeDirection()
     {
-        if (Direction == Vector3.zero)
-            Direction = Vector3.right;
 
-        if (Direction == -Vector3.right)
-            transform.localScale = new Vector3(-1, 1, 1);
+        if (Direction == Vector3.left)
+            transform.Rotate(0, 0, 180);
+
+        else if (Direction == Vector3.up)
+            transform.Rotate(0, 0, 90);
+
+        else if (Direction == Vector3.down)
+            transform.Rotate(0, 0, 270);
+
+        else if (Direction == new Vector3(1, 1, 0))
+            transform.Rotate(0, 0, 50);
+
+        else if (Direction == new Vector3(-1, 1, 0))
+            transform.Rotate(0, 0, 140);
+
+        else if (Direction == new Vector3(-1, -1, 0))
+            transform.Rotate(0, 0, 230);
+
+        else if (Direction == new Vector3(1, -1, 0))
+            transform.Rotate(0, 0, 310);
     }
 
     private void InitializeAnimator()
@@ -58,16 +74,25 @@ public class Fireball : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player") & !isDestroying)
         {
-            DamagePlayer(collision);
+            DamagePlayer(collision.gameObject.GetComponent<Player>());
         }
 
        if (!collision.gameObject.CompareTag("Enemy"))
             yield return DestroyFireball();
     }
 
-    private void DamagePlayer(Collision2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+        if (collision.gameObject.CompareTag("Player") & !isDestroying)
+        {
+            DamagePlayer(collision.GetComponent<Player>());
+            yield return DestroyFireball();
+        }
+    }
+
+    private void DamagePlayer(Player player)
+    {
+        player.playerStats.TakeDamage(DamageAmount);
     }
 
     private IEnumerator DestroyFireball()

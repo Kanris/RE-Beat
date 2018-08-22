@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114077754354735496}
   - component: {fileID: 114450152582583560}
   - component: {fileID: 114777930182066012}
+  - component: {fileID: 114074688157870410}
   m_Layer: 0
   m_Name: Bald
   m_TagString: Enemy
@@ -239,6 +240,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114074688157870410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355790987852450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyStats:
+    MaxHealth: 200
+    DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
+      type: 2}
+    HitSound: Enemy Hit
+    DeathSound: Enemy Death
+    DamageAmount: 1
+    Speed: 1
 --- !u!114 &114077754354735496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+  LightOnObject: {fileID: 0}
 --- !u!212 &212533038501834828
 SpriteRenderer:
   m_ObjectHideFlags: 1

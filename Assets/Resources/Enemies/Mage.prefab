@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 114152002762517770}
   - component: {fileID: 114879631205071088}
   - component: {fileID: 114826362762346134}
+  - component: {fileID: 114425864084102134}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Enemy
@@ -252,6 +253,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdleTime: 2
   m_PosX: -1
+--- !u!114 &114425864084102134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1642957300447368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyStats:
+    MaxHealth: 200
+    DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
+      type: 2}
+    HitSound: Enemy Hit
+    DeathSound: Enemy Death
+    DamageAmount: 1
+    Speed: 1
 --- !u!114 &114826362762346134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -265,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+  LightOnObject: {fileID: 0}
 --- !u!114 &114879631205071088
 MonoBehaviour:
   m_ObjectHideFlags: 1

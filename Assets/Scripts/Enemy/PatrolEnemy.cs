@@ -4,14 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyMovement), typeof(EnemyStatsGO))]
 public class PatrolEnemy : MonoBehaviour {
-
-    public Enemy EnemyStats;
 
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnPlayerSpot;
 
+    private Enemy m_EnemyStats;
     private EnemyMovement m_EnemyMovement;
     private TextMeshProUGUI m_Text;
     private float m_UpdateTime = 0f;
@@ -29,21 +28,21 @@ public class PatrolEnemy : MonoBehaviour {
         m_AlarmImage.gameObject.SetActive(false);
     }
 
+    private void InitializeStats()
+    {
+        m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
+    }
+
     private void Update()
     {
-        if (EnemyStats.IsPlayerNear)
+        if (m_EnemyStats.IsPlayerNear)
         {
             if (GameMaster.Instance.isPlayerDead)
             {
-                EnemyStats.ChangeIsPlayerNear(false);
+                m_EnemyStats.ChangeIsPlayerNear(false);
                 StartCoroutine(PlayerSpot(false));
             }
         }
-    }
-
-    private void InitializeStats()
-    {
-        EnemyStats.Initialize(gameObject, GetComponent<Animator>());
     }
 
     private void InitializeEnemyMovement()
@@ -57,7 +56,7 @@ public class PatrolEnemy : MonoBehaviour {
         {
             AttackPlayer(collision);
 
-            if (!EnemyStats.IsPlayerNear)
+            if (!m_EnemyStats.IsPlayerNear)
             {
                 m_EnemyMovement.TurnAround();
             }
@@ -68,9 +67,9 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            EnemyStats.ChangeIsPlayerNear(true);
+            m_EnemyStats.ChangeIsPlayerNear(true);
 
-            yield return PlayerSpot(EnemyStats.IsPlayerNear);
+            yield return PlayerSpot(m_EnemyStats.IsPlayerNear);
         }
     }
 
@@ -78,18 +77,18 @@ public class PatrolEnemy : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            EnemyStats.ChangeIsPlayerNear(false);
+            m_EnemyStats.ChangeIsPlayerNear(false);
 
             yield return new WaitForSeconds(1f);
 
-            if (!EnemyStats.IsPlayerNear)
+            if (!m_EnemyStats.IsPlayerNear)
                 yield return PlayerSpot(false);
         }
     }
 
     private void AttackPlayer(Collision2D collision)
     {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(EnemyStats.DamageAmount);       
+        collision.transform.GetComponent<Player>().playerStats.TakeDamage(m_EnemyStats.DamageAmount);       
     }
 
     private IEnumerator PlayerSpot(bool isSpot)
@@ -102,8 +101,8 @@ public class PatrolEnemy : MonoBehaviour {
             OnPlayerSpot(false);
 
         if (isSpot)
-            EnemyStats.ChangeSpeed(2f);
+            m_EnemyStats.ChangeSpeed(2f);
         else
-            EnemyStats.ChangeSpeed(1f);
+            m_EnemyStats.ChangeSpeed(1f);
     }
 }

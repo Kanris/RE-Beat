@@ -441,10 +441,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   YBoundaries: -20
-  YFallDeath: -5
+  YFallDeath: -10
   ThrowX: 0.08
   ThrowY: 0.1
   AttackRange: {fileID: 1378929303225844}
+  AttackSound: Player Attack
   playerStats:
     MaxHealth: 6
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
