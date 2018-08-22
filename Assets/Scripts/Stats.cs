@@ -178,8 +178,6 @@ public class PlayerStats : Stats
     {
         if (!isInvincible)
         {
-            //AudioManager.Instance.Play("Hit");
-
             base.TakeDamage(amount);
 
             UIManager.Instance.RemoveHealth(amount);
@@ -193,7 +191,7 @@ public class PlayerStats : Stats
 
         isInvincible = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
 
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
 
