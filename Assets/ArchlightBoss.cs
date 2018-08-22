@@ -145,6 +145,9 @@ public class ArchlightBoss : MonoBehaviour
 
     private void BossTeleport(bool value)
     {
+
+        TeleportSound();
+
         CrossAttack();
 
         if (m_Stage2) WeirdAttack();
@@ -161,6 +164,8 @@ public class ArchlightBoss : MonoBehaviour
         m_IsTeleport = true;
         TeleportAnimation(m_IsTeleport);
 
+        TeleportSound();
+
         yield return new WaitForSeconds(0.5f);
 
         transform.position = GetDestination();
@@ -175,6 +180,11 @@ public class ArchlightBoss : MonoBehaviour
         CrossAttack();
 
         StartCoroutine(TeleportSequence());
+    }
+
+    private void TeleportSound()
+    {
+        AudioManager.Instance.Play("Teleport");
     }
 
     private Vector3 GetDestination()
