@@ -19239,11 +19239,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 17.94
+      value: 17.460001
       objectReference: {fileID: 0}
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: -0.28999996
       objectReference: {fileID: 0}
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -22928,7 +22928,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1104603196120006, guid: 7a9fbb9a12e09d94f8c99803988eebae, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a9fbb9a12e09d94f8c99803988eebae, type: 2}
@@ -23620,7 +23620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1387431269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25863,7 +25863,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1248686669654070, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
@@ -27299,6 +27299,11 @@ Prefab:
     - target: {fileID: 4366071695632996, guid: 1cb1595de4c855f4795047296f40e8f1, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 212867957257633750, guid: 1cb1595de4c855f4795047296f40e8f1,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1cb1595de4c855f4795047296f40e8f1, type: 2}

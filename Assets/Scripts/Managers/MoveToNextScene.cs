@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class MoveToNextScene : MonoBehaviour {
 
-    public static MoveToNextScene Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     public delegate void VoidDelegate(bool value);
-    public event VoidDelegate IsMoveToNextScene;
+    public static event VoidDelegate IsMoveToNextScene;
 
     [SerializeField] private string NextScene;
     [SerializeField] private string NextScenename;
@@ -30,7 +23,9 @@ public class MoveToNextScene : MonoBehaviour {
             if (!string.IsNullOrEmpty(NextScene))
             {
                 if (IsMoveToNextScene != null)
+                {
                     IsMoveToNextScene(true);
+                }
 
                 LoadSceneManager.Instance.StartCoroutine(
                     LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition));

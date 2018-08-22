@@ -21,7 +21,7 @@ public class SpawnEnemies : MonoBehaviour {
 
     private void SpawnOnChildren()
     {
-        for (int index = 0; index < transform.childCount; index++)
+        for (int index = 0; gameObject != null & index < transform.childCount; index++)
         {
             var child = transform.GetChild(index);
             SpawnEnemy(child.name, child);

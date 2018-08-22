@@ -18,8 +18,7 @@ public class StringTrigger : MonoBehaviour {
     private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        if (MoveToNextScene.Instance != null)
-            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

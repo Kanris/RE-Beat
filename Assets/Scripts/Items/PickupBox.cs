@@ -47,8 +47,7 @@ public class PickupBox : MonoBehaviour {
     private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        if (MoveToNextScene.Instance != null)
-            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
     }
 
     #endregion
@@ -118,11 +117,13 @@ public class PickupBox : MonoBehaviour {
             }
         }
 
-        if (transform.position.y < YRestrictions)
+        if (!m_IsQuitting)
         {
-            Destroy(gameObject);
+            if (transform.position.y < YRestrictions)
+            {
+                Destroy(gameObject);
+            }
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

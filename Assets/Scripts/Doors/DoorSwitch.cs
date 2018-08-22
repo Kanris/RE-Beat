@@ -53,8 +53,7 @@ public class DoorSwitch : MonoBehaviour {
     private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        if (MoveToNextScene.Instance != null)
-            MoveToNextScene.Instance.IsMoveToNextScene += ChangeIsQuitting;
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
     }
 
 
