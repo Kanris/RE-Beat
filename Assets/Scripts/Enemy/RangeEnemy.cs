@@ -135,8 +135,10 @@ public class RangeEnemy : MonoBehaviour {
 
         if (m_EnemyMovement.m_PosX < 0)
         {
-            instantiateFireball.GetComponent<Fireball>().Direction = -Vector3.right;
+            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.left;
         }
+        else
+            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
     }
 
     private IEnumerator CastCooldown()

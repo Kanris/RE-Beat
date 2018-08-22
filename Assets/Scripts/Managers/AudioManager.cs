@@ -174,7 +174,9 @@ public class AudioManager : MonoBehaviour {
                 var sound = GetAudioFromArray(m_BackgroundMusic);
 
                 if (sound != null)
+                {
                     StartCoroutine(sound.FadeOut());
+                }
             }
 
             if (!string.IsNullOrEmpty(name))

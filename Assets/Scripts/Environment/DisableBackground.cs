@@ -67,6 +67,7 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_PlayerInCave)
         {
+            //collis
             yield return PlayerLeaveCave(false);
             ChangeLightState(false);
         }

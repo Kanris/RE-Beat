@@ -5,7 +5,30 @@ using UnityEngine;
 public class ObjectAppearOnTrigger : MonoBehaviour {
 
     [SerializeField] private GameObject ObjectToAppear;
+    [SerializeField] private GameObject ShowOnDestroy;
     [SerializeField] private bool DestroyOnTrigger;
+
+    private bool m_IsQuitting;
+
+    #region Initialize
+
+    private void Start()
+    {
+        SubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+    }
+
+    #endregion
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,10 +45,6 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
         {
             ObjectToAppear.SetActive(true);
         }
-        else
-        {
-            Debug.LogError("ObjectAppearOnTrigger.AppearObject: ObjectToAppear is not assigned.");
-        }
     }
 
     private void DestroyThisTrigger()
@@ -36,4 +55,24 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+
+    #region OnDestroy
+
+    private void OnApplicationQuit()
+    {
+        ChangeIsQuitting(true);
+    }
+
+    private void OnDestroy()
+    {
+        if (!m_IsQuitting)
+        {
+            if (ShowOnDestroy != null)
+            {
+                ShowOnDestroy.SetActive(true);
+            }
+        }
+    }
+
+    #endregion
 }
