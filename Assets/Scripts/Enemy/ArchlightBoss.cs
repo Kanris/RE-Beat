@@ -27,14 +27,13 @@ public class ArchlightBoss : MonoBehaviour
 
     private Dictionary<Vector3, int> teleportDestinations;
     private Animator m_Animator;
-    private bool m_IsTeleport;
-    private int m_CurrentTeleportIndex = 10;
     private int m_NextTeleportIndex = 10;
     private Enemy m_Stats;
     private bool m_Stage2;
     private bool m_Stage3;
     private bool m_IsReset;
-
+    private float m_TeleportTimer;
+    private Vector3 m_NextDestination;
     #endregion
 
     // Use this for initialization
@@ -48,7 +47,9 @@ public class ArchlightBoss : MonoBehaviour
 
         SubscribeEvents();
 
-        StartCoroutine(TeleportSequence(GetDestination()));
+        m_NextDestination = GetDestination();
+
+        m_TeleportTimer = 0f;
     }
 
     #region Initialize
@@ -86,7 +87,7 @@ public class ArchlightBoss : MonoBehaviour
     private void SubscribeEvents()
     {
         m_Stats.OnObjectDeath += ArchlightDead;
-        m_Stats.OnEnemyTakeDamage += BossTeleport;
+        m_Stats.OnEnemyTakeDamage += OnPlayerHitTeleport;
     }
 
     #endregion
@@ -96,15 +97,24 @@ public class ArchlightBoss : MonoBehaviour
     {
         ChangeState();
 
+        if (m_TeleportTimer <= Time.time)
+        {
+            m_TeleportTimer = Time.time + TeleportSpeed;
+
+            CrossAttack();
+
+            StartCoroutine(TeleportSequence(m_NextDestination));
+
+            m_NextDestination = GetDestination();
+            ChangeTeleportDestinationPosition(m_NextDestination);
+
+            //m_IsReset = false;
+        }
+
         if (GameMaster.Instance.isPlayerDead)
         {
             if (!m_IsReset)
                 StartCoroutine(ResetState());
-        }
-        else if(m_IsReset)
-        {
-            m_IsReset = false;
-            StartCoroutine(TeleportSequence(GetDestination()));
         }
     }
 
@@ -132,7 +142,6 @@ public class ArchlightBoss : MonoBehaviour
 
         m_Stage2 = false;
         m_Stage3 = false;
-        m_IsTeleport = false;
 
         TeleportSpeed = 5f;
 
@@ -163,54 +172,9 @@ public class ArchlightBoss : MonoBehaviour
 
     #region Teleport
 
-    private void BossTeleport(bool value)
+    private void OnPlayerHitTeleport(bool value)
     {
-        TeleportSound();
-
-        CrossAttack();
-
-        if (m_Stage2) WeirdAttack();
-
-        TeleportAnimation(true);
-
-        transform.position = GetDestination();
-
-        ChangeLookPosition();
-
-        TeleportAnimation(false);
-    }
-
-    private IEnumerator TeleportSequence(Vector3 destination)
-    {
-        m_IsTeleport = true;
-        TeleportAnimation(m_IsTeleport);
-
-        TeleportSound();
-
-        yield return new WaitForSeconds(0.5f);
-
-        transform.position = destination;
-        ChangeLookPosition();
-
-        m_IsTeleport = false;
-        TeleportAnimation(m_IsTeleport);
-
-        if (m_Stage2) WeirdAttack();
-
-        var nextDestination = GetDestination();
-
-        ChangeTeleportDestinationPosition(nextDestination);
-
-        yield return new WaitForSeconds(TeleportSpeed);
-
-        CrossAttack();
-
-        yield return TeleportSequence(nextDestination);
-    }
-
-    private void TeleportSound()
-    {
-        AudioManager.Instance.Play("Teleport");
+        m_TeleportTimer = Time.time;
     }
 
     private void ChangeTeleportDestinationPosition(Vector3 destination)
@@ -220,6 +184,29 @@ public class ArchlightBoss : MonoBehaviour
             TeleportDestination.transform.position = destination;
         }
     }
+
+    private IEnumerator TeleportSequence(Vector3 destination)
+    {
+        TeleportAnimation(true);
+
+        TeleportSound();
+
+        yield return new WaitForSeconds(0.5f);
+
+        transform.position = destination;
+        ChangeLookPosition();
+
+        TeleportAnimation(false);
+
+        if (m_Stage2) WeirdAttack();
+
+    }
+
+    private void TeleportSound()
+    {
+        AudioManager.Instance.Play("Teleport");
+    }
+
 
     private Vector3 GetDestination()
     {
@@ -244,15 +231,17 @@ public class ArchlightBoss : MonoBehaviour
 
     private int GetRandomIndex()
     {
-        m_CurrentTeleportIndex = m_NextTeleportIndex;
+        int randIndex;
 
         do
         {
-            m_NextTeleportIndex = Random.Range(0, teleportDestinations.Count);
+            randIndex = Random.Range(0, teleportDestinations.Count);
         }
-        while (m_CurrentTeleportIndex == m_NextTeleportIndex);
+        while (randIndex == m_NextTeleportIndex);
 
-        return m_NextTeleportIndex;
+        m_NextTeleportIndex = randIndex;
+
+        return randIndex;
     }
 
     private void TeleportAnimation(bool isTeleport)
