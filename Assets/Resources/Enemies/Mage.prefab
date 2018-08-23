@@ -272,6 +272,7 @@ MonoBehaviour:
     DeathSound: Enemy Death
     DamageAmount: 1
     Speed: 1
+    AttackSpeed: 2
 --- !u!114 &114826362762346134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -297,16 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3b544a90082224daebde12893e58d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyStats:
-    MaxHealth: 200
-    DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
-      type: 2}
-    HitSound: Enemy Hit
-    DeathSound: Enemy Death
-    DamageAmount: 1
-    Speed: 1
-    AttackSpeed: 2
   m_AlarmImage: {fileID: 212483226420415968}
+  Fireball: {fileID: 1931802493666614, guid: 99d49189405f3df42aa3f249f90b233a, type: 2}
 --- !u!212 &212483226420415968
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -16,7 +16,10 @@ public class RangeEnemy : MonoBehaviour {
     private bool m_CanCreateNewFireball = true;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
+    [SerializeField] private GameObject Fireball;
 
+
+    #region Initialize
     // Use this for initialization
     void Start()
     {
@@ -46,7 +49,9 @@ public class RangeEnemy : MonoBehaviour {
         if (m_Animator == null)
             Debug.LogError("RangeEnemy.InitializeAnimator: Can't find animator on GameObject");
     }
+    #endregion
 
+    #region Collision
     //simplify
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -60,6 +65,10 @@ public class RangeEnemy : MonoBehaviour {
             collision.transform.GetComponent<Player>().playerStats.TakeDamage(m_EnemyStats.DamageAmount);
         }
     }
+
+    #endregion
+
+    #region Trigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -78,6 +87,8 @@ public class RangeEnemy : MonoBehaviour {
             yield return ResetState();
         }
     }
+
+    #endregion
 
     private void Update()
     {
@@ -129,9 +140,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private void CreateFireball()
     {
-        var newFireball = Resources.Load("Fireball");
-
-        var instantiateFireball = Instantiate(newFireball, transform.position, transform.rotation) as GameObject;
+        var instantiateFireball = Instantiate(Fireball, transform.position, transform.rotation) as GameObject;
 
         if (m_EnemyMovement.m_PosX < 0)
         {

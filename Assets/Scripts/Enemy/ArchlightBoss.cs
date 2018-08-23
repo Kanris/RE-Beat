@@ -12,6 +12,7 @@ public class ArchlightBoss : MonoBehaviour
     [SerializeField] private GameObject RightTeleport;
 
     [SerializeField] private GameObject TeleportDestination;
+    [SerializeField] private GameObject FireballGO;
 
     [SerializeField] private GameObject FlyingPlatform;
     [SerializeField] private GameObject Key;
@@ -38,7 +39,6 @@ public class ArchlightBoss : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         InitializeTeleportsTransform();
 
         InitializeAnimator();
@@ -93,20 +93,12 @@ public class ArchlightBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_Stats.CurrentHealth <= Stage2Health & !m_Stage2)
-            m_Stage2 = true;
-
-        if (m_Stats.CurrentHealth <= Stage3Health & !m_Stage3)
-        {
-            ChangeLightState(false);
-            m_Stage3 = true;
-            TeleportSpeed = 2f;
-        }
+        ChangeState();
 
         if (GameMaster.Instance.isPlayerDead)
         {
             if (!m_IsReset)
-                StartCoroutine(ResetArchlight());
+                StartCoroutine(ResetState());
         }
         else if(m_IsReset)
         {
@@ -115,14 +107,34 @@ public class ArchlightBoss : MonoBehaviour
         }
     }
 
-    public IEnumerator ResetArchlight()
+    #region State
+
+    private void ChangeState()
     {
+        if (m_Stats.CurrentHealth <= Stage2Health & !m_Stage2)
+            m_Stage2 = true;
+
+        if (m_Stats.CurrentHealth <= Stage3Health & !m_Stage3)
+        {
+            m_Stage3 = true;
+
+            ChangeLightState(false);
+            TeleportSpeed = 2f;
+        }
+    }
+
+    private IEnumerator ResetState()
+    {
+        m_IsReset = true;
+
         GetComponent<EnemyStatsGO>().InitializeStats();
+
         m_Stage2 = false;
         m_Stage3 = false;
         m_IsTeleport = false;
-        m_IsReset = true;
+
         TeleportSpeed = 5f;
+
         yield return new WaitForSeconds(0.5f);
 
         ChangeLightState(true);
@@ -135,6 +147,8 @@ public class ArchlightBoss : MonoBehaviour
         RightTeleport.SetActive(value);
         CenterTeleport.SetActive(value);
     }
+
+    #endregion
 
     private void ArchlightDead()
     {
@@ -149,7 +163,6 @@ public class ArchlightBoss : MonoBehaviour
 
     private void BossTeleport(bool value)
     {
-
         TeleportSound();
 
         CrossAttack();
@@ -285,8 +298,7 @@ public class ArchlightBoss : MonoBehaviour
 
     private void CreateFireball(Vector2 direction)
     {
-        var fireballGO = Resources.Load("GreenFireball");
-        var fireball = Instantiate(fireballGO, transform.position, transform.rotation) as GameObject;
+        var fireball = Instantiate(FireballGO, transform.position, transform.rotation);
         fireball.GetComponent<Fireball>().Direction = direction;
     }
 
@@ -297,6 +309,8 @@ public class ArchlightBoss : MonoBehaviour
 
     #endregion
 
+    #region collision
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player"))
@@ -304,4 +318,6 @@ public class ArchlightBoss : MonoBehaviour
             collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(m_Stats.DamageAmount);
         }
     }
+
+    #endregion
 }
