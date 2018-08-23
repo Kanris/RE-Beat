@@ -29,6 +29,7 @@ public class ArchlightBoss : MonoBehaviour
     private Animator m_Animator;
     private bool m_IsTeleport;
     private int m_CurrentTeleportIndex = 10;
+    private int m_NextTeleportIndex = 10;
     private Enemy m_Stats;
     private bool m_Stage2;
     private bool m_Stage3;
@@ -243,17 +244,15 @@ public class ArchlightBoss : MonoBehaviour
 
     private int GetRandomIndex()
     {
-        int randIndex;
+        m_CurrentTeleportIndex = m_NextTeleportIndex;
 
         do
         {
-            randIndex = Random.Range(0, teleportDestinations.Count);
+            m_NextTeleportIndex = Random.Range(0, teleportDestinations.Count);
         }
-        while (m_CurrentTeleportIndex == randIndex);
+        while (m_CurrentTeleportIndex == m_NextTeleportIndex);
 
-        m_CurrentTeleportIndex = randIndex;
-
-        return randIndex;
+        return m_NextTeleportIndex;
     }
 
     private void TeleportAnimation(bool isTeleport)
