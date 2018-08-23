@@ -63,11 +63,27 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (m_Animator.GetBool("Damage"))
+        {
+            if (!isPlayerThrowingBack)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                m_ThrowBackVector = GetThrowBackVector();
+                isPlayerThrowingBack = true;
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().position += m_ThrowBackVector;
+            }
+        }
+    }
+
     private IEnumerator Attack()
     {
         if (!m_IsAttacking)
         {
-
             m_IsInCooldown = true;
 
             m_IsAttacking = true;
@@ -95,23 +111,6 @@ public class Player : MonoBehaviour {
                 isPlayerCanAttack = true;
 
         return isPlayerCanAttack;
-    }
-
-    private void FixedUpdate()
-    {
-        if (m_Animator.GetBool("Damage"))
-        {
-            if (!isPlayerThrowingBack)
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                m_ThrowBackVector = GetThrowBackVector();
-                isPlayerThrowingBack = true;
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().position += m_ThrowBackVector;
-            }
-        }
     }
 
     private Vector2 GetThrowBackVector()

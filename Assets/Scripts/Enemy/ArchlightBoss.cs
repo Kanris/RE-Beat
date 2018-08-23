@@ -11,6 +11,8 @@ public class ArchlightBoss : MonoBehaviour
     [SerializeField] private GameObject CenterTeleport;
     [SerializeField] private GameObject RightTeleport;
 
+    [SerializeField] private GameObject TeleportDestination;
+
     [SerializeField] private GameObject FlyingPlatform;
     [SerializeField] private GameObject Key;
 
@@ -45,7 +47,7 @@ public class ArchlightBoss : MonoBehaviour
 
         SubscribeEvents();
 
-        StartCoroutine(TeleportSequence());
+        StartCoroutine(TeleportSequence(GetDestination()));
     }
 
     #region Initialize
@@ -109,7 +111,7 @@ public class ArchlightBoss : MonoBehaviour
         else if(m_IsReset)
         {
             m_IsReset = false;
-            StartCoroutine(TeleportSequence());
+            StartCoroutine(TeleportSequence(GetDestination()));
         }
     }
 
@@ -158,10 +160,12 @@ public class ArchlightBoss : MonoBehaviour
 
         transform.position = GetDestination();
 
+        ChangeLookPosition();
+
         TeleportAnimation(false);
     }
 
-    private IEnumerator TeleportSequence()
+    private IEnumerator TeleportSequence(Vector3 destination)
     {
         m_IsTeleport = true;
         TeleportAnimation(m_IsTeleport);
@@ -170,23 +174,36 @@ public class ArchlightBoss : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        transform.position = GetDestination();
+        transform.position = destination;
+        ChangeLookPosition();
 
         m_IsTeleport = false;
         TeleportAnimation(m_IsTeleport);
 
         if (m_Stage2) WeirdAttack();
 
+        var nextDestination = GetDestination();
+
+        ChangeTeleportDestinationPosition(nextDestination);
+
         yield return new WaitForSeconds(TeleportSpeed);
 
         CrossAttack();
 
-        StartCoroutine(TeleportSequence());
+        yield return TeleportSequence(nextDestination);
     }
 
     private void TeleportSound()
     {
         AudioManager.Instance.Play("Teleport");
+    }
+
+    private void ChangeTeleportDestinationPosition(Vector3 destination)
+    {
+        if (TeleportDestination != null)
+        {
+            TeleportDestination.transform.position = destination;
+        }
     }
 
     private Vector3 GetDestination()
@@ -201,7 +218,6 @@ public class ArchlightBoss : MonoBehaviour
             if (index == randomDestination)
             {
                 teleportDestination = new Vector3(item.Key.x, item.Key.y - 1f, item.Key.z);
-                ChangeLookPosition(item.Value);
                 break;
             }
 
@@ -231,8 +247,9 @@ public class ArchlightBoss : MonoBehaviour
         m_Animator.SetBool("Teleport", isTeleport);
     }
 
-    private void ChangeLookPosition(float lookPosition)
+    private void ChangeLookPosition()
     {
+        float lookPosition = teleportDestinations[new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z)];
         m_Animator.SetFloat("LookPosition", lookPosition);
     }
 
