@@ -103,6 +103,7 @@ public class Player : MonoBehaviour {
         {
             if (!isPlayerThrowingBack)
             {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 m_ThrowBackVector = GetThrowBackVector();
                 isPlayerThrowingBack = true;
             }
