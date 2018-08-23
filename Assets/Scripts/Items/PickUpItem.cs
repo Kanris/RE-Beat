@@ -5,6 +5,9 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PickUpItem : MonoBehaviour {
 
+    public enum ItemType { Item, Note }
+    public ItemType itemType;
+
     [SerializeField] private Item item;
 
     private GameObject m_InteractionButton;
@@ -28,7 +31,10 @@ public class PickUpItem : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                AddToTheInventory();
+                if (itemType == ItemType.Item)
+                    AddToTheInventory();
+                else
+                    ReadNote();
             }
         }
     }
@@ -68,6 +74,14 @@ public class PickUpItem : MonoBehaviour {
             GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
 
         Destroy(gameObject);
+    }
+
+    private void ReadNote()
+    {
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Description, 4f));
+
+        if (GameMaster.Instance != null)
+            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
     }
 
     private AnnouncerManager.Message GetAnnouncerMessage()

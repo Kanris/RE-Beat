@@ -165,9 +165,14 @@ public class GameMaster : MonoBehaviour {
 
     #region SaveState
 
-    private State GetState()
+    private State GetState(string sceneName)
     {
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+        State searchResult = null;
+
+        if (!string.IsNullOrEmpty(sceneName))
+            searchResult = ScenesState.FirstOrDefault(x => x.SceneName == sceneName);
+        else
+            searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
         if (searchResult == null)
         {
@@ -179,9 +184,9 @@ public class GameMaster : MonoBehaviour {
         return searchResult;
     }
 
-    public void SaveState<T>(string name, T value, RecreateType recreateType)
+    public void SaveState<T>(string name, T value, RecreateType recreateType, string sceneName = "")
     {
-        var state = GetState();
+        var state = GetState(sceneName);
         
         switch (recreateType)
         {

@@ -157,6 +157,7 @@ public class ArchlightBoss : MonoBehaviour
         Key.SetActive(true);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
+        GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
     }
 
     #region Teleport
