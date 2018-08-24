@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114450152582583560}
   - component: {fileID: 114777930182066012}
   - component: {fileID: 114074688157870410}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Bald
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4552045832577098}
   - component: {fileID: 61237159028034092}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4123792287795154}
   - component: {fileID: 61709115381874482}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GroundCheck
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4799195032587940}
   - component: {fileID: 212575243324112112}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: AlarmImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,6 +259,7 @@ MonoBehaviour:
     DeathSound: Enemy Death
     DamageAmount: 1
     Speed: 1
+    AttackSpeed: 2
 --- !u!114 &114077754354735496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,14 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4c7c6ca284f5e499f43efc193a6595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyStats:
-    MaxHealth: 200
-    DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
-      type: 2}
-    HitSound: Enemy Hit
-    DeathSound: Enemy Death
-    DamageAmount: 1
-    Speed: 1
   m_AlarmImage: {fileID: 212575243324112112}
   WaitTimeAfterSpot: 2
 --- !u!114 &114777930182066012
