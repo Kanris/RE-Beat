@@ -159,6 +159,7 @@ public class PlayerStats : Stats
     public static int GemsAmount;
     public static int DamageAmount = 50;
     public static float AttackSpeed = 0.6f;
+    public static float Invincible = 2f;
     public static Inventory PlayerInventory;
 
     private bool isInvincible;
@@ -191,15 +192,27 @@ public class PlayerStats : Stats
 
         isInvincible = true;
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.4f);
 
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
 
         PlayHitAnimation(false);
-        isInvincible = false;
         
         m_GameObject.GetComponent<Player>().isPlayerThrowingBack = false;
+        
+        yield return InvincibleAnimation();
+        
+        isInvincible = false;
+    }
 
+    private IEnumerator InvincibleAnimation()
+    {
+        m_Animator.SetTrigger("InvincibleTrigger");
+        m_Animator.SetBool("Invincible", true);
+
+        yield return new WaitForSeconds(Invincible);
+
+        m_Animator.SetBool("Invincible", false);
     }
 
     protected override void KillObject()
