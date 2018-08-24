@@ -10,8 +10,7 @@ public class ArchlightBoss : MonoBehaviour
     [SerializeField] private GameObject LeftTeleport;
     [SerializeField] private GameObject CenterTeleport;
     [SerializeField] private GameObject RightTeleport;
-
-    [SerializeField] private GameObject TeleportDestination;
+    
     [SerializeField] private GameObject FireballGO;
 
     [SerializeField] private GameObject FlyingPlatform;
@@ -106,9 +105,6 @@ public class ArchlightBoss : MonoBehaviour
             StartCoroutine(TeleportSequence(m_NextDestination));
 
             m_NextDestination = GetDestination();
-            ChangeTeleportDestinationPosition(m_NextDestination);
-
-            //m_IsReset = false;
         }
 
         if (GameMaster.Instance.isPlayerDead)
@@ -116,6 +112,8 @@ public class ArchlightBoss : MonoBehaviour
             if (!m_IsReset)
                 StartCoroutine(ResetState());
         }
+        else if (m_IsReset)
+            m_IsReset = false;
     }
 
     #region State
@@ -177,14 +175,6 @@ public class ArchlightBoss : MonoBehaviour
         m_TeleportTimer = Time.time;
     }
 
-    private void ChangeTeleportDestinationPosition(Vector3 destination)
-    {
-        if (TeleportDestination != null)
-        {
-            TeleportDestination.transform.position = destination;
-        }
-    }
-
     private IEnumerator TeleportSequence(Vector3 destination)
     {
         TeleportAnimation(true);
@@ -206,7 +196,6 @@ public class ArchlightBoss : MonoBehaviour
     {
         AudioManager.Instance.Play("Teleport");
     }
-
 
     private Vector3 GetDestination()
     {
