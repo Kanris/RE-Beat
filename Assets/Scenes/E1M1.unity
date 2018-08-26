@@ -716,7 +716,7 @@ Transform:
   m_Children:
   - {fileID: 2144031614}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &183522069
 GameObject:
@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 183522070}
   m_Layer: 0
   m_Name: Killing Ground
-  m_TagString: Untagged
+  m_TagString: CaveObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -745,7 +745,7 @@ Transform:
   m_Children:
   - {fileID: 1706921800}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &183751477
 Prefab:
@@ -861,7 +861,7 @@ Prefab:
         type: 2}
       propertyPath: RespawnPoint
       value: 
-      objectReference: {fileID: 753630515}
+      objectReference: {fileID: 77665800}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: SceneName
@@ -2922,7 +2922,7 @@ Transform:
   - {fileID: 798709377}
   - {fileID: 1243147780}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315815520
 GameObject:
@@ -3164,7 +3164,7 @@ Transform:
   - {fileID: 2052888315}
   - {fileID: 10918601}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &424000586
 GameObject:
@@ -13749,7 +13749,7 @@ Transform:
   m_Children:
   - {fileID: 1191494688}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &629430543 stripped
 GameObject:
@@ -18541,7 +18541,7 @@ Transform:
   - {fileID: 2104051379}
   - {fileID: 183751478}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &759092874
 GameObject:
@@ -19423,6 +19423,10 @@ Prefab:
       propertyPath: m_Name
       value: Junk
       objectReference: {fileID: 0}
+    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
+      propertyPath: m_TagString
+      value: CaveObjects
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
   m_IsPrefabParent: 0
@@ -19440,7 +19444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 965218125}
   m_Layer: 0
-  m_Name: WorldDoors
+  m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19458,6 +19462,7 @@ Transform:
   m_Children:
   - {fileID: 901489720}
   - {fileID: 1370085297}
+  - {fileID: 2029354465}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23065,7 +23070,7 @@ Transform:
   m_Children:
   - {fileID: 1935556945}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218462890
 GameObject:
@@ -23762,7 +23767,7 @@ GameObject:
   - component: {fileID: 1387431274}
   m_Layer: 0
   m_Name: BlueSwitch
-  m_TagString: BlueSwitch
+  m_TagString: CaveObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23976,6 +23981,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
   m_IsPrefabParent: 0
@@ -24063,7 +24072,7 @@ Transform:
   m_Children:
   - {fileID: 991854871}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1515697939
 GameObject:
@@ -24075,7 +24084,7 @@ GameObject:
   - component: {fileID: 1515697940}
   m_Layer: 0
   m_Name: Cave Light
-  m_TagString: CaveLight
+  m_TagString: CaveObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24096,7 +24105,7 @@ Transform:
   - {fileID: 755761580}
   - {fileID: 1315511182}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1548713258
 Prefab:
@@ -24304,7 +24313,7 @@ GameObject:
   - component: {fileID: 1620843119}
   m_Layer: 0
   m_Name: BlueLight
-  m_TagString: CaveLight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24515,7 +24524,7 @@ Transform:
   - {fileID: 1337044502}
   - {fileID: 130046885}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1752411045
 Prefab:
@@ -24753,7 +24762,7 @@ Transform:
   - {fileID: 1863019848}
   - {fileID: 2060853086}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1790738709
 GameObject:
@@ -27700,6 +27709,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
   m_IsPrefabParent: 0
@@ -28915,7 +28928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2029354465}
   m_Layer: 0
-  m_Name: DoorSwitches
+  m_Name: Switches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28927,14 +28940,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2029354464}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.530262, y: 2.8329895, z: 0.12890625}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -428.62866, y: -150.71735, z: -10.089638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1387431271}
   - {fileID: 228923486}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 965218125}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2051636611 stripped
 Transform:

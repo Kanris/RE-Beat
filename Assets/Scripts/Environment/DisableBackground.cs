@@ -9,7 +9,7 @@ public class DisableBackground : MonoBehaviour {
     [SerializeField] private Animator BackgroundAnimator;
     [SerializeField] private Animator MistAnimator;
 
-    private GameObject[] LightsInCave;
+    private GameObject[] ObjectsInCave;
     private Tilemap m_MistTilemap;
     private bool m_PlayerInCave;
     private bool m_IsFading;
@@ -17,9 +17,9 @@ public class DisableBackground : MonoBehaviour {
     private void Start()
     {
         InitializeBackground();
-        InitializeLight();
+        InitializeObjectsInCave();
 
-        ChangeLightState(false);
+        ChangeCaveObjectsState(false);
     }
 
     private void Update()
@@ -32,9 +32,9 @@ public class DisableBackground : MonoBehaviour {
 
     #region Initialize
 
-    private void InitializeLight()
+    private void InitializeObjectsInCave()
     {
-        LightsInCave = GameObject.FindGameObjectsWithTag("CaveLight");
+        ObjectsInCave = GameObject.FindGameObjectsWithTag("CaveObjects");
     }
 
     private void InitializeBackground()
@@ -49,12 +49,14 @@ public class DisableBackground : MonoBehaviour {
 
     #endregion
 
+    #region trigger
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_PlayerInCave)
         {
             PlayerEnterCave();
-            ChangeLightState(true);
+            ChangeCaveObjectsState(true);
         }
 
         if (collision.CompareTag("Player") | collision.CompareTag("Enemy") | collision.CompareTag("Item"))
@@ -67,9 +69,8 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_PlayerInCave)
         {
-            //collis
             yield return PlayerLeaveCave(false);
-            ChangeLightState(false);
+            ChangeCaveObjectsState(false);
         }
 
         if (collision.CompareTag("Player") | collision.CompareTag("Enemy") | collision.CompareTag("Item"))
@@ -77,6 +78,8 @@ public class DisableBackground : MonoBehaviour {
             ChangeObjectMaterial(collision, false);
         }
     }
+
+    #endregion
 
     private void PlayerEnterCave()
     {
@@ -120,7 +123,7 @@ public class DisableBackground : MonoBehaviour {
 
     private void ChangeObjectMaterial(Collider2D collision, bool isEnter)
     {
-        if (LightsInCave.Length != 0)
+        if (ObjectsInCave.Length != 0)
         {
             var objectMaterialChange = collision.GetComponent<MaterialChange>();
 
@@ -135,14 +138,14 @@ public class DisableBackground : MonoBehaviour {
         m_IsFading = false;
     }
 
-    private void ChangeLightState(bool isPlayerNear)
+    private void ChangeCaveObjectsState(bool isPlayerNear)
     {
-        if (LightsInCave.Length != 0)
+        if (ObjectsInCave.Length != 0)
         {
-            foreach (var light in LightsInCave)
+            foreach (var objectInCave in ObjectsInCave)
             {
-                if (light != null)
-                    light.SetActive(isPlayerNear);
+                if (objectInCave != null)
+                    objectInCave.SetActive(isPlayerNear);
             }
         }
     }

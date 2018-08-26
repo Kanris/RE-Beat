@@ -18,7 +18,7 @@ public class Saw : MonoBehaviour {
 
     private Animator m_SawAnimator;
     private Rigidbody2D m_Rigidbody;
-    private bool m_IsMove;
+    private float m_MoveTime = 0f;
     private float m_PosX = 0f;
     private float m_PosY = 0f;
 
@@ -87,29 +87,33 @@ public class Saw : MonoBehaviour {
 
         var whereToMoveX = 2f * whereToMove;
 
-        yield return Move(0f, 1f, 0.5f);
+        Move(0f, 1f);
+        yield return new WaitForSeconds(0.5f);
 
-        yield return Move(whereToMoveX, 0f, SawMoveTime);
+        Move(whereToMoveX, 0f);
+        yield return new WaitForSeconds(SawMoveTime);
 
-        yield return Move(-whereToMoveX, 0f, SawMoveTime);
+        Move(-whereToMoveX, 0f);
+        yield return new WaitForSeconds(SawMoveTime);
 
-        yield return new WaitForSeconds(0.1f);
+        Move(0f, -1f);
+        yield return new WaitForSeconds(0.5f);
 
-        yield return Move(0f, -1f, 0.5f);
-
-        SawAnimation("Idle");
         AddSawCollision(false);
+
+        StopMove();
     }
 
-    private IEnumerator Move(float posX, float posY, float time)
+    private void StopMove()
     {
-        m_IsMove = true;
-        m_Rigidbody.velocity = new Vector2(posX, posY);
-
-        yield return new WaitForSeconds(time);
-
         m_Rigidbody.velocity = Vector2.zero;
-        m_IsMove = false;
+
+        SawAnimation("Idle");
+    }
+
+    private void Move(float posX, float posY)
+    {
+        m_Rigidbody.velocity = new Vector2(posX, posY);
     }
 
     #endregion
@@ -118,9 +122,11 @@ public class Saw : MonoBehaviour {
     {
         if (!WithTrigger)
         {
-            if (!m_IsMove)
+            if (m_MoveTime <= Time.time)
             {
-                StartCoroutine(Move(m_PosX, m_PosY, SawMoveTime));
+                m_MoveTime = Time.time + SawMoveTime;
+
+                Move(m_PosX, m_PosY);
                 ChangePositionDirection();
             }
         }
