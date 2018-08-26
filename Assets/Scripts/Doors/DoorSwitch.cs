@@ -8,12 +8,11 @@ public class DoorSwitch : MonoBehaviour {
     public delegate void VoidDelegate();
     public event VoidDelegate OnSwitchPressed;
 
-    public bool m_IsQuitting;
-
     [SerializeField] private GameObject DoorToOpen;
 
     private GameObject m_InteractionButton;
     private bool m_IsPlayerNearSwitch = false;
+    private bool m_IsQuitting;
     private Animator m_Animator;
 
     // Use this for initialization

@@ -23767,7 +23767,7 @@ GameObject:
   - component: {fileID: 1387431274}
   m_Layer: 0
   m_Name: BlueDoorSwitch
-  m_TagString: CaveObjects
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23783,7 +23783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc94ef7c7f2136f44bd7777ba656af37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsQuitting: 0
   DoorToOpen: {fileID: 247247795}
 --- !u!212 &1387431270
 SpriteRenderer:
@@ -24313,7 +24312,7 @@ GameObject:
   - component: {fileID: 1620843119}
   m_Layer: 0
   m_Name: BlueLight
-  m_TagString: Untagged
+  m_TagString: CaveObjects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

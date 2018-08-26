@@ -133,14 +133,11 @@ public class GameMaster : MonoBehaviour {
     {
         var searchGameObjectResult = GameObject.Find(objectToFind);
 
-        Debug.LogError("Need to destroy - " + objectToFind);
-
         if (searchGameObjectResult != null)
         { 
             switch (recreateType)
             {
                 case RecreateType.Object:
-                    Debug.LogError(objectToFind);
                     Destroy(searchGameObjectResult);
                     break;
 
