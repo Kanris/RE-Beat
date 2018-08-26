@@ -16,16 +16,23 @@ public class AudioManager : MonoBehaviour {
         [Range(0f, 0.5f)] public float PitchOffset = 0.1f;
         public bool Loop = false;
 
+
         private AudioSource m_AudioSource;
         private bool m_PlayerReturn = true;
+        private bool Unload = false;
 
         public void SetSource(AudioSource source)
         {
             m_AudioSource = source;
             m_AudioSource.clip = Clip;
             m_AudioSource.playOnAwake = false;
-
             ChangeMusicSettings();
+
+            if (!m_AudioSource.clip.preloadAudioData)
+            {
+                Unload = true;
+                m_AudioSource.clip.UnloadAudioData();
+            }
         }
 
         public void PlaySound()
@@ -34,6 +41,8 @@ public class AudioManager : MonoBehaviour {
             {
                 if (!m_AudioSource.isPlaying)
                 {
+                    if (Unload) m_AudioSource.clip.LoadAudioData();
+
                     ChangeMusicSettings();
                     m_AudioSource.Play();
                 }
@@ -45,6 +54,8 @@ public class AudioManager : MonoBehaviour {
             if (m_AudioSource != null)
             {
                 m_AudioSource.Stop();
+
+                if (Unload) m_AudioSource.clip.UnloadAudioData();
             }
             else
             {
@@ -110,9 +121,10 @@ public class AudioManager : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(this);
+
+            InitializeAudioPlaylist();
         }
 
-        InitializeAudioPlaylist();
     }
 
     #endregion
