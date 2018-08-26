@@ -89,7 +89,7 @@ public class FireballTrigger : MonoBehaviour {
 
             var fireballDirection = GetFireballDirection();
 
-            var fireballGameObject = Resources.Load("Fireball") as GameObject;
+            var fireballGameObject = Resources.Load("Fireballs/Fireball") as GameObject;
 
             StartCoroutine(CreateFireballs(fireballDirection, fireballGameObject));
         }
