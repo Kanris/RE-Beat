@@ -30,35 +30,35 @@ public class GameMaster : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(this);
+
+            #region Initialize Managers
+            Initialize("Managers/EventSystem");
+
+            Initialize("Managers/AudioManager");
+
+            Initialize("Managers/LoadSceneManager");
+
+            Initialize("Managers/ScreenFaderManager");
+
+            Initialize("Managers/PauseMenuManager");
+
+            Initialize("Managers/AnnouncerManager");
+
+            Initialize("Managers/DialogueManager");
+
+            Initialize("Managers/UIManager");
+
+            Initialize("Managers/JournalManager");
+
+            InitializeRespawnPoint();
+
+            InitalizePlayerToRespawn();
+            #endregion
+
+            InitializeBackgroundMusic();
+
+            InitializeSceneState();
         }
-
-        #region Initialize Managers
-        Initialize("Managers/EventSystem");
-
-        Initialize("Managers/AudioManager");
-
-        Initialize("Managers/LoadSceneManager");
-
-        Initialize("Managers/ScreenFaderManager");
-
-        Initialize("Managers/PauseMenuManager");
-
-        Initialize("Managers/AnnouncerManager");
-
-        Initialize("Managers/DialogueManager");
-
-        Initialize("Managers/UIManager");
-
-        Initialize("Managers/JournalManager");
-
-        InitializeRespawnPoint();
-
-        InitalizePlayerToRespawn();
-        #endregion
-
-        InitializeBackgroundMusic();
-
-        InitializeSceneState();
     }
 
     #endregion
@@ -133,11 +133,14 @@ public class GameMaster : MonoBehaviour {
     {
         var searchGameObjectResult = GameObject.Find(objectToFind);
 
+        Debug.LogError("Need to destroy - " + objectToFind);
+
         if (searchGameObjectResult != null)
         { 
             switch (recreateType)
             {
                 case RecreateType.Object:
+                    Debug.LogError(objectToFind);
                     Destroy(searchGameObjectResult);
                     break;
 
