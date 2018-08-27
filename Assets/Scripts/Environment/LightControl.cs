@@ -21,7 +21,7 @@ public class LightControl : MonoBehaviour {
         }
     }
 
-    public void ChangeColorIntensity(int value)
+    public void ChangeColorIntensity(float value)
     {
         if (LightToControl != null)
         {
