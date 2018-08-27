@@ -91,11 +91,15 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void ResumeGame()
     {
+        PlayClickSound();
+
         SetActive(!m_PauseGame.activeSelf);
     }
 
     public void ReturnToStartScreen()
     {
+        PlayClickSound();
+
         SetActive(!m_PauseGame.activeSelf);
 
         if (OnReturnToStartSceen != null)
@@ -109,6 +113,23 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void ExitGame()
     {
+        PlayClickSound();
         LoadSceneManager.Instance.CloseGame();
     }
+
+    #region Sound
+
+    private void PlayClickSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play("UI-Click");
+        }
+        else
+        {
+            Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
+        }
+    }
+
+    #endregion
 }
