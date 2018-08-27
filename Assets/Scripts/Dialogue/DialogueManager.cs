@@ -293,6 +293,7 @@ public class DialogueManager : MonoBehaviour {
 
     public void GetAnswer(bool isFirst)
     {
+        PlayClickSound();
         StartCoroutine(SetUpAnswer(isFirst));
     }
 
@@ -316,4 +317,20 @@ public class DialogueManager : MonoBehaviour {
         if (OnDialogueInProgressChange != null)
             OnDialogueInProgressChange(value);
     }
+
+    #region Sound
+
+    private void PlayClickSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play("UI-Click");
+        }
+        else
+        {
+            Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
+        }
+    }
+
+    #endregion
 }

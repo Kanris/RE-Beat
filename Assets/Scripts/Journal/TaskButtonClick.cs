@@ -10,6 +10,8 @@ public class TaskButtonClick : MonoBehaviour {
         JournalManager.Instance.DisplayTaskText(transform.name);
     }
 
+    #region Sound
+
     private void PlayClickSound()
     {
         if (AudioManager.Instance != null)
@@ -21,4 +23,6 @@ public class TaskButtonClick : MonoBehaviour {
             Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
         }
     }
+
+    #endregion
 }

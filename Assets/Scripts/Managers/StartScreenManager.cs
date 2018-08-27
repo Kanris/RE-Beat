@@ -53,6 +53,8 @@ public class StartScreenManager : MonoBehaviour {
         Application.Quit();
     }
 
+    #region Sound
+
     private void PlayClickSound()
     {
         if (AudioManager.Instance != null)
@@ -64,4 +66,6 @@ public class StartScreenManager : MonoBehaviour {
             Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
         }
     }
+
+    #endregion
 }
