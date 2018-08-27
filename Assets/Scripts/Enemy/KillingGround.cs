@@ -16,4 +16,12 @@ public class KillingGround : MonoBehaviour {
             if (collision != null) Destroy(collision.gameObject);
         }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<Player>().playerStats.TakeDamage(999);
+        }
+    }
 }
