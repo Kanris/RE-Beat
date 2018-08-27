@@ -28622,11 +28622,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.size
-      value: 24
-      objectReference: {fileID: 0}
     - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -28659,31 +28654,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 24
       objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[24].Name
-      value: DoorOpe
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[24].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b534c04817300bd438e982593e594b67, type: 3}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[24].Volume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[24].Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
-        type: 2}
-      propertyPath: AudioArray.Array.data[7].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: c83abf09d0945fc4bbe100cf574816b0, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
   m_IsPrefabParent: 0

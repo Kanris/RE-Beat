@@ -4071,6 +4071,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: WoodRunning
+--- !u!1001 &2028995065
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334244801460138, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114588768776659026, guid: ddf2e734f6a654b0699094b328c3b832,
+        type: 2}
+      propertyPath: AudioArray.Array.data[5].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1cda64e0a172f884aa256fc77b3c89d8, type: 3}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ddf2e734f6a654b0699094b328c3b832, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2038800950
 GameObject:
   m_ObjectHideFlags: 0
