@@ -23,6 +23,8 @@ public class Actions : MonoBehaviour {
         ChangeIsQuitting(false);
 
         SubscribeToEvents();
+
+        if (actionType == ActionType.Show) ActionObject.SetActive(false);
     }
 
 
