@@ -53,13 +53,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioArray:
   - Name: Waterfall
-    Clip: {fileID: 8300000, guid: f747fc0bdc95e4dc28f9a53b874ebaad, type: 3}
+    Clip: {fileID: 8300000, guid: 16b09fa78a2ac5043a21f133d28c1b9d, type: 3}
     Volume: 0.05
     Pitch: 1
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 1
   - Name: GrassRunning
     Clip: {fileID: 8300000, guid: 126bcadb6881045c5a38ff4cf3432502, type: 3}
     Volume: 0.2
@@ -67,7 +66,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 0
   - Name: WoodRunning
     Clip: {fileID: 8300000, guid: 8a8573cbf4afb494cb62c1908bf36800, type: 3}
     Volume: 0.2
@@ -75,15 +73,13 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 0
   - Name: StoneRunning
-    Clip: {fileID: 8300000, guid: 49ca6cd79c1cc4a6893d513768b3fd80, type: 3}
+    Clip: {fileID: 8300000, guid: 168aa2404550a3c488262ad9d69ced0e, type: 3}
     Volume: 0.1
     Pitch: 0.8
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 0
   - Name: Background-Mushroom
     Clip: {fileID: 8300000, guid: ca454120fe6800e41806d119bc2ee9e0, type: 3}
     Volume: 0.1
@@ -91,7 +87,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 1
   - Name: Rain
     Clip: {fileID: 8300000, guid: ca4f435239e00a247b469baf396997a4, type: 3}
     Volume: 0.3
@@ -99,7 +94,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 1
   - Name: Teleport
     Clip: {fileID: 8300000, guid: be3ac78ee77d986419c9fdd82222abdb, type: 3}
     Volume: 0.5
@@ -107,7 +101,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: DoorOpen
     Clip: {fileID: 8300000, guid: 4ac92537098c8004fae75d805b025bf7, type: 3}
     Volume: 0.5
@@ -115,7 +108,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: Cast
     Clip: {fileID: 8300000, guid: 760ed72a961ca0548822e85b8bd98258, type: 3}
     Volume: 0.5
@@ -123,7 +115,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Hit
     Clip: {fileID: 8300000, guid: 714fb7839b9d5ed4ca660474dfbf78aa, type: 3}
     Volume: 0.5
@@ -131,7 +122,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: OpenJournal
     Clip: {fileID: 8300000, guid: a460732f3e0e5754c8a24454f290e93e, type: 3}
     Volume: 0.6
@@ -139,7 +129,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Task
     Clip: {fileID: 8300000, guid: a460732f3e0e5754c8a24454f290e93e, type: 3}
     Volume: 0.6
@@ -147,7 +136,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Background-Dark
     Clip: {fileID: 8300000, guid: 2d26a2278756b2f44883b5011c0f417d, type: 3}
     Volume: 0.2
@@ -155,7 +143,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 1
   - Name: Chest Open
     Clip: {fileID: 8300000, guid: 78106635abbd7e8438a786fd41f5694f, type: 3}
     Volume: 0.6
@@ -163,7 +150,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: Respawn Torch Activation
     Clip: {fileID: 8300000, guid: 3a36f45b865789344b6a44da0e3ef9a5, type: 3}
     Volume: 0.6
@@ -171,7 +157,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Player Attack
     Clip: {fileID: 8300000, guid: 8fd1181e305ccd74f95e3135414a9658, type: 3}
     Volume: 0.6
@@ -179,7 +164,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Enemy Hit
     Clip: {fileID: 8300000, guid: fdc0511e72eea6741a092717dd5ffd5b, type: 3}
     Volume: 0.6
@@ -187,7 +171,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Enemy Death
     Clip: {fileID: 8300000, guid: a852d91d3b5f0374baa1b45dbe5b7ce5, type: 3}
     Volume: 0.6
@@ -195,7 +178,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: Box Destroy
     Clip: {fileID: 8300000, guid: 8a2a79ff15bcffd4c8d52f509dd57cf5, type: 3}
     Volume: 0.6
@@ -203,7 +185,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: Player Death
     Clip: {fileID: 8300000, guid: 3dd81414053ec0747a899cfac90d8d5c, type: 3}
     Volume: 0.6
@@ -211,7 +192,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 0
   - Name: Button Switch
     Clip: {fileID: 8300000, guid: 059079dba9e264145a11c1f8506c23fe, type: 3}
     Volume: 0.6
@@ -219,7 +199,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
   - Name: Boss-Fight
     Clip: {fileID: 8300000, guid: 53e187815b824ba429e723959a570dac, type: 3}
     Volume: 0.2
@@ -227,7 +206,6 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 1
-    Unload: 1
   - Name: Archlight-attack
     Clip: {fileID: 8300000, guid: bb8a7e16882e9f440a8ad348655641ff, type: 3}
     Volume: 0.3
@@ -235,4 +213,10 @@ MonoBehaviour:
     VolumeOffset: 0.1
     PitchOffset: 0.1
     Loop: 0
-    Unload: 1
+  - Name: UI-Click
+    Clip: {fileID: 8300000, guid: b534c04817300bd438e982593e594b67, type: 3}
+    Volume: 0.2
+    Pitch: 1
+    VolumeOffset: 0.1
+    PitchOffset: 0.1
+    Loop: 0

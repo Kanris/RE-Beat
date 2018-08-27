@@ -6,9 +6,10 @@ public class StartScreenManager : MonoBehaviour {
 
     [SerializeField] private string BackgroundMusic;
 
+    #region Initialize Managers
+
     private void Awake()
     {
-        #region Initialize Managers
         Initialize("Managers/EventSystem");
 
         Initialize("Managers/AudioManager");
@@ -18,8 +19,6 @@ public class StartScreenManager : MonoBehaviour {
         Initialize("Managers/ScreenFaderManager");
 
         InitializeBackgroundMusic();
-
-        #endregion
     }
 
     void Initialize(string name)
@@ -27,6 +26,8 @@ public class StartScreenManager : MonoBehaviour {
         var gameObjectToInstantiate = Resources.Load(name);
         Instantiate(gameObjectToInstantiate);
     }
+
+    #endregion
 
     private void InitializeBackgroundMusic()
     {
@@ -36,16 +37,31 @@ public class StartScreenManager : MonoBehaviour {
 
     public void LoadScene(string name)
     {
+        PlayClickSound();
         LoadSceneManager.Instance.Load(name);
     }
 
     public void LoadGame()
     {
-
+        PlayClickSound();
+        //TODO: Implement LoadGame
     }
 
     public void ExitGame()
     {
+        PlayClickSound();
         Application.Quit();
+    }
+
+    private void PlayClickSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.Play("UI-Click");
+        }
+        else
+        {
+            Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
+        }
     }
 }
