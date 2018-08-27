@@ -163,6 +163,7 @@ public class PlayerStats : Stats
     public static Inventory PlayerInventory;
 
     private bool isInvincible;
+    private static int CurrentPlayerHealth;
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
@@ -172,7 +173,14 @@ public class PlayerStats : Stats
         base.Initialize(gameObject);
 
         UIManager.Instance.Clear();
-        UIManager.Instance.AddHealth(CurrentHealth);
+
+        if (CurrentPlayerHealth > 0)
+            UIManager.Instance.AddHealth(CurrentPlayerHealth);
+        else
+        {
+            UIManager.Instance.AddHealth(CurrentHealth);
+            CurrentPlayerHealth = CurrentHealth;
+        }
     }
 
     public override void TakeDamage(int amount)
@@ -180,6 +188,7 @@ public class PlayerStats : Stats
         if (!isInvincible)
         {
             base.TakeDamage(amount);
+            CurrentPlayerHealth -= amount;
 
             UIManager.Instance.RemoveHealth(amount);
         }
