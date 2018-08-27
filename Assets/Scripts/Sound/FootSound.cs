@@ -5,10 +5,9 @@ using UnityEngine;
 public class FootSound : MonoBehaviour {
 
     public string Sound;
-
-    private float updateTime = 0.2f;
-    private float currentUpdateTime = 0.2f;
     private Animator m_Animator;
+
+    #region Initialize
 
     private void Start()
     {
@@ -24,26 +23,13 @@ public class FootSound : MonoBehaviour {
             Debug.LogError("FootSound: Can't find Animator on GameObject");
         }
     }
+    #endregion
 
     private void Update()
     {
-        if (currentUpdateTime <= Time.time)
+        if (m_Animator.GetBool("Ground"))
         {
-            currentUpdateTime = updateTime + Time.time;
-
-            ManageFootstepsSound();
-        }
-    }
-
-    private void ManageFootstepsSound()
-    {
-        var onGround = m_Animator.GetBool("Ground");
-
-        if (onGround)
-        {
-            var isMoving = m_Animator.GetFloat("Speed") > 0.01f;
-
-            if (isMoving)
+            if (m_Animator.GetFloat("Speed") > 0.01f)
             {
                 AudioManager.Instance.Play(Sound);
             }
@@ -57,4 +43,6 @@ public class FootSound : MonoBehaviour {
             AudioManager.Instance.Stop(Sound);
         }
     }
+
+
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerDamagePlayer : MonoBehaviour {
+public class PlayerDamageFromFace : MonoBehaviour {
 
     public Player player;
 
