@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NextScene: Boss
   NextScenename: Weird Dream
-  SpawnPosition: {x: -6.92, y: 0.23}
+  SpawnPosition: {x: -17.89, y: 0.75}
   BackgroundMusic: Boss-Fight
 --- !u!1 &12145143
 GameObject:
@@ -23898,6 +23898,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightToControl: {fileID: 1620843119}
+  ControlWithoutAnimator: 0
+  BlinkAfter: 3
+  IntensivityIteration: 20
+  Iterations: 4
 --- !u!1 &1392632935
 GameObject:
   m_ObjectHideFlags: 0
