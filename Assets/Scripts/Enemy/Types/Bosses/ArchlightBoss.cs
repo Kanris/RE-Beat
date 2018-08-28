@@ -145,8 +145,21 @@ public class ArchlightBoss : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        ResetArchlightPosition();
+
         ChangeLightState(true);
         gameObject.SetActive(false);
+    }
+
+    private void ResetArchlightPosition()
+    {
+        if (CenterTeleport != null)
+        {
+            if (CenterTeleport.transform.childCount > 0)
+            {
+                transform.position = CenterTeleport.transform.GetChild(0).position;
+            }
+        }
     }
 
     private void ChangeLightState(bool value)
