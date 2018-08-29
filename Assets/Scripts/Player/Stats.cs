@@ -156,14 +156,13 @@ public class Stats {
 [System.Serializable]
 public class PlayerStats : Stats
 {
-    public static int GemsAmount;
     public static int DamageAmount = 50;
     public static float AttackSpeed = 0.6f;
     public static float Invincible = 2f;
     public static Inventory PlayerInventory;
+    public static int CurrentPlayerHealth;
 
     private bool isInvincible;
-    private static int CurrentPlayerHealth;
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {

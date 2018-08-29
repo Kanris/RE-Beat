@@ -33,7 +33,7 @@ public class PickupBox : MonoBehaviour {
 
         SubscribeToEvents();
 
-        GameMaster.Instance.SaveState(gameObject.name, transform.position, GameMaster.RecreateType.Position);
+        GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
     }
 
     #region Initialize
@@ -176,7 +176,7 @@ public class PickupBox : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         else
         {
-            GameMaster.Instance.SaveState(gameObject.name, transform.position, GameMaster.RecreateType.Position);
+            GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 

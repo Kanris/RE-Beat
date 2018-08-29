@@ -198,6 +198,11 @@ public class AudioManager : MonoBehaviour {
 
                 if (sound != null)
                 {
+                    for (int index = 0; index < AudioArray.Length; index++)
+                    {
+                        AudioArray[index].StopSound();
+                    }
+
                     StartCoroutine(sound.FadeIn());
                 }
                 else

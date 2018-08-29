@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class State {
+
+    public static List<State> ScenesState;
 
     public string SceneName;
 
     public List<string> ObjectsState;
 
-    public Dictionary<string, Vector2> ObjectsPosition;
+    public Dictionary<string, ObjectPosition> ObjectsPosition;
 
     public List<string> DialogueIsComplete;
 
@@ -22,7 +25,7 @@ public class State {
 
         ObjectsState = new List<string>();
 
-        ObjectsPosition = new Dictionary<string, Vector2>();
+        ObjectsPosition = new Dictionary<string, ObjectPosition>();
 
         DialogueIsComplete = new List<string>();
 
@@ -39,5 +42,18 @@ public class State {
     public bool IsExistInPosition(string name)
     {
         return ObjectsPosition.ContainsKey(name);
+    }
+}
+
+[System.Serializable]
+public class ObjectPosition
+{
+    public float x;
+    public float y;
+
+    public ObjectPosition(Vector2 position)
+    {
+        x = position.x;
+        y = position.y;
     }
 }

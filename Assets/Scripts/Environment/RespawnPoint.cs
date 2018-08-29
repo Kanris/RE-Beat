@@ -35,6 +35,8 @@ public class RespawnPoint : MonoBehaviour {
             {
                 SetActiveFlame(true);
                 ChangePlayerMaterial(collision);
+
+                SaveLoadManager.Instance.SaveGameData();
                 AudioManager.Instance.Play("Respawn Torch Activation");
             }
         }

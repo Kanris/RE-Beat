@@ -6,6 +6,22 @@ using TMPro;
 
 public class JournalManager : MonoBehaviour {
 
+    [SerializeField] private TextPage page;
+    [SerializeField] private Transform content;
+    [SerializeField] private Transform completeButton;
+    [SerializeField] private Transform currentButton;
+
+    private GameObject m_JournalUI;
+    private string m_CurrentOpenPage;
+    private float m_UpdateSearchTime;
+    private Player m_Player;
+
+    public Dictionary<string, Task> CurrentTasks;
+    public Dictionary<string, Task> CompletedTasks;
+
+    private List<Button> m_CurrentTaskButtons;
+    private List<Button> m_CompletedTaskButtons;
+
     #region Singleton
 
     public static JournalManager Instance;
@@ -23,23 +39,14 @@ public class JournalManager : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(this);
+
+            m_CurrentTaskButtons = new List<Button>();
+            m_CompletedTaskButtons = new List<Button>();
         }
     }
 
     #endregion
-    
-    [SerializeField] private TextPage page;
-    [SerializeField] private Transform content;
-    [SerializeField] private Transform completeButton;
-    [SerializeField] private Transform currentButton;
-
-    private GameObject m_JournalUI;
-    private Dictionary<string, Task> CurrentTasks;
-    private Dictionary<string, Task> CompletedTasks;
-    private string m_CurrentOpenPage;
-    private float m_UpdateSearchTime;
-    private Player m_Player;
-
+   
     // Use this for initialization
     void Start () {
 
@@ -47,12 +54,13 @@ public class JournalManager : MonoBehaviour {
 
         page.ClearText();
 
-        CurrentTasks = new Dictionary<string, Task>();
-
-        CompletedTasks = new Dictionary<string, Task>();
-
         SetActiveUI(false);
 
+        if (CurrentTasks == null)
+            CurrentTasks = new Dictionary<string, Task>();
+
+        if (CompletedTasks == null)
+            CompletedTasks = new Dictionary<string, Task>();
     }
 
     #region Initialize
@@ -127,14 +135,51 @@ public class JournalManager : MonoBehaviour {
     {
         if (!CurrentTasks.ContainsKey(taskName))
         {
-            var taskButton = CreateTaskButton(taskName);
-            var newTask = CreateNewTask(taskName, taskText, taskButton);
+            m_CurrentTaskButtons.Add( CreateTaskButton(taskName));
+            var newTask = CreateNewTask(taskName, taskText);
             CurrentTasks.Add(taskName, newTask);
 
             return true;
         }
 
         return false;
+    }
+
+    public void RecreateTasks()
+    {
+        if (CurrentTasks != null)
+        {
+            if (m_CurrentTaskButtons != null)
+            {
+                foreach (var item in m_CurrentTaskButtons)
+                {
+                    Destroy(item);
+                    m_CurrentTaskButtons.Remove(item);
+                }
+
+                foreach (var item in CurrentTasks)
+                {
+                    m_CurrentTaskButtons.Add(CreateTaskButton(item.Value.Name));
+                }
+            }
+        }
+
+        if (CompletedTasks != null)
+        {
+            if (m_CompletedTaskButtons != null)
+            {
+                foreach (var item in m_CompletedTaskButtons)
+                {
+                    Destroy(item);
+                    m_CompletedTaskButtons.Remove(item);
+                }
+
+                foreach (var item in CompletedTasks)
+                {
+                    m_CompletedTaskButtons.Add(CreateTaskButton(item.Key));
+                }
+            }
+        }
     }
 
     public bool UpdateTask(string taskName, string taskText)
@@ -189,8 +234,8 @@ public class JournalManager : MonoBehaviour {
 
     private void OpenPage(bool isCurrentPressed)
     {
-        ChangeButtonsVision(isCurrentPressed, CurrentTasks.Values);
-        ChangeButtonsVision(!isCurrentPressed, CompletedTasks.Values);
+        ChangeButtonsVision(isCurrentPressed, m_CurrentTaskButtons);
+        ChangeButtonsVision(!isCurrentPressed, m_CompletedTaskButtons);
 
         var moveVector = new Vector3(-10, 0);
 
@@ -203,17 +248,17 @@ public class JournalManager : MonoBehaviour {
         completeButton.position -= moveVector;
     }
 
-    private void ChangeButtonsVision(bool value, IEnumerable<Task> tasks)
+    private void ChangeButtonsVision(bool value, IEnumerable<Button> buttons)
     {
-        foreach (var item in tasks)
+        foreach (var item in buttons)
         {
-            item.TaskButton.gameObject.SetActive(value);
+            item.gameObject.SetActive(value);
         }
     }
 
-    private Task CreateNewTask(string taskName, string taskText, Button buttonTask)
+    private Task CreateNewTask(string taskName, string taskText)
     {
-        return new Task(taskName, taskText, buttonTask);
+        return new Task(taskName, taskText);
     }
 
     private Button CreateTaskButton(string name)
@@ -233,18 +278,16 @@ public class Task
 {
     public string Name;
     public string Text;
-    public Button TaskButton;
     public bool IsTaskComplete;
 
     public delegate void VoidDelegate();
     public event VoidDelegate OnTaskComplete;
     public event VoidDelegate OnTaskUpdate;
 
-    public Task(string taskName, string taskText, Button taskButton)
+    public Task(string taskName, string taskText)
     {
         this.Name = taskName;
         this.Text = taskText;
-        this.TaskButton = taskButton;
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
             new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been added to journal - <#000000>J</color>", 3f));

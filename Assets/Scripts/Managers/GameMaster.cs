@@ -6,7 +6,8 @@ using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
-    public Transform RespawnPoint;
+    public static Transform m_RespawnPoint;
+    [HideInInspector] public static Vector3 m_RespawnPointPosition;
     public bool isPlayerDead;
 
     private GameObject m_PlayerToRespawn;
@@ -50,14 +51,16 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/JournalManager");
 
-            InitializeRespawnPoint();
+            Initialize("Managers/SaveLoadManager");
 
-            InitalizePlayerToRespawn();
+            if (StartScreenManager.IsLoadPressed)
+            {
+                SaveLoadManager.Instance.LoadGameData();
+
+                JournalManager.Instance.RecreateTasks();
+            }
+
             #endregion
-
-            InitializeBackgroundMusic();
-
-            InitializeSceneState();
         }
     }
 
@@ -65,6 +68,14 @@ public class GameMaster : MonoBehaviour {
 
     private void Start()
     {
+        InitializeRespawnPoint();
+
+        InitalizePlayerToRespawn();
+
+        InitializeBackgroundMusic();
+
+        InitializeSceneState();
+
         if (Camera.main.GetComponent<Camera2DFollow>().target == null)
             InitializePlayerRespawn(false);
     }
@@ -78,8 +89,6 @@ public class GameMaster : MonoBehaviour {
     }
 
     #region SceneRecreation
-    private List<State> ScenesState;
-
     public string SceneName;
 
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
@@ -90,7 +99,7 @@ public class GameMaster : MonoBehaviour {
     {
         SceneName = sceneName;
 
-        var searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+        var searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
         if (searchResult != null)
         {
@@ -151,7 +160,8 @@ public class GameMaster : MonoBehaviour {
                     break;
 
                 case RecreateType.Position:
-                    searchGameObjectResult.transform.position = (Vector2)(object)value;
+                    var position = (ObjectPosition)(object)value;
+                    searchGameObjectResult.transform.position = new Vector2(position.x, position.y);
                     break;
 
                 case RecreateType.ChestItem:
@@ -170,15 +180,15 @@ public class GameMaster : MonoBehaviour {
         State searchResult = null;
 
         if (!string.IsNullOrEmpty(sceneName))
-            searchResult = ScenesState.FirstOrDefault(x => x.SceneName == sceneName);
+            searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == sceneName);
         else
-            searchResult = ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+            searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
 
         if (searchResult == null)
         {
             searchResult = new State(SceneName);
 
-            ScenesState.Add(searchResult);
+            State.ScenesState.Add(searchResult);
         }
 
         return searchResult;
@@ -221,11 +231,11 @@ public class GameMaster : MonoBehaviour {
 
                 if (!state.IsExistInPosition(name))
                 {
-                    state.ObjectsPosition.Add(name, (Vector3)(object)value);
+                    state.ObjectsPosition.Add(name, (ObjectPosition)(object)value);
                 }
                 else
                 {
-                    state.ObjectsPosition[name] = (Vector3)(object)value;
+                    state.ObjectsPosition[name] = (ObjectPosition)(object)value;
                 }
 
                 break;
@@ -250,16 +260,25 @@ public class GameMaster : MonoBehaviour {
 
     private void InitializeSceneState()
     {
-        if (ScenesState == null)
-            ScenesState = new List<State>();
+        if (State.ScenesState == null)
+            State.ScenesState = new List<State>();
+        else
+            RecreateSceneState(SceneName);
     }
 
     void InitializeRespawnPoint()
     {
-        if (RespawnPoint == null)
-            RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
+        if (m_RespawnPoint == null)
+        {
+            m_RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
 
-        if (RespawnPoint == null)
+            if (m_RespawnPointPosition == Vector3.zero)
+            {
+                m_RespawnPointPosition = m_RespawnPoint.position;
+            }
+        }
+
+        if (m_RespawnPointPosition == null)
         {
             Debug.LogError("GameMaster: Can't find Respawn Point on scene");
         }
@@ -284,12 +303,13 @@ public class GameMaster : MonoBehaviour {
     {
         if (respawnPointTransform != null)
         {
-            if (!ReferenceEquals(RespawnPoint, respawnPointTransform))
+            if (!ReferenceEquals(m_RespawnPointPosition, respawnPointTransform))
             {
-                if (RespawnPoint != null)
-                    RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
+                if (m_RespawnPoint != null)
+                    m_RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
                 
-                RespawnPoint = respawnPointTransform;
+                m_RespawnPoint = respawnPointTransform;
+                m_RespawnPointPosition = respawnPointTransform.position;
             }
         }
         else
@@ -302,7 +322,7 @@ public class GameMaster : MonoBehaviour {
     {
         if (!isPlayerRespawning)
         {
-            if (RespawnPoint != null)
+            if (m_RespawnPointPosition != null)
             {
                 if (m_PlayerToRespawn != null)
                 {
@@ -334,7 +354,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(RespawnPoint.position);
+        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(m_RespawnPointPosition);
         var playerTransform = RespawnWithoutFade();
         Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
@@ -349,7 +369,8 @@ public class GameMaster : MonoBehaviour {
     {
         isPlayerDead = true;
 
-        var playerGameObject = Instantiate(m_PlayerToRespawn, RespawnPoint.position, m_PlayerToRespawn.transform.rotation);
+        var playerGameObject = Instantiate(m_PlayerToRespawn);
+        playerGameObject.transform.position = m_RespawnPointPosition;
 
         isPlayerRespawning = false;
         isPlayerDead = false;

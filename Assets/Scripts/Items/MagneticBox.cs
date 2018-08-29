@@ -33,7 +33,7 @@ public class MagneticBox : MonoBehaviour {
 
         SubscribeToEvents();
 
-        GameMaster.Instance.SaveState(transform.name, transform.position, GameMaster.RecreateType.Position);
+        GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
     }
 
     #region Initialize
@@ -146,7 +146,7 @@ public class MagneticBox : MonoBehaviour {
             transform.SetParent(null);
             transform.gameObject.layer = 0;
             SetAnimation("Inactive");
-            GameMaster.Instance.SaveState(transform.name, transform.position, GameMaster.RecreateType.Position);
+            GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
         }
     }
 

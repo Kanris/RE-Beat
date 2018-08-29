@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StartScreenManager : MonoBehaviour {
 
+    public static bool IsLoadPressed;
+
     [SerializeField] private string BackgroundMusic;
 
     #region Initialize Managers
@@ -17,6 +19,8 @@ public class StartScreenManager : MonoBehaviour {
         Initialize("Managers/LoadSceneManager");
 
         Initialize("Managers/ScreenFaderManager");
+
+        Initialize("Managers/SaveLoadManager");
 
         InitializeBackgroundMusic();
     }
@@ -37,14 +41,16 @@ public class StartScreenManager : MonoBehaviour {
 
     public void LoadScene(string name)
     {
+        IsLoadPressed = false;
         PlayClickSound();
         LoadSceneManager.Instance.Load(name);
     }
 
     public void LoadGame()
     {
+        IsLoadPressed = true;
         PlayClickSound();
-        //TODO: Implement LoadGame
+        SaveLoadManager.Instance.LoadScene();
     }
 
     public void ExitGame()
