@@ -32,6 +32,9 @@ public class State {
         ChestItems = new Dictionary<string, string>();
 
         Tasks = new List<string>();
+
+        if (ScenesState == null)
+            ScenesState = new List<State>();
     }
 
     public bool IsExistInBool(string name)

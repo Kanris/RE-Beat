@@ -60,6 +60,15 @@ public class GameMaster : MonoBehaviour {
                 JournalManager.Instance.RecreateTasks();
             }
 
+            
+            InitializeRespawnPoint();
+
+            InitalizePlayerToRespawn();
+
+            InitializeBackgroundMusic();
+
+            InitializeSceneState();
+            
             #endregion
         }
     }
@@ -68,14 +77,6 @@ public class GameMaster : MonoBehaviour {
 
     private void Start()
     {
-        InitializeRespawnPoint();
-
-        InitalizePlayerToRespawn();
-
-        InitializeBackgroundMusic();
-
-        InitializeSceneState();
-
         if (Camera.main.GetComponent<Camera2DFollow>().target == null)
             InitializePlayerRespawn(false);
     }
