@@ -27,17 +27,14 @@ public class RespawnPoint : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") & !m_Flame.gameObject.activeSelf)
         {
             GameMaster.Instance.ChangeRespawnPoint(gameObject.transform);
 
-            if (!m_Flame.gameObject.activeSelf)
-            {
-                SetActiveFlame(true);
-                ChangePlayerMaterial(collision);
-                Debug.LogError(m_Flame);
-                SaveLoadManager.Instance.SaveGameData();
-            }
+            SetActiveFlame(true);
+            ChangePlayerMaterial(collision);
+
+            SaveLoadManager.Instance.SaveGameData();
         }
     }
 
