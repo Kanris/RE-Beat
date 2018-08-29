@@ -107,6 +107,7 @@ public class PauseMenuManager : MonoBehaviour {
 
         LoadSceneManager.Instance.Load("StartScreen");
 
+        DestroyManagers();
         Destroy(GameMaster.Instance.gameObject);
         Destroy(gameObject);
     }
@@ -132,4 +133,13 @@ public class PauseMenuManager : MonoBehaviour {
     }
 
     #endregion
+
+    private void DestroyManagers()
+    {
+        Destroy(GameObject.Find("PauseMenuManager(Clone)"));
+        Destroy(GameObject.Find("AnnouncerManager(Clone)"));
+        Destroy(GameObject.Find("DialogueManager(Clone)"));
+        Destroy(GameObject.Find("UIManager(Clone)"));
+        Destroy(GameObject.Find("JournalManager(Clone)"));
+    }
 }
