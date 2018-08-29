@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SaveLoadManager : MonoBehaviour {
 
@@ -24,9 +25,9 @@ public class SaveLoadManager : MonoBehaviour {
 
     #endregion
 
-    #region private fields
+    #region private serialize fields
 
-    private GameObject SaveImage;
+    [SerializeField] private GameObject m_SaveImage;
 
     #endregion
 
@@ -34,12 +35,7 @@ public class SaveLoadManager : MonoBehaviour {
 
     private void Start()
     {
-        InitializeSaveImage();
-    }
-
-    private void InitializeSaveImage()
-    {
-
+        ActiveSaveImage(false);
     }
 
     #endregion
@@ -68,8 +64,20 @@ public class SaveLoadManager : MonoBehaviour {
 
     public void SaveGameData()
     {
+        StartCoroutine(SaveGame());
+    }
+
+    private IEnumerator SaveGame()
+    {
+        ActiveSaveImage(true);
+        AudioManager.Instance.Play("Respawn Torch Activation");
+
         SaveLoadMaster.SaveGeneralData();
         SaveLoadMaster.SavePlayerData();
+
+        yield return new WaitForSeconds(1f);
+
+        ActiveSaveImage(false);
     }
 
     #endregion
@@ -84,6 +92,10 @@ public class SaveLoadManager : MonoBehaviour {
             Debug.LogError("SaveLoadManager.LoadScene: Can't load scene because LoadSceneManager.Instance is null");
     }
 
+    private void ActiveSaveImage(bool value)
+    {
+        m_SaveImage.SetActive(value);
+    }
     #endregion
 
 }
