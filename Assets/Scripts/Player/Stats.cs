@@ -6,19 +6,41 @@ using UnityStandardAssets._2D;
 [System.Serializable]
 public class Stats {
 
+    #region public fields
+
     public int MaxHealth = 200;
+
+    #endregion
+
+    #region protected fields
 
     protected GameObject m_GameObject;
     protected Animator m_Animator;
 
+    #endregion
+
+    #region private fields
+
     private int m_CurrentHealth;
+
+    #region private serialize fields
 
     [SerializeField] private GameObject DeathParticle;
     [SerializeField] private string HitSound;
     [SerializeField] private string DeathSound;
 
+    #endregion
+
+    #endregion
+
+    #region delegates
+
     public delegate void DeathDelegate();
     public event DeathDelegate OnObjectDeath;
+
+    #endregion
+
+    #region properties
 
     public int CurrentHealth
     {
@@ -31,6 +53,8 @@ public class Stats {
             m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
     }
+
+    #endregion
 
     #region Initialize
 
@@ -76,6 +100,8 @@ public class Stats {
 
     #endregion
 
+    #region virtual methods
+
     public virtual void TakeDamage(int amount)
     {
         CurrentHealth -= amount;
@@ -105,33 +131,6 @@ public class Stats {
         PlayHitAnimation(false);
     }
 
-    protected void PlayHitAnimation(bool isHit)
-    {
-        if (m_Animator != null)
-        {
-            m_Animator.SetBool("Damage", isHit);
-
-            if (isHit)
-                m_Animator.SetTrigger("DamageTrigger");
-        }
-    }
-
-    private void PlayHitSound()
-    {
-        if (!string.IsNullOrEmpty(HitSound))
-        {
-            AudioManager.Instance.Play(HitSound);
-        }
-    }
-
-    private void PlayDeathSound()
-    {
-        if (!string.IsNullOrEmpty(DeathSound))
-        {
-            AudioManager.Instance.Play(DeathSound);
-        }
-    }
-
     protected virtual void KillObject()
     {
         SpawnParticle();
@@ -150,7 +149,44 @@ public class Stats {
             }
         }
     }
-	
+
+    #endregion
+
+    #region protected methods
+
+    protected void PlayHitAnimation(bool isHit)
+    {
+        if (m_Animator != null)
+        {
+            m_Animator.SetBool("Damage", isHit);
+
+            if (isHit)
+                m_Animator.SetTrigger("DamageTrigger");
+        }
+    }
+
+    #endregion
+
+    #region private methods
+
+    private void PlayHitSound()
+    {
+        if (!string.IsNullOrEmpty(HitSound))
+        {
+            AudioManager.Instance.Play(HitSound);
+        }
+    }
+
+    private void PlayDeathSound()
+    {
+        if (!string.IsNullOrEmpty(DeathSound))
+        {
+            AudioManager.Instance.Play(DeathSound);
+        }
+    }
+
+    #endregion
+
 }
 
 [System.Serializable]
@@ -198,6 +234,8 @@ public class PlayerStats : Stats
     private bool isInvincible;
 
     #endregion
+
+    #region override methods
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
@@ -250,6 +288,16 @@ public class PlayerStats : Stats
         isInvincible = false;
     }
 
+    protected override void KillObject()
+    {
+        GameMaster.Instance.InitializePlayerRespawn(true);
+        base.KillObject();
+    }
+
+    #endregion
+
+    #region private methods
+
     private IEnumerator InvincibleAnimation()
     {
         m_Animator.SetTrigger("InvincibleTrigger");
@@ -264,11 +312,7 @@ public class PlayerStats : Stats
         m_Animator.SetBool("Invincible", false);
     }
 
-    protected override void KillObject()
-    {
-        GameMaster.Instance.InitializePlayerRespawn(true);
-        base.KillObject();
-    }
+    #endregion
 }
 
 [System.Serializable]
@@ -311,6 +355,8 @@ public class Enemy : Stats
 
     #endregion
 
+    #region override
+
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
         OnObjectDeath += GiveCoinsToPlayer;
@@ -328,6 +374,10 @@ public class Enemy : Stats
         base.TakeDamage(amount);
     }
 
+    #endregion
+
+    #region public methods
+
     public void ChangeIsPlayerNear(bool value)
     {
         m_IsPlayerNear = value;
@@ -341,8 +391,14 @@ public class Enemy : Stats
             OnSpeedChange(value);
     }
 
+    #endregion
+
+    #region private methods
+
     private void GiveCoinsToPlayer()
     {
         PlayerStats.Coins = DropCoins;
     }
+
+    #endregion
 }
