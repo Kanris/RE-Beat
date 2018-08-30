@@ -255,11 +255,11 @@ public class PlayerStats : Stats
         m_Animator.SetTrigger("InvincibleTrigger");
         m_Animator.SetBool("Invincible", true);
 
-        Physics2D.IgnoreLayerCollision(16, 8);
+        //Physics2D.IgnoreLayerCollision(16, 8);
 
         yield return new WaitForSeconds(Invincible);
 
-        Physics2D.IgnoreLayerCollision(16, 8, false);
+        //Physics2D.IgnoreLayerCollision(16, 8, false);
 
         m_Animator.SetBool("Invincible", false);
     }
