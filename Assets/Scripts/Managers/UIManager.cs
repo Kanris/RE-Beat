@@ -30,10 +30,11 @@ public class UIManager : MonoBehaviour {
     private GameObject m_LayoutGrid;
     private List<GameObject> m_HealthInPanel = new List<GameObject>();
 
-    public TextMeshProUGUI Text;
+    [SerializeField] private TextMeshProUGUI Text;
+    [SerializeField] private TextMeshProUGUI AddCoins;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         InitializeUI();
 
@@ -98,11 +99,30 @@ public class UIManager : MonoBehaviour {
         m_HealthInPanel.Clear();
     }
 
-    public void ChangeCoinsAmount()
+    public IEnumerator ChangeCoinsAmount(int value)
     { 
-        if (Text != null)
+        if (Text != null & AddCoins != null)
         {
-            Text.text = PlayerStats.Coins.ToString();
+            AddCoins.gameObject.SetActive(true);
+            AddCoins.text = "+" + value.ToString();
+
+            yield return new WaitForSeconds(1f);
+
+            var currentCoinsCount = int.Parse(Text.text);
+            var addAmount = value;
+
+            for (int index = 0; index < value; index++)
+            {
+                currentCoinsCount += 1;
+                Text.text = currentCoinsCount.ToString();
+
+                addAmount -= 1;
+                AddCoins.text = "+" + addAmount.ToString();
+
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            AddCoins.gameObject.SetActive(false);
         }
     }
 

@@ -158,8 +158,8 @@ public class PlayerStats : Stats
 {
     #region delegates
 
-    public delegate void VoidDelegate();
-    public static event VoidDelegate OnCoinsAmountChange;
+    public delegate IEnumerator IEnumeratorDelegate(int value);
+    public static event IEnumeratorDelegate OnCoinsAmountChange;
 
     #endregion
 
@@ -180,10 +180,10 @@ public class PlayerStats : Stats
     {
         set
         {
-            m_Coins = value;
+            m_Coins += value;
 
             if (OnCoinsAmountChange != null)
-                OnCoinsAmountChange();
+                GameMaster.Instance.StartCoroutine( OnCoinsAmountChange(value) );
         }
         get
         {
@@ -216,7 +216,7 @@ public class PlayerStats : Stats
             CurrentPlayerHealth = CurrentHealth;
         }
 
-        UIManager.Instance.ChangeCoinsAmount();
+        UIManager.Instance.ChangeCoinsAmount(m_Coins);
     }
 
     public override void TakeDamage(int amount)
@@ -343,6 +343,6 @@ public class Enemy : Stats
 
     private void GiveCoinsToPlayer()
     {
-        PlayerStats.Coins += DropCoins;
+        PlayerStats.Coins = DropCoins;
     }
 }
