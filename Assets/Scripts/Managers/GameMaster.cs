@@ -6,8 +6,8 @@ using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
-    public static Transform m_RespawnPoint;
-    [HideInInspector] public static Vector3 m_RespawnPointPosition;
+    public Transform m_RespawnPoint;
+    [HideInInspector] public Vector3 m_RespawnPointPosition;
     public bool isPlayerDead;
 
     private GameObject m_PlayerToRespawn;

@@ -136,8 +136,8 @@ public class GeneralGameData : IGameData
     {
         ScenesState = State.ScenesState;
         CurrentScene = SceneManager.GetActiveScene().name;
-        RespawnPointX = GameMaster.m_RespawnPointPosition.x;
-        RespawnPointY = GameMaster.m_RespawnPointPosition.y;
+        RespawnPointX = GameMaster.Instance.m_RespawnPointPosition.x;
+        RespawnPointY = GameMaster.Instance.m_RespawnPointPosition.y;
 
         if (JournalManager.Instance != null)
         {
@@ -155,7 +155,7 @@ public class GeneralGameData : IGameData
     public void RecreateState()
     {
         State.ScenesState = ScenesState;
-        GameMaster.m_RespawnPointPosition = new Vector3(RespawnPointX, RespawnPointY);
+        GameMaster.Instance.m_RespawnPointPosition = new Vector3(RespawnPointX, RespawnPointY);
 
         if (JournalManager.Instance != null)
         {
