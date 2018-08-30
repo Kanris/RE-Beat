@@ -156,13 +156,48 @@ public class Stats {
 [System.Serializable]
 public class PlayerStats : Stats
 {
+    #region delegates
+
+    public delegate void VoidDelegate();
+    public static event VoidDelegate OnCoinsAmountChange;
+
+    #endregion
+
+    #region public fields
+
     public static int DamageAmount = 50;
     public static float AttackSpeed = 0.6f;
     public static float Invincible = 2f;
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
+    private static int m_Coins = 0;
+
+    #endregion
+
+    #region properties
+
+    public static int Coins
+    {
+        set
+        {
+            m_Coins = value;
+
+            if (OnCoinsAmountChange != null)
+                OnCoinsAmountChange();
+        }
+        get
+        {
+            return m_Coins;
+        }
+    }
+
+    #endregion
+
+    #region private fields
 
     private bool isInvincible;
+
+    #endregion
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
@@ -180,6 +215,8 @@ public class PlayerStats : Stats
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
         }
+
+        UIManager.Instance.ChangeCoinsAmount();
     }
 
     public override void TakeDamage(int amount)
@@ -237,18 +274,32 @@ public class PlayerStats : Stats
 [System.Serializable]
 public class Enemy : Stats
 {
+    #region delegates
+
     public delegate void VoidFloatDelegate(float value);
     public event VoidFloatDelegate OnSpeedChange;
 
     public delegate void VoidBoolDelegate(bool value);
     public event VoidBoolDelegate OnEnemyTakeDamage;
 
+    #endregion
+
+    #region public fields
+
     public int DamageAmount = 1;
     public float Speed = 1f;
-
     public float AttackSpeed = 2f;
+    [SerializeField, Range(1, 100)] private int DropCoins = 1;
+
+    #endregion
+
+    #region private fields
 
     private bool m_IsPlayerNear;
+
+    #endregion
+
+    #region properties
 
     public bool IsPlayerNear
     {
@@ -256,6 +307,15 @@ public class Enemy : Stats
         {
             return m_IsPlayerNear;
         }
+    }
+
+    #endregion
+
+    public override void Initialize(GameObject gameObject, Animator animator = null)
+    {
+        OnObjectDeath += GiveCoinsToPlayer;
+
+        base.Initialize(gameObject, animator);
     }
 
     public override void TakeDamage(int amount)
@@ -279,5 +339,10 @@ public class Enemy : Stats
 
         if (OnSpeedChange != null)
             OnSpeedChange(value);
+    }
+
+    private void GiveCoinsToPlayer()
+    {
+        PlayerStats.Coins += DropCoins;
     }
 }

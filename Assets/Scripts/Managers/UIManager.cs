@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour {
 
@@ -29,12 +30,16 @@ public class UIManager : MonoBehaviour {
     private GameObject m_LayoutGrid;
     private List<GameObject> m_HealthInPanel = new List<GameObject>();
 
+    public TextMeshProUGUI Text;
+
 	// Use this for initialization
 	void Start () {
 
         InitializeUI();
 
         InitializeLayoutGrid();
+
+        PlayerStats.OnCoinsAmountChange += ChangeCoinsAmount;
     }
 
     private void InitializeUI()
@@ -91,6 +96,14 @@ public class UIManager : MonoBehaviour {
         }
 
         m_HealthInPanel.Clear();
+    }
+
+    public void ChangeCoinsAmount()
+    { 
+        if (Text != null)
+        {
+            Text.text = PlayerStats.Coins.ToString();
+        }
     }
 
     private GameObject GetHealthObject()

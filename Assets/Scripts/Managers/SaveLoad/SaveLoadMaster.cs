@@ -179,6 +179,7 @@ public class PlayerGameData : IGameData
     public float Invincible;
     public Inventory PlayerInventory;
     public int CurrentPlayerHealth;
+    public int Coins;
 
     #endregion
 
@@ -191,6 +192,7 @@ public class PlayerGameData : IGameData
         Invincible = PlayerStats.Invincible;
         PlayerInventory = PlayerStats.PlayerInventory;
         CurrentPlayerHealth = PlayerStats.CurrentPlayerHealth;
+        Coins = PlayerStats.Coins;
     }
 
     #endregion
@@ -204,6 +206,7 @@ public class PlayerGameData : IGameData
         PlayerStats.Invincible = Invincible;
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
+        PlayerStats.Coins = Coins;
     }
 
     #endregion
