@@ -272,16 +272,11 @@ public class GameMaster : MonoBehaviour {
         if (m_RespawnPoint == null)
         {
             m_RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
-
-            if (m_RespawnPointPosition == Vector3.zero)
-            {
-                m_RespawnPointPosition = m_RespawnPoint.position;
-            }
         }
 
-        if (m_RespawnPointPosition == null)
+        if (m_RespawnPointPosition == Vector3.zero)
         {
-            Debug.LogError("GameMaster: Can't find Respawn Point on scene");
+            m_RespawnPointPosition = m_RespawnPoint.position;
         }
     }
 
