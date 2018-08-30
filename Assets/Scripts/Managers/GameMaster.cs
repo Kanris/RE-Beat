@@ -6,14 +6,24 @@ using System.Linq;
 
 public class GameMaster : MonoBehaviour {
 
+    #region public fields
+
+    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
+
     public Transform m_RespawnPoint;
     [HideInInspector] public Vector3 m_RespawnPointPosition;
     public bool isPlayerDead;
+    public string SceneName;
+
+    #endregion
+
+    #region private fields
 
     private GameObject m_PlayerToRespawn;
     private bool isPlayerRespawning;
-
     [SerializeField] private string Music = "Background";
+
+    #endregion
 
     #region Singleton
     public static GameMaster Instance;
@@ -81,18 +91,7 @@ public class GameMaster : MonoBehaviour {
             InitializePlayerRespawn(false);
     }
 
-    public void SetPlayerPosition(Vector2 spawnPosition)
-    {
-        if (!GameObject.FindGameObjectWithTag("Player"))
-        {
-            RespawnWithoutFade(spawnPosition);
-        }
-    }
-
     #region SceneRecreation
-    public string SceneName;
-
-    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
 
     #region Recreate
 
@@ -342,6 +341,16 @@ public class GameMaster : MonoBehaviour {
     }
     #endregion
 
+    #region Respawn
+
+    public void SetPlayerPosition(Vector2 spawnPosition)
+    {
+        if (!GameObject.FindGameObjectWithTag("Player"))
+        {
+            RespawnWithoutFade(spawnPosition);
+        }
+    }
+
     private IEnumerator RespawnWithFade()
     {
         isPlayerDead = true;
@@ -381,4 +390,6 @@ public class GameMaster : MonoBehaviour {
 
         Camera.main.GetComponent<Camera2DFollow>().SetTarget(respawnPlayer.transform);
     }
+
+    #endregion
 }
