@@ -7,7 +7,7 @@ public class Barrier : MonoBehaviour {
 
     [SerializeField, Range(1, 10)] private float IdleTime = 5f;
     [SerializeField, Range(1, 10)] private float ActiveTime = 3f;
-    [SerializeField, Range(1, 6)] private int DamageAmount = 1;
+    [SerializeField, Range(0, 6)] private int DamageAmount = 1;
 
     private Animator m_Animator;
     private Collider2D m_BarrierCollider;
