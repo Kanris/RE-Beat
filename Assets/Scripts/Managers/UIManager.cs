@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour {
                 addAmount -= 1;
                 AddCoins.text = "+" + addAmount.ToString();
 
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             }
 
             AddCoins.gameObject.SetActive(false);
