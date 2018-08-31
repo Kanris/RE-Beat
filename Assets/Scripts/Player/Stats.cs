@@ -245,8 +245,11 @@ public class PlayerStats : Stats
         }
         else
         {
-            var excess = (CurrentHealth + amount) - MaxHealth;
-            amount = amount - excess;
+            if ((CurrentHealth + amount) > MaxHealth)
+            {
+                var excess = (CurrentHealth + amount) - MaxHealth;
+                amount = amount - excess;
+            }
 
             CurrentPlayerHealth += amount;
 
