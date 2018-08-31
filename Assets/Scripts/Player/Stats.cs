@@ -235,6 +235,28 @@ public class PlayerStats : Stats
 
     #endregion
 
+    #region public methods
+
+    public void HealPlayer(int amount)
+    {
+        if ((CurrentHealth + amount) > MaxHealth)
+        {
+            var excess = (CurrentHealth + amount) - MaxHealth;
+
+            var excessCoins = excess * 10;
+
+            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(excessCoins));
+
+            amount = amount - excess;
+        }
+
+        CurrentPlayerHealth += amount;
+
+        UIManager.Instance.AddHealth(amount);
+    }
+
+    #endregion
+
     #region override methods
 
     public override void Initialize(GameObject gameObject, Animator animator = null)

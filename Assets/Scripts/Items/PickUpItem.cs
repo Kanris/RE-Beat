@@ -5,13 +5,15 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PickUpItem : MonoBehaviour {
 
-    public enum ItemType { Item, Note }
+    public enum ItemType { Item, Note, Heal }
     public ItemType itemType;
 
+    [SerializeField] private int HealAmount = 3;
     [SerializeField] private Item item;
 
     private GameObject m_InteractionButton;
     private bool m_IsPlayerNearDoor = false;
+    private PlayerStats m_PlayerStats;
 
     private void Start()
     {
@@ -31,12 +33,30 @@ public class PickUpItem : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                if (itemType == ItemType.Item)
-                    AddToTheInventory();
-                else
-                    ReadNote();
+                InteractWithItem();
             }
         }
+    }
+
+    private void InteractWithItem()
+    {            
+        switch (itemType)
+        {
+            case ItemType.Item:
+                AddToTheInventory();
+                break;
+            case ItemType.Note:
+                ReadNote();
+                break;
+            case ItemType.Heal:
+                if (m_PlayerStats != null)
+                    m_PlayerStats.HealPlayer(HealAmount);
+                Destroy(gameObject);
+                break;
+        }
+
+        if (GameMaster.Instance != null)
+            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,6 +64,10 @@ public class PickUpItem : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_IsPlayerNearDoor)
         {
             m_IsPlayerNearDoor = true;
+
+            if (itemType == ItemType.Heal)
+                m_PlayerStats = collision.GetComponent<Player>().playerStats;
+
             ShowInteractionKey(m_IsPlayerNearDoor);
         }
     }
@@ -70,18 +94,12 @@ public class PickUpItem : MonoBehaviour {
         PlayerStats.PlayerInventory.Add(item);
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
 
-        if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
-
         Destroy(gameObject);
     }
 
     private void ReadNote()
     {
         AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Description, 4f));
-
-        if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
     }
 
     private AnnouncerManager.Message GetAnnouncerMessage()
