@@ -239,20 +239,19 @@ public class PlayerStats : Stats
 
     public void HealPlayer(int amount)
     {
-        if ((CurrentHealth + amount) > MaxHealth)
+        if (CurrentHealth == MaxHealth)
+        {
+            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(10));
+        }
+        else
         {
             var excess = (CurrentHealth + amount) - MaxHealth;
-
-            var excessCoins = excess * 10;
-
-            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(excessCoins));
-
             amount = amount - excess;
+
+            CurrentPlayerHealth += amount;
+
+            UIManager.Instance.AddHealth(amount);
         }
-
-        CurrentPlayerHealth += amount;
-
-        UIManager.Instance.AddHealth(amount);
     }
 
     #endregion
