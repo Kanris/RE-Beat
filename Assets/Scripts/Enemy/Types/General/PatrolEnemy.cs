@@ -104,7 +104,7 @@ public class PatrolEnemy : MonoBehaviour {
         m_AlarmImage.gameObject.SetActive(isSpot);
 
         if (OnPlayerSpot != null)
-            OnPlayerSpot(false);
+            OnPlayerSpot(false); //continue moving 
 
         if (isSpot)
             m_EnemyStats.ChangeSpeed(m_SpeedUpSpeed);

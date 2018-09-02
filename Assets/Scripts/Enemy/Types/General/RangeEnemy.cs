@@ -110,8 +110,10 @@ public class RangeEnemy : MonoBehaviour {
     }
 
     private void ChangeAlertStatus(bool value)
-    {
-        OnPlayerSpot(value);
+    { 
+        if (OnPlayerSpot != null)
+            OnPlayerSpot(value); //stop moving 
+
         EnableWarningSign(value);
     }
 
