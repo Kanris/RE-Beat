@@ -13,7 +13,6 @@ public class EnemyMovement : MonoBehaviour {
     private float m_Speed = 1f;
 
     [SerializeField] private float IdleTime = 2f;
-
     [HideInInspector] public float m_PosX = -1f;
 
     public delegate void VoidDelegate(bool value);
