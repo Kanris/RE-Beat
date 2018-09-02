@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour {
             m_HealthInPanel.RemoveAt(index);
 
             objectToDestroy.GetComponent<Animator>().SetTrigger("Prepare");
-            Destroy(objectToDestroy, 3f);
+            Destroy(objectToDestroy, 1.6f);
         }
     }
 

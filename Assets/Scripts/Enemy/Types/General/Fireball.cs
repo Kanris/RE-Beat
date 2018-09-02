@@ -7,6 +7,8 @@ public class Fireball : MonoBehaviour {
     [HideInInspector] public Vector3 Direction;
     [HideInInspector] public float DestroyTime;
     [SerializeField] private int DamageAmount = 2;
+    [SerializeField] private float Speed = 2.5f;
+    [SerializeField] private bool isNeedRotation = true;
 
     private Animator m_Animator;
     private bool isDestroying = false;
@@ -23,27 +25,29 @@ public class Fireball : MonoBehaviour {
 
     private void InitializeDirection()
     {
+        if (isNeedRotation)
+        {
+            if (Direction == Vector3.left)
+                transform.Rotate(0, 0, 180);
 
-        if (Direction == Vector3.left)
-            transform.Rotate(0, 0, 180);
+            else if (Direction == Vector3.up)
+                transform.Rotate(0, 0, 90);
 
-        else if (Direction == Vector3.up)
-            transform.Rotate(0, 0, 90);
+            else if (Direction == Vector3.down)
+                transform.Rotate(0, 0, 270);
 
-        else if (Direction == Vector3.down)
-            transform.Rotate(0, 0, 270);
+            else if (Direction == new Vector3(1, 1, 0))
+                transform.Rotate(0, 0, 50);
 
-        else if (Direction == new Vector3(1, 1, 0))
-            transform.Rotate(0, 0, 50);
+            else if (Direction == new Vector3(-1, 1, 0))
+                transform.Rotate(0, 0, 140);
 
-        else if (Direction == new Vector3(-1, 1, 0))
-            transform.Rotate(0, 0, 140);
+            else if (Direction == new Vector3(-1, -1, 0))
+                transform.Rotate(0, 0, 230);
 
-        else if (Direction == new Vector3(-1, -1, 0))
-            transform.Rotate(0, 0, 230);
-
-        else if (Direction == new Vector3(1, -1, 0))
-            transform.Rotate(0, 0, 310);
+            else if (Direction == new Vector3(1, -1, 0))
+                transform.Rotate(0, 0, 310);
+        }
     }
 
     private void InitializeAnimator()
@@ -66,8 +70,7 @@ public class Fireball : MonoBehaviour {
     void FixedUpdate() {
 
         if (!isDestroying)
-            transform.position += Direction * Time.fixedDeltaTime * 2.5f;
-
+            transform.position += Direction * Time.fixedDeltaTime * Speed;
     }
 
     private IEnumerator OnCollisionEnter2D(Collision2D collision)
@@ -101,7 +104,7 @@ public class Fireball : MonoBehaviour {
 
         m_Animator.SetBool("isCollide", isDestroying);
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
 
         Destroy(gameObject);
     }

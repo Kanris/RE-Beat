@@ -16,7 +16,7 @@ public class RangeEnemy : MonoBehaviour {
     private bool m_CanCreateNewFireball = true;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
-    [SerializeField] private GameObject Fireball;
+    [SerializeField] private GameObject[] ThrowObjects;
 
 
     #region Initialize
@@ -140,7 +140,9 @@ public class RangeEnemy : MonoBehaviour {
 
     private void CreateFireball()
     {
-        var instantiateFireball = Instantiate(Fireball, transform.position, transform.rotation) as GameObject;
+        var throwObject = ThrowObjects[GetRandomIndex()];
+
+        var instantiateFireball = Instantiate(throwObject, transform.position, transform.rotation) as GameObject;
 
         if (m_EnemyMovement.m_PosX < 0)
         {
@@ -148,6 +150,11 @@ public class RangeEnemy : MonoBehaviour {
         }
         else
             instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
+    }
+
+    private int GetRandomIndex()
+    {
+        return Random.Range(0, ThrowObjects.Length);
     }
 
     private IEnumerator CastCooldown()
