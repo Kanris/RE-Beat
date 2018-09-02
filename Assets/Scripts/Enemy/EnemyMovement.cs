@@ -9,7 +9,8 @@ public class EnemyMovement : MonoBehaviour {
     private Animator m_Animator;
     private Vector2 m_PreviousPosition = Vector2.zero;
     private bool m_IsWaiting = false;
-    private float m_Speed;
+    private bool m_IsJumping = false;
+    private float m_Speed = 1f;
 
     [SerializeField] private float IdleTime = 2f;
 
@@ -17,6 +18,8 @@ public class EnemyMovement : MonoBehaviour {
 
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnWaitingStateChange;
+
+    public bool isPlayerNear;
 
     // Use this for initialization
     void Start () {
@@ -97,7 +100,8 @@ public class EnemyMovement : MonoBehaviour {
 
             if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting)
             {
-                StartCoroutine(Idle());
+                if (isPlayerNear) StartCoroutine(Jump());
+                else StartCoroutine(Idle());
             }
             else
                 m_PreviousPosition = m_Rigidbody2D.position;
@@ -106,6 +110,21 @@ public class EnemyMovement : MonoBehaviour {
         {
             SetAnimation();
         }
+
+        if (m_IsJumping)
+        {
+            m_Rigidbody2D.velocity = new Vector2(-0.001f, 10f);
+        }
+    }
+
+    private IEnumerator Jump()
+    {
+        m_IsJumping = true;
+
+        yield return new WaitForSeconds(0.2f);
+
+        m_IsJumping = false;
+        m_Rigidbody2D.velocity = Vector2.zero;
     }
 
     private void SpeedChange(float speed)
@@ -115,7 +134,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") & !isPlayerNear)
         {
             StartCoroutine(Idle());
         }

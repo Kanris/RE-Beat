@@ -17,6 +17,9 @@ public class PatrolEnemy : MonoBehaviour {
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
     [SerializeField] private float WaitTimeAfterSpot = 2f;
+    [SerializeField] private float m_IdleSpeed = 1f;
+    [SerializeField] private float m_SpeedUpSpeed = 2f;
+    [SerializeField] private float m_YBoundaries = -30f;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +46,9 @@ public class PatrolEnemy : MonoBehaviour {
                 StartCoroutine(PlayerSpot(false));
             }
         }
+
+        if (transform.position.y < m_YBoundaries)
+            Destroy(gameObject);
     }
 
     private void InitializeEnemyMovement()
@@ -79,7 +85,7 @@ public class PatrolEnemy : MonoBehaviour {
         {
             m_EnemyStats.ChangeIsPlayerNear(false);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(WaitTimeAfterSpot);
 
             if (!m_EnemyStats.IsPlayerNear)
                 yield return PlayerSpot(false);
@@ -101,8 +107,8 @@ public class PatrolEnemy : MonoBehaviour {
             OnPlayerSpot(false);
 
         if (isSpot)
-            m_EnemyStats.ChangeSpeed(2f);
+            m_EnemyStats.ChangeSpeed(m_SpeedUpSpeed);
         else
-            m_EnemyStats.ChangeSpeed(1f);
+            m_EnemyStats.ChangeSpeed(m_IdleSpeed);
     }
 }
