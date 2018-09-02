@@ -119,9 +119,11 @@ public class EnemyMovement : MonoBehaviour {
     private IEnumerator Jump()
     {
         m_IsJumping = true;
+        Physics2D.IgnoreLayerCollision(8, 13);
 
         yield return new WaitForSeconds(0.2f);
 
+        Physics2D.IgnoreLayerCollision(8, 13, false);
         m_IsJumping = false;
         m_Rigidbody2D.velocity = Vector2.zero;
     }
