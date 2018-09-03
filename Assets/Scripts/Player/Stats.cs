@@ -158,10 +158,7 @@ public class Stats {
     {
         if (m_Animator != null)
         {
-            m_Animator.SetBool("Damage", isHit);
-
-            if (isHit)
-                m_Animator.SetTrigger("DamageTrigger");
+            m_Animator.SetBool("Hit", isHit);
         }
     }
 

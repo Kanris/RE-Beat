@@ -51,7 +51,6 @@ public class AttackPlayerOnTrigger : MonoBehaviour {
 
     private IEnumerator Attack()
     {
-        m_Animator.SetTrigger("AttackTrigger");
         m_Animator.SetBool("Attack", true);
 
         yield return new WaitForSeconds(0.2f);
