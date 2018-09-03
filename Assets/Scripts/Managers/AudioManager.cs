@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour {
 
@@ -21,12 +22,13 @@ public class AudioManager : MonoBehaviour {
         private bool m_PlayerReturn = true;
         private bool Unload = false;
 
-        public void SetSource(AudioSource source)
+        public void SetSource(AudioSource source, AudioMixerGroup mixerGroup)
         {
             m_AudioSource = source;
             m_AudioSource.clip = Clip;
             m_AudioSource.playOnAwake = false;
             ChangeMusicSettings();
+            m_AudioSource.outputAudioMixerGroup = mixerGroup;
 
             if (!m_AudioSource.clip.preloadAudioData)
             {
@@ -130,6 +132,7 @@ public class AudioManager : MonoBehaviour {
     #endregion
 
     public Audio[] AudioArray;
+    public AudioMixerGroup mixerGroup;
 
     private string m_BackgroundMusic;
 
@@ -139,7 +142,7 @@ public class AudioManager : MonoBehaviour {
         {
             var audioSource = new GameObject("AudioSource_" + index + "_" + AudioArray[index]);
             audioSource.transform.SetParent(transform);
-            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>());
+            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>(), mixerGroup);
         }
     }
 
