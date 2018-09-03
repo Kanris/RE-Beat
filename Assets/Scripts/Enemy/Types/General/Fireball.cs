@@ -49,10 +49,10 @@ public class Fireball : MonoBehaviour {
                 transform.Rotate(0, 0, 310);
         }
 
-        if (Direction.x == 1)
+        /*if (Direction.x == 1)
             transform.position += new Vector3(0.4f, 0f);
         else
-            transform.position += new Vector3(-0.4f, 0f);
+            transform.position += new Vector3(-0.4f, 0f);*/
     }
 
     private void InitializeAnimator()

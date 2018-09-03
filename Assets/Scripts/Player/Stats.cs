@@ -324,16 +324,27 @@ public class PlayerStats : Stats
 
     private IEnumerator InvincibleAnimation()
     {
-        m_Animator.SetTrigger("InvincibleTrigger");
-        m_Animator.SetBool("Invincible", true);
+        var invincibleTime = Time.time + Invincible;
+        var playerSprite = m_GameObject.GetComponent<SpriteRenderer>().material;
+        var color = playerSprite.color;
 
-        //Physics2D.IgnoreLayerCollision(16, 8);
+        do
+        {
+            yield return ChangeAlpha(1f, playerSprite, color);
 
-        yield return new WaitForSeconds(Invincible);
+            yield return ChangeAlpha(0.6f, playerSprite, color);
 
-        //Physics2D.IgnoreLayerCollision(16, 8, false);
+        } while (invincibleTime >= Time.time);
 
-        m_Animator.SetBool("Invincible", false);
+        yield return ChangeAlpha(1f, playerSprite, color, 0f);
+    }
+
+    private IEnumerator ChangeAlpha(float alpha, Material material, Color color, float time = 0.1f)
+    {
+        color.a = alpha;
+        material.color = color;
+
+        yield return new WaitForSeconds(time);
     }
 
     #endregion
