@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114450152582583560}
   - component: {fileID: 114777930182066012}
   - component: {fileID: 114074688157870410}
-  m_Layer: 16
+  m_Layer: 13
   m_Name: Bald
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdleTime: 2
   m_PosX: -1
+  isPlayerNear: 0
 --- !u!114 &114450152582583560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,6 +288,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AlarmImage: {fileID: 212575243324112112}
   WaitTimeAfterSpot: 2
+  m_IdleSpeed: 1
+  m_SpeedUpSpeed: 2
+  m_YBoundaries: -30
 --- !u!114 &114777930182066012
 MonoBehaviour:
   m_ObjectHideFlags: 1

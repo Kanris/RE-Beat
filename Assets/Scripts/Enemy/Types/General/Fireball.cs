@@ -85,7 +85,7 @@ public class Fireball : MonoBehaviour {
             DamagePlayer(collision.gameObject.GetComponent<Player>());
         }
 
-       //if (!collision.gameObject.CompareTag("Enemy"))
+       if (!collision.gameObject.CompareTag("Enemy"))
             yield return DestroyFireball();
     }
 

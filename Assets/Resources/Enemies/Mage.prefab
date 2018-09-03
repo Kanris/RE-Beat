@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114879631205071088}
   - component: {fileID: 114826362762346134}
   - component: {fileID: 114425864084102134}
-  m_Layer: 16
+  m_Layer: 13
   m_Name: Mage
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -253,6 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdleTime: 2
   m_PosX: -1
+  isPlayerNear: 0
 --- !u!114 &114425864084102134
 MonoBehaviour:
   m_ObjectHideFlags: 1
