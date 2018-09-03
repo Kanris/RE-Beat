@@ -5,8 +5,7 @@ using UnityEngine;
 public class StringTrigger : MonoBehaviour {
 
     private Rigidbody2D m_Box;
-
-    public bool m_IsQuitting;
+    private bool m_IsQuitting;
 
     private void Start()
     {
