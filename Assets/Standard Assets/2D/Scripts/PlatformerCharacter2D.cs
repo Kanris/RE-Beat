@@ -25,6 +25,7 @@ namespace UnityStandardAssets._2D
         private bool m_IsHaveDoubleJump;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private GameObject m_JumpPlatform;
+        private bool m_IsDashing;
 
         private void Awake()
         {
@@ -123,15 +124,22 @@ namespace UnityStandardAssets._2D
 
             if (dash && m_Anim.GetFloat("Speed") > 0.01f)
             {
+
+                m_Anim.SetBool("Dash", true);
+
+                m_IsDashing = true;
+
+                StartCoroutine(StopDash());
+            }
+
+            if (m_IsDashing)
+            {
                 var multiplier = 1;
 
                 if (!m_FacingRight)
                     multiplier = -1;
 
-                m_Rigidbody2D.AddForce(new Vector2(40f * multiplier, 0f), ForceMode2D.Impulse);
-                m_Anim.SetBool("Dash", true);
-
-                StartCoroutine(StopDash());
+                m_Rigidbody2D.AddForce(new Vector2(10f * multiplier, 0f), ForceMode2D.Impulse);
             }
         }
 
@@ -145,9 +153,11 @@ namespace UnityStandardAssets._2D
 
         private IEnumerator StopDash()
         {
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.1f);
 
             m_Anim.SetBool("Dash", false);
+
+            m_IsDashing = false;
         }
 
         private void Flip()
