@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(TilemapRenderer))]
 public class DisableBackground : MonoBehaviour {
 
     [SerializeField] private Animator BackgroundAnimator;
     [SerializeField] private Animator MistAnimator;
 
     private GameObject[] ObjectsInCave;
-    private Tilemap m_MistTilemap;
     private bool m_PlayerInCave;
     private bool m_IsFading;
 
