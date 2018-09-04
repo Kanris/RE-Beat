@@ -124,7 +124,6 @@ namespace UnityStandardAssets._2D
 
             if (dash && m_Anim.GetFloat("Speed") > 0.01f)
             {
-
                 m_Anim.SetBool("Dash", true);
 
                 m_IsDashing = true;
