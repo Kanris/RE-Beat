@@ -80,6 +80,18 @@ public class SaveLoadManager : MonoBehaviour {
         ActiveSaveImage(false);
     }
 
+    public void SaveOptions()
+    {
+        SaveLoadMaster.SaveOptionsData();
+    }
+
+    public bool LoadOptions()
+    {
+        var instance = SaveLoadMaster.LoadOptionsData();
+
+        return instance != null;
+    }
+
     #endregion
 
     #region Private methods

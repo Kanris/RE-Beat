@@ -10,6 +10,7 @@ public static class SaveLoadMaster {
 
     private const string SAVE_PLAYER_FILE_NAME = "Player.sav";
     private const string SAVE_GENERAL_FILE_NAME = "General.sav";
+    private const string SAVE_OPTIONS_FILE_NAME = "Options.sav";
 
     #endregion
 
@@ -25,6 +26,11 @@ public static class SaveLoadMaster {
         SaveData<GeneralGameData>(SAVE_GENERAL_FILE_NAME);
     }
 
+    public static void SaveOptionsData()
+    {
+        SaveData<OptionsGameData>(SAVE_OPTIONS_FILE_NAME);
+    }
+
     public static PlayerGameData LoadPlayerData()
     {
         return LoadData<PlayerGameData>(SAVE_PLAYER_FILE_NAME);
@@ -33,6 +39,11 @@ public static class SaveLoadMaster {
     public static GeneralGameData LoadGeneralData()
     {
         return LoadData<GeneralGameData>(SAVE_GENERAL_FILE_NAME);
+    }
+
+    public static OptionsGameData LoadOptionsData()
+    {
+        return LoadData<OptionsGameData>(SAVE_OPTIONS_FILE_NAME);
     }
 
     public static string GetLoadScene()
@@ -69,10 +80,6 @@ public static class SaveLoadMaster {
             var binaryFormatter = new BinaryFormatter();
             var dataToSave = new T();
 
-            if (dataToSave is GeneralGameData)
-            {
-                var generalGameData = dataToSave as GeneralGameData;
-            }
             binaryFormatter.Serialize(stream, dataToSave);
         }
     }
@@ -207,6 +214,40 @@ public class PlayerGameData : IGameData
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
         PlayerStats.Coins = Coins;
+    }
+
+    #endregion
+}
+
+[System.Serializable]
+public class OptionsGameData : IGameData
+{
+    #region public fields
+
+    public int ResolutionIndex;
+    public bool IsFullscreen;
+    public float Volume;
+
+    #endregion
+
+    #region constructor
+
+    public OptionsGameData()
+    {
+        this.ResolutionIndex = StartScreenManager.ResolutionIndex;
+        this.IsFullscreen = StartScreenManager.IsFullscreen;
+        this.Volume = StartScreenManager.Volume;
+    }
+
+    #endregion
+
+    #region public methods
+
+    public void RecreateState()
+    {
+        StartScreenManager.ResolutionIndex = ResolutionIndex;
+        StartScreenManager.IsFullscreen = IsFullscreen;
+        StartScreenManager.Volume = Volume;
     }
 
     #endregion
