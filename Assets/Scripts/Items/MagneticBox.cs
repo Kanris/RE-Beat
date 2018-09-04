@@ -138,13 +138,13 @@ public class MagneticBox : MonoBehaviour {
         {
             transform.SetParent(m_Player);
             transform.localPosition = new Vector2(0.5f, 0.5f);
-            transform.gameObject.layer = 15;
+            transform.gameObject.layer = 0;
             SetAnimation("Active");
         }
         else
         {
             transform.SetParent(null);
-            transform.gameObject.layer = 0;
+            transform.gameObject.layer = 14;
             SetAnimation("Inactive");
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
         }

@@ -6,18 +6,21 @@ namespace UnityStandardAssets._2D
     public class PlatformerCharacter2D : MonoBehaviour
     {
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
-        [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
+        public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
+        [HideInInspector] public Rigidbody2D m_Rigidbody2D;
+        [HideInInspector] public bool m_Grounded;            // Whether or not the player is grounded.
+        [HideInInspector] public Animator m_Anim;            // Reference to the player's animator component.
+
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
-        private bool m_Grounded;            // Whether or not the player is grounded.
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-        private Animator m_Anim;            // Reference to the player's animator component.
-        private Rigidbody2D m_Rigidbody2D;
+
+        private bool m_IsHaveDoubleJump;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         private void Awake()
@@ -95,9 +98,18 @@ namespace UnityStandardAssets._2D
                 m_Grounded = false;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+
+                m_IsHaveDoubleJump = true;
+            }
+            else if (!m_Anim.GetBool("Ground") & m_IsHaveDoubleJump && jump)
+            {
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
+
+                m_IsHaveDoubleJump = false;
+                m_Anim.Play("Jump", -1, 0f);
             }
         }
-
 
         private void Flip()
         {

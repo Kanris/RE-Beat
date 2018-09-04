@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 12145146}
   - component: {fileID: 12145145}
   - component: {fileID: 12145151}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RedDoors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,6 +691,10 @@ Prefab:
       propertyPath: HealAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1144231212852150, guid: dc3a3c4f81c6228478e6624f83f85b2f, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc3a3c4f81c6228478e6624f83f85b2f, type: 2}
   m_IsPrefabParent: 0
@@ -856,6 +860,10 @@ Prefab:
         type: 2}
       propertyPath: Sound
       value: Waterfall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
@@ -2635,7 +2643,7 @@ GameObject:
   - component: {fileID: 247247797}
   - component: {fileID: 247247801}
   - component: {fileID: 247247800}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BlueDoors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3320,7 +3328,7 @@ GameObject:
   - component: {fileID: 424000588}
   - component: {fileID: 424000590}
   - component: {fileID: 424000589}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cave
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -13996,7 +14004,7 @@ GameObject:
   - component: {fileID: 638057561}
   - component: {fileID: 638057563}
   - component: {fileID: 638057562}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Wood
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -18687,6 +18695,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_IsPrefabParent: 0
@@ -19077,7 +19089,7 @@ GameObject:
   - component: {fileID: 829069166}
   - component: {fileID: 829069169}
   - component: {fileID: 829069170}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MetalicGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19558,6 +19570,14 @@ Prefab:
       propertyPath: m_Size.x
       value: 0.30583954
       objectReference: {fileID: 0}
+    - target: {fileID: 1724270900901946, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523369929323242, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
   m_IsPrefabParent: 0
@@ -19772,6 +19792,10 @@ Prefab:
     - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
       propertyPath: m_TagString
       value: CaveObjects
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
@@ -20305,7 +20329,7 @@ GameObject:
   - component: {fileID: 1115813203}
   - component: {fileID: 1115813202}
   - component: {fileID: 1115813201}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Grass
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -23666,6 +23690,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1104603196120006, guid: 7a9fbb9a12e09d94f8c99803988eebae, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a9fbb9a12e09d94f8c99803988eebae, type: 2}
   m_IsPrefabParent: 0
@@ -23923,26 +23951,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4435468150432506, guid: c6fc85782dc1dfe41813ca879a8e5a2d, type: 2}
       propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114550833905410416, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
-        type: 2}
-      propertyPath: MovingTime
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114550833905410416, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
-        type: 2}
-      propertyPath: IdleTime
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114550833905410416, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
-        type: 2}
-      propertyPath: PlatformType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114550833905410416, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
-        type: 2}
-      propertyPath: Direction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -24395,6 +24403,10 @@ Prefab:
       propertyPath: m_Name
       value: Rain
       objectReference: {fileID: 0}
+    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
   m_IsPrefabParent: 0
@@ -24544,6 +24556,10 @@ Prefab:
         type: 2}
       propertyPath: DisplayMessage
       value: Can't open this door by myself
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
@@ -25139,6 +25155,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1846643860262880, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}
   m_IsPrefabParent: 0
@@ -25550,7 +25570,7 @@ GameObject:
   - component: {fileID: 1759945781}
   - component: {fileID: 1759945780}
   - component: {fileID: 1759945779}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Springboards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25877,7 +25897,7 @@ GameObject:
   - component: {fileID: 1819579450}
   - component: {fileID: 1819579449}
   - component: {fileID: 1819579448}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Grass-light
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26992,6 +27012,10 @@ Prefab:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: b151d40a09b281a49aa3b93142117219, type: 2}
+    - target: {fileID: 1248686669654070, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
   m_IsPrefabParent: 0
@@ -27060,7 +27084,7 @@ GameObject:
   - component: {fileID: 1892891043}
   - component: {fileID: 1892891041}
   - component: {fileID: 1892891042}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Note
   m_TagString: BlueKey
   m_Icon: {fileID: 0}
@@ -28341,106 +28365,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &2023815935
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2023815936}
-  - component: {fileID: 2023815937}
-  - component: {fileID: 2023815938}
-  m_Layer: 0
-  m_Name: Bottom
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2023815936
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2023815935}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1472229666}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2023815937
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2023815935}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: 7b0b5befef3e78345b6f74b9eb1bde28, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1.92, y: 0.64}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
---- !u!61 &2023815938
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2023815935}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.92, y: 0.64}
-    newSize: {x: 1.92, y: 0.64}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.92, y: 0.64}
-  m_EdgeRadius: 0
 --- !u!1 &2028199133
 GameObject:
   m_ObjectHideFlags: 0
@@ -28813,6 +28737,10 @@ Prefab:
         type: 2}
       propertyPath: Sound
       value: Waterfall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}

@@ -159,11 +159,11 @@ public class PickupBox : MonoBehaviour {
         if (parrent != null)
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            ChangeBoxProperty(true, 15);   
+            ChangeBoxProperty(true, 0);   
         }
         else
         {
-            ChangeBoxProperty(false, 0);
+            ChangeBoxProperty(false, 14);
         }
     }
 

@@ -268,6 +268,10 @@ Prefab:
       propertyPath: m_Intensity
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1377437551375790, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
   m_IsPrefabParent: 0
@@ -490,7 +494,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Name
@@ -906,6 +910,14 @@ Prefab:
       propertyPath: isLight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1500544934284040, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821173005763828, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
   m_IsPrefabParent: 0
@@ -1149,7 +1161,7 @@ GameObject:
   - component: {fileID: 1043901828}
   - component: {fileID: 1043901827}
   - component: {fileID: 1043901829}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GroundGrass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2437,6 +2449,14 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 1478591648533968, guid: d03b97e8fe71fac45b729a3bda9904e9, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702506853662990, guid: d03b97e8fe71fac45b729a3bda9904e9, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d03b97e8fe71fac45b729a3bda9904e9, type: 2}
   m_IsPrefabParent: 0
@@ -2599,7 +2619,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Name
@@ -2646,7 +2666,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1473223965}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: SoundTriggers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2715,6 +2735,14 @@ Prefab:
         type: 2}
       propertyPath: isLight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460513596874122, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812577031010728, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
@@ -3462,7 +3490,7 @@ GameObject:
   - component: {fileID: 1767411624}
   - component: {fileID: 1767411623}
   - component: {fileID: 1767411626}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: CaveBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3877,7 +3905,7 @@ GameObject:
   - component: {fileID: 1865442591}
   - component: {fileID: 1865442593}
   - component: {fileID: 1865442594}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: KillingGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4040,7 +4068,7 @@ GameObject:
   - component: {fileID: 2016377326}
   - component: {fileID: 2016377330}
   - component: {fileID: 2016377331}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GroundWood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4217,7 +4245,7 @@ GameObject:
   - component: {fileID: 2038800952}
   - component: {fileID: 2038800956}
   - component: {fileID: 2038800957}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: GroundCave
   m_TagString: Untagged
   m_Icon: {fileID: 0}

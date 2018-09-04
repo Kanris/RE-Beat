@@ -9,7 +9,7 @@ namespace UnityStandardAssets._2D
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
-
+       
         public bool IsCanJump;
 
         private void Awake()
@@ -31,6 +31,12 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        private void SecondJump()
+        {
+            m_Character.m_Grounded = false;
+            m_Character.m_Anim.SetBool("Ground", false);
+            m_Character.m_Rigidbody2D.AddForce(new Vector2(0f, m_Character.m_JumpForce));
+        }
 
         private void FixedUpdate()
         {
