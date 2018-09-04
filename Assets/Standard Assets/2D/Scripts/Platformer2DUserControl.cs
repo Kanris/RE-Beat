@@ -42,13 +42,6 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        private void SecondJump()
-        {
-            m_Character.m_Grounded = false;
-            m_Character.m_Anim.SetBool("Ground", false);
-            m_Character.m_Rigidbody2D.AddForce(new Vector2(0f, m_Character.m_JumpForce));
-        }
-
         private void FixedUpdate()
         {
             // Read the inputs.

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Unity;
 
 namespace UnityStandardAssets._2D
 {
@@ -14,25 +15,32 @@ namespace UnityStandardAssets._2D
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
         public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
-        [HideInInspector] public Rigidbody2D m_Rigidbody2D;
-        [HideInInspector] public bool m_Grounded;            // Whether or not the player is grounded.
-        [HideInInspector] public Animator m_Anim;            // Reference to the player's animator component.
 
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
 
+        private Rigidbody2D m_Rigidbody2D;
+        private bool m_Grounded;            // Whether or not the player is grounded.
+        private Animator m_Anim;            // Reference to the player's animator component.
         private bool m_IsHaveDoubleJump;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        private GameObject m_JumpPlatform;
 
         private void Awake()
         {
             // Setting up references.
-            /*m_GroundCheck = transform.Find("GroundCheck");
-            m_CeilingCheck = transform.Find("CeilingCheck");*/
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+            InitializeJumpPlatform();
         }
 
+        private void InitializeJumpPlatform()
+        {
+            var platformResources = Resources.Load("Platform") as GameObject;
+            m_JumpPlatform = Instantiate(platformResources);
+            m_JumpPlatform.SetActive(false);
+        }
 
         private void FixedUpdate()
         {
@@ -109,6 +117,8 @@ namespace UnityStandardAssets._2D
 
                 m_IsHaveDoubleJump = false;
                 m_Anim.Play("Jump", -1, 0f);
+
+                StartCoroutine(DoubleJumpPlatform());
             }
 
             if (dash && m_Anim.GetFloat("Speed") > 0.01f)
@@ -121,9 +131,16 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.AddForce(new Vector2(40f * multiplier, 0f), ForceMode2D.Impulse);
                 m_Anim.SetBool("Dash", true);
 
-                StopAllCoroutines();
                 StartCoroutine(StopDash());
             }
+        }
+
+        private IEnumerator DoubleJumpPlatform()
+        {
+            m_JumpPlatform.transform.position = m_GroundCheck.transform.position;
+            m_JumpPlatform.SetActive(true);
+            yield return new WaitForSeconds(0.8f);
+            m_JumpPlatform.SetActive(false);
         }
 
         private IEnumerator StopDash()
