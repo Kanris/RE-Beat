@@ -62,7 +62,7 @@ public class DialogueTrigger : MonoBehaviour {
     private void EnableUserControl(bool active)
     {
         if (!active)
-            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false);
+            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false);
 
         if (m_Player != null & m_Player.enabled != active)
             m_Player.enabled = active;

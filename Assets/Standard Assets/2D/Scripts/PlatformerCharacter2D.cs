@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -51,7 +52,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(float move, bool crouch, bool jump, bool dash)
         {
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
@@ -109,6 +110,27 @@ namespace UnityStandardAssets._2D
                 m_IsHaveDoubleJump = false;
                 m_Anim.Play("Jump", -1, 0f);
             }
+
+            if (dash && m_Anim.GetFloat("Speed") > 0.01f)
+            {
+                var multiplier = 1;
+
+                if (!m_FacingRight)
+                    multiplier = -1;
+
+                m_Rigidbody2D.AddForce(new Vector2(40f * multiplier, 0f), ForceMode2D.Impulse);
+                m_Anim.SetBool("Dash", true);
+
+                StopAllCoroutines();
+                StartCoroutine(StopDash());
+            }
+        }
+
+        private IEnumerator StopDash()
+        {
+            yield return new WaitForSeconds(0.15f);
+
+            m_Anim.SetBool("Dash", false);
         }
 
         private void Flip()
