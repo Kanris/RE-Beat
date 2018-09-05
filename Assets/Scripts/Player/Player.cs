@@ -17,8 +17,8 @@ public class Player : MonoBehaviour {
     private Animator m_Animator;
     private Vector2 m_ThrowBackVector;
     private bool isPlayerBusy = false;
-    private float m_AttackUpdateTime;
     private bool m_IsAttacking;
+    private float m_AttackUpdateTime;
 
     public PlayerStats playerStats;
 
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (m_Animator.GetBool("Damage"))
+        if (m_Animator.GetBool("Hit"))
         {
             if (!isPlayerThrowingBack)
             {
@@ -81,6 +81,7 @@ public class Player : MonoBehaviour {
             {
                 GetComponent<Rigidbody2D>().position += m_ThrowBackVector;
             }
+
         }
     }
 
