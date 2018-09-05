@@ -129,6 +129,8 @@ namespace UnityStandardAssets._2D
 
                 m_IsDashing = true;
 
+                ShowDashEffect();
+
                 StartCoroutine(StopDash());
             }
 
@@ -149,6 +151,23 @@ namespace UnityStandardAssets._2D
             m_JumpPlatform.SetActive(true);
             yield return new WaitForSeconds(0.8f);
             m_JumpPlatform.SetActive(false);
+        }
+
+        private void ShowDashEffect()
+        {
+            var multiplier = -1;
+
+            if (!m_FacingRight)
+                multiplier = 1;
+
+            var dashEffect = Resources.Load("Effects/DashEffect") as GameObject;
+            var instantiateDashEffect = Instantiate(dashEffect);
+
+            instantiateDashEffect.transform.position = transform.position;
+            instantiateDashEffect.transform.rotation = 
+                instantiateDashEffect.transform.rotation * Quaternion.Euler(0, 90 * multiplier, 0);
+
+            Destroy(instantiateDashEffect, 10f);
         }
 
         private IEnumerator StopDash()

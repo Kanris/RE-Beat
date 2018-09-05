@@ -16,9 +16,9 @@ public class Player : MonoBehaviour {
     private float m_YPositionBeforeJump;
     private Animator m_Animator;
     private Vector2 m_ThrowBackVector;
-    private bool m_IsAttacking = false;
-    private bool m_IsInCooldown = false;
     private bool isPlayerBusy = false;
+    private float m_AttackUpdateTime;
+    private bool m_IsAttacking;
 
     public PlayerStats playerStats;
 
@@ -54,11 +54,15 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl();
 
-        if (IsPlayerCanAttack())
+        if (m_AttackUpdateTime < Time.time)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+            if (!isPlayerBusy)
             {
-                StartCoroutine(Attack());
+                if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                {
+                    m_AttackUpdateTime = Time.time + PlayerStats.AttackSpeed;
+                    StartCoroutine(Attack());
+                }
             }
         }
     }
@@ -82,35 +86,17 @@ public class Player : MonoBehaviour {
 
     private IEnumerator Attack()
     {
-        if (!m_IsAttacking)
-        {
-            m_IsInCooldown = true;
+        m_IsAttacking = true;
 
-            m_IsAttacking = true;
-            AttackRange.SetActive(true);
+        AttackRange.SetActive(true);
 
-            AudioManager.Instance.Play(AttackSound);
+        AudioManager.Instance.Play(AttackSound);
 
-            yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
 
-            m_IsAttacking = false;
+        AttackRange.SetActive(false);
 
-            yield return new WaitForSeconds(PlayerStats.AttackSpeed);
-
-            m_IsInCooldown = false;
-            AttackRange.SetActive(m_IsAttacking);
-        }
-    }
-
-    private bool IsPlayerCanAttack()
-    {
-        var isPlayerCanAttack = false;
-
-        if (!isPlayerBusy)
-            if (!m_IsAttacking & !m_IsInCooldown)
-                isPlayerCanAttack = true;
-
-        return isPlayerCanAttack;
+        m_IsAttacking = false;
     }
 
     private Vector2 GetThrowBackVector()
@@ -158,6 +144,8 @@ public class Player : MonoBehaviour {
     {
         if (collision.CompareTag("Enemy") & m_IsAttacking)
         {
+            m_IsAttacking = false;
+
             var enemyStats = GetStats(collision);
 
             if (enemyStats != null)
