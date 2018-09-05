@@ -78,7 +78,7 @@ MonoBehaviour:
     Loop: 1
   - Name: StoneRunning
     Clip: {fileID: 8300000, guid: 168aa2404550a3c488262ad9d69ced0e, type: 3}
-    Volume: 1
+    Volume: 0.5
     Pitch: 0.8
     VolumeOffset: 0.1
     PitchOffset: 0.1
@@ -238,6 +238,14 @@ MonoBehaviour:
     Loop: 0
   - Name: UI-Click
     Clip: {fileID: 8300000, guid: b534c04817300bd438e982593e594b67, type: 3}
+    Volume: 1
+    Pitch: 1
+    VolumeOffset: 0
+    PitchOffset: 0
+    m_AudioType: 0
+    Loop: 0
+  - Name: Land
+    Clip: {fileID: 8300000, guid: 14bc6a2fbf22cdc429d468b4632f46b9, type: 3}
     Volume: 1
     Pitch: 1
     VolumeOffset: 0

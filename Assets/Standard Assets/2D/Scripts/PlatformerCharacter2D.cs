@@ -7,6 +7,9 @@ namespace UnityStandardAssets._2D
 {
     public class PlatformerCharacter2D : MonoBehaviour
     {
+        public delegate void VoidDelegate();
+        public event VoidDelegate OnLandEvent;
+
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
@@ -41,6 +44,8 @@ namespace UnityStandardAssets._2D
             var platformResources = Resources.Load("Platform") as GameObject;
             m_JumpPlatform = Instantiate(platformResources);
             m_JumpPlatform.SetActive(false);
+
+            OnLandEvent += ShowDustEffect;
         }
 
         private void FixedUpdate()
@@ -110,6 +115,8 @@ namespace UnityStandardAssets._2D
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 
+                ShowDustEffect();
+                
                 m_IsHaveDoubleJump = true;
             }
             else if (!m_Anim.GetBool("Ground") & m_IsHaveDoubleJump && jump)
@@ -151,6 +158,21 @@ namespace UnityStandardAssets._2D
             m_JumpPlatform.SetActive(true);
             yield return new WaitForSeconds(0.8f);
             m_JumpPlatform.SetActive(false);
+        }
+
+        private void Landed()
+        {
+            if (OnLandEvent != null)
+                OnLandEvent();
+        }
+
+        private void ShowDustEffect()
+        {
+            var dustEffect = Resources.Load("Effects/Dust") as GameObject;
+            var dustGO = Instantiate(dustEffect);
+            dustGO.transform.position = m_GroundCheck.position;
+
+            Destroy(dustGO, 1.5f);
         }
 
         private void ShowDashEffect()

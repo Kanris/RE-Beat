@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour {
 
         PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
+
+        GetComponent<PlatformerCharacter2D>().OnLandEvent += PlayLandSound;
     }
 
     private void InitializeAnimator()
@@ -48,6 +51,11 @@ public class Player : MonoBehaviour {
     }
 
     #endregion
+
+    private void PlayLandSound()
+    {
+        AudioManager.Instance.Play("Land");
+    }
 
     // Update is called once per frame
     private void Update () {
