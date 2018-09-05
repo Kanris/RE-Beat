@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour {
         [Range(0.5f, 1.5f)] public float Pitch = 1f;
         [Range(0f, 0.5f)] public float VolumeOffset = 0.1f;
         [Range(0f, 0.5f)] public float PitchOffset = 0.1f;
+        public AudioType m_AudioType;
         public bool Loop = false;
 
 
@@ -130,9 +131,12 @@ public class AudioManager : MonoBehaviour {
     }
 
     #endregion
+    public enum AudioType { Environment, Music }
 
     public Audio[] AudioArray;
-    public AudioMixerGroup mixerGroup;
+
+    [SerializeField] private AudioMixerGroup MusicAudioMixer;
+    [SerializeField] private AudioMixerGroup EnvironmentAudioMixer;
 
     private string m_BackgroundMusic;
 
@@ -142,8 +146,19 @@ public class AudioManager : MonoBehaviour {
         {
             var audioSource = new GameObject("AudioSource_" + index + "_" + AudioArray[index]);
             audioSource.transform.SetParent(transform);
-            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>(), mixerGroup);
+            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>(), 
+                GetAudioMixerGroup(AudioArray[index].m_AudioType));
         }
+    }
+
+    private AudioMixerGroup GetAudioMixerGroup(AudioType type)
+    {
+        var mixerGroup = MusicAudioMixer;
+
+        if (type == AudioType.Environment)
+            mixerGroup = EnvironmentAudioMixer;
+
+        return mixerGroup;
     }
 
     public void Play(string name, bool PlayFadeSound = false)

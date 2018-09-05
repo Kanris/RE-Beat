@@ -12,7 +12,8 @@ public class StartScreenManager : MonoBehaviour {
     public static bool IsLoadPressed;
     public static int ResolutionIndex;
     public static bool IsFullscreen;
-    public static float Volume;
+    public static float VolumeMaster;
+    public static float VolumeEnvironment;
 
     #endregion
 
@@ -24,7 +25,8 @@ public class StartScreenManager : MonoBehaviour {
     [SerializeField] private AudioMixer audioMixer;
 
     [SerializeField] private Dropdown resoulutionsDropDown;
-    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider volumeMasterSlider;
+    [SerializeField] private Slider volumeEnvironmentSlider;
     [SerializeField] private Toggle fullscreenToggle;
 
     #endregion
@@ -82,10 +84,13 @@ public class StartScreenManager : MonoBehaviour {
     private void InitializeOptions()
     {
         resoulutionsDropDown.value = ResolutionIndex;
-        volumeSlider.value = Volume;
+        volumeMasterSlider.value = VolumeMaster;
+        volumeEnvironmentSlider.value = VolumeEnvironment;
         fullscreenToggle.isOn = IsFullscreen;
 
-        SetFloat(Volume);
+        SetMasterFloat(VolumeMaster);
+        SetEnvironmentFloat(VolumeEnvironment);
+
         SetFullScreen(IsFullscreen);
         SetResolution(ResolutionIndex);
     }
@@ -179,10 +184,16 @@ public class StartScreenManager : MonoBehaviour {
         ChangeGridsVisibility();
     }
 
-    public void SetFloat(float volume)
+    public void SetMasterFloat(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
-        Volume = volume;
+        audioMixer.SetFloat("VolumeMaster", volume);
+        VolumeMaster = volume;
+    }
+
+    public void SetEnvironmentFloat(float volume)
+    {
+        audioMixer.SetFloat("VolumeEnvironment", volume);
+        VolumeEnvironment = volume;
     }
 
     public void SetFullScreen(bool value)

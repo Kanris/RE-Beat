@@ -226,7 +226,8 @@ public class OptionsGameData : IGameData
 
     public int ResolutionIndex;
     public bool IsFullscreen;
-    public float Volume;
+    public float VolumeMaster;
+    public float VolumeEnvironment;
 
     #endregion
 
@@ -236,7 +237,8 @@ public class OptionsGameData : IGameData
     {
         this.ResolutionIndex = StartScreenManager.ResolutionIndex;
         this.IsFullscreen = StartScreenManager.IsFullscreen;
-        this.Volume = StartScreenManager.Volume;
+        this.VolumeMaster = StartScreenManager.VolumeMaster;
+        this.VolumeEnvironment = StartScreenManager.VolumeEnvironment;
     }
 
     #endregion
@@ -247,7 +249,8 @@ public class OptionsGameData : IGameData
     {
         StartScreenManager.ResolutionIndex = ResolutionIndex;
         StartScreenManager.IsFullscreen = IsFullscreen;
-        StartScreenManager.Volume = Volume;
+        StartScreenManager.VolumeMaster = VolumeMaster;
+        StartScreenManager.VolumeEnvironment = VolumeEnvironment;
     }
 
     #endregion
