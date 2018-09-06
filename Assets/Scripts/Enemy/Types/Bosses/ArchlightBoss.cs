@@ -177,17 +177,22 @@ public class ArchlightBoss : MonoBehaviour
         FlyingPlatform.SetActive(true);
         Key.SetActive(true);
 
-        var DeathParticle = Resources.Load("Effects/Archlight Death Particle") as GameObject;
-
-        if (DeathParticle != null)
-        {
-            var DeathParticleInstantiate = 
-                Instantiate(DeathParticle, transform.position, transform.rotation);
-            Destroy(DeathParticleInstantiate, 5f);
-        }
+        ShowParticles("Effects/Archlight/Archlight Death Particle", 5f);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
         GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
+    }
+
+    private void ShowParticles(string path, float time = 1.5f)
+    {
+        var particle = Resources.Load(path) as GameObject;
+
+        if (particle != null)
+        {
+            var DeathParticleInstantiate =
+                Instantiate(particle, transform.position, transform.rotation);
+            Destroy(DeathParticleInstantiate, time);
+        }
     }
 
     #region Teleport
@@ -195,6 +200,7 @@ public class ArchlightBoss : MonoBehaviour
     private void OnPlayerHitTeleport(bool value)
     {
         m_TeleportTimer = Time.time;
+        ShowParticles("Effects/Archlight/Archlight Hit Particle");
     }
 
     private IEnumerator TeleportSequence(Vector3 destination)
