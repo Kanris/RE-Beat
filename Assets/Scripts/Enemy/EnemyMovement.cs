@@ -1,9 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(EnemyStatsGO))]
 public class EnemyMovement : MonoBehaviour {
+
+    #region private fields
 
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
@@ -11,17 +13,36 @@ public class EnemyMovement : MonoBehaviour {
     private bool m_IsWaiting = false;
     private bool m_IsJumping = false;
     private float m_Speed = 1f;
+    private Enemy m_EnemyStats;
+    private bool m_IsThrowBack;
+    private float m_UpdateTime;
+
+    #endregion
+
+    #region inspector fields
 
     [SerializeField] private float IdleTime = 2f;
     [HideInInspector] public float m_PosX = -1f;
 
+    #endregion
+
+    #region public fields
+
+    #region events
+
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnWaitingStateChange;
 
+    #endregion
+
     public bool isPlayerNear;
 
+    #endregion
+
+    #region private methods
+
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
         InitializeRigidBody();
 
@@ -30,9 +51,19 @@ public class EnemyMovement : MonoBehaviour {
         SubscribeOnEvents();
 
         SpeedChange(GetDefaultSpeed());
+
+        GetComponent<EnemyStatsGO>().EnemyStats.OnEnemyTakeDamage += ThrowBack;
+
+        InitializeEnemyStats();
     }
 
     #region Initialize
+
+    private void InitializeEnemyStats()
+    {
+        m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
+    }
+
     private void InitializeRigidBody()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -114,6 +145,43 @@ public class EnemyMovement : MonoBehaviour {
         {
             m_Rigidbody2D.velocity = new Vector2(-0.001f, 10f);
         }
+
+        if (m_IsThrowBack)
+        {
+            if (m_UpdateTime <= Time.time)
+            {
+                m_Rigidbody2D.velocity = Vector2.zero;
+                m_IsThrowBack = false;
+            }
+            else
+            {
+                var multiplier = GetMultiplier();
+
+                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, m_EnemyStats.m_ThrowY);
+            }
+        }
+    }
+
+    private int GetMultiplier()
+    {
+        var multiplier = Convert.ToInt32(transform.localScale.x);
+
+        if (!m_EnemyStats.IsPlayerNear)
+            multiplier *= -1;
+
+        return multiplier;
+    }
+
+    private void ThrowBack(bool value)
+    {
+        if (!m_EnemyStats.m_IsBigMonster)
+        {
+            m_IsThrowBack = true;
+            m_UpdateTime = Time.time + 0.2f;
+
+            if (GetComponent<PatrolEnemy>() != null)
+                GetComponent<EnemyMovement>().TurnAround();
+        }
     }
 
     private IEnumerator Jump()
@@ -156,15 +224,19 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
+    private void SetAnimation()
+    {
+        m_Animator.SetBool("isWalking", !m_IsWaiting);
+    }
+
+    #endregion
+
+    #region public methods
+
     public void TurnAround()
     {
         transform.localScale = new Vector3(m_PosX, 1, 1);
         m_PosX = -m_PosX;
-    }
-
-    private void SetAnimation()
-    {
-        m_Animator.SetBool("isWalking", !m_IsWaiting);
     }
 
     public void ChangeWaitingState(bool value)
@@ -174,4 +246,6 @@ public class EnemyMovement : MonoBehaviour {
         if (OnWaitingStateChange != null)
             OnWaitingStateChange(value);
     }
+
+    #endregion
 }
