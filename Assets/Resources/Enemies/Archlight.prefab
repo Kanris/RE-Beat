@@ -223,7 +223,11 @@ MonoBehaviour:
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2
+    m_IsBigMonster: 1
+    m_ThrowX: 2
+    m_ThrowY: 0.5
     DropCoins: 5
+  DontResurect: 0
 --- !u!212 &212388568018852434
 SpriteRenderer:
   m_ObjectHideFlags: 1

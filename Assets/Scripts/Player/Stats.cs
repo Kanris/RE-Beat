@@ -365,6 +365,9 @@ public class Enemy : Stats
     public int DamageAmount = 1;
     public float Speed = 1f;
     public float AttackSpeed = 2f;
+    public bool m_IsBigMonster;
+    [Range(0f, 10f)] public float m_ThrowX = 2f;
+    [Range(0f, 10f)] public float m_ThrowY = 0.5f;
     [SerializeField, Range(1, 100)] private int DropCoins = 1;
 
     #endregion

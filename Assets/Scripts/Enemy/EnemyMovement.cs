@@ -167,7 +167,7 @@ public class EnemyMovement : MonoBehaviour {
         m_Animator.SetBool("isWalking", !m_IsWaiting);
     }
 
-    private void ChangeWaitingState(bool value)
+    public void ChangeWaitingState(bool value)
     {
         m_IsWaiting = value;
 
