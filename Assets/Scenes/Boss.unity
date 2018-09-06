@@ -1376,52 +1376,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1001 &740592294
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4244789493701248, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587882821856884, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &759369633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,7 +2233,7 @@ GameObject:
   - component: {fileID: 1139524895}
   - component: {fileID: 1139524894}
   - component: {fileID: 1139524893}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: CaveBackground
   m_TagString: CaveBackground
   m_Icon: {fileID: 0}
@@ -6901,6 +6855,10 @@ Prefab:
       propertyPath: isLight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1600313076646786, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
   m_IsPrefabParent: 0
@@ -6956,6 +6914,10 @@ Prefab:
         type: 2}
       propertyPath: isLight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600313076646786, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}

@@ -189,7 +189,7 @@ namespace UnityStandardAssets._2D
             instantiateDashEffect.transform.rotation = 
                 instantiateDashEffect.transform.rotation * Quaternion.Euler(0, 90 * multiplier, 0);
 
-            Destroy(instantiateDashEffect, 10f);
+            Destroy(instantiateDashEffect, 1f);
         }
 
         private IEnumerator StopDash()

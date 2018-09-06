@@ -99,8 +99,22 @@ public class Chest : MonoBehaviour {
         if (collision.CompareTag("PlayerAttackRange") & Health > 0)
         {
             StopAllCoroutines();
+            ShowHitParticles(collision.transform.parent.transform.localScale.x);
             StartCoroutine( DamageChest(PlayerStats.DamageAmount) );
         }
+    }
+
+    private void ShowHitParticles(float playerLook)
+    {
+        var hitParticles = Resources.Load("Effects/ChestHit") as GameObject;
+        var hitParticlesInstantiate = Instantiate(hitParticles);
+        hitParticlesInstantiate.transform.position = transform.position;
+
+        if (playerLook == 1)
+            hitParticlesInstantiate.transform.rotation = 
+                new Quaternion(hitParticlesInstantiate.transform.rotation.x, hitParticlesInstantiate.transform.rotation.y * -1, hitParticlesInstantiate.transform.rotation.z, hitParticlesInstantiate.transform.rotation.w);
+
+        Destroy(hitParticlesInstantiate, 1.5f);
     }
 
     private IEnumerator DamageChest(int amount)
