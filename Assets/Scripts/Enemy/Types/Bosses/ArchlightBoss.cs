@@ -177,7 +177,7 @@ public class ArchlightBoss : MonoBehaviour
         FlyingPlatform.SetActive(true);
         Key.SetActive(true);
 
-        ShowParticles("Effects/Archlight/Archlight Death Particle", 5f);
+        ShowParticles("Effects/Archlight/Archlight Death Particle", 10f);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
         GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
@@ -200,7 +200,7 @@ public class ArchlightBoss : MonoBehaviour
     private void OnPlayerHitTeleport(bool value)
     {
         m_TeleportTimer = Time.time;
-        ShowParticles("Effects/Archlight/Archlight Hit Particle");
+        ShowParticles("Effects/Archlight/Archlight Hit Particle", 5f);
     }
 
     private IEnumerator TeleportSequence(Vector3 destination)
