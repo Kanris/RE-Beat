@@ -177,6 +177,15 @@ public class ArchlightBoss : MonoBehaviour
         FlyingPlatform.SetActive(true);
         Key.SetActive(true);
 
+        var DeathParticle = Resources.Load("Effects/Archlight Death Particle") as GameObject;
+
+        if (DeathParticle != null)
+        {
+            var DeathParticleInstantiate = 
+                Instantiate(DeathParticle, transform.position, transform.rotation);
+            Destroy(DeathParticleInstantiate, 5f);
+        }
+
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
         GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
     }
