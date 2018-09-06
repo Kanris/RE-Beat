@@ -7,24 +7,38 @@ using UnityStandardAssets._2D;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
 
+    #region serialize fields
+
     [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
-    [SerializeField] private float ThrowX = 0.08f;
-    [SerializeField] private float ThrowY = 0.1f;
-    [SerializeField] private GameObject AttackRange;
+
+    [SerializeField] private GameObject AttackRangeAnimation;
+    [SerializeField] private Transform m_AttackPosition;
+    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX;
+    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY;
+    [SerializeField] private LayerMask WhatIsEnemy;
     [SerializeField] private string AttackSound = "Player Attack";
 
-    private float m_YPositionBeforeJump;
+    #endregion
+
+    #region private fields
+
     private Animator m_Animator;
-    private Vector2 m_ThrowBackVector;
+
+    private float m_YPositionBeforeJump;
     private bool isPlayerBusy = false;
     private bool m_IsAttacking;
     private float m_AttackUpdateTime;
 
-    public PlayerStats playerStats;
+    #endregion
 
-    [HideInInspector] public bool isPlayerThrowingBack;
+    #region public fields
+
+    public PlayerStats playerStats;
+    
     [HideInInspector] public bool IsDamageFromFace;
+
+    #endregion
 
     #region Initialize
 
@@ -79,54 +93,48 @@ public class Player : MonoBehaviour {
     {
         if (m_Animator.GetBool("Hit"))
         {
-            if (!isPlayerThrowingBack)
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                m_ThrowBackVector = GetThrowBackVector();
-                isPlayerThrowingBack = true;
-            }
-            else
-            {
-                GetComponent<Rigidbody2D>().position += m_ThrowBackVector;
-            }
-
+            GetComponent<Rigidbody2D>().velocity = GetThrowBackVector();
         }
     }
 
     private IEnumerator Attack()
     {
-        m_IsAttacking = true;
-
-        AttackRange.SetActive(true);
+        AttackRangeAnimation.SetActive(true); //attack animation
 
         AudioManager.Instance.Play(AttackSound);
 
+        var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position, 
+            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, WhatIsEnemy);
+
+        foreach (var enemy in enemiesToDamage)
+        {
+            enemy.GetComponent<EnemyStatsGO>().EnemyStats.TakeDamage(PlayerStats.DamageAmount);
+        }
+
         yield return new WaitForSeconds(0.2f);
 
-        AttackRange.SetActive(false);
+        AttackRangeAnimation.SetActive(false); //attack animation
+    }
 
-        m_IsAttacking = false;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(m_AttackPosition.position, new Vector3(m_AttackRangeX, m_AttackRangeY, 1));
     }
 
     private Vector2 GetThrowBackVector()
     {
-        var throwBackVector = Vector2.zero;
+        var xThrowValue = -playerStats.m_ThrowX;
 
-        if (transform.localScale.x.CompareTo(1f) == 0)
+        if (transform.localScale.x.CompareTo(1f) != 0)
         {
-            throwBackVector = new Vector2(-ThrowX, ThrowY);
-        }
-        else
-        {
-            throwBackVector = new Vector2(ThrowX, ThrowY);
+            xThrowValue *= -1;
         }
 
         if (!IsDamageFromFace)
-        {
-            throwBackVector = new Vector2(-throwBackVector.x, throwBackVector.y);
-        }
+            xThrowValue *= -1;
 
-        return throwBackVector;
+        return new Vector2(xThrowValue, playerStats.m_ThrowY);
     }
 
     private void JumpHeightControl()
@@ -147,33 +155,6 @@ public class Player : MonoBehaviour {
         {
             m_YPositionBeforeJump = transform.position.y;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy") & m_IsAttacking)
-        {
-            m_IsAttacking = false;
-
-            var enemyStats = GetStats(collision);
-
-            if (enemyStats != null)
-            {
-                enemyStats.TakeDamage(PlayerStats.DamageAmount);
-            }
-        }
-    }
-
-    private Stats GetStats(Collider2D collision)
-    {
-        Stats enemyStats = null;
-
-        if (collision.GetComponent<EnemyStatsGO>() != null)
-        {
-            enemyStats = collision.GetComponent<EnemyStatsGO>().EnemyStats;
-        }
-
-        return enemyStats;
     }
 
     public void TriggerPlayerBussy(bool value)

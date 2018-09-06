@@ -9,6 +9,8 @@ public class Stats {
     #region public fields
 
     public int MaxHealth = 200;
+    [Range(0f, 10f)] public float m_ThrowX = 2f;
+    [Range(0f, 10f)] public float m_ThrowY = 0.5f;
 
     #endregion
 
@@ -249,6 +251,7 @@ public class PlayerStats : Stats
             }
 
             CurrentPlayerHealth += amount;
+            CurrentHealth += amount;
 
             UIManager.Instance.AddHealth(amount);
         }
@@ -301,8 +304,6 @@ public class PlayerStats : Stats
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
 
         PlayHitAnimation(false);
-        
-        m_GameObject.GetComponent<Player>().isPlayerThrowingBack = false;
         
         yield return InvincibleAnimation();
         
@@ -366,8 +367,6 @@ public class Enemy : Stats
     public float Speed = 1f;
     public float AttackSpeed = 2f;
     public bool m_IsBigMonster;
-    [Range(0f, 10f)] public float m_ThrowX = 2f;
-    [Range(0f, 10f)] public float m_ThrowY = 0.5f;
     [SerializeField, Range(1, 100)] private int DropCoins = 1;
 
     #endregion

@@ -20049,6 +20049,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyStats:
     MaxHealth: 200
+    m_ThrowX: 5
+    m_ThrowY: 2
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
     HitSound: Enemy Hit
@@ -20057,8 +20059,6 @@ MonoBehaviour:
     Speed: 1
     AttackSpeed: 2
     m_IsBigMonster: 0
-    m_ThrowX: 5
-    m_ThrowY: 2
     DropCoins: 100
   DontResurect: 1
 --- !u!114 &1085342244
@@ -27198,7 +27198,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.47058824, y: 0.47058824}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
