@@ -89,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1610999385841892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.007, y: -0.128, z: 0}
+  m_LocalPosition: {x: 0, y: -0.085, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4523476232501578}
@@ -219,8 +219,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016819239, y: -0.14833426}
-  m_Size: {x: 0.44750166, y: 0.74260235}
+  m_Offset: {x: 0.016819239, y: -0.1259439}
+  m_Size: {x: 0.44750166, y: 0.6978216}
   m_Direction: 0
 --- !u!95 &95989746736998552
 Animator:
@@ -253,6 +253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyStats:
     MaxHealth: 200
+    m_ThrowX: 2
+    m_ThrowY: 0.5
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
     HitSound: Enemy Hit
@@ -261,8 +263,6 @@ MonoBehaviour:
     Speed: 1
     AttackSpeed: 2
     m_IsBigMonster: 0
-    m_ThrowX: 2
-    m_ThrowY: 0.5
     DropCoins: 100
   DontResurect: 0
 --- !u!114 &114077754354735496
@@ -343,7 +343,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300018, guid: d38d3e3564b13a549a11a2f857a8622a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
