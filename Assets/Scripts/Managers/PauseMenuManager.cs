@@ -141,5 +141,6 @@ public class PauseMenuManager : MonoBehaviour {
         Destroy(GameObject.Find("DialogueManager(Clone)"));
         Destroy(GameObject.Find("UIManager(Clone)"));
         Destroy(GameObject.Find("JournalManager(Clone)"));
+        Destroy(GameObject.Find("InventoryManager(Clone)"));
     }
 }

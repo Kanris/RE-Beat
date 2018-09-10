@@ -5,15 +5,12 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PickUpItem : MonoBehaviour {
 
-    public enum ItemType { Item, Note, Heal }
-    public ItemType itemType;
-
-    [SerializeField] private int HealAmount = 3;
     [SerializeField] private Item item;
 
     private GameObject m_InteractionButton;
     private bool m_IsPlayerNearDoor = false;
     private PlayerStats m_PlayerStats;
+    private SpriteRenderer m_SpriteRenderer;
 
     private void Start()
     {
@@ -25,6 +22,8 @@ public class PickUpItem : MonoBehaviour {
     {
         var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
         m_InteractionButton = Instantiate(interactionButton, transform);
+
+        //m_SpriteRenderer.sprite.
     }
 
     private void Update()
@@ -40,17 +39,17 @@ public class PickUpItem : MonoBehaviour {
 
     private void InteractWithItem()
     {            
-        switch (itemType)
+        switch (item.itemType)
         {
-            case ItemType.Item:
+            case Item.ItemType.Item:
                 AddToTheInventory();
                 break;
-            case ItemType.Note:
+            case Item.ItemType.Note:
                 ReadNote();
                 break;
-            case ItemType.Heal:
+            case Item.ItemType.Heal:
                 if (m_PlayerStats != null)
-                    m_PlayerStats.HealPlayer(HealAmount);
+                    m_PlayerStats.HealPlayer(item.HealAmount);
                 Destroy(gameObject);
                 break;
         }
@@ -65,7 +64,7 @@ public class PickUpItem : MonoBehaviour {
         {
             m_IsPlayerNearDoor = true;
 
-            if (itemType == ItemType.Heal)
+            if (item.itemType == Item.ItemType.Heal)
                 m_PlayerStats = collision.GetComponent<Player>().playerStats;
 
             ShowInteractionKey(m_IsPlayerNearDoor);
@@ -91,7 +90,7 @@ public class PickUpItem : MonoBehaviour {
 
     private void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item);
+        PlayerStats.PlayerInventory.Add(item, GetComponent<SpriteRenderer>().sprite.name);
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
 
         Destroy(gameObject);

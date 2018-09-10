@@ -63,6 +63,8 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/SaveLoadManager");
 
+            Initialize("Managers/InventoryManager");
+
             if (StartScreenManager.IsLoadPressed)
             {
                 SaveLoadManager.Instance.LoadGameData();

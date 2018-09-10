@@ -261,8 +261,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   KeyName:
+    Image: (
     Name: 
     Description: 
+    itemType: 0
+    HealAmount: 3
   DisplayMessage: Red magic seal on door
 --- !u!483693784 &12145148
 TilemapRenderer:
@@ -583,6 +586,16 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: item.Description
+      value: Key that can open blue door
+      objectReference: {fileID: 0}
+    - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: item.Image
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a3c115df6dde7342b4c49385ad1e4f9, type: 2}
   m_IsPrefabParent: 0
@@ -695,6 +708,17 @@ Prefab:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 114899911898052986, guid: dc3a3c4f81c6228478e6624f83f85b2f,
+        type: 2}
+      propertyPath: item.itemType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899911898052986, guid: dc3a3c4f81c6228478e6624f83f85b2f,
+        type: 2}
+      propertyPath: item.Image
+      value: 
+      objectReference: {fileID: 21300204, guid: 42717c02b1655be44809142aceb42b35,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc3a3c4f81c6228478e6624f83f85b2f, type: 2}
   m_IsPrefabParent: 0
@@ -931,7 +955,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 753630515}
+      objectReference: {fileID: 77665800}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -2706,8 +2730,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   KeyName:
+    Image: (
     Name: 
     Description: 
+    itemType: 0
+    HealAmount: 3
   DisplayMessage: Blue magic seal on door
 --- !u!483693784 &247247798
 TilemapRenderer:
@@ -19013,6 +19040,16 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: item.Description
+      value: Allow to carry magnetic box
+      objectReference: {fileID: 0}
+    - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: item.Image
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a3c115df6dde7342b4c49385ad1e4f9, type: 2}
   m_IsPrefabParent: 0
@@ -19955,7 +19992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1085342243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23972,6 +24009,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Inventory: {fileID: 2053566476}
+  m_Animator: {fileID: 1243147776}
   chestType: 1
   Health: 100
 --- !u!61 &1243147778
@@ -27068,11 +27107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a63678e5ce38174dbff7f7054fa93fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 1
-  HealAmount: 3
   item:
+    Image: '*'
     Name: Note
     Description: Haha! What a noob!
+    itemType: 1
+    HealAmount: 3
 --- !u!61 &1892891043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28070,8 +28110,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
+    Image: '*'
     Name: Magnetic Boots
-    Description: 
+    Description: Allow to walk on steel surface
+    itemType: 0
+    HealAmount: 3
 --- !u!114 &1965731664
 MonoBehaviour:
   m_ObjectHideFlags: 0

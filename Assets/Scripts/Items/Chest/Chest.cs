@@ -7,23 +7,22 @@ public class Chest : MonoBehaviour {
 
     public enum ChestType { Common, Destroyable }
 
+    public GameObject m_Inventory;
+    public Animator m_Animator;
     public ChestType chestType;
     public int Health = 0; 
 
     private GameObject m_InteractionButton;
     private Player m_Player;
-    private GameObject m_Inventory;
-    private Animator m_Animator;
     private bool isChestEmpty;
 
-	// Use this for initialization
-	void Start () {
-
+    private void Awake()
+    {
         InitializeInteractionButton();
+    }
 
-        InitializeInventory();
-
-        InitializeAnimator();
+    // Use this for initialization
+    void Start () {
 
         ActiveInteractionButton(false);
 
@@ -36,18 +35,6 @@ public class Chest : MonoBehaviour {
     {
         var interactionButton = Resources.Load("UI/InteractionUI");
         m_InteractionButton = Instantiate(interactionButton, transform) as GameObject;
-    }
-
-    private void InitializeInventory()
-    {
-        if (transform.childCount > 0)
-        {
-            m_Inventory = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("Chest.InitializeInventory: Chest has no grid on it");
-        }
     }
 
     private void InitializeAnimator()

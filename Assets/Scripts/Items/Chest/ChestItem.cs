@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChestItem : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class ChestItem : MonoBehaviour {
 
     public void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item);
+        PlayerStats.PlayerInventory.Add(item, GetComponent<Image>().sprite.name);
         AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
 
         if (GameMaster.Instance != null)

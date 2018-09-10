@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Inventory {
 
-    private List<Item> m_Bag;
-	
+    public List<Item> m_Bag;
+
     public Inventory(int size)
     {
         m_Bag = new List<Item>(size);
     }
 
-    public bool Add(Item item)
+    public bool Add(Item item, string image)
     {
         if (m_Bag.Capacity > m_Bag.Count)
         {
@@ -23,7 +24,9 @@ public class Inventory {
             }
             else
             {
+                item.Image = image;
                 m_Bag.Add(item);
+                InventoryManager.Instance.AddItem(item);
             }
 
             return true;
@@ -44,6 +47,7 @@ public class Inventory {
         {
             var searchResult = m_Bag.First(x => x.Name == item.Name);
             m_Bag.RemoveAt(m_Bag.IndexOf(searchResult));
+            InventoryManager.Instance.RemoveItem(item.Name);
 
             return true;
         }
@@ -55,6 +59,12 @@ public class Inventory {
 [System.Serializable]
 public class Item
 {
+    [HideInInspector] public string Image;
     public string Name;
-    public string Description;
+    [TextArea(3, 10)] public string Description;
+
+    public enum ItemType { Item, Note, Heal }
+    public ItemType itemType;
+
+    [Range(1, 8)] public int HealAmount = 3;
 }

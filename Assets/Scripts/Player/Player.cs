@@ -50,6 +50,7 @@ public class Player : MonoBehaviour {
 
         PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
+        InventoryManager.Instance.OnInventoryOpen += TriggerPlayerBussy;
 
         GetComponent<PlatformerCharacter2D>().OnLandEvent += PlayLandSound;
     }
