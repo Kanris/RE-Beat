@@ -26,7 +26,7 @@ public class Inventory {
             {
                 item.Image = image;
                 m_Bag.Add(item);
-                InventoryManager.Instance.AddItem(item);
+                InfoManager.Instance.AddItem(item);
             }
 
             return true;
@@ -47,7 +47,7 @@ public class Inventory {
         {
             var searchResult = m_Bag.First(x => x.Name == item.Name);
             m_Bag.RemoveAt(m_Bag.IndexOf(searchResult));
-            InventoryManager.Instance.RemoveItem(item.Name);
+            InfoManager.Instance.RemoveItem(item.Name);
 
             return true;
         }

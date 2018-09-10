@@ -7,7 +7,7 @@ public class TaskButtonClick : MonoBehaviour {
 	public void DisplayTaskText()
     {
         PlayClickSound();
-        JournalManager.Instance.DisplayTaskText(transform.name);
+        InfoManager.Instance.DisplayTaskText(transform.name);
     }
 
     #region Sound

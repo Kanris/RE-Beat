@@ -265,8 +265,6 @@ public class PlayerStats : Stats
     {
         if (PlayerInventory == null)
             PlayerInventory = new Inventory(9);
-        else
-            InventoryManager.Instance.InitializeInventory();
 
         base.Initialize(gameObject);
 

@@ -59,17 +59,15 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/UIManager");
 
-            Initialize("Managers/JournalManager");
+            Initialize("Managers/InfoManager");
 
             Initialize("Managers/SaveLoadManager");
-
-            Initialize("Managers/InventoryManager");
 
             if (StartScreenManager.IsLoadPressed)
             {
                 SaveLoadManager.Instance.LoadGameData();
 
-                JournalManager.Instance.RecreateTasks();
+                InfoManager.Instance.RecreateState();
             }
 
             

@@ -146,10 +146,10 @@ public class GeneralGameData : IGameData
         RespawnPointX = GameMaster.Instance.m_RespawnPointPosition.x;
         RespawnPointY = GameMaster.Instance.m_RespawnPointPosition.y;
 
-        if (JournalManager.Instance != null)
+        if (InfoManager.Instance != null)
         {
-            CurrentTasks = JournalManager.Instance.CurrentTasks;
-            CompletedTasks = JournalManager.Instance.CompletedTasks;
+            CurrentTasks = InfoManager.Instance.CurrentTasks;
+            CompletedTasks = InfoManager.Instance.CompletedTasks;
         }
         else
             Debug.LogError("Can't save journal state");
@@ -164,10 +164,10 @@ public class GeneralGameData : IGameData
         State.ScenesState = ScenesState;
         GameMaster.Instance.m_RespawnPointPosition = new Vector3(RespawnPointX, RespawnPointY);
 
-        if (JournalManager.Instance != null)
+        if (InfoManager.Instance != null)
         {
-            JournalManager.Instance.CurrentTasks = CurrentTasks;
-            JournalManager.Instance.CompletedTasks = CompletedTasks;
+            InfoManager.Instance.CurrentTasks = CurrentTasks;
+            InfoManager.Instance.CompletedTasks = CompletedTasks;
         }
         else
             Debug.LogError("Can't recreate journal state");

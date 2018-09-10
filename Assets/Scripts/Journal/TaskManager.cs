@@ -94,15 +94,15 @@ public class TaskManager : MonoBehaviour {
             switch (taskType)
             {
                 case TaskType.Giver:
-                    isSuccess = JournalManager.Instance.AddTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.AddTask(Name, TaskText);
                     break;
 
                 case TaskType.Updater:
-                    isSuccess = JournalManager.Instance.UpdateTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.UpdateTask(Name, TaskText);
                     break;
 
                 case TaskType.Finisher:
-                    isSuccess = JournalManager.Instance.CompleteTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.CompleteTask(Name, TaskText);
                     break;
             }
 
