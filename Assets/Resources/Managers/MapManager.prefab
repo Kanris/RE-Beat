@@ -153,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236970116326202}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.085747, y: -2.4613173, z: -31.898438}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4604371687869170}
@@ -166,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253831644600928}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.314253, y: 2.5013173, z: 1.8984375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224048116963352656}
@@ -480,10 +480,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LocationName: {fileID: 114665113038697454}
   m_UI: {fileID: 1337864403570658}
+  m_Minimap: {fileID: 114052065014330606}
   imagesToTransparent:
-  - {fileID: 114418369754762978}
-  - {fileID: 114270398683740354}
   - {fileID: 114681345311224180}
+  - {fileID: 114270398683740354}
+  m_PlayerAnimator: {fileID: 0}
+  m_UpdateSearchTime: 0
 --- !u!222 &222003295624151110
 CanvasRenderer:
   m_ObjectHideFlags: 1
