@@ -24924,6 +24924,14 @@ Prefab:
       propertyPath: SawMoveTime
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
   m_IsPrefabParent: 0
@@ -29936,7 +29944,21 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
     - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114599820156378758, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_ThrowX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114599820156378758, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_ThrowY
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
@@ -32109,11 +32131,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4814384279827420, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4814384279827420, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 212211230881872706, guid: 74393718dd00ee1439233ebe530cb04c,
         type: 2}
@@ -32492,7 +32514,21 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
     - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114599820156378758, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_ThrowX
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114599820156378758, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_ThrowY
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}

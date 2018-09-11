@@ -15,12 +15,17 @@ public class Saw : MonoBehaviour {
     [SerializeField, Range(1, 10)] private int DamageAmount = 2;
     [SerializeField, Range(1f, 5f)] private float MoveVelocity = 2f;
     [SerializeField] private bool WithTrigger = false;
+    [SerializeField, Range(1f, 10f)] private float m_ThrowX = 5f;
+    [SerializeField, Range(1f, 10f)] private float m_ThrowY = 3f;
 
     private Animator m_SawAnimator;
     private Rigidbody2D m_Rigidbody;
     private float m_MoveTime = 0f;
     private float m_PosX = 0f;
     private float m_PosY = 0f;
+
+    private float m_PrevThrowX;
+    private float m_PrevThrowY;
 
     #region Initialize
 
@@ -72,10 +77,28 @@ public class Saw : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+            var playerStats = collision.gameObject.GetComponent<Player>().playerStats;
+
+            m_PrevThrowX = playerStats.m_ThrowX;
+            m_PrevThrowY = playerStats.m_ThrowY;
+
+            playerStats.m_ThrowX = m_ThrowX;
+            playerStats.m_ThrowY = m_ThrowY;
+
+            playerStats.TakeDamage(DamageAmount);
         }
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            var playerStats = collision.gameObject.GetComponent<Player>().playerStats;
+
+            playerStats.m_ThrowX = m_PrevThrowX;
+            playerStats.m_ThrowY = m_PrevThrowY;
+        }
+    }
     #endregion
 
     #region saw move

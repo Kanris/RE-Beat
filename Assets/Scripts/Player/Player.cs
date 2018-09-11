@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     private bool isPlayerBusy = false;
     private bool m_IsAttacking;
     private float m_AttackUpdateTime;
+    private Vector2 m_ThrowBackVector;
 
     #endregion
 
@@ -94,8 +95,13 @@ public class Player : MonoBehaviour {
     {
         if (m_Animator.GetBool("Hit"))
         {
-            GetComponent<Rigidbody2D>().velocity = GetThrowBackVector();
+            if (m_ThrowBackVector == Vector2.zero)
+                m_ThrowBackVector = GetThrowBackVector();
+            else
+                GetComponent<Rigidbody2D>().velocity = m_ThrowBackVector;
         }
+        else if (m_ThrowBackVector != Vector2.zero)
+            m_ThrowBackVector = Vector2.zero;
     }
 
     private IEnumerator Attack()
@@ -133,7 +139,9 @@ public class Player : MonoBehaviour {
         }
 
         if (!IsDamageFromFace)
+        {
             xThrowValue *= -1;
+        }
 
         return new Vector2(xThrowValue, playerStats.m_ThrowY);
     }
