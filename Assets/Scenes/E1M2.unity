@@ -245,7 +245,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 143570341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 74025777}
@@ -2191,6 +2191,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &420114440 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114681345311224180, guid: 3c42a2106c28a9c4e9623640e476b6e0,
+    type: 2}
+  m_PrefabInternal: {fileID: 1969330104}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!4 &471983756 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a,
@@ -2878,18 +2884,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4455417591592536, guid: c9c72d8bce2eb74429a60237aebbb7d5,
     type: 2}
   m_PrefabInternal: {fileID: 836543100}
---- !u!114 &1220644108 stripped
+--- !u!114 &1246171906 stripped
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114270398683740354, guid: 3c42a2106c28a9c4e9623640e476b6e0,
+  m_PrefabParentObject: {fileID: 114052065014330606, guid: 3c42a2106c28a9c4e9623640e476b6e0,
     type: 2}
   m_PrefabInternal: {fileID: 1969330104}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!114 &1238055397 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114418369754762978, guid: 3c42a2106c28a9c4e9623640e476b6e0,
-    type: 2}
-  m_PrefabInternal: {fileID: 1969330104}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1359940888
 GameObject:
   m_ObjectHideFlags: 0
@@ -5563,7 +5563,7 @@ Prefab:
     - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
         type: 2}
       propertyPath: imagesToTransparent.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4604371687869170, guid: 3c42a2106c28a9c4e9623640e476b6e0, type: 2}
       propertyPath: m_LocalPosition.x
@@ -5600,12 +5600,12 @@ Prefab:
     - target: {fileID: 114665113038697454, guid: 3c42a2106c28a9c4e9623640e476b6e0,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114665113038697454, guid: 3c42a2106c28a9c4e9623640e476b6e0,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224048116963352656, guid: 3c42a2106c28a9c4e9623640e476b6e0,
         type: 2}
@@ -5614,19 +5614,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
         type: 2}
-      propertyPath: imagesToTransparent.Array.data[0]
-      value: 
-      objectReference: {fileID: 1238055397}
-    - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
-        type: 2}
-      propertyPath: imagesToTransparent.Array.data[1]
-      value: 
-      objectReference: {fileID: 1220644108}
-    - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
-        type: 2}
       propertyPath: imagesToTransparent.Array.data[2]
       value: 
-      objectReference: {fileID: 2035649648}
+      objectReference: {fileID: 420114440}
+    - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
+        type: 2}
+      propertyPath: imagesToTransparent.Array.data[0]
+      value: 
+      objectReference: {fileID: 420114440}
+    - target: {fileID: 114801771123232854, guid: 3c42a2106c28a9c4e9623640e476b6e0,
+        type: 2}
+      propertyPath: m_Minimap
+      value: 
+      objectReference: {fileID: 1246171906}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3c42a2106c28a9c4e9623640e476b6e0, type: 2}
   m_IsPrefabParent: 0
@@ -5765,12 +5765,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: WoodRunning
---- !u!114 &2035649648 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114681345311224180, guid: 3c42a2106c28a9c4e9623640e476b6e0,
-    type: 2}
-  m_PrefabInternal: {fileID: 1969330104}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2038800950
 GameObject:
   m_ObjectHideFlags: 0
