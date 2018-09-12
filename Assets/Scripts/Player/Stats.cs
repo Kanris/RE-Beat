@@ -299,7 +299,7 @@ public class PlayerStats : Stats
 
         isInvincible = true;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
 
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
 
