@@ -23,8 +23,9 @@ public class MapManager : MonoBehaviour {
 
     private bool m_IsMoving;
     private bool m_IsTransparent;
-    public Animator m_PlayerAnimator;
-    public float m_UpdateSearchTime;
+    private bool m_IsTransparing;
+    private Animator m_PlayerAnimator;
+    private float m_UpdateSearchTime;
     #endregion
 
     #region singleton
@@ -85,7 +86,7 @@ public class MapManager : MonoBehaviour {
 
         }
 
-        if (m_IsTransparent)
+        if (m_IsTransparent & !m_IsTransparing)
         {
             StartCoroutine(TransparentImages(m_IsMoving));
         }
@@ -108,26 +109,28 @@ public class MapManager : MonoBehaviour {
 
     private IEnumerator TransparentImages(bool value)
     {
-        yield return new WaitForSeconds(1f);
+        m_IsTransparing = true;
+
+        yield return new WaitForSeconds(0.5f);
 
         if (value == m_IsMoving)
         {
-            var transparentValue = 0.5f;
+            var alphaValue = 0.5f / 10f;
 
-            if (!value)
-                transparentValue = 1f;
+            if (value)
+                alphaValue *= -1;
 
-            foreach (var item in imagesToTransparent)
+            for (int iteration = 0; iteration < 10; iteration++)
             {
-                var newColor = item.color;
-                newColor.a = transparentValue;
+                var color = new Color(m_Minimap.color.r, m_Minimap.color.g, m_Minimap.color.b, m_Minimap.color.a + alphaValue);
 
-                item.color = newColor;
+                imagesToTransparent[0].color = imagesToTransparent[1].color = m_Minimap.color = color;
+
+                yield return new WaitForSeconds(0.01f);
             }
-
-            m_Minimap.color = new Color(m_Minimap.color.r, m_Minimap.color.g, m_Minimap.color.b, transparentValue);
         }
 
         m_IsTransparent = false;
+        m_IsTransparing = false;
     }
 }

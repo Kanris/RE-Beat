@@ -170,10 +170,6 @@ public class Chest : MonoBehaviour {
 
         m_Animator.SetTrigger("Open");
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f);
-
-        /*var openChestSprite = Resources.LoadAll<Sprite>("Sprites/Props")[9];
-
-        GetComponent<SpriteRenderer>().sprite = openChestSprite;*/
     }
 
     #region Active
