@@ -111,7 +111,7 @@ public class EnemyMovement : MonoBehaviour {
             GetComponent<RangeEnemy>().OnPlayerSpot += ChangeWaitingState;
     }
 
-        private float GetDefaultSpeed()
+    private float GetDefaultSpeed()
     {
         var defaultSpeed = 0f;
 
@@ -130,28 +130,27 @@ public class EnemyMovement : MonoBehaviour {
         if (m_CantMoveFurther)
         {
             m_CantMoveFurther = false;
-            m_IsWaiting = false;
             TurnAround();
         }
 
-        if (!m_IsWaiting & !m_IsThrowBack)
+        if (!m_IsWaiting & !m_IsThrowBack) //if enemey is not waiting or is not throwing back
         {
-            if (m_MoveUpdateTime > Time.time | isPlayerNear | m_EnemyStats.IsPlayerNear)
+            if (m_MoveUpdateTime > Time.time | isPlayerNear | m_EnemyStats.IsPlayerNear) 
             {
-                if (!m_Animator.GetBool("isWalking"))
+                if (!m_Animator.GetBool("isWalking")) //if enemy still not playing move animation
                     SetAnimation(true);
 
-                m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed;
+                m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
 
-                if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting)
+                if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting) //if enemy can't move further
                 {
-                    if (isPlayerNear) StartCoroutine(Jump());
-                    else m_CantMoveFurther = true;
+                    if (isPlayerNear) StartCoroutine(Jump()); //jump if player is near 
+                    else m_CantMoveFurther = true; //turn around
                 }
                 else
-                    m_PreviousPosition = m_Rigidbody2D.position;
+                    m_PreviousPosition = m_Rigidbody2D.position; //remember this position maybe next will be same
 
-                if (isPlayerNear | m_EnemyStats.IsPlayerNear)
+                if (isPlayerNear | m_EnemyStats.IsPlayerNear) //Continue pursuit time if enemy will loose sight of player
                     m_MoveUpdateTime = Time.time + 2.2f;
             }
             else
