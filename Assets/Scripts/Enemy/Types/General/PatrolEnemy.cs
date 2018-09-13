@@ -11,23 +11,19 @@ public class PatrolEnemy : MonoBehaviour {
     public event VoidDelegate OnPlayerSpot;
 
     private Enemy m_EnemyStats;
-    private EnemyMovement m_EnemyMovement;
-    private TextMeshProUGUI m_Text;
-    private float m_UpdateTime = 0f;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
     [SerializeField] private float WaitTimeAfterSpot = 2f;
     [SerializeField] private float m_IdleSpeed = 1f;
     [SerializeField] private float m_SpeedUpSpeed = 2f;
     [SerializeField] private float m_YBoundaries = -30f;
+    
 
 	// Use this for initialization
 	void Start () {
 
         InitializeStats();
-
-        InitializeEnemyMovement();
-
+        
         m_AlarmImage.gameObject.SetActive(false);
     }
 
@@ -51,21 +47,11 @@ public class PatrolEnemy : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    private void InitializeEnemyMovement()
-    {
-        m_EnemyMovement = GetComponent<EnemyMovement>();
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            AttackPlayer(collision);
-
-            if (!m_EnemyStats.IsPlayerNear)
-            {
-                m_EnemyMovement.TurnAround();
-            }
+            m_EnemyStats.HitEnemy(collision.transform.GetComponent<Player>().playerStats);
         }
     }
 
@@ -90,11 +76,6 @@ public class PatrolEnemy : MonoBehaviour {
             if (!m_EnemyStats.IsPlayerNear)
                 yield return PlayerSpot(false);
         }
-    }
-
-    private void AttackPlayer(Collision2D collision)
-    {
-        collision.transform.GetComponent<Player>().playerStats.TakeDamage(m_EnemyStats.DamageAmount);       
     }
 
     private IEnumerator PlayerSpot(bool isSpot)

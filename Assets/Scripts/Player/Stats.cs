@@ -152,6 +152,8 @@ public class Stats {
         }
     }
 
+    public virtual void HitEnemy(Stats enemy) {  }
+
     #endregion
 
     #region protected methods
@@ -292,6 +294,11 @@ public class PlayerStats : Stats
         }
     }
 
+    public override void HitEnemy(Stats enemy)
+    {
+        enemy.TakeDamage(DamageAmount);
+    }
+
     protected override IEnumerator PlayTakeDamageAnimation()
     {
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
@@ -358,6 +365,7 @@ public class Enemy : Stats
 
     public delegate void VoidBoolDelegate(bool value);
     public event VoidBoolDelegate OnEnemyTakeDamage;
+    public event VoidBoolDelegate OnPlayerHit;
 
     #endregion
 
@@ -406,6 +414,14 @@ public class Enemy : Stats
         }
 
         base.TakeDamage(amount);
+    }
+
+    public override void HitEnemy(Stats player)
+    {
+        if (OnPlayerHit != null)
+            OnPlayerHit(m_IsPlayerNear);
+
+        player.TakeDamage(DamageAmount);
     }
 
     #endregion

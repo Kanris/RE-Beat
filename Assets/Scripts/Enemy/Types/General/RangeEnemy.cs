@@ -52,17 +52,12 @@ public class RangeEnemy : MonoBehaviour {
     #endregion
 
     #region Collision
-    //simplify
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!m_EnemyStats.IsPlayerNear)
-            {
-                m_EnemyMovement.TurnAround();
-            }
-
-            collision.transform.GetComponent<Player>().playerStats.TakeDamage(m_EnemyStats.DamageAmount);
+            m_EnemyStats.HitEnemy(collision.transform.GetComponent<Player>().playerStats);
         }
     }
 
@@ -146,7 +141,7 @@ public class RangeEnemy : MonoBehaviour {
 
         var instantiateFireball = Instantiate(throwObject, transform.position, transform.rotation) as GameObject;
 
-        if (m_EnemyMovement.m_PosX < 0)
+        if (-transform.localScale.x < 0)
         {
             instantiateFireball.GetComponent<Fireball>().Direction = Vector3.left;
         }

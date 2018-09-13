@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(EnemyStatsGO))]
 public class EnemyMovement : MonoBehaviour {
@@ -9,33 +10,31 @@ public class EnemyMovement : MonoBehaviour {
 
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
+    private Enemy m_EnemyStats;
     private Vector2 m_PreviousPosition = Vector2.zero;
+
+    private float m_ThrowUpdateTime;
+    private float m_Speed = 1f;
     private bool m_IsWaiting = false;
     private bool m_IsJumping = false;
-    private float m_Speed = 1f;
-    private Enemy m_EnemyStats;
     private bool m_IsThrowBack;
-    private float m_UpdateTime;
+    private bool m_CantMoveFurther;
+
+    public float m_MoveUpdateTime;
+    private float m_MinMoveTime = 0.5f;
+    private float m_MaxMoveTime = 4f;
 
     #endregion
 
     #region inspector fields
 
     [SerializeField] private float IdleTime = 2f;
-    [HideInInspector] public float m_PosX = -1f;
 
     #endregion
 
     #region public fields
 
-    #region events
-
-    public delegate void VoidDelegate(bool value);
-    public event VoidDelegate OnWaitingStateChange;
-
-    #endregion
-
-    public bool isPlayerNear;
+    public bool isPlayerNear; //for jump
 
     #endregion
 
@@ -51,8 +50,6 @@ public class EnemyMovement : MonoBehaviour {
         SubscribeOnEvents();
 
         SpeedChange(GetDefaultSpeed());
-
-        GetComponent<EnemyStatsGO>().EnemyStats.OnEnemyTakeDamage += ThrowBack;
 
         InitializeEnemyStats();
     }
@@ -94,8 +91,18 @@ public class EnemyMovement : MonoBehaviour {
             enemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
             {
                 if (!isPlayerNear)
+                {
+                    TurnAround();
+                }
+            };
+
+            enemy.EnemyStats.OnPlayerHit += isPlayerNear =>
+            {
+                if (!isPlayerNear)
                     TurnAround();
             };
+
+            enemy.EnemyStats.OnEnemyTakeDamage += ThrowBack;
         }
 
         if (GetComponent<PatrolEnemy>() != null)
@@ -104,7 +111,7 @@ public class EnemyMovement : MonoBehaviour {
             GetComponent<RangeEnemy>().OnPlayerSpot += ChangeWaitingState;
     }
 
-    private float GetDefaultSpeed()
+        private float GetDefaultSpeed()
     {
         var defaultSpeed = 0f;
 
@@ -120,26 +127,38 @@ public class EnemyMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!m_IsWaiting)
+        if (m_CantMoveFurther)
         {
-            if (!m_Animator.GetBool("isWalking"))
-                SetAnimation();
+            m_CantMoveFurther = false;
+            m_IsWaiting = false;
+            TurnAround();
+        }
 
-            m_Rigidbody2D.position += new Vector2(m_PosX, 0) * Time.fixedDeltaTime * m_Speed;
-            SetAnimation();
-
-            if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting)
+        if (!m_IsWaiting & !m_IsThrowBack)
+        {
+            if (m_MoveUpdateTime > Time.time | isPlayerNear | m_EnemyStats.IsPlayerNear)
             {
-                if (isPlayerNear) StartCoroutine(Jump());
-                else StartCoroutine(Idle());
+                if (!m_Animator.GetBool("isWalking"))
+                    SetAnimation(true);
+
+                m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed;
+
+                if (m_Rigidbody2D.position == m_PreviousPosition & !m_IsWaiting)
+                {
+                    if (isPlayerNear) StartCoroutine(Jump());
+                    else m_CantMoveFurther = true;
+                }
+                else
+                    m_PreviousPosition = m_Rigidbody2D.position;
+
+                if (isPlayerNear | m_EnemyStats.IsPlayerNear)
+                    m_MoveUpdateTime = Time.time + 2.2f;
             }
             else
-                m_PreviousPosition = m_Rigidbody2D.position;
+                StartCoroutine(Idle(false));
         }
         else if (m_Animator.GetBool("isWalking"))
-        {
-            SetAnimation();
-        }
+            SetAnimation(false);
 
         if (m_IsJumping)
         {
@@ -148,7 +167,7 @@ public class EnemyMovement : MonoBehaviour {
 
         if (m_IsThrowBack)
         {
-            if (m_UpdateTime <= Time.time)
+            if (m_ThrowUpdateTime <= Time.time)
             {
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_IsThrowBack = false;
@@ -157,7 +176,7 @@ public class EnemyMovement : MonoBehaviour {
             {
                 var multiplier = GetMultiplier();
 
-                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, m_EnemyStats.m_ThrowY);
+                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, 0f);
             }
         }
     }
@@ -177,10 +196,7 @@ public class EnemyMovement : MonoBehaviour {
         if (!m_EnemyStats.m_IsBigMonster)
         {
             m_IsThrowBack = true;
-            m_UpdateTime = Time.time + 0.2f;
-
-            if (GetComponent<PatrolEnemy>() != null)
-                GetComponent<EnemyMovement>().TurnAround();
+            m_ThrowUpdateTime = Time.time + 0.2f;
         }
     }
 
@@ -205,28 +221,36 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Ground") & !isPlayerNear)
         {
-            StartCoroutine(Idle());
+            m_CantMoveFurther = true;
         }
     }
 
-    private IEnumerator Idle()
+    private IEnumerator Idle(bool haveToTurnAround)
     {
         if (!m_IsWaiting)
         {
             ChangeWaitingState(true);
-
-            TurnAround();
-            SetAnimation();
+            SetAnimation(false);
 
             yield return new WaitForSeconds(IdleTime);
+
+            m_MoveUpdateTime = Time.time + Random.Range(m_MinMoveTime, m_MaxMoveTime);
+
+            if (!haveToTurnAround)
+            {
+                var isWantToTurnAround = Random.Range(0, 2);
+
+                if (isWantToTurnAround == 1)
+                    TurnAround();
+            }
 
             ChangeWaitingState(false);
         }
     }
 
-    private void SetAnimation()
+    private void SetAnimation(bool value)
     {
-        m_Animator.SetBool("isWalking", !m_IsWaiting);
+        m_Animator.SetBool("isWalking", value);
     }
 
     #endregion
@@ -235,16 +259,13 @@ public class EnemyMovement : MonoBehaviour {
 
     public void TurnAround()
     {
-        transform.localScale = new Vector3(m_PosX, 1, 1);
-        m_PosX = -m_PosX;
+        transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
     }
 
     public void ChangeWaitingState(bool value)
     {
         m_IsWaiting = value;
 
-        if (OnWaitingStateChange != null)
-            OnWaitingStateChange(value);
     }
 
     #endregion

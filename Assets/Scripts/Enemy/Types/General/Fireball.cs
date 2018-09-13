@@ -9,6 +9,7 @@ public class Fireball : MonoBehaviour {
     [SerializeField] private int DamageAmount = 2;
     [SerializeField] private float Speed = 2.5f;
     [SerializeField] private bool isNeedRotation = true;
+    [SerializeField] private float DestroyDelay = 0.2f;
 
     private Animator m_Animator;
     private bool isDestroying = false;
@@ -48,11 +49,6 @@ public class Fireball : MonoBehaviour {
             else if (Direction == new Vector3(1, -1, 0))
                 transform.Rotate(0, 0, 310);
         }
-
-        /*if (Direction.x == 1)
-            transform.position += new Vector3(0.4f, 0f);
-        else
-            transform.position += new Vector3(-0.4f, 0f);*/
     }
 
     private void InitializeAnimator()
@@ -68,7 +64,7 @@ public class Fireball : MonoBehaviour {
     private void Update()
     {
         if (Time.time >= DestroyTime & !isDestroying)
-            StartCoroutine(DestroyFireball());
+            DestroyFireball();
     }
 
     // Update is called once per frame
@@ -78,7 +74,7 @@ public class Fireball : MonoBehaviour {
             transform.position += Direction * Time.fixedDeltaTime * Speed;
     }
 
-    private IEnumerator OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") & !isDestroying)
         {
@@ -86,15 +82,15 @@ public class Fireball : MonoBehaviour {
         }
 
        if (!collision.gameObject.CompareTag("Enemy"))
-            yield return DestroyFireball();
+            DestroyFireball();
     }
 
-    private IEnumerator OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") & !isDestroying)
         {
             DamagePlayer(collision.GetComponent<Player>());
-            yield return DestroyFireball();
+            DestroyFireball();
         }
     }
 
@@ -103,14 +99,12 @@ public class Fireball : MonoBehaviour {
         player.playerStats.TakeDamage(DamageAmount);
     }
 
-    private IEnumerator DestroyFireball()
+    private void DestroyFireball()
     {
         isDestroying = true;
 
         m_Animator.SetBool("isCollide", isDestroying);
 
-        yield return new WaitForSeconds(0.2f);
-
-        Destroy(gameObject);
+        Destroy(gameObject, DestroyDelay);
     }
 }
