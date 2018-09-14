@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
 
@@ -239,6 +238,8 @@ public class PlayerStats : Stats
     #region private fields
 
     private bool isInvincible;
+    private int m_SeriesCombo = 0;
+    private float m_CheckNextComboTime;
 
     #endregion
 
@@ -291,7 +292,8 @@ public class PlayerStats : Stats
 
     public void HitEnemy(Enemy enemy, int zone)
     {
-        enemy.TakeDamage(DamageAmount / zone, zone);
+        var damageToEnemy = GetDamageAmount(zone);
+        enemy.TakeDamage(damageToEnemy, zone);
     }
 
     public override void TakeDamage(int amount, int divider = 1)
@@ -332,6 +334,30 @@ public class PlayerStats : Stats
     #endregion
 
     #region private methods
+
+    private int GetDamageAmount(int zone)
+    {
+        var damageToEnemy = DamageAmount / zone;
+        
+        if (m_CheckNextComboTime > Time.time)
+        {
+            m_SeriesCombo++;
+
+            if (m_SeriesCombo == 3)
+            {
+                m_SeriesCombo = 1;
+                damageToEnemy *= 2;
+            }
+        }
+        else
+        {
+            m_SeriesCombo = 1;
+        }
+        
+        m_CheckNextComboTime = Time.time + 0.6f;
+
+        return damageToEnemy;
+    }
 
     private IEnumerator InvincibleAnimation()
     {
