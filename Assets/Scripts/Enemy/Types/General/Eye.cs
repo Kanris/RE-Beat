@@ -47,7 +47,7 @@ public class Eye : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            m_EnemyStats.HitEnemy(collision.transform.GetComponent<Player>().playerStats);
+            m_EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
         }
     }
 

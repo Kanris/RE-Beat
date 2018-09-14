@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
 
     [SerializeField] private GameObject AttackRangeAnimation;
+    [SerializeField] private AnimationClip m_AttackAnimation;
     [SerializeField] private Transform m_AttackPosition;
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX;
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY;
@@ -115,12 +116,26 @@ public class Player : MonoBehaviour {
 
         foreach (var enemy in enemiesToDamage)
         {
-            enemy.GetComponent<EnemyStatsGO>().EnemyStats.TakeDamage(PlayerStats.DamageAmount);
+            float distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
+            
+            playerStats.HitEnemy(enemy.GetComponent<EnemyStatsGO>().EnemyStats, GetHitZone(distance));
         }
 
-        yield return new WaitForSeconds(0.2f);
-
+        yield return new WaitForSeconds(m_AttackAnimation.length);
         AttackRangeAnimation.SetActive(false); //attack animation
+    }
+
+    private int GetHitZone(float distance)
+    {
+        int zone = 3;
+
+        if (m_AttackRangeX / 3 >= distance)
+            zone = 1;
+        else if (m_AttackRangeX / 3 * 2 >= distance)
+            zone = 2;
+
+        return zone;
+        //0-33 34-66 67-100
     }
 
     private void OnDrawGizmos()

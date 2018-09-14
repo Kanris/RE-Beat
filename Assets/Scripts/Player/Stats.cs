@@ -104,7 +104,7 @@ public class Stats {
 
     #region virtual methods
 
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount, int divider = 1)
     {
         CurrentHealth -= amount;
 
@@ -119,16 +119,25 @@ public class Stats {
 
         if (CurrentHealth > 0)
         {
-            GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation());
+            GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation(divider));
             PlayHitSound();
         }
     }
 
-    protected virtual IEnumerator PlayTakeDamageAnimation()
+    protected virtual IEnumerator PlayTakeDamageAnimation(int divider)
     {
         PlayHitAnimation(true);
 
+        var m_prevThrowX = m_ThrowX;
+        var m_prevThrowY = m_ThrowY;
+
+        m_ThrowX /= divider;
+        m_ThrowY /= divider;
+
         yield return new WaitForSeconds(0.1f);
+
+        m_ThrowX = m_prevThrowX;
+        m_ThrowY = m_prevThrowY;
 
         PlayHitAnimation(false);
     }
@@ -151,9 +160,6 @@ public class Stats {
             }
         }
     }
-
-    public virtual void HitEnemy(Stats enemy) {  }
-
     #endregion
 
     #region protected methods
@@ -203,7 +209,7 @@ public class PlayerStats : Stats
     #region public fields
 
     public static int DamageAmount = 50;
-    public static float AttackSpeed = 0.6f;
+    public static float AttackSpeed = 0.3f;
     public static float Invincible = 2f;
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
@@ -283,23 +289,23 @@ public class PlayerStats : Stats
         UIManager.Instance.ChangeCoinsAmount(m_Coins);
     }
 
-    public override void TakeDamage(int amount)
+    public void HitEnemy(Enemy enemy, int zone)
+    {
+        enemy.TakeDamage(DamageAmount / zone, zone);
+    }
+
+    public override void TakeDamage(int amount, int divider = 1)
     {
         if (!isInvincible)
         {
-            base.TakeDamage(amount);
+            base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
 
             UIManager.Instance.RemoveHealth(amount);
         }
     }
 
-    public override void HitEnemy(Stats enemy)
-    {
-        enemy.TakeDamage(DamageAmount);
-    }
-
-    protected override IEnumerator PlayTakeDamageAnimation()
+    protected override IEnumerator PlayTakeDamageAnimation(int divider)
     {
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
         PlayHitAnimation(true);
@@ -406,17 +412,17 @@ public class Enemy : Stats
         base.Initialize(gameObject, animator);
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, int divider = 1)
     {
         if (OnEnemyTakeDamage != null)
         {
             OnEnemyTakeDamage(m_IsPlayerNear);
         }
 
-        base.TakeDamage(amount);
+        base.TakeDamage(amount, divider);
     }
 
-    public override void HitEnemy(Stats player)
+    public void HitPlayer(PlayerStats player)
     {
         if (OnPlayerHit != null)
             OnPlayerHit(m_IsPlayerNear);
