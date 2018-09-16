@@ -47,6 +47,7 @@ public class PlayerStats : Stats
     private bool isInvincible;
     private int m_SeriesCombo = 0;
     private float m_CheckNextComboTime;
+    private int m_CurrentComboIndex;
 
     #endregion
 
@@ -155,20 +156,40 @@ public class PlayerStats : Stats
         {
             m_SeriesCombo++;
 
-            if (m_SeriesCombo == 3)
-            {
-                m_SeriesCombo = 1;
-                damageToEnemy *= 2;
-            }
+            CheckIsComboComplete(ref damageToEnemy);
+        }
+        else if (m_SeriesCombo == 1 & (m_CheckNextComboTime + 1f) > Time.time)
+        {
+            m_CurrentComboIndex = 1;
+            m_SeriesCombo++;
+            m_CheckNextComboTime = Time.time + 1f;
         }
         else
         {
+            m_CurrentComboIndex = 0;
             m_SeriesCombo = 1;
         }
 
         m_CheckNextComboTime = Time.time + 0.6f;
 
         return damageToEnemy;
+    }
+
+    private void CheckIsComboComplete(ref int damageToEnemy)
+    {
+        if (m_CurrentComboIndex == 1)
+        {
+            m_SeriesCombo = 0;
+            m_CurrentComboIndex = 0;
+            Debug.LogError("Pause combo");
+        }
+        else if (m_SeriesCombo == 3)
+        {
+            m_CurrentComboIndex = 0;
+            m_SeriesCombo = 0;
+            damageToEnemy *= 2;
+            Debug.LogError("Damage combo");
+        }
     }
 
     private IEnumerator InvincibleAnimation()
