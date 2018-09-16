@@ -37,6 +37,8 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
             InitializeJumpPlatform();
+
+            OnLandEvent += ShowDustEffect;
         }
 
         private void InitializeJumpPlatform()
@@ -44,8 +46,12 @@ namespace UnityStandardAssets._2D
             var platformResources = Resources.Load("Platform") as GameObject;
             m_JumpPlatform = Instantiate(platformResources);
             m_JumpPlatform.SetActive(false);
+        }
 
-            OnLandEvent += ShowDustEffect;
+        private void OnDestroy()
+        {
+            if (m_JumpPlatform != null)
+                Destroy(m_JumpPlatform.gameObject);
         }
 
         private void FixedUpdate()

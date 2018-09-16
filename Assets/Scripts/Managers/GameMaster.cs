@@ -361,9 +361,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraPosition(m_RespawnPointPosition);
         var playerTransform = RespawnWithoutFade();
-        Camera.main.GetComponent<Camera2DFollow>().ChangeCameraTarget(playerTransform);
 
         isPlayerDead = false;
 

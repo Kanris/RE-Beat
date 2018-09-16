@@ -15,30 +15,11 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
         private Vector3 m_LookAheadPos;
-
-        private float m_UpdateSearchTime = 0f;
-        [SerializeField] private float m_DownRestrictions = -1f;
-        [SerializeField] private float m_UpRestrictions = 3f;
-        [SerializeField] private float m_RightRestrictions = 3f;
-        [SerializeField] private float m_LeftRestrictions = -60f;
-
-        // Use this for initialization
-        private void Start()
-        {
-            if (target != null)
-            {
-                m_LastTargetPosition = target.position;
-                m_OffsetZ = (transform.position - target.position).z;
-                transform.parent = null;     
-            }
-            else
-            {
-                SearchForTarget();
-            }
-
-            InitializeCameraRestrictions();
-
-        }
+        
+        private float m_DownRestrictions = -1f;
+        private float m_UpRestrictions = 3f;
+        private float m_RightRestrictions = 3f;
+        private float m_LeftRestrictions = -60f;
 
         private void InitializeCameraRestrictions()
         {
@@ -60,14 +41,7 @@ namespace UnityStandardAssets._2D
         // Update is called once per frame
         private void Update()
         {
-            if (target == null)
-            {
-                if (m_UpdateSearchTime < Time.time)
-                {
-                    SearchForTarget();
-                }
-            }
-            else
+            if (target != null)
             {
                 // only update lookahead pos if accelerating or changed direction
                 float xMoveDelta = (target.position - m_LastTargetPosition).x;
@@ -95,44 +69,13 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void ChangeCameraPosition(Vector2 position)
-        {
-            if (target == null)
-            {
-                transform.position = new Vector3(position.x, position.y, transform.position.z);
-            }
-        }
-
-        public void ChangeCameraTarget(Transform newTarget)
-        {
-            if (newTarget != null)
-            {
-                target = newTarget;
-            }
-            else
-            {
-                Debug.LogError("Camera2DFollow.ChangeCameraTarget: newTarget is null");
-            }
-        }
-
-        private void SearchForTarget()
-        {
-            var player = GameObject.FindWithTag("Player");
-
-            if (player == null)
-                m_UpdateSearchTime = Time.time + 1f;
-            else
-            {
-                target = player.transform;
-                m_OffsetZ = (transform.position - target.position).z;
-            }
-
-        }
-
         public void SetTarget(Transform player)
         {
             target = player.transform;
+            m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
+
+            InitializeCameraRestrictions();
         }
     }
 }

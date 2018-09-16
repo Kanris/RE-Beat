@@ -46,6 +46,8 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
+        Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform);
+
         playerStats.Initialize(gameObject);
 
         InitializeAnimator();
