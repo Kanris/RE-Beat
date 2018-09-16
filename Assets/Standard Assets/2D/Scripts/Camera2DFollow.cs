@@ -17,10 +17,10 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LookAheadPos;
 
         private float m_UpdateSearchTime = 0f;
-        [SerializeField, Range(-100, 100)] private float YMinusPosition = -1f;
-        [SerializeField, Range(-100, 100)] private float YPlusPosition = 3f;
-        [SerializeField, Range(-100, 100)] private float XPlusPosition = 3f;
-        [SerializeField, Range(-100, 100)] private float XMinusPosition = -60f;
+        [SerializeField] private float m_DownRestrictions = -1f;
+        [SerializeField] private float m_UpRestrictions = 3f;
+        [SerializeField] private float m_RightRestrictions = 3f;
+        [SerializeField] private float m_LeftRestrictions = -60f;
 
         // Use this for initialization
         private void Start()
@@ -36,8 +36,26 @@ namespace UnityStandardAssets._2D
                 SearchForTarget();
             }
 
+            InitializeCameraRestrictions();
+
         }
 
+        private void InitializeCameraRestrictions()
+        {
+            var restrictions = GameObject.Find("CameraRestrictions");
+
+            if (restrictions != null)
+            {
+                if (restrictions.transform.childCount == 4)
+                {
+                    m_RightRestrictions = restrictions.transform.GetChild(0).transform.position.x - 8.52f;
+                    m_LeftRestrictions = restrictions.transform.GetChild(1).transform.position.x + 8.52f;
+                    m_UpRestrictions = restrictions.transform.GetChild(2).transform.position.y - 4.8f;
+                    m_DownRestrictions = restrictions.transform.GetChild(3).transform.position.y + 5f;
+                }
+                //right left up down
+            }
+        }
 
         // Update is called once per frame
         private void Update()
@@ -68,8 +86,8 @@ namespace UnityStandardAssets._2D
                 Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
                 Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
-                newPos = new Vector3(Mathf.Clamp(newPos.x, XMinusPosition, XPlusPosition), 
-                                     Mathf.Clamp(newPos.y, YMinusPosition, YPlusPosition), newPos.z);
+                newPos = new Vector3(Mathf.Clamp(newPos.x, m_LeftRestrictions, m_RightRestrictions), 
+                                     Mathf.Clamp(newPos.y, m_DownRestrictions, m_UpRestrictions), newPos.z);
 
                 transform.position = newPos;
 

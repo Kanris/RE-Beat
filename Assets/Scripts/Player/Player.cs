@@ -12,13 +12,13 @@ public class Player : MonoBehaviour {
     [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
 
-    [SerializeField] private GameObject AttackRangeAnimation;
+    [SerializeField] private GameObject m_AttackRangeAnimation;
     [SerializeField] private AnimationClip m_AttackAnimation;
     [SerializeField] private Transform m_AttackPosition;
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX;
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY;
-    [SerializeField] private LayerMask WhatIsEnemy;
-    [SerializeField] private string AttackSound = "Player Attack";
+    [SerializeField] private LayerMask m_WhatIsEnemy;
+    [SerializeField] private string m_AttackSound = "Player Attack";
 
     #endregion
 
@@ -107,12 +107,12 @@ public class Player : MonoBehaviour {
 
     private IEnumerator Attack()
     {
-        AttackRangeAnimation.SetActive(true); //attack animation
+        m_AttackRangeAnimation.SetActive(true); //attack animation
 
-        AudioManager.Instance.Play(AttackSound);
+        AudioManager.Instance.Play(m_AttackSound);
 
         var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position, 
-            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, WhatIsEnemy);
+            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, m_WhatIsEnemy);
 
         foreach (var enemy in enemiesToDamage)
         {
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(m_AttackAnimation.length);
-        AttackRangeAnimation.SetActive(false); //attack animation
+        m_AttackRangeAnimation.SetActive(false); //attack animation
     }
 
     private int GetHitZone(float distance)

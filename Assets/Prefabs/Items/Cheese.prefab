@@ -58,7 +58,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.47058824, y: 0.47058824}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -78,11 +78,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a63678e5ce38174dbff7f7054fa93fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 2
-  HealAmount: 3
   item:
+    Image: 
     Name: Cheese
     Description: Heal you for 3 health
+    itemType: 0
+    HealAmount: 3
 --- !u!212 &212765582052638656
 SpriteRenderer:
   m_ObjectHideFlags: 1

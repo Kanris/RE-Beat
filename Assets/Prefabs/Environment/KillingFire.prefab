@@ -176,6 +176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LightToControl: {fileID: 108585273467505812}
+  ControlWithoutAnimator: 0
+  BlinkAfter: 3
+  IntensivityIteration: 20
+  Iterations: 4
 --- !u!212 &212063241807308014
 SpriteRenderer:
   m_ObjectHideFlags: 1

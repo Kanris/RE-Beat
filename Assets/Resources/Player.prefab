@@ -472,15 +472,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   YBoundaries: -20
   YFallDeath: -10
-  AttackRangeAnimation: {fileID: 1544622228992300}
+  m_AttackRangeAnimation: {fileID: 1544622228992300}
   m_AttackAnimation: {fileID: 7400000, guid: d34aa8dbb8e68fb41bf59dd85cb4b9d0, type: 2}
   m_AttackPosition: {fileID: 4632782172215112}
   m_AttackRangeX: 1
   m_AttackRangeY: 0.5
-  WhatIsEnemy:
+  m_WhatIsEnemy:
     serializedVersion: 2
     m_Bits: 8192
-  AttackSound: Player Attack
+  m_AttackSound: Player Attack
   playerStats:
     MaxHealth: 6
     m_ThrowX: 5
