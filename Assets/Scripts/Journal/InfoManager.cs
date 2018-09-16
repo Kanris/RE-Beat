@@ -182,6 +182,7 @@ public class InfoManager : MonoBehaviour {
     public void CloseJournal()
     {
         m_JournalUI.SetActive(false);
+        OnJournalOpen(m_JournalUI.activeSelf);
     }
 
     #endregion
