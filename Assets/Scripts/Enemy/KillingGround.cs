@@ -8,20 +8,12 @@ public class KillingGround : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().playerStats.TakeDamage(999);
+            collision.GetComponent<Player>().playerStats.KillPlayer();
         }
         else if (collision.CompareTag("Item"))
         {
             yield return new WaitForSeconds(0.5f);
             if (collision != null) Destroy(collision.gameObject);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            collision.GetComponent<Player>().playerStats.TakeDamage(999);
         }
     }
 }

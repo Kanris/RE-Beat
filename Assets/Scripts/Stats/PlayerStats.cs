@@ -114,6 +114,11 @@ public class PlayerStats : Stats
         }
     }
 
+    public void KillPlayer()
+    {
+        base.TakeDamage(999);
+    }
+
     protected override IEnumerator PlayTakeDamageAnimation(int divider)
     {
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
