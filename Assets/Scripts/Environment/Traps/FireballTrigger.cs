@@ -5,122 +5,70 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class FireballTrigger : MonoBehaviour {
 
-    public enum Direction { left, right }
-    public Direction FireballDirection;
+    #region enum
 
-    [SerializeField] private int Count = 3;
+    public enum Direction { left, right } //direction where to move
+    public Direction FireballDirection; //current fireball direction
 
-    private Animator m_Animator;
-    private Transform m_ThrowerTransform;
-    private bool isCreatingFireballs;
-    private bool isPlayerNear;
+    #endregion
 
-    #region Initialize
+    #region private fields
+
+    [SerializeField, Range(1, 10)] private int Count = 3; //fireballs count
+    [SerializeField] GameObject m_FireballGameObject;
+    [SerializeField] private Transform m_ThrowerTransform; //from where throw fireballs
+
+    private Animator m_Animator; //trigger animation
+    private bool isCreatingFireballs; //is player triggered trap
+
+    #endregion
+
+    #region private methods
 
     private void Start()
     {
-        InitializeAnimator();
-
-        InitializeThrowerTransform();
+        m_Animator = GetComponentInChildren<Animator>(); //get reference to trigger animation
     }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponentInChildren<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("FireballTrigger.InitializeAnimator: Can't find animator");
-        }
-    }
-
-    private void InitializeThrowerTransform()
-    {
-        m_ThrowerTransform = transform.GetChild(0);
-
-        if (m_ThrowerTransform == null)
-        {
-            Debug.LogError("FireballTrigger.InitializeThrowerTransform: Can't find child transform");
-        }
-    }
-    #endregion
-
-    #region trigger
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !isCreatingFireballs & !isPlayerNear)
+        if (collision.CompareTag("Player") & !isCreatingFireballs) //if player on button and fireballs isn't creating
         {
-            isPlayerNear = true;
-
-            ButtonAnimation();
-            PlayTriggerSound();
-            PrepareFireball();
+            ButtonAnimation("Pressed"); //play pressed animation
+            PlayTriggerSound(); //play trigger sound
+            StartCoroutine(CreateFireballs()); //create fireballs
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & !isCreatingFireballs)
-        {
-            PlayTriggerSound();
-            PrepareFireball();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & isPlayerNear)
-        {
-            isPlayerNear = false;
-
-            if (!isCreatingFireballs)
-                ButtonAnimation();
-        }
-    }
-
-    #endregion
 
     #region fireball
-    private void PrepareFireball()
+
+    private IEnumerator CreateFireballs()
     {
-        if (!isCreatingFireballs)
+        if (m_FireballGameObject != null) //if there is reference to the fireball
         {
-            isCreatingFireballs = true;
+            isCreatingFireballs = true; //notify that we creating fireballs
+            var fireballDirection = GetFireballDirection(); //get fireballs move directions
 
-            var fireballDirection = GetFireballDirection();
-
-            var fireballGameObject = Resources.Load("Fireballs/Fireball") as GameObject;
-
-            StartCoroutine(CreateFireballs(fireballDirection, fireballGameObject));
-        }
-    }
-
-    private IEnumerator CreateFireballs(Vector3 fireballDirection, GameObject fireballGameObject)
-    {
-        if (fireballGameObject != null)
-        {
-            for (int index = 0; index < Count; index++)
+            for (int index = 0; index < Count; index++) //creates need amount of fireballs
             {
-                var fireball = Instantiate(fireballGameObject, m_ThrowerTransform.position + fireballDirection, m_ThrowerTransform.rotation);
-                fireball.GetComponent<Fireball>().Direction = fireballDirection;
+                var fireball = Instantiate(m_FireballGameObject, m_ThrowerTransform.position + fireballDirection, m_ThrowerTransform.rotation); //instantiate fireballs
+                fireball.GetComponent<Fireball>().Direction = fireballDirection; //set fireball direction
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1f); //wait before create next fireball
             }
         }
 
-        if (!isPlayerNear)
-            ButtonAnimation();
-
-        isCreatingFireballs = false;
+        isCreatingFireballs = false; //notify that all fireballs created
+        ButtonAnimation("Unpressed"); //play unpressed animation
     }
 
     private Vector3 GetFireballDirection()
     {
-        var fireballDirection = Vector3.right;
+        var fireballDirection = Vector3.right; //by defaul fireball move to the right
 
-        if (FireballDirection == Direction.left)
+        if (FireballDirection == Direction.left) //if direction is left
         {
-            fireballDirection = Vector3.left;
+            fireballDirection = Vector3.left; //change fireball direction to the left
         }
 
         return fireballDirection;
@@ -128,15 +76,15 @@ public class FireballTrigger : MonoBehaviour {
 
     #endregion
 
-    private void ButtonAnimation()
+    private void ButtonAnimation(string animation)
     {
-        var animationTrigger = isPlayerNear ? "Pressed" : "Unpressed";
-
-        m_Animator.SetTrigger(animationTrigger);
+        m_Animator.SetTrigger(animation);
     }
 
     private void PlayTriggerSound()
     {
         AudioManager.Instance.Play("Button Switch");
     }
+
+    #endregion
 }

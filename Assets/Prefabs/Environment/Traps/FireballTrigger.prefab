@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235326398429498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.45, y: -2.6, z: 0}
+  m_LocalPosition: {x: 5.41, y: 0.4, z: 0}
   m_LocalScale: {x: 0.04642913, y: 0.044898316, z: 1}
   m_Children:
   - {fileID: 4174611077900014}
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561963643709998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 120.82931, y: 8.909017, z: 0}
+  m_LocalPosition: {x: -201.7, y: -8.4, z: 0}
   m_LocalScale: {x: 0.25627697, y: 6.929268, z: 1}
   m_Children: []
   m_Father: {fileID: 4089201064506376}
@@ -127,8 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e14f8083ba7d5647ad97284fdbc3c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireballDirection: 0
+  FireballDirection: 1
   Count: 3
+  m_FireballGameObject: {fileID: 1931802493666614, guid: 99d49189405f3df42aa3f249f90b233a,
+    type: 2}
+  m_ThrowerTransform: {fileID: 4174611077900014}
 --- !u!212 &212167785587748828
 SpriteRenderer:
   m_ObjectHideFlags: 1

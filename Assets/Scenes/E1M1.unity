@@ -2984,26 +2984,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &264102652 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1652080869903226, guid: 1cb1595de4c855f4795047296f40e8f1,
-    type: 2}
-  m_PrefabInternal: {fileID: 1887814060}
---- !u!58 &264102653
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 264102652}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.007699013, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.4099121
 --- !u!1 &274614060
 GameObject:
   m_ObjectHideFlags: 0
@@ -29675,19 +29655,6 @@ Prefab:
     - target: {fileID: 4089201064506376, guid: f9493d5c093c09f4a9407a534f3a8e65, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4174611077900014, guid: f9493d5c093c09f4a9407a534f3a8e65, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -201.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114099714336896306, guid: f9493d5c093c09f4a9407a534f3a8e65,
-        type: 2}
-      propertyPath: FireballDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4174611077900014, guid: f9493d5c093c09f4a9407a534f3a8e65, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -8.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f9493d5c093c09f4a9407a534f3a8e65, type: 2}
