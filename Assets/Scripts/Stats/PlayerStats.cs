@@ -74,6 +74,22 @@ public class PlayerStats : Stats
         }
     }
 
+    public void HitEnemy(Enemy enemy, int zone)
+    {
+        var damageToEnemy = GetDamageAmount(zone);
+        enemy.TakeDamage(damageToEnemy, zone);
+    }
+
+    public void KillPlayer()
+    {
+        var damageAmount = 999;
+
+        base.TakeDamage(damageAmount);
+        CurrentPlayerHealth -= damageAmount;
+
+        UIManager.Instance.RemoveHealth(damageAmount);
+    }
+
     #endregion
 
     #region override methods
@@ -98,12 +114,6 @@ public class PlayerStats : Stats
         UIManager.Instance.ChangeCoinsAmount(m_Coins);
     }
 
-    public void HitEnemy(Enemy enemy, int zone)
-    {
-        var damageToEnemy = GetDamageAmount(zone);
-        enemy.TakeDamage(damageToEnemy, zone);
-    }
-
     public override void TakeDamage(int amount, int divider = 1)
     {
         if (!isInvincible)
@@ -113,11 +123,6 @@ public class PlayerStats : Stats
 
             UIManager.Instance.RemoveHealth(amount);
         }
-    }
-
-    public void KillPlayer()
-    {
-        base.TakeDamage(999);
     }
 
     protected override IEnumerator PlayTakeDamageAnimation(int divider)
