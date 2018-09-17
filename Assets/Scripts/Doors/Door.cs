@@ -1,58 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour {
 
-    public enum DoorType { Key, SwitchOrButton }
+    #region enum
 
-    [SerializeField] private DoorType Type;
-    [SerializeField] private Item KeyName;
-    [SerializeField] private string DisplayMessage;
+    public enum DoorType { Key, SwitchOrButton } //door types
 
-    private GameObject m_InteractionButton;
-    private bool m_IsPlayerNearDoor = false;
-    private Animator m_Animator;
+    #endregion
+
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private DoorType Type; //current door type
+    [SerializeField] private Item KeyName; //key that have to open the door (if door type is key)
+    [SerializeField] private string DisplayMessage; //display message if door is close
+
+    #endregion
+
+    private Animator m_Animator; //reference to the gameobject animator
+    private GameObject m_UI; //interaction button ui (needed only if door type is key)
+
+    #endregion
+
+    #region private methods
 
     private void Start()
     {
-        InitializeInteractionButton();
+        m_Animator = GetComponent<Animator>(); //get gameobject animator
 
-        InitializeAnimator();
-
-        ShowInteractionKey(false);
+        InitializeInteractionButton(); //initialize door ui
     }
 
     private void InitializeInteractionButton()
     {
-        if (Type == DoorType.Key)
+        if (Type == DoorType.Key) //if door type is Key
         {
             var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-            m_InteractionButton = Instantiate(interactionButton, transform);
-        }
-    }
+            m_UI = Instantiate(interactionButton, transform);
 
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("Door.InitializeAnimator: Can't find Animator component on Gamobject");
+            m_UI.SetActive(false); //hide door ui
         }
     }
 
     private void Update()
     {
-        if (m_IsPlayerNearDoor)
+        if (Type == DoorType.Key) //if door is have to open with key
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (m_UI.activeSelf) //if player is near door
             {
-                if (Type == DoorType.Key)
+                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
                 {
-                    OpenDoorWithKey();
+                    OpenDoorWithKey(); //try to open the door
                 }
             }
         }
@@ -60,81 +61,65 @@ public class Door : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player") & Type == DoorType.Key) //if player is in trigger
         {
-            m_IsPlayerNearDoor = true;
-            ShowInteractionKey(m_IsPlayerNearDoor);
+            m_UI.SetActive(true); //show door ui
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player") & Type == DoorType.Key) //if player is leaving trigger
         {
-            m_IsPlayerNearDoor = false;
-            ShowInteractionKey(false);
+            m_UI.SetActive(false); //hide door ui
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") & !m_IsPlayerNearDoor)
+        if (collision.gameObject.CompareTag("Player")) //if player is in collision
         {
-            m_IsPlayerNearDoor = true;
-            ShowTip();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") & m_IsPlayerNearDoor)
-        {
-            m_IsPlayerNearDoor = false;
-            ShowInteractionKey(false);
-        }
-    }
-
-    private void ShowInteractionKey(bool show)
-    {
-        if (Type == DoorType.Key)
-        {
-            if (m_InteractionButton != null)
-                m_InteractionButton.gameObject.SetActive(show);
-            else
-                Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
+            ShowAnnouncerMessage(DisplayMessage); //show tip
         }
     }
 
     private void OpenDoorWithKey()
     {
-        if (string.IsNullOrEmpty(KeyName.Name))
+        if (string.IsNullOrEmpty(KeyName.Name)) //if there is not key name
         {
-            Destroy(gameObject);
+            Destroy(gameObject); //open the door
+            GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
         }
-        else if (PlayerStats.PlayerInventory.IsInBag(KeyName.Name))
+        else if (PlayerStats.PlayerInventory.IsInBag(KeyName.Name)) //if there is key name and player have it in the bag
         {
-            if (PlayerStats.PlayerInventory.Remove(KeyName))
-                AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(KeyName.Name + " was removed from inventory"));
+            if (PlayerStats.PlayerInventory.Remove(KeyName)) //remove key from the inventory
+                ShowAnnouncerMessage(KeyName.Name + " was removed from inventory"); //display announcer message that key was removed from the bag
 
-            if (GameMaster.Instance != null)
-                GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object);
+            GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
 
-            Destroy(gameObject);
+            Destroy(gameObject); //open the door
         }
-        else
+        else //if player havn't needed key
         {
-            AnnouncerManager.Instance.DisplayAnnouncerMessage(GetMessage());
+            ShowAnnouncerMessage(KeyName.Name + " required"); //display message that key is required
         }
     }
 
-    private void ShowTip()
+    private void ShowAnnouncerMessage(string messageToDisplay)
     {
-        if (!string.IsNullOrEmpty(DisplayMessage))
+        if (!string.IsNullOrEmpty(messageToDisplay))
             AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                new AnnouncerManager.Message(DisplayMessage));
-        else
-            Debug.LogError("Door.ShowTip: Can't display empty tip");
+                new AnnouncerManager.Message(messageToDisplay));
     }
+
+    private void PlayAnimation(string name)
+    {
+        m_Animator.SetTrigger(name);
+    }
+
+    #endregion
+
+    #region public methods
 
     public void PlayOpenDoorAnimation()
     {
@@ -147,17 +132,5 @@ public class Door : MonoBehaviour {
         PlayAnimation("Close");
     }
 
-    private void PlayAnimation(string name)
-    {
-        if (m_Animator != null)
-        {
-            m_Animator.SetTrigger(name);
-        }
-    }
-
-    private AnnouncerManager.Message GetMessage()
-    {
-        return new AnnouncerManager.Message(KeyName.Name + " required");
-    }
-
+    #endregion
 }

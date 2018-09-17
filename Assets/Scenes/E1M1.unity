@@ -23473,89 +23473,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &732845123
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 965218125}
-    m_Modifications:
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -376.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -151.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -10.218544
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_Name
-      value: CaveDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
-    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-  m_IsPrefabParent: 0
---- !u!1 &732845124 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f,
-    type: 2}
-  m_PrefabInternal: {fileID: 732845123}
---- !u!114 &732845125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 732845124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskType: 1
-  taskTriggerType: 3
-  DestroyEntireObject: 0
-  Name: Find out
-  TaskText: '<#000000>Talk with android</color> - Junk
-
-
-'
 --- !u!4 &753630515 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4178902492585998, guid: d6671bf13a804944f97cd2951da1a8e7,
@@ -24520,7 +24437,7 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f,
     type: 2}
-  m_PrefabInternal: {fileID: 732845123}
+  m_PrefabInternal: {fileID: 2022858880}
 --- !u!1001 &918974432
 Prefab:
   m_ObjectHideFlags: 0
@@ -24611,47 +24528,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 4469467346282704, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212039298943561222, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
-    - target: {fileID: 114354878163579086, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: dialogue.MainSentences.Array.data[0].firstSentence.Array.data[0].firstSentence.Array.data[0].DisplaySentence
-      value: Just go and kill monster in the cave
-      objectReference: {fileID: 0}
-    - target: {fileID: 114354878163579086, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: dialogue.MainSentences.Array.data[0].firstSentence.Array.data[0].secondSentence.Array.data[0].DisplaySentence
-      value: If you are so smart just go and kill monster in the cave
-      objectReference: {fileID: 0}
-    - target: {fileID: 114354878163579086, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: dialogue.MainSentences.Array.data[0].secondSentence.Array.data[0].DisplaySentence
-      value: I dont wan't to talk with you! Just go and kill monster in the cave
-      objectReference: {fileID: 0}
     - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
       propertyPath: m_Name
       value: Junk
       objectReference: {fileID: 0}
-    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
-      propertyPath: m_TagString
-      value: CaveObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212039298943561222, guid: 35779c41c71fc9d47a33239e6ea0a153,
+    - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
         type: 2}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: ActionObject
+      value: 
+      objectReference: {fileID: 1892891040}
+    - target: {fileID: 114160986447167942, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: ActionObject
+      value: 
+      objectReference: {fileID: 1370085298}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
   m_IsPrefabParent: 0
@@ -28195,6 +28085,106 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1122304166
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224424051308002430, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 237801e1f659d3c4f88f48b4506494bd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1162898743
 GameObject:
   m_ObjectHideFlags: 0
@@ -29181,34 +29171,6 @@ Prefab:
       propertyPath: m_Name
       value: BossDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 212191541132273930, guid: bff3b13da43165545afc098aa6e3695f,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
-    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
-        type: 2}
-      propertyPath: Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
-        type: 2}
-      propertyPath: KeyName.Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
-        type: 2}
-      propertyPath: DisplayMessage
-      value: Can't open this door by myself
-      objectReference: {fileID: 0}
-    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_IsPrefabParent: 0
@@ -29231,9 +29193,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1387431271}
   - component: {fileID: 1387431270}
-  - component: {fileID: 1387431269}
-  - component: {fileID: 1387431272}
   - component: {fileID: 1387431273}
+  - component: {fileID: 1387431272}
+  - component: {fileID: 1387431269}
   - component: {fileID: 1387431274}
   m_Layer: 0
   m_Name: BlueDoorSwitch
@@ -29253,7 +29215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc94ef7c7f2136f44bd7777ba656af37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DoorToOpen: {fileID: 247247795}
+  DoorToOpen: {fileID: 247247797}
 --- !u!212 &1387431270
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -29595,7 +29557,7 @@ Prefab:
         type: 2}
       propertyPath: DoorToOpen
       value: 
-      objectReference: {fileID: 12145143}
+      objectReference: {fileID: 12145147}
     - target: {fileID: 1216416398861100, guid: 759cd657d6416324a8040299d55f6d78, type: 2}
       propertyPath: m_IsActive
       value: 1
@@ -33131,6 +33093,73 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1001 &2022858880
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 965218125}
+    m_Modifications:
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -376.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -151.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -10.218544
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053033129193820, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+      propertyPath: m_Name
+      value: CaveDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_UI
+      value: 
+      objectReference: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
+        type: 2}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: KeyName.Name
+      value: Blue Key
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: DisplayMessage
+      value: Blue Key is required
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2028199133
 GameObject:
   m_ObjectHideFlags: 0
@@ -33160,58 +33189,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2028724411 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153,
-    type: 2}
-  m_PrefabInternal: {fileID: 957499706}
---- !u!114 &2028724412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2028724411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskType: 1
-  taskTriggerType: 2
-  DestroyEntireObject: 0
-  Name: Find out
-  TaskText: 'I have to kill <#000000>Monster</color> in the <#000000>Cave</color>
-
-
-'
---- !u!114 &2028724413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2028724411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3d89f0bee9c474aa95843492af7293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAction: 1
-  actionType: 1
-  ActionObject: {fileID: 1892891040}
---- !u!114 &2028724414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2028724411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3d89f0bee9c474aa95843492af7293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerAction: 0
-  actionType: 0
-  ActionObject: {fileID: 1370085298}
 --- !u!1 &2029354464
 GameObject:
   m_ObjectHideFlags: 0

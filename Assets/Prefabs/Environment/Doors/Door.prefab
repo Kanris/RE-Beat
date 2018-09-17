@@ -22,9 +22,10 @@ GameObject:
   - component: {fileID: 212191541132273930}
   - component: {fileID: 61013409830003964}
   - component: {fileID: 61680685048540116}
-  - component: {fileID: 114277011240081968}
   - component: {fileID: 95475315978041430}
-  m_Layer: 0
+  - component: {fileID: 114277011240081968}
+  - component: {fileID: 114748765543706924}
+  m_Layer: 14
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1471449184225938}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -376.59, y: -151.58, z: -10.218544}
+  m_LocalPosition: {x: -363.51, y: -154.6, z: -10.218544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -123,11 +124,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b985eac783ec03a4bb279f7611f9900c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 1
   KeyName:
-    Name: Blue Key
-  DisplayMessage: You need blue key to open the door
-  m_IsPlayerNearDoor: 0
+    Image: 
+    Name: 
+    Description: 
+    itemType: 0
+    HealAmount: 3
+  DisplayMessage: Can't open this door by myself
+  m_UI: {fileID: 0}
+--- !u!114 &114748765543706924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471449184225938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskType: 1
+  taskTriggerType: 3
+  DestroyEntireObject: 0
+  Name: Find out
+  TaskText: '<#000000>Talk with android</color> - Junk
+
+
+'
 --- !u!212 &212191541132273930
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -143,7 +167,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

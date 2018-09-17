@@ -1,33 +1,43 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(Animator))]
 public class DoorSwitch : MonoBehaviour {
+
+    #region events
 
     public delegate void VoidDelegate();
     public event VoidDelegate OnSwitchPressed;
 
-    [SerializeField] private GameObject DoorToOpen;
+    #endregion
 
-    private GameObject m_InteractionButton;
-    private bool m_IsPlayerNearSwitch = false;
-    private bool m_IsQuitting;
-    private Animator m_Animator;
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private Door DoorToOpen; //door to open when switch is pressed
+
+    #endregion
+
+    private GameObject m_UI; //switch ui
+    private Animator m_Animator; //switch animator
+    private bool m_IsQuitting; //if game is closing
+
+    #endregion
+
+    #region private methods
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
-        InitializeAnimator();
+        m_Animator = GetComponent<Animator>(); //get animator component
 
-        InitializeInteractionButton();
+        InitializeInteractionButton(); //initialize switch ui
 
-        ShowInteractionKey(false);
+        ChangeIsQuitting(false); //notify that application is not closing
 
-        ChangeIsQuitting(false);
-
-        SubscribeToEvents();
-
+        SubscribeToEvents(); //subscribe to events
     }
 
     #region Initialize
@@ -35,40 +45,30 @@ public class DoorSwitch : MonoBehaviour {
     private void InitializeInteractionButton()
     {
         var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-        m_InteractionButton = Instantiate(interactionButton, transform);
-    }
+        m_UI = Instantiate(interactionButton, transform);
 
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("DoorSwitch.InitializeAnimator: Can't find Animator component on gameobject");
-        }
+        m_UI.SetActive(false); //hide ui
     }
 
     private void SubscribeToEvents()
     {
-        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //if player is moving to the main screen
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //if is player moving to another scene
     }
 
 
     #endregion
 
     // Update is called once per frame
-    void Update () {
+    private void Update () {
 		
-        if (m_IsPlayerNearSwitch)
+        if (m_UI.activeSelf) //if switch ui is active
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                m_IsPlayerNearSwitch = false;
-                ShowInteractionKey(false);
+                m_UI.SetActive(false); //hide switch ui
 
-                StartCoroutine(OpenTheDoor());
+                StartCoroutine(OpenTheDoor()); //open attached door
             }
         }
 
@@ -76,52 +76,35 @@ public class DoorSwitch : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNearSwitch)
+        if (collision.CompareTag("Player")) //if player is near the switch
         {
-            m_IsPlayerNearSwitch = true;
-            ShowInteractionKey(m_IsPlayerNearSwitch);
+            m_UI.SetActive(true); //show switch ui
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNearSwitch)
+        if (collision.CompareTag("Player")) //if player leaving the switch
         {
-            m_IsPlayerNearSwitch = false;
-            ShowInteractionKey(m_IsPlayerNearSwitch);
+            m_UI.SetActive(false); //hide switch ui
         }
     }
 
-    private void ShowInteractionKey(bool show)
-    {
-        if (m_InteractionButton != null)
-            m_InteractionButton.gameObject.SetActive(show);
-        else
-            Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
-    }
-
-
     private IEnumerator OpenTheDoor()
     {
-        if (DoorToOpen != null)
+        if (DoorToOpen != null) //if door to open is attached
         {
-            ShowInteractionKey(false);
+            m_Animator.SetTrigger("Triggering"); //play switch trigerring animation
 
-            m_Animator.SetTrigger("Triggering");
+            DoorToOpen.PlayOpenDoorAnimation(); //open the door
 
-            DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
+            yield return new WaitForSeconds(1f); //wait 1s
 
-            yield return new WaitForSeconds(1f);
+            GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
+            GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
 
-            if (GameMaster.Instance != null)
-            {
-                GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object);
-                GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object);
-            }
-
-            Destroy(DoorToOpen);
-
-            Destroy(gameObject);
+            Destroy(DoorToOpen.gameObject); //destroy door gameobject
+            Destroy(gameObject); //destroy switch
         }
         else
         {
@@ -132,14 +115,14 @@ public class DoorSwitch : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        ChangeIsQuitting(true);
+        ChangeIsQuitting(true); //if application is closing
     }
 
     private void OnDestroy()
     {
-        if (!m_IsQuitting)
+        if (!m_IsQuitting) //if application is not closing
         {
-            OnSwitchPressed();
+            OnSwitchPressed(); //notify event
         }
     }
 
@@ -147,4 +130,6 @@ public class DoorSwitch : MonoBehaviour {
     {
         m_IsQuitting = value;
     }
+
+    #endregion
 }

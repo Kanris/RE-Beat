@@ -2,55 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class DoorButton : MonoBehaviour {
 
-    [SerializeField] private GameObject DoorToOpen;
+    #region private fields
 
-    private Animator m_Animator;
+    [SerializeField] private Door DoorToOpen; //door to open when button is pressed
+    private Animator m_Animator; //button animator
+
+    #endregion
+
+    #region private methods
 
     private void Start()
     {
-        InitializeAnimator();
+        m_Animator = GetComponent<Animator>(); //get button animator
     }
 
-    private void InitializeAnimator()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        m_Animator = GetComponent<Animator>();
+        if (collision.transform.CompareTag("Item")) //if item is on the button
+            OpenDoor(true); //open attached door
+    }
 
-        if (m_Animator == null)
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Item")) //if item is no longer on the button
+            OpenDoor(false); //close attached door
+    }
+
+    private void OpenDoor(bool open)
+    {
+        if (DoorToOpen != null) //if attached door is not equal to null
         {
-            Debug.LogError("DoorButton.InitializeAnimator: Can't fint Animator component on Gameobject");
-        }
-    }
-
-    private IEnumerator OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Item"))
-            yield return OpenDoor(true);
-    }
-
-    private IEnumerator OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Item"))
-            yield return OpenDoor(false);
-    }
-
-    private IEnumerator OpenDoor(bool open)
-    {
-        if (DoorToOpen != null)
-        {
-            if (open)
+            if (open) //if need to open the door
             {
-                DoorToOpen.GetComponent<Door>().PlayOpenDoorAnimation();
+                DoorToOpen.PlayOpenDoorAnimation(); //play open door animation
 
-                TriggerAnimation("Pressed");
-
-                yield return new WaitForSeconds(0.5f);
+                m_Animator.SetTrigger("Pressed"); //set button to pressed animation 
             }
-            else
-                TriggerAnimation("Unpressed");
+            else //if need to close the door
+                m_Animator.SetTrigger("Unpressed"); //set button to unpressed animation
 
-            DoorToOpen.SetActive(!open);
+            DoorToOpen.gameObject.SetActive(!open); //active or disable attached door
         }
         else
         {
@@ -58,11 +52,5 @@ public class DoorButton : MonoBehaviour {
         }
     }
 
-    private void TriggerAnimation(string animation)
-    {
-        if (m_Animator != null)
-        {
-            m_Animator.SetTrigger(animation);
-        }
-    }
+    #endregion
 }

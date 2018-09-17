@@ -335,10 +335,6 @@ public class GameMaster : MonoBehaviour {
                     Debug.LogError("GameMaster: Couldn't respawn player, because GameMaster couldn't load Player from Resources.");
                 }
             }
-            else
-            {
-                Debug.LogError("GameMaster: Can't respawn player, because GameMaster couldn't found RespawnPoint on scene.");
-            }
         }
     }
     #endregion

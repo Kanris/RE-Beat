@@ -44,7 +44,7 @@ public class Sign : MonoBehaviour {
                 {
                     EnableUserControl(false);
                     SetActiveInteractionButton(false);
-                    StartCoroutine(DialogueManager.Instance.DisplaySentence(SignText, SignName));
+                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName));
 
                 } else if (!m_Player.enabled)
                 {
