@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95988530771751858}
   - component: {fileID: 50112585652964314}
   - component: {fileID: 114850983909908302}
+  - component: {fileID: 58177698638128526}
   m_Layer: 0
   m_Name: Saw
   m_TagString: Untagged
@@ -96,6 +97,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58177698638128526
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652080869903226}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.007699013, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4099121
 --- !u!61 &61123876401868810
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -169,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SawMoveTime: 2
+  m_Saw: {fileID: 114850983909908302}
 --- !u!114 &114850983909908302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,6 +203,8 @@ MonoBehaviour:
   DamageAmount: 2
   MoveVelocity: 2
   WithTrigger: 1
+  m_ThrowX: 5
+  m_ThrowY: 3
 --- !u!212 &212326599585693704
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -265,7 +284,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 5aa0f3e1caa57fc478925302d9148b4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

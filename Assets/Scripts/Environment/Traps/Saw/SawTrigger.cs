@@ -5,89 +5,41 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class SawTrigger : MonoBehaviour {
 
-    [SerializeField] private float SawMoveTime = 2.5f;
+    #region private fields
 
-    private Saw m_Saw;
-    private Animator m_Animator;
-    private bool m_IsTriggered;
-    private bool m_IsSawMove;
+    #region serialize fields
 
-	// Use this for initialization
-	void Start () {
-
-        InitializeSaw();
-        
-        InitializeAnimator();
-    }
-
-    #region Initialize
-
-    private void InitializeSaw()
-    {
-        m_Saw = transform.GetChild(0).gameObject.GetComponent<Saw>();
-
-        if (m_Saw == null)
-        {
-            Debug.LogError("SawTrigger.InitializeSaw: Can't find saw in child");
-        }
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("SawTrigger.initialzieAnimator: Can't find animator on gameobject");
-        }
-    }
+    [SerializeField] private float SawMoveTime = 2.5f; //saw move timer
+    [SerializeField] private Saw m_Saw; //saw script
 
     #endregion
 
-    #region trigger
+    private Animator m_Animator; //animator
+    private bool m_IsSawMove; //if saw is moving
+
+    #endregion
+
+    #region private methods
+
+    // Use this for initialization
+    void Start () {
+
+        m_Animator = GetComponent<Animator>(); //get animator
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsTriggered)
+        if (collision.CompareTag("Player") & !m_IsSawMove) //if player is on trigger and saw is not moving
         {
-            m_IsTriggered = true;
+            StartCoroutine(MoveSaw()); //move saw
 
-            PlayTriggerSound();
-            ButtonAnimation("Pressed");
+            PlayTriggerSound(); //play trigger sound
+            ButtonAnimation("Pressed"); //play press button animation
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & !m_IsTriggered)
-        {
-            m_IsTriggered = true;
-
-            PlayTriggerSound();
-            ButtonAnimation("Pressed");
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (!m_IsSawMove & !m_IsTriggered)
-                ButtonAnimation("Unpressed");
-        }
-    }
-
-    #endregion
-
-    private void FixedUpdate()
-    {
-        if (m_IsTriggered & !m_IsSawMove)
-        {
-            StartCoroutine(MoveSaw());
-        }
-    }
-
-    private int WhereToMove()
+    private int WhereToMove() //determine where to move
     {
         if (m_Saw.transform.position.x > transform.position.x)
         {
@@ -99,14 +51,14 @@ public class SawTrigger : MonoBehaviour {
 
     private IEnumerator MoveSaw()
     {
-        m_IsSawMove = true;
+        m_IsSawMove = true; //saw is moving
 
-        yield return m_Saw.MoveWithHide(WhereToMove());
+        yield return m_Saw.MoveWithHide(WhereToMove()); //move attached saw
 
-        m_IsSawMove = false;
-        m_IsTriggered = false;
+        m_IsSawMove = false; //saw is not moving
 
-        ButtonAnimation("Unpressed");
+
+        ButtonAnimation("Unpressed"); //play unpressed animation
     }
 
     private void ButtonAnimation(string animation)
@@ -118,4 +70,6 @@ public class SawTrigger : MonoBehaviour {
     {
         AudioManager.Instance.Play("Button Switch");
     }
+
+    #endregion
 }
