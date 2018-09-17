@@ -107,14 +107,17 @@ public class DisableBackground : MonoBehaviour {
 
     private void ChangeCaveObjectsMaterial(bool isEnter)
     {
-        if (ChangeMaterialTilemap.Length > 0) //if there is cave items
+        if (ChangeMaterialTilemap != null)
         {
-            var material = isEnter ? m_LightMaterial : m_DefaultMaterial; //is player enter the cave than apply light material or if player leave cave set default material
-
-            //apply new material
-            for (var index = 0; index < ChangeMaterialTilemap.Length; index++)
+            if (ChangeMaterialTilemap.Length > 0) //if there is cave items
             {
-                ChangeMaterialTilemap[index].material = material;
+                var material = isEnter ? m_LightMaterial : m_DefaultMaterial; //is player enter the cave than apply light material or if player leave cave set default material
+
+                //apply new material
+                for (var index = 0; index < ChangeMaterialTilemap.Length; index++)
+                {
+                    ChangeMaterialTilemap[index].material = material;
+                }
             }
         }
     }
