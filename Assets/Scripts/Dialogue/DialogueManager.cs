@@ -9,307 +9,148 @@ using UnityEngine.EventSystems;
 public class DialogueManager : MonoBehaviour {
 
     #region Singleton
-    public static DialogueManager Instance;
+    public static DialogueManager Instance; //singleton instance
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null) //if instance has reference
         {
-            if (Instance != this)
+            if (Instance != this) //if instance is not reference to this gameobject
             {
-                Destroy(gameObject);
+                Destroy(gameObject); //destroy this gameobject
             }
         }
-        else
+        else //if instance hadn't initialized
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Instance = this; //reference to this
+            DontDestroyOnLoad(this); //dont destroy this gameobject on load
         }
     }
     #endregion
 
-    //[HideInInspector] private bool isDialogueInProgress = false;
+    #region public delegate
 
     public delegate void VoidDelegate(bool value);
-    public event VoidDelegate OnDialogueInProgressChange;
+    public event VoidDelegate OnDialogueInProgressChange; //notify if dialogue is in progress or not
 
-    private Queue<Sentence> m_Sentences = new Queue<Sentence>();
-    private Dialogue m_Dialogue;
-    private Sentence m_CurrentSentence;
-    private GameObject m_DialogueUI;
-    private GameObject m_Buttons;
-    private Button m_FirstButton;
-    private Button m_SecondButton;
-    private bool m_IsSentenceTyping;
-    private bool m_AnwswerChoose;
-    private bool m_IsDialogueInProgress;
-    private bool m_IsDisplayingSentence;
+    #endregion
 
-    [SerializeField] private TextMeshProUGUI m_Text;
-    [SerializeField] private TextMeshProUGUI m_NameText;
-    [SerializeField] private GameObject m_NextImage;
+    #region private fields
 
-    // Use this for initialization
-    void Start () {
+    private Queue<Sentence> m_Sentences = new Queue<Sentence>(); //sentence queue
+    private Dialogue m_Dialogue; //current dialogue
+    private Sentence m_CurrentSentence; //current sentece
+    private bool m_IsSentenceTyping; //is manager typing sentence
+    private bool m_AnwswerChoose; //is player have to choose the answer
+    private bool m_IsDialogueInProgress; //is dialogue in progress
+    private bool m_DisplayingSingleSentence; //if displaying sign text
 
-        InitializeDialogueUI();
+    #region serialize fields
 
-        InitializeButtonsUI();
+    [SerializeField] private GameObject m_DialogueUI; //dialogue ui
+    [SerializeField] private GameObject m_Buttons; //answer buttons
+    [SerializeField] private TextMeshProUGUI m_FirstButton; //first answer ui text 
+    [SerializeField] private TextMeshProUGUI m_SecondButton; //second answer ui text
+    [SerializeField] private TextMeshProUGUI m_Text; //text to display sentences
+    [SerializeField] private TextMeshProUGUI m_NameText; //text to display npc name
+    [SerializeField] private GameObject m_NextImage; //image that notify player that sentence is over
 
-        SetActiveUI(false);
+    #endregion
 
-        SetActiveAnswerButtons(false);
-    }
+    #endregion
 
-    private void InitializeDialogueUI()
-    {
-        if (transform.childCount > 0)
-        {
-            m_DialogueUI = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("DialogueManager.InitializeDialogueUI: Dialogue UI has no child.");
-        }
-    }
-
-    private void InitializeButtonsUI()
-    {
-        m_Buttons = GameObject.Find("ButtonsDialogueGrid").gameObject;
-
-        if (m_Buttons.transform.childCount > 1)
-        {
-            m_FirstButton = m_Buttons.transform.GetChild(0).GetComponent<Button>();
-            m_SecondButton = m_Buttons.transform.GetChild(1).GetComponent<Button>();
-        }
-        else
-        {
-            Debug.LogError("DialogueManager.InitializeDialogueUI: Dialogue UI has no child.");
-        }
-    }
-
-    private void InitializeSentences()
-    {
-        m_Sentences.Clear();
-
-        var dialogueToDisplay = m_Dialogue.IsDialogueFinished
-            ? m_Dialogue.RepeatSentences : m_Dialogue.MainSentences;
-
-        foreach (var sentence in dialogueToDisplay)
-        {
-            m_Sentences.Enqueue(sentence);
-        }
-    }
+    #region private methods
 
     // Update is called once per frame
     private void Update()
     {
-        if (m_IsDialogueInProgress)
+        if (m_IsDialogueInProgress) //if is dialogue in progress
         {
-            if (CrossPlatformInputManager.GetButtonDown("Jump"))
+            if (CrossPlatformInputManager.GetButtonDown("Jump")) //if jump button pressed
             {
-                if (m_IsSentenceTyping)
+                if (m_IsSentenceTyping) //if sentence is still typing
                 {
-                    m_IsSentenceTyping = false;
+                    m_IsSentenceTyping = false; //stop typying sentence and display it all
                 }
-                else if (!m_AnwswerChoose & !m_IsDisplayingSentence)
+                else if (!m_AnwswerChoose & !m_DisplayingSingleSentence) //if player dont have to choose the answer and sentence is display
                 {
-                    DisplayNextSentence();
+                    DisplayNextSentence(); //show next sentece
 
-                } else if (m_IsDisplayingSentence)
+                } else if (m_DisplayingSingleSentence) //if displaying sign text
                 {
-                    ChangeIsDialogueInProgress(false);
-                    m_IsDisplayingSentence = false;
-                    SetActiveUI(false);
+                    ChangeIsDialogueInProgress(false); //dialogue is not in ptrogress
+                    m_DisplayingSingleSentence = false; //dialogue is not displaying sign text
+
+                    m_DialogueUI.SetActive(false); //hide dialogue ui
                 }
             }
         }
-
     }
 
-    private IEnumerator TypeSentence(string name, string sentence)
+    //type sentence
+    private IEnumerator TypeSentenceWithAnswer(string sentence)
     {
-        m_NameText.text = name;
-        m_Text.text = "";
-        SetActiveNextImage(false);
+        yield return TypeSentence(sentence);
 
-        m_IsSentenceTyping = true;
+        if (m_AnwswerChoose) //if player have to choose the answer
+        {
+            SetButtonsText(m_CurrentSentence.firstAnswer, m_CurrentSentence.secondAnswer); //initialize buttons text and show buttons grid
+        }
+    }
 
+    private IEnumerator TypeSentence(string sentence)
+    {
+        m_Text.text = string.Empty; //clear main dialogue text
+        m_NextImage.SetActive(false); //hide next image
+
+        m_IsSentenceTyping = true; //notify that sentence is typing
+
+        //start type sentence
         foreach (var letter in sentence)
         {
-            if (m_IsSentenceTyping)
-                yield return new WaitForSeconds(0.05f);
+            if (m_IsSentenceTyping) //if player didn't press skip button
+                yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
 
-            m_Text.text += letter;
+            m_Text.text += letter; //type letter
         }
 
-
-        if (m_AnwswerChoose)
-        {
-            SetActiveAnswerButtons(true);
-            SetButtonsText(m_CurrentSentence.firstAnswer, m_CurrentSentence.secondAnswer);
-        }
-
-        m_IsSentenceTyping = false;
-        SetActiveNextImage(true);
-    }
-
-    private string GetName(Sentence sentence)
-    {
-        return string.IsNullOrEmpty(sentence.Name) ? "Stranger" : sentence.Name;
-    }
-
-    public void SetActiveUI(bool isActive)
-    {
-        if (m_DialogueUI != null)
-        {
-            m_DialogueUI.SetActive(isActive);
-        }
-        else
-            Debug.LogError("DialogueManager.SetActiveUI: m_DialogueUI is not initialized");
-    }
-
-    private void SetActiveNextImage(bool isActive)
-    {
-        m_NextImage.SetActive(isActive);
-    }
-
-    private IEnumerator DialogueComplete()
-    {
-        m_Dialogue.IsDialogueFinished = true;
-
-        yield return null;
-
-        StopDialogue();
+        m_IsSentenceTyping = false; //notify that sentence typing is over
+        m_NextImage.SetActive(true); //show next image
     }
 
     private void DisplayNextSentence()
     {
-        if (m_IsDialogueInProgress)
+        if (m_IsDialogueInProgress) //if dialogue is in progress
         {
-            if (m_Sentences.Count == 0)
+            if (m_Sentences.Count == 0) //if queue is empty
             {
-                StartCoroutine( DialogueComplete() );
-                return;
+                StopDialogue(); //stop dialogue
             }
-
-            var sentence = m_Sentences.Dequeue();
-
-            StopAllCoroutines();
-            if (!string.IsNullOrEmpty(sentence.firstAnswer))
+            else //if queue still have items
             {
-                m_AnwswerChoose = true;
-                m_CurrentSentence = sentence;
+                var currentSentenceToDisplay = m_Sentences.Dequeue(); //get next sentence to display
+                
+                if (!string.IsNullOrEmpty(currentSentenceToDisplay.firstAnswer)) //if player will have to choose the answers
+                {
+                    m_AnwswerChoose = true; //notify update that player have to choose the anser
+                    m_CurrentSentence = currentSentenceToDisplay; //save reference to the current sentence
+                }
+
+                StartCoroutine(TypeSentenceWithAnswer(currentSentenceToDisplay.DisplaySentence)); //display current sentence
             }
-            else
-                SetActiveAnswerButtons(false);
-
-            StartCoroutine(TypeSentence(GetName(sentence), sentence.DisplaySentence));
         }
     }
 
-    private void SetActiveAnswerButtons(bool isActive)
+    //set up answers
+    private void SetButtonsText(string firstButtonText, string secondButtonText)
     {
-        if (isActive)
-        {
-            GameObject.Find("EventSystem").GetComponent<EventSystem>()
-                .SetSelectedGameObject(m_FirstButton.gameObject);
-        }
+        m_FirstButton.text = firstButtonText;
+        m_SecondButton.text = secondButtonText;
 
-        m_Buttons.SetActive(isActive);
+        m_Buttons.SetActive(true);
     }
 
-    private void SetButtonsText(string button1, string button2)
-    {
-        m_FirstButton.GetComponentInChildren<TextMeshProUGUI>().text = button1;
-        m_SecondButton.GetComponentInChildren<TextMeshProUGUI>().text = button2;
-    }
-
-    public void StartDialogue(Dialogue dialogue)
-    {
-        if (dialogue != null)
-        {
-            ChangeIsDialogueInProgress(true);
-            m_Dialogue = dialogue;
-
-            InitializeSentences();
-
-            SetActiveUI(true);
-            DisplayNextSentence();
-        }
-        else
-        {
-            Debug.LogError("DialogueManager.StartDialogue: Can't start empty dialogue");
-        }
-    }
-
-    public IEnumerator DisplaySentence(string sentence, string name)
-    {
-        SetActiveUI(true);
-        ChangeIsDialogueInProgress(true);
-        m_IsDisplayingSentence = true;
-
-        m_NameText.text = name;
-        m_Text.text = "";
-        SetActiveNextImage(false);
-
-        m_IsSentenceTyping = true;
-
-        foreach (var letter in sentence)
-        {
-            if (m_IsSentenceTyping)
-                yield return new WaitForSeconds(0.05f);
-
-            m_Text.text += letter;
-        }
-
-        m_IsSentenceTyping = false;
-        SetActiveNextImage(true);
-    }
-
-
-    public void StartDialogue(Sentence[] dialogueToDisplay)
-    {
-        ChangeIsDialogueInProgress(true);
-        m_Sentences.Clear();
-
-        foreach (var sentence in dialogueToDisplay)
-        {
-            m_Sentences.Enqueue(sentence);
-        }
-
-        SetActiveUI(true);
-        DisplayNextSentence();
-    }
-
-    public void StopDialogue()
-    {
-        m_AnwswerChoose = false;
-        ChangeIsDialogueInProgress(false);
-
-        SetActiveAnswerButtons(false);
-        SetActiveUI(false);
-    }
-
-    public void GetAnswer(bool isFirst)
-    {
-        PlayClickSound();
-        StartCoroutine(SetUpAnswer(isFirst));
-    }
-
-    private IEnumerator SetUpAnswer(bool isFirst)
-    {
-        yield return null;
-
-        SetActiveAnswerButtons(false);
-
-        var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence;
-
-        m_AnwswerChoose = false;
-
-        StartDialogue(sentenceToStart);
-    }
-
+    //notify subscribers that dialogue in progress or not
     private void ChangeIsDialogueInProgress(bool value)
     {
         m_IsDialogueInProgress = value;
@@ -322,14 +163,94 @@ public class DialogueManager : MonoBehaviour {
 
     private void PlayClickSound()
     {
-        if (AudioManager.Instance != null)
+        if (AudioManager.Instance != null) //if audiomanager instance initialized
         {
-            AudioManager.Instance.Play("UI-Click");
+            AudioManager.Instance.Play("UI-Click"); //play ui click sound
         }
         else
         {
             Debug.LogError("StartScreenManager.PlayClickSound: Audiomanager.Instance is equal to null");
         }
+    }
+
+    #endregion
+
+    private void ReInitializeDialogueQueue(Sentence[] dialogueToDisplay)
+    {
+        m_Sentences.Clear(); //clear sentences queue
+
+        //save sentences to display in queue
+        foreach (var sentence in dialogueToDisplay)
+        {
+            m_Sentences.Enqueue(sentence);
+        }
+
+        DisplayNextSentence(); //show sentence
+    }
+
+    #endregion
+
+    #region public methods
+
+    public void StartDialogue(string npcName, Dialogue dialogue)
+    {
+        if (dialogue != null) //if dialogue is not empty
+        {
+            ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
+            m_Dialogue = dialogue; //save dialogue reference
+            m_NameText.text = npcName; //display npc name
+
+            m_Sentences.Clear(); //clear sentences queue
+
+            var dialogueToDisplay = m_Dialogue.IsDialogueFinished
+                ? m_Dialogue.RepeatSentences : m_Dialogue.MainSentences; //choose sentences to display
+
+            //save sentences to display in queue
+            foreach (var sentence in dialogueToDisplay)
+            {
+                m_Sentences.Enqueue(sentence);
+            }
+
+            m_DialogueUI.SetActive(true); //show dialogue ui
+            DisplayNextSentence(); //show sentence
+        }
+        else
+        {
+            Debug.LogError("DialogueManager.StartDialogue: Can't start empty dialogue");
+        }
+    }
+
+    public IEnumerator DisplaySingleSentence(string sentence, string name)
+    {
+        m_DialogueUI.SetActive(true); //show dialogue ui
+        ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
+        m_DisplayingSingleSentence = true; //notify update that single sentence is displaying
+        m_NameText.text = name; //show sign text
+
+        yield return TypeSentence(sentence); //start typing sentece
+    }
+
+    public void StopDialogue()
+    {
+        m_Dialogue.IsDialogueFinished = true; //save that dialogue is finished
+        m_AnwswerChoose = false; //player don't have to choose the answer
+        ChangeIsDialogueInProgress(false); //notify that dialogue is complete
+
+        m_DialogueUI.SetActive(false); //hide dialogue ui
+    }
+
+    //get player answer
+    public void GetAnswer(bool isFirst)
+    {
+        PlayClickSound(); //play button click sound
+
+        var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence; //if player pressed first button return firstSentence array; if player pressed second button return secondSentence array
+
+        m_AnwswerChoose = false; //player had choose the answer
+
+        ReInitializeDialogueQueue(sentenceToStart); //reinitialize queue
+
+        m_Buttons.SetActive(false); //hide buttons
     }
 
     #endregion

@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Dialogue  {
+public class Dialogue  { //full dialogue 
 
-    public Sentence[] MainSentences;
+    #region public fields
 
-    public Sentence[] RepeatSentences;
+    public Sentence[] MainSentences; //main npc dialogue
 
-    public bool IsDialogueFinished = false;
+    public Sentence[] RepeatSentences; //repeat dialogue when main dialogue is finished 
+
+    public bool IsDialogueFinished = false; //indicates that main sentence dialogue were played
+
+    #endregion
 }
 
 [System.Serializable]
 public class Sentence
 {
-    public string Name;
+    #region public fields
 
     [TextArea(3, 10)]
-    public string DisplaySentence;
+    public string DisplaySentence; //sentence to display
 
-    public string firstAnswer;
+    public string firstAnswer; //first variant of the user's response
 
-    public string secondAnswer;
+    public string secondAnswer; //second variant of the user's response
 
-    public Sentence[] firstSentence;
+    public Sentence[] firstSentence; //sentence to display when first answer were chosen
 
-    public Sentence[] secondSentence;
+    public Sentence[] secondSentence; //sentence to display when second answer were chosen
+
+    #endregion
 }
