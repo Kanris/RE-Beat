@@ -58,7 +58,9 @@ public class StringTrigger : MonoBehaviour {
             if (m_Box != null) //if m_box contains reference to the box rigidbody
             {
                 m_Box.transform.SetParent(transform.parent); //change box parent
-                
+
+                m_Box.GetComponent<BoxCollider2D>().enabled = true;
+
                 m_Box.constraints = RigidbodyConstraints2D.FreezePositionX //allow box to move on y position (fall because of gravity)
                     | RigidbodyConstraints2D.FreezeRotation;
             }
