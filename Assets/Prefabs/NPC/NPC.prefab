@@ -22,6 +22,9 @@ GameObject:
   - component: {fileID: 212039298943561222}
   - component: {fileID: 61222880567429250}
   - component: {fileID: 114354878163579086}
+  - component: {fileID: 114948439663149570}
+  - component: {fileID: 114808322752333964}
+  - component: {fileID: 114160986447167942}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -36,8 +39,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990950036120288}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.75, y: -0.08, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 29.95, y: 1.893, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,6 +70,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.71373, y: 0.8377373}
   m_EdgeRadius: 0
+--- !u!114 &114160986447167942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1990950036120288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3d89f0bee9c474aa95843492af7293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAction: 0
+  actionType: 0
+  ActionObject: {fileID: 0}
 --- !u!114 &114354878163579086
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,57 +97,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     MainSentences:
-    - Name: Junk
-      DisplaySentence: You are new here?
+    - DisplaySentence: You are new here?
       firstAnswer: Maybe
       secondAnswer: Not Your Business
       firstSentence:
-      - Name: Junk
-        DisplaySentence: So you need to find two bells one is... wait..
+      - DisplaySentence: So you need to find two bells one is... wait..
         firstAnswer: Something wrong?
         secondAnswer: It's dark souls story?
         firstSentence:
-        - Name: Junk
-          DisplaySentence: Nothing, just leave me.
+        - DisplaySentence: Just go and kill monster in the cave
           firstAnswer: 
           secondAnswer: 
           firstSentence: []
           secondSentence: []
         secondSentence:
-        - Name: Junk
-          DisplaySentence: If you are so smart do what you want.
+        - DisplaySentence: If you are so smart just go and kill monster in the cave
           firstAnswer: 
           secondAnswer: 
           firstSentence: []
           secondSentence: []
       secondSentence:
-      - Name: Junk
-        DisplaySentence: I dont wan't to talk with you!
+      - DisplaySentence: I dont wan't to talk with you! Just go and kill monster in
+          the cave
         firstAnswer: 
         secondAnswer: 
         firstSentence: []
         secondSentence: []
     RepeatSentences:
-    - Name: Junk
-      DisplaySentence: Just let...
+    - DisplaySentence: Just let...
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
       secondSentence: []
-    - Name: Junk
-      DisplaySentence: '...me...'
+    - DisplaySentence: '...me...'
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
       secondSentence: []
-    - Name: Junk
-      DisplaySentence: ..be!
+    - DisplaySentence: ..be!
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
       secondSentence: []
     IsDialogueFinished: 0
-  m_isPlayerNear: 0
+--- !u!114 &114808322752333964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1990950036120288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3d89f0bee9c474aa95843492af7293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAction: 1
+  actionType: 1
+  ActionObject: {fileID: 0}
+--- !u!114 &114948439663149570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1990950036120288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskType: 1
+  taskTriggerType: 2
+  DestroyEntireObject: 0
+  Name: Find out
+  TaskText: 'I have to kill <#000000>Monster</color> in the <#000000>Cave</color>
+
+
+'
 --- !u!212 &212039298943561222
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -146,7 +188,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,7 +207,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5598ac69b35e9fb4585732c60ef49762, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
