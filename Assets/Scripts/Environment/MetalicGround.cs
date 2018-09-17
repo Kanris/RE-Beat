@@ -1,68 +1,49 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityStandardAssets._2D;
 
-[RequireComponent(typeof(TilemapCollider2D))]
+[RequireComponent(typeof(TilemapCollider2D), typeof(Animator))]
 public class MetalicGround : MonoBehaviour {
 
-    public string NeededItem = "Magnetic Boots";
+    #region private fields
 
-    private TilemapCollider2D m_Ground;
-    private Animator m_Animator;
+    [SerializeField] private string NeededItem = "Magnetic Boots"; //required item to move on the metalic ground
+
+    private TilemapCollider2D m_Ground; //metalic ground
+    private Animator m_Animator; //metalic ground animator
+
+    #endregion
+
+    #region private methods
 
     private void Start()
     {
-        InitializeGround();
+        m_Ground = GetComponent<TilemapCollider2D>(); //initialize ground
 
-        InitializeAnimator();
+        m_Animator = GetComponent<Animator>(); //initialize animator
     }
-
-    #region Initialize
-
-    private void InitializeGround()
-    {
-        m_Ground = GetComponent<TilemapCollider2D>();
-
-        if (m_Ground == null)
-        {
-            Debug.LogError("MetalicGround.InitializeGround: Can't find CompositeCollider2D on gameobject");
-        }
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("MetalicGround.InitializeAnimator: Can't find Animator on gameobject");
-        }
-    }
-
-    #endregion  
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player")) //if player on metalic ground
         {
-            if (PlayerStats.PlayerInventory.IsInBag(NeededItem))
+            if (PlayerStats.PlayerInventory.IsInBag(NeededItem)) //if player has needed item
             {
-                collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = false;
-                PlayAnimation("Active");
+                collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = false; //dont allow player to jump
+                PlayAnimation("Active"); //change ground animation
             }
-            else
-                StartCoroutine(DisableGround());
+            else //if player havn't needed item
+                StartCoroutine(DisableGround()); //disable metalic ground collision
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player")) //if player leave metalic ground
         {
-            collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = true;
-            PlayAnimation("Inactive");
+            collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = true; //allow player to jump
+            PlayAnimation("Inactive"); //change ground animation
         }
     }
 
@@ -73,10 +54,12 @@ public class MetalicGround : MonoBehaviour {
 
     private IEnumerator DisableGround()
     {
-        m_Ground.enabled = false;
+        m_Ground.enabled = false; //disable ground collider
 
         yield return new WaitForSeconds(1f);
 
-        m_Ground.enabled = true;
+        m_Ground.enabled = true; //enable ground collider
     }
+
+    #endregion
 }

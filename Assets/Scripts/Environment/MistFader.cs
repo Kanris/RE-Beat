@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MistFader : MonoBehaviour {
 
+    #region serialize fields
+
     [SerializeField] private DisableBackground m_DisableBackground;
+
+    #endregion
+
+    #region public methods
 
     public void AnimationComplete()
     {
@@ -18,5 +22,5 @@ public class MistFader : MonoBehaviour {
         }
     }
 
-
+    #endregion
 }

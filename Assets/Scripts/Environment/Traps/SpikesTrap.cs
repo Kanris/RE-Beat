@@ -7,7 +7,7 @@ public class SpikesTrap : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private int DamageAmount = 2; //spike damage amount
+    [SerializeField, Range(2, 10)] private int DamageAmount = 2; //spike damage amount
 
     private PlayerStats m_Player; //reference to player stats
     private Rigidbody2D m_Rigidbody; //current object of rigidbody

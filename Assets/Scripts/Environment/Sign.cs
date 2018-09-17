@@ -6,24 +6,33 @@ using UnityStandardAssets._2D;
 
 public class Sign : MonoBehaviour {
 
-    [SerializeField] private string SignName;
-    [SerializeField, TextArea(2, 10)] private string SignText;
+    #region private fields
 
-    private GameObject m_InteractionButton;
-    private Platformer2DUserControl m_Player;
-    private bool m_IsSentenceShowInProgress;
+    #region serialize fields
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField] private string SignName; //sign name
+    [SerializeField, TextArea(2, 10)] private string SignText; //sign text to display
 
-        InitializeInteractionButton();
+    #endregion
 
-        SetActiveInteractionButton(false);
+    private GameObject m_InteractionButton; //sign ui
+    private Platformer2DUserControl m_Player; //player control
+    private bool m_IsSentenceShowInProgress; //indicates is dialogue still in progress
 
-        DialogueManager.Instance.OnDialogueInProgressChange += ChangeIsInProgress;
-    }
+    #endregion
+
+    #region private methods
 
     #region Initialize
+    // Use this for initialization
+    private void Start () {
+
+        InitializeInteractionButton(); //initialize sign ui
+
+        m_InteractionButton.SetActive(false); //hide ui
+
+        DialogueManager.Instance.OnDialogueInProgressChange += ChangeIsInProgress; //subscribe to dialogue in progress
+    }
 
     private void InitializeInteractionButton()
     {
@@ -36,23 +45,23 @@ public class Sign : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
-        if (m_Player != null)
+        if (m_Player != null) //if player is near the sign
         {
-            if (!m_IsSentenceShowInProgress)
+            if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit"))
+                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player want to read the sign
                 {
-                    EnableUserControl(false);
-                    SetActiveInteractionButton(false);
-                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName));
+                    EnableUserControl(false); //disable user controll
+                    m_InteractionButton.SetActive(false); //hide sign ui
+                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName)); //show sign text
 
-                } else if (!m_Player.enabled)
+                } else if (!m_Player.enabled) //if player control is disabled
                 {
-                    EnableUserControl(true);
+                    EnableUserControl(true); //enable it
                 }
-                else if (!m_InteractionButton.activeSelf)
+                else if (!m_InteractionButton.activeSelf) //if sign ui is hidden
                 {
-                    SetActiveInteractionButton(true);
+                    m_InteractionButton.SetActive(true); //show sign ui
                 }
             }
         }
@@ -61,16 +70,16 @@ public class Sign : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player == null)
+        if (collision.CompareTag("Player") & m_Player == null) //if player enter to the sign trigger
         {
-            var playerControl = collision.GetComponent<Platformer2DUserControl>();
-            SetUpSign(true, playerControl);
+            var playerControl = collision.GetComponent<Platformer2DUserControl>(); //get reference to the player control
+            SetUpSign(true, playerControl); 
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player != null)
+        if (collision.CompareTag("Player") & m_Player != null) //if player leave sign trigger
         {
             SetUpSign(false, null);
         }
@@ -78,26 +87,23 @@ public class Sign : MonoBehaviour {
 
     private void EnableUserControl(bool active)
     {
-        if (!active)
-            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false);
+        if (!active) //if player shouldn't move
+            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop player movement
 
         if (m_Player != null & m_Player.enabled != active)
-            m_Player.enabled = active;
+            m_Player.enabled = active; //change control state
     }
 
     private void SetUpSign(bool value, Platformer2DUserControl player)
     {
-        SetActiveInteractionButton(value);
-        m_Player = player;
-    }
-
-    private void SetActiveInteractionButton(bool value)
-    {
-        m_InteractionButton.SetActive(value);
+        m_InteractionButton.SetActive(value); //show or hide sign ui
+        m_Player = player; //reference to the player's control
     }
 
     private void ChangeIsInProgress(bool value)
     {
         m_IsSentenceShowInProgress = value;
     }
+
+    #endregion
 }

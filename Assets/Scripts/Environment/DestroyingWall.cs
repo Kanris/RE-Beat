@@ -1,41 +1,46 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class DestroyingWall : MonoBehaviour {
-    
-    [SerializeField] private int Health = 3;
 
-    private Animator m_Animator;
+    #region private fields
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField, Range(1, 5)] private int Health = 3; //wall health
 
-        m_Animator = GetComponent<Animator>();
+    private Animator m_Animator; //destroying wall animator
+
+    #endregion
+
+    #region private methods
+
+    // Use this for initialization
+    private void Start () {
+
+        m_Animator = GetComponent<Animator>(); //reference to the wall animator
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttackRange") & Health > 0)
+        if (collision.CompareTag("PlayerAttackRange") & Health > 0) //if player attack wall and wall is not destroyed
         {
-            StartCoroutine(WallHit(1));
+            WallHit(); //hit wall
 
-            if (Health == 0)
+            if (Health == 0) //if wall health is 0
             {
-                GameMaster.Instance.SaveState(transform.name, 0, GameMaster.RecreateType.Object);
-                Destroy(gameObject);
+                GameMaster.Instance.SaveState(transform.name, 0, GameMaster.RecreateType.Object); //save wall state
+                Destroy(gameObject); //destroy wall
             }
-            else
+            else //if wall health is greater than 0
             {
-                SpawnParticles(collision.transform.parent.transform.localScale.x);
+                SpawnParticles(collision.transform.parent.transform.localScale.x); //show hit particles
             }
         }
     }
 
     private void SpawnParticles(float playerLook)
     {
-        var hitParticle = Resources.Load("Effects/ChestHit") as GameObject;
+        var hitParticle = Resources.Load("Effects/ChestHit") as GameObject; //get hit particles
         var hitParticlesInstantiate = Instantiate(hitParticle);
         hitParticlesInstantiate.transform.position = transform.position;
 
@@ -43,17 +48,24 @@ public class DestroyingWall : MonoBehaviour {
             hitParticlesInstantiate.transform.rotation =
                 new Quaternion(hitParticlesInstantiate.transform.rotation.x, hitParticlesInstantiate.transform.rotation.y * -1, hitParticlesInstantiate.transform.rotation.z, hitParticlesInstantiate.transform.rotation.w);
 
-        Destroy(hitParticlesInstantiate, 1.5f);
+        Destroy(hitParticlesInstantiate, 1.5f); //destroy particles after 1.5s
     }
 
-    private IEnumerator WallHit(int amount)
+    private void WallHit()
     {
-        Health -= amount;
+        Health -= 1; //remove 1 health from current wall health
 
-        m_Animator.SetBool("Hit", true);
+        StartCoroutine(HitAnimation()); //play hit animation
+    }
+
+    private IEnumerator HitAnimation()
+    {
+        m_Animator.SetBool("Hit", true); //play hit animation
 
         yield return new WaitForSeconds(0.2f);
 
-        m_Animator.SetBool("Hit", false);
+        m_Animator.SetBool("Hit", false); //stop playing hit animation
     }
+
+    #endregion
 }

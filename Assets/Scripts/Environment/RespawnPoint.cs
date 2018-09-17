@@ -4,47 +4,47 @@ using UnityEngine;
 
 public class RespawnPoint : MonoBehaviour {
 
+    #region private fields
+
     [SerializeField] private bool isLight;
 
     private Transform m_Flame;
 
+    #endregion
+
+    #region private methods
+
     private void Start()
     {
-        InitializeFlame();
-    }
-
-    private void InitializeFlame()
-    {
-        m_Flame = gameObject.transform.GetChild(0);
-
-        if (m_Flame == null)
-        {
-            Debug.LogError("RespawnPoint: Can't find flame in child");
-        }
-
-        SetActiveFlame(false);
+        m_Flame = gameObject.transform.GetChild(0); //initialize flame animation
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_Flame.gameObject.activeSelf)
+        if (collision.CompareTag("Player") & !m_Flame.gameObject.activeSelf) //if player is in respawn point trigger and respawn isn't active
         {
-            GameMaster.Instance.ChangeRespawnPoint(gameObject.transform);
+            GameMaster.Instance.ChangeRespawnPoint(gameObject.transform); //change player respawn point
 
-            SetActiveFlame(true);
-            ChangePlayerMaterial(collision);
+            SetActiveFlame(true); //enable flame animation
+            ChangePlayerMaterial(collision); //if respawn point has light on it change player material
 
-            SaveLoadManager.Instance.SaveGameData();
+            SaveLoadManager.Instance.SaveGameData(); //save game data
         }
     }
+
+    private void ChangePlayerMaterial(Collider2D collision)
+    {
+        collision.GetComponent<MaterialChange>().Change(isLight); //if respawn point has light on it change player material
+    }
+
+    #endregion
+
+    #region public methods
 
     public void SetActiveFlame(bool value)
     {
         m_Flame.gameObject.SetActive(value);
     }
 
-    private void ChangePlayerMaterial(Collider2D collision)
-    {
-        collision.GetComponent<MaterialChange>().Change(isLight);
-    }
+    #endregion
 }

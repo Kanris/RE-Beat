@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class FlyingPlatform : MonoBehaviour {
 
-    public enum FlyingPlatformType { Vertical, Horizontal }
-    public enum DirectionType { LeftDown, RightUp }
+    #region enum
 
+    public enum FlyingPlatformType { Vertical, Horizontal } //flying platform type
     [SerializeField] private FlyingPlatformType PlatformType;
-    [SerializeField, Range(1, 20)] private float MovingTime = 1f;
-    [SerializeField, Range(1, 20)] private float IdleTime = 3f;
+
+    public enum DirectionType { LeftDown, RightUp } //move direction
     [SerializeField] private DirectionType Direction;
 
-    private Vector3 m_MoveVector;
-    private bool m_Idle;
-    private float m_UpdateTime = 0f;
-    private float m_StartDirection = -1f;
+    #endregion
+
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField, Range(1, 20)] private float MovingTime = 1f; //how long is platform moving
+    [SerializeField, Range(1, 20)] private float IdleTime = 3f; //how long is platform idle
+
+    #endregion
+
+    private Vector3 m_MoveVector; //platform move vectore
+    private bool m_Idle; //is platform idling
+    private float m_UpdateTime = 0f; //change state timer
+    private float m_StartDirection = -1f; //move direction
+
+    #endregion
+
+    #region private methods
+
+    #region initialize
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
         InitializeStartDirection();
 
@@ -53,55 +70,53 @@ public class FlyingPlatform : MonoBehaviour {
                 break;
         }
     }
-	
-	// Update is called once per frame
-	private void FixedUpdate () {
 
-        if (m_UpdateTime <= Time.time)
+    #endregion
+
+    // Update is called once per frame
+    private void FixedUpdate () {
+
+        if (m_UpdateTime <= Time.time) //if need to change state
         {
-            m_Idle = !m_Idle;
+            m_Idle = !m_Idle; //change state
             m_UpdateTime = Time.time;
 
-            if (m_Idle)
+            if (m_Idle) //is state is idle
             { 
-                ChangeDirection();
-                m_UpdateTime += IdleTime;
+                ChangeDirection(); //change platform direction
+                m_UpdateTime += IdleTime; //idle pause
             }
             else
-                m_UpdateTime += MovingTime;
+                m_UpdateTime += MovingTime; //moving time
         }
-        else
+        else if (!m_Idle) //if platform is moving
         {
-            if (!m_Idle)
-            {
-                transform.position += m_MoveVector * Time.fixedDeltaTime * 1.5f;
-            }
+            transform.position += m_MoveVector * Time.fixedDeltaTime * 1.5f;
         }
 
 	}
 
     private void ChangeDirection()
     {
-        m_MoveVector = -m_MoveVector;
+        m_MoveVector = -m_MoveVector; //change platform move direction
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player")) //if player is on the platform
         {
-            collision.transform.SetParent(transform);
-        }
-        else if (collision.transform.CompareTag("Ground"))
-        {
-            ChangeDirection();
+            collision.transform.SetParent(transform); //attach player to the platform so he will be moved with platform
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player")) //if player is leave platform
         {
-            collision.transform.SetParent(null);
+            collision.transform.SetParent(null); //detach player from the platform
         }
     }
+
+    #endregion
+
 }
