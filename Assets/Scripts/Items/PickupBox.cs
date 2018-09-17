@@ -1,39 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class PickupBox : MonoBehaviour {
 
-    private GameObject m_InteractionButton;
-    private Vector3 m_SpawnPosition;
-    private Quaternion m_SpawnRotation;
-    private Transform m_Player;
+    #region public fields
+
+    public float YRestrictions = -10f; //y fall restrictions
+
+    #endregion
+
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private GameObject DeathParticle; //box destroying particles
+    [SerializeField] private string DestroySound; //box destroying sound
+
+    #endregion
+
+    private BoxCollider2D m_BoxCollider; //box collider
+    private GameObject m_InteractionButton; //box ui
+    private Vector3 m_SpawnPosition; //box spawn position
+    public Transform m_Player; //player reference
     
-    private bool m_IsBoxUp;
-    private bool m_IsQuitting = false;
+    public bool m_IsBoxUp; //is box in player's hand
+    private bool m_IsQuitting; //is application closing
 
-    public float YRestrictions = -10f;
+    #endregion
 
-    [SerializeField] private BoxCollider2D m_BoxCollider;
-    [SerializeField] private GameObject DeathParticle;
-    [SerializeField] private string DestroySound;
+    #region private methods
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
-        InitializeInteractionButton();
+        InitializeInteractionButton(); //initialize box ui
 
-        ActiveInteractionButton(false);
+        m_BoxCollider = GetComponent<BoxCollider2D>(); //get box collider
 
-        m_SpawnPosition = transform.position;
-        m_SpawnRotation = transform.rotation;
+        m_InteractionButton.SetActive(false); //hide box ui
 
-        ChangeIsQuitting(false);
+        m_SpawnPosition = transform.position; //initialize respawn position
+
+        ChangeIsQuitting(false); //application is not closing
 
         SubscribeToEvents();
 
-        GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+        GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save object state
     }
 
     #region Initialize
@@ -46,35 +58,38 @@ public class PickupBox : MonoBehaviour {
 
     private void SubscribeToEvents()
     {
-        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //if player is open start screen
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player is move to the next sceen
     }
 
     #endregion
 
     private void OnApplicationQuit()
     {
-        ChangeIsQuitting(true);
+        ChangeIsQuitting(true); //application is closing
     }
 
     private void OnDestroy()
     {
-         if (!m_IsQuitting)
+         if (!m_IsQuitting) //is application is not closing
          {
-            ShowDeathParticles();
-            PlayDestroySound();
+            ShowDeathParticles(); //display destroying particles
+            PlayDestroySound(); //play destroy sound
 
+            //respawn new box
             var newBox = Resources.Load("Items/Box") as GameObject;
-            Instantiate(newBox, m_SpawnPosition, m_SpawnRotation);
+            var instantiateNewBox = Instantiate(newBox);
+            instantiateNewBox.transform.position = m_SpawnPosition;
          }
      }
 
     private void ShowDeathParticles()
     {
-        if (DeathParticle != null)
+        if (DeathParticle != null) //if death particles has reference
         {
-            if (transform != null)
+            if (transform != null) //if box is not detroyed
             {
+                //spawn particles
                 var deathParticles = GameMaster.Instantiate(DeathParticle, transform.position, transform.rotation);
                 GameMaster.Destroy(deathParticles, 1f);
             }
@@ -92,73 +107,55 @@ public class PickupBox : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
-        if (m_Player != null)
+        if (m_Player != null) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                Transform parrentTransform = null;
+                var parent = m_Player;
 
-                if (!m_IsBoxUp)
+                if (m_IsBoxUp)
                 {
-                    if (m_Player != null)
-                    {
-                        parrentTransform = m_Player;
-                    }
+                    parent = null;
                 }
 
-                AttachToParent(parrentTransform);
-            }
-        }
-        else if (m_IsBoxUp)
-        {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
-            {
-                AttachToParent(null);
+                AttachToParent(parent); //attach box to the player
             }
         }
 
-        if (!m_IsQuitting)
+        if (!m_IsQuitting) //if application is not closing
         {
-            if (transform.position.y < YRestrictions)
+            if (transform.position.y < YRestrictions) //if box is out from y restrictions
             {
-                Destroy(gameObject);
+                Destroy(gameObject); //destroy box to respawn new
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player == null)
+        if (collision.CompareTag("Player") & m_Player == null) //if player is near box
         {
-            ActiveInteractionButton(true);
-            m_Player = collision.transform;
+            m_InteractionButton.SetActive(true); //show box ui
+            m_Player = collision.transform; //get player reference
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player != null)
+        if (collision.CompareTag("Player") & m_Player != null) //if player move away from the box
         {
-            ActiveInteractionButton(false);
-            m_Player = null;
-        }
-    }
-
-    private void ActiveInteractionButton(bool isActive)
-    {
-        if (m_InteractionButton != null)
-        {
-            m_InteractionButton.SetActive(isActive);
+            m_InteractionButton.SetActive(false); //hide box ui
+            m_Player = null; //remove player reference
         }
     }
 
     private void AttachToParent(Transform parrent)
     {
-        transform.SetParent(parrent);
+        transform.SetParent(parrent); //attach box to the parrent
 
-        if (parrent != null)
+        if (parrent != null) //if parent there is parent
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
             ChangeBoxProperty(true, 0);   
         }
         else
@@ -169,8 +166,8 @@ public class PickupBox : MonoBehaviour {
 
     private void ChangeBoxProperty(bool isActive, int layerId)
     {
-        m_IsBoxUp = isActive;
-        m_BoxCollider.enabled = !isActive;
+        m_IsBoxUp = isActive; //is box picked up
+        m_BoxCollider.enabled = !isActive; //remove or enable collider on the box
 
         if (isActive)
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
@@ -180,12 +177,15 @@ public class PickupBox : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 
-        transform.gameObject.layer = layerId;
-        ActiveInteractionButton(!isActive);
+        transform.gameObject.layer = layerId; //change layer so player can play walk or jump animation
+        m_InteractionButton.SetActive(!isActive); //show or hide box ui
     }
 
     private void ChangeIsQuitting(bool value)
     {
         m_IsQuitting = value;
     }
+
+    #endregion
+
 }

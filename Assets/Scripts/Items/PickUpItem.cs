@@ -1,21 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class PickUpItem : MonoBehaviour {
 
-    [SerializeField] private Item item;
+    #region private fields
 
-    private GameObject m_InteractionButton;
-    private bool m_IsPlayerNearDoor = false;
-    private PlayerStats m_PlayerStats;
-    private SpriteRenderer m_SpriteRenderer;
+    [SerializeField] private Item item; //item description
+
+    private GameObject m_InteractionButton; //item ui
+    private PlayerStats m_PlayerStats; //player stats (for heal item type)
+    private bool m_IsPlayerNearDoor = false; //is player near item
+
+    #endregion
+
+    #region private methods
+
+    #region initialize
 
     private void Start()
     {
-        InitializeInteractionButton();
-        ShowInteractionKey(false);
+        InitializeInteractionButton(); //initialize item ui
+
+        m_InteractionButton.gameObject.SetActive(false); //hide item ui
     }
 
     private void InitializeInteractionButton()
@@ -23,86 +29,82 @@ public class PickUpItem : MonoBehaviour {
         var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
         m_InteractionButton = Instantiate(interactionButton, transform);
 
-        //m_SpriteRenderer.sprite.
     }
+
+    #endregion
 
     private void Update()
     {
-        if (m_IsPlayerNearDoor)
+        if (m_IsPlayerNearDoor) //if is player near item
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                InteractWithItem();
+                InteractWithItem(); //add item
             }
         }
     }
 
     private void InteractWithItem()
     {            
-        switch (item.itemType)
+        switch (item.itemType) //base on item type
         {
-            case Item.ItemType.Item:
-                AddToTheInventory();
+            case Item.ItemType.Item: //if it is item
+                AddToTheInventory(); //add to the inventory
                 break;
-            case Item.ItemType.Note:
-                ReadNote();
+
+            case Item.ItemType.Note: //it is is note
+                ReadNote(); //read note
                 break;
-            case Item.ItemType.Heal:
+
+            case Item.ItemType.Heal: //if it is heal
                 if (m_PlayerStats != null)
-                    m_PlayerStats.HealPlayer(item.HealAmount);
+                    m_PlayerStats.HealPlayer(item.HealAmount); //heal player
+
                 Destroy(gameObject);
                 break;
         }
-
-        if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
+        
+        GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player")) //if player is near item
         {
-            m_IsPlayerNearDoor = true;
+            m_IsPlayerNearDoor = true; //player is near item
 
-            if (item.itemType == Item.ItemType.Heal)
-                m_PlayerStats = collision.GetComponent<Player>().playerStats;
+            if (item.itemType == Item.ItemType.Heal) //if item type is heal
+                m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
 
-            ShowInteractionKey(m_IsPlayerNearDoor);
+            m_InteractionButton.gameObject.SetActive(true); // show item ui
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNearDoor)
+        if (collision.CompareTag("Player")) //if player move away from the item
         {
-            m_IsPlayerNearDoor = false;
-            ShowInteractionKey(m_IsPlayerNearDoor);
-        }
-    }
+            m_IsPlayerNearDoor = false; //player is not near the door
 
-    private void ShowInteractionKey(bool show)
-    {
-        if (m_InteractionButton != null)
-            m_InteractionButton.gameObject.SetActive(show);
-        else
-            Debug.LogError("Door.ShowInteractionKey: InteractionButtonImage is not initialized");
+            if (item.itemType == Item.ItemType.Heal) //if item type is heal
+                m_PlayerStats = null; //remove reference to the player stats
+
+            m_InteractionButton.gameObject.SetActive(false); //hide item ui
+        }
     }
 
     private void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item, GetComponent<SpriteRenderer>().sprite.name);
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
+        PlayerStats.PlayerInventory.Add(item, GetComponent<SpriteRenderer>().sprite.name); //add item to the player's bag
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Name + " add to inventory")); //show announcer message about new item in the bag
 
-        Destroy(gameObject);
+        Destroy(gameObject); //destroy this item
     }
 
     private void ReadNote()
     {
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Description, 4f));
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Description, 4f)); //show announcer with message in the note
     }
 
-    private AnnouncerManager.Message GetAnnouncerMessage()
-    {
-        return new AnnouncerManager.Message(item.Name + " add to inventory");
-    }
+    #endregion
 }

@@ -1,42 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(Animator))]
 public class MagneticBox : MonoBehaviour {
 
-    public string NeededItem = "Magnetic Arm";
+    #region public fields
 
-    [SerializeField] private GameObject DeathParticles;
-    [SerializeField] private string DestroySound;
+    public string NeededItem = "Magnetic Arm"; //required item to pickup item
 
-    private bool m_IsBoxPickedUp;
-    private bool m_IsQuitting;
-    private Animator m_Animator;
-    private Transform m_Player;
-    private Vector2 m_RespawnPosition;
-    private Quaternion m_RespawnRotation;
-    private GameObject m_InteractionButton;
+    #endregion
 
-	// Use this for initialization
-	void Start () {
+    #region private fields
 
-        InitializeInteractionButton();
+    #region serialize fields
 
-        InitializeRespawnValues();
+    [SerializeField] private GameObject DeathParticles; //destroying particles
+    [SerializeField] private string DestroySound; //destroying sound
 
-        InitializeAnimator();
+    #endregion
 
-        ChangeIsQuitting(false);
+    private bool m_IsBoxPickedUp; //is box in player hands
+    private bool m_IsQuitting; //is application closing
+    private Animator m_Animator; //box animator
+    private Transform m_Player; //player reference
+    private Vector2 m_RespawnPosition; //box respawn point
+    private GameObject m_InteractionButton; //box ui
 
-        ActiveInteractionButton(false);
+    #endregion
+
+    #region private fields
+
+    #region Initialize
+    // Use this for initialization
+    private void Start () {
+
+        InitializeInteractionButton(); //initialize box ui
+
+        m_RespawnPosition = transform.position; //initialize respawn point
+
+        m_Animator = GetComponent<Animator>(); //box animator
+
+        ChangeIsQuitting(false); //game is not closing
+
+        m_InteractionButton.SetActive(false); //hide box ui
 
         SubscribeToEvents();
 
-        GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+        GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
     }
-
-    #region Initialize
 
     private void InitializeInteractionButton()
     {
@@ -44,52 +55,41 @@ public class MagneticBox : MonoBehaviour {
         m_InteractionButton = Instantiate(interactionButton, transform);
     }
 
-    private void InitializeRespawnValues()
-    {
-        m_RespawnPosition = transform.position;
-        m_RespawnRotation = transform.rotation;
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("MagneticBox.InitializeAnimator: can't find animator on gameObject");
-        }
-    }
-
     private void SubscribeToEvents()
     {
-        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //is player return to the start screen
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
+
     }
+    
     #endregion
 
     private void OnApplicationQuit()
     {
-        ChangeIsQuitting(true);
+        ChangeIsQuitting(true); //application is closing
     }
 
     private void OnDestroy()
     {
-        if (!m_IsQuitting)
+        if (!m_IsQuitting) //if application is not closing
         {
-            ShowDeathParticles();
-            PlayDestroySound();
+            ShowDeathParticles(); //show destroying particles
+            PlayDestroySound(); //play destroying sound
 
-            var objectToRespawn = Resources.Load("Items/MagneticBox");
-            Instantiate(objectToRespawn, m_RespawnPosition, m_RespawnRotation);
+            //respawn new box
+            var objectToRespawn = Resources.Load("Items/MagneticBox") as GameObject;
+            var instantiatedBox = Instantiate(objectToRespawn);
+            instantiatedBox.transform.position = m_RespawnPosition;
         }
     }
 
     private void ShowDeathParticles()
     {
-        if (DeathParticles != null)
+        if (DeathParticles != null) //if there is death particles
         {
-            if (transform != null)
+            if (transform != null) //if box still reachable
             {
+                //show deathParticles
                 var deathParticles = GameMaster.Instantiate(DeathParticles, transform.position, transform.rotation);
                 GameMaster.Destroy(deathParticles, 1f);
             }
@@ -106,88 +106,72 @@ public class MagneticBox : MonoBehaviour {
 
     private void Update()
     {
-        if (m_Player != null)
+        if (m_Player != null) //if player near the box
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                if (IsPlayerHaveItem())
+                if (PlayerStats.PlayerInventory.IsInBag(NeededItem)) //if player have needed item
                 {
-                    PickUpBox(true);
+                    PickUpBox(true); //pick up box
                 }
-                else
+                else //if player haven't needed item
                 {
                     AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                        new AnnouncerManager.Message(NeededItem + " - required to pickup this box."));
+                        new AnnouncerManager.Message(NeededItem + " - required to pickup this box.")); //display warning message
                 }
             }
         }
-        else if (m_IsBoxPickedUp)
+        else if (m_IsBoxPickedUp) //if box is picked up
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                PickUpBox(false);
+                PickUpBox(false); //put the box
             }
         }
     }
 
     private void PickUpBox(bool value)
     {
-        m_IsBoxPickedUp = value;
+        m_IsBoxPickedUp = value; //change box value
 
-        if (value)
+        if (value) //if box is picked up
         {
-            transform.SetParent(m_Player);
-            transform.localPosition = new Vector2(0.5f, 0.5f);
-            transform.gameObject.layer = 0;
-            SetAnimation("Active");
+            transform.SetParent(m_Player); //attach box to the player
+            transform.localPosition = new Vector2(0.5f, 0.5f); //put box in fron of the player
+            transform.gameObject.layer = 0; //change layer so player animation will play correctly
+            m_Animator.SetTrigger("Active"); //play active animation
         }
-        else
+        else //if need to put box down
         {
-            transform.SetParent(null);
-            transform.gameObject.layer = 14;
-            SetAnimation("Inactive");
-            GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+            transform.SetParent(null); //detach from parent
+            transform.gameObject.layer = 14; //chage layer so player can play ground animation
+            m_Animator.SetTrigger("Inactive"); //play inactive animation
+            GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & m_Player == null)
+        if (collision.transform.CompareTag("Player") & m_Player == null) //if player near box
         {
-            m_Player = collision.transform;
-            ActiveInteractionButton(true);
+            m_Player = collision.transform; //save player 
+            m_InteractionButton.SetActive(true); //show box ui
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & m_Player != null)
+        if (collision.transform.CompareTag("Player") & m_Player != null) //if player leave box
         {
-            m_Player = null;
-            ActiveInteractionButton(false);
+            m_Player = null; //remove player reference
+            m_InteractionButton.SetActive(false); //hide box ui
         }
-    }
-
-    private bool IsPlayerHaveItem()
-    {
-        return PlayerStats.PlayerInventory.IsInBag(NeededItem);
-    }
-
-    private void ActiveInteractionButton(bool isActive)
-    {
-        if (m_InteractionButton != null)
-        {
-            m_InteractionButton.SetActive(isActive);
-        }
-    }
-
-    private void SetAnimation(string name)
-    {
-        m_Animator.SetTrigger(name);
     }
 
     private void ChangeIsQuitting(bool value)
     {
         m_IsQuitting = value;
     }
+
+    #endregion
 }

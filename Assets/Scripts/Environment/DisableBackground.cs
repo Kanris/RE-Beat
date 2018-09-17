@@ -116,7 +116,8 @@ public class DisableBackground : MonoBehaviour {
                 //apply new material
                 for (var index = 0; index < ChangeMaterialTilemap.Length; index++)
                 {
-                    ChangeMaterialTilemap[index].material = material;
+                    if (ChangeMaterialTilemap[index] != null)
+                        ChangeMaterialTilemap[index].material = material;
                 }
             }
         }

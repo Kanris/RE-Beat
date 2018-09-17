@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ChestItem : MonoBehaviour {
 
-    [SerializeField] Item item;
+    #region private fields
+
+    [SerializeField] private Item item; //item description
+
+    #endregion
+
+    #region public methods
 
     public void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item, GetComponent<Image>().sprite.name);
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(GetAnnouncerMessage());
+        PlayerStats.PlayerInventory.Add(item, GetComponent<Image>().sprite.name); //add item to the player inventory
 
-        if (GameMaster.Instance != null)
-            GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem);
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(
+            new AnnouncerManager.Message(item.Name + " add to the inventory")); //display additing message
 
-        Destroy(gameObject);
+        GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
+
+        Destroy(gameObject); //destroy item
     }
 
-    private AnnouncerManager.Message GetAnnouncerMessage()
-    {
-        return new AnnouncerManager.Message(item.Name + " add to the inventory");
-    }
+    #endregion
 }

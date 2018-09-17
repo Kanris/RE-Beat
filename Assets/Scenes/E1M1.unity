@@ -28478,10 +28478,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory: {fileID: 2053566476}
-  m_Animator: {fileID: 1243147776}
   chestType: 1
-  Health: 100
+  m_Inventory: {fileID: 2053566476}
+  Health: 2
 --- !u!61 &1243147778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29711,6 +29710,14 @@ Prefab:
     - target: {fileID: 1846643860262880, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4938978137075384, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1846643860262880, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}
+      propertyPath: m_Name
+      value: BoxOnString
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7137fae09a410c74e9d439e0d76c5ef2, type: 2}

@@ -171,10 +171,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   YRestrictions: -10
-  m_BoxCollider: {fileID: 61593544100186622}
   DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
     type: 2}
   DestroySound: Box Destroy
+  m_Player: {fileID: 0}
+  m_IsBoxUp: 0
 --- !u!212 &212211230881872706
 SpriteRenderer:
   m_ObjectHideFlags: 1
