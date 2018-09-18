@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RespawnPoint : MonoBehaviour {
 
@@ -17,6 +15,7 @@ public class RespawnPoint : MonoBehaviour {
     private void Start()
     {
         m_Flame = gameObject.transform.GetChild(0); //initialize flame animation
+        m_Flame.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
