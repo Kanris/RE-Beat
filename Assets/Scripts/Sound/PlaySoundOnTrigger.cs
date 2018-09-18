@@ -1,26 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlaySoundOnTrigger : MonoBehaviour {
 
+    #region private fields
+
     [SerializeField] private string Sound;
+
+    #endregion
+
+    #region private methods
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SoundManager(collision);
+        SoundManager(collision.tag);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        SoundManager(collision, false);
+        SoundManager(collision.tag, false);
     }
 
-    private void SoundManager(Collider2D collision, bool PlaySound = true)
+    private void SoundManager(string name, bool PlaySound = true)
     {
-        if (!string.IsNullOrEmpty(Sound))
+        if (!string.IsNullOrEmpty(Sound)) //if sound attached
         {
-            if (collision.CompareTag("Player"))
+            if (name == "Player") //if collision is a player
             {
                 if (PlaySound)
                 {
@@ -38,4 +42,6 @@ public class PlaySoundOnTrigger : MonoBehaviour {
         }
 
     }
+
+    #endregion
 }

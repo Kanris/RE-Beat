@@ -1,33 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChangeFootStepsSound : MonoBehaviour {
 
-    [SerializeField] private string Sound;
-    private string PreviousSound;
-    private bool isPlayerOnTrigger = false;
+    #region private fields
+
+    [SerializeField] private string Sound; //foot sound
+
+    #endregion
+
+    #region private methods
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & !isPlayerOnTrigger)
+        if (collision.transform.CompareTag("Player") )
         {
-            PreviousSound = collision.gameObject.GetComponent<FootSound>().Sound;
-            AudioManager.Instance.Stop(PreviousSound);
-            collision.gameObject.GetComponent<FootSound>().Sound = Sound;
-
-            isPlayerOnTrigger = true;
+            if (collision.gameObject.GetComponent<FootSound>().Sound != Sound)
+            {
+                AudioManager.Instance.Stop(collision.gameObject.GetComponent<FootSound>().Sound);
+                collision.gameObject.GetComponent<FootSound>().Sound = Sound;
+            }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Player") & isPlayerOnTrigger)
-        {
-            AudioManager.Instance.Stop(Sound);
-            collision.gameObject.GetComponent<FootSound>().Sound = PreviousSound;
-
-            isPlayerOnTrigger = false;
-        }
-    }
+    #endregion
 }
