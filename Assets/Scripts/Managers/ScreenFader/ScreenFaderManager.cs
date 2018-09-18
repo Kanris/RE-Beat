@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenFaderManager : MonoBehaviour {
@@ -24,77 +23,58 @@ public class ScreenFaderManager : MonoBehaviour {
     }
     #endregion
 
-    private Animator m_Animator;
-    private GameObject m_ChildUIGameObject;
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private Animator m_BackgroundAnimator;
+    [SerializeField] private GameObject m_UI;
+
+    #endregion
+
     private bool m_IsFading = false;
+
+    #endregion
+
+    #region private methods
 
     private void Start()
     {
-        InitializeUI();
-
-        InitializeAnimator();
-
-        SetActiveUI(false);
-    }
-
-    private void InitializeUI()
-    {
-        var childTransform = transform.GetChild(0);
-
-        if (childTransform != null)
-        {
-            m_ChildUIGameObject = childTransform.gameObject;
-        }
-        else
-        {
-            Debug.LogError("ScreenFaderManager.InitializeUI: Can't find child object");
-        }
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = m_ChildUIGameObject.GetComponentInChildren<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("ScreenFaderManager.InitializeAnimator: Can't find animator in child objects");
-        }
-    }
-
-    private void SetActiveUI(bool active)
-    {
-        if (m_ChildUIGameObject != null)
-            m_ChildUIGameObject.SetActive(active);
-    }
-
-    public IEnumerator FadeToClear()
-    {
-        yield return FadeTo("FadeOut");
-    }
-
-    public IEnumerator FadeToBlack()
-    {
-        yield return FadeTo("FadeIn");
+        m_UI.SetActive(false); //hide ui
     }
 
     private IEnumerator FadeTo(string trigger)
     {
-        m_IsFading = true;
-        SetActiveUI(m_IsFading);
-        m_ChildUIGameObject.GetComponent<Canvas>().sortingOrder = 100;
-        m_Animator.SetTrigger(trigger);
+        m_IsFading = true; //notify that fading starts
+
+        m_UI.SetActive(m_IsFading); //show fade ui
+        m_BackgroundAnimator.SetTrigger(trigger); //start animation
 
         while (m_IsFading)
             yield return null;
 
-        m_ChildUIGameObject.GetComponent<Canvas>().sortingOrder = -100;
-
         if (trigger == "FadeOut")
-            SetActiveUI(m_IsFading);
+            m_UI.SetActive(false);
     }
+
+    #endregion
+
+    #region public methods
 
     public void AnimationComplete()
     {
-        m_IsFading = false;
+        m_IsFading = false; //notify that animation complete
     }
+
+    public IEnumerator FadeToClear()
+    {
+        yield return FadeTo("FadeOut"); //start fade out animation
+    }
+
+    public IEnumerator FadeToBlack()
+    {
+        yield return FadeTo("FadeIn"); //start fade in animaiton
+    }
+
+    #endregion
 }
