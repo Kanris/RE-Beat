@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class Actions : MonoBehaviour {
+
+    #region public fields
 
     public enum PlayerAction { OnSubmit, OnDestroy }
     public PlayerAction playerAction;
@@ -13,9 +13,14 @@ public class Actions : MonoBehaviour {
 
     public GameObject ActionObject;
 
-    private bool m_IsQuitting;
-    private bool m_IsPlayerNear;
+    #endregion
 
+    #region private fields
+
+    private bool m_IsQuitting; //is application closing
+    private bool m_IsPlayerNear; //is player near
+
+    #endregion
 
     #region Initialize
     private void Start()
@@ -37,9 +42,12 @@ public class Actions : MonoBehaviour {
 
     #endregion
 
+    #region private methods
+
     private void Update()
     {
-        if (playerAction == PlayerAction.OnSubmit)
+        //trigger on submit
+        if (playerAction == PlayerAction.OnSubmit) 
         {
             if (m_IsPlayerNear)
             {
@@ -53,12 +61,13 @@ public class Actions : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
+        //application is closing
         ChangeIsQuitting(true);
     }
 
     private void OnDestroy()
     {
-        if (!m_IsQuitting & playerAction == PlayerAction.OnDestroy)
+        if (!m_IsQuitting & playerAction == PlayerAction.OnDestroy) //on destroy
         {
             ChangeObjectState();
         }
@@ -68,7 +77,7 @@ public class Actions : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
+        if (collision.CompareTag("Player"))
         {
             m_IsPlayerNear = true;
         }
@@ -76,7 +85,7 @@ public class Actions : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
+        if (collision.CompareTag("Player"))
         {
             m_IsPlayerNear = false;
         }
@@ -88,13 +97,14 @@ public class Actions : MonoBehaviour {
     {
         if (ActionObject != null)
         {
-            if (actionType == ActionType.Destroy)
+            //destroy
+            if (actionType == ActionType.Destroy) 
             {
                 GameMaster.Instance.SaveState(ActionObject.name, 0, GameMaster.RecreateType.Object);
                 Destroy(ActionObject);
             }
-
-            else if (actionType == ActionType.Show)
+            //show
+            else if (actionType == ActionType.Show) 
                 ActionObject.SetActive(true);
         }
     }
@@ -103,4 +113,6 @@ public class Actions : MonoBehaviour {
     {
         m_IsQuitting = value;
     }
+
+    #endregion
 }

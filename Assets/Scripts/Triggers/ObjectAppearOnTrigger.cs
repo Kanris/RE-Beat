@@ -1,23 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ObjectAppearOnTrigger : MonoBehaviour {
 
-    [SerializeField] private GameObject ObjectToAppear;
-    [SerializeField] private GameObject ShowOnDestroy;
-    [SerializeField] private bool DestroyOnTrigger;
+    #region private fields
 
-    private bool m_IsQuitting;
+    [SerializeField] private GameObject ObjectToAppear; //object to show
+    [SerializeField] private GameObject ShowOnDestroy; //show on destroy some object
+    [SerializeField] private bool DestroyOnTrigger; 
+
+    private bool m_IsQuitting; //is application is closing
+
+    #endregion
+
+    #region private methods
 
     #region Initialize
 
     private void Start()
-    {
-        SubscribeToEvents();
-    }
-
-    private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
@@ -25,17 +24,12 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
     #endregion
 
-    private void ChangeIsQuitting(bool value)
-    {
-        m_IsQuitting = value;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) //if player in collision
         {
-            AppearObject();
-            DestroyThisTrigger();
+            AppearObject(); //show object
+            DestroyThisTrigger(); //destroy this object
         }
     }
 
@@ -56,13 +50,6 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
         }
     }
 
-    #region OnDestroy
-
-    private void OnApplicationQuit()
-    {
-        ChangeIsQuitting(true);
-    }
-
     private void OnDestroy()
     {
         if (!m_IsQuitting)
@@ -72,6 +59,16 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
                 ShowOnDestroy.SetActive(true);
             }
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        ChangeIsQuitting(true);
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 
     #endregion
