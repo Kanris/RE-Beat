@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerDamageFromFace : MonoBehaviour {
 
+    #region public fields
+
     public Player player;
+
+    #endregion
+
+    #region private methods
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,4 +25,6 @@ public class PlayerDamageFromFace : MonoBehaviour {
             player.IsDamageFromFace = false;
         }
     }
+
+    #endregion
 }

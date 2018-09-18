@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
@@ -7,88 +6,78 @@ using UnityStandardAssets._2D;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
 
-    #region serialize fields
+    #region public fields
 
-    [SerializeField, Range(-3, -200)] private float YBoundaries = -20f;
-    [SerializeField, Range(-3, -20)] private float YFallDeath = -3f;
+    public PlayerStats playerStats; //player stats
 
-    [SerializeField] private GameObject m_AttackRangeAnimation;
-    [SerializeField] private AnimationClip m_AttackAnimation;
-    [SerializeField] private Transform m_AttackPosition;
-    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX;
-    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY;
-    [SerializeField] private LayerMask m_WhatIsEnemy;
-    [SerializeField] private string m_AttackSound = "Player Attack";
+    [HideInInspector] public bool IsDamageFromFace; //is player take damage from face
 
     #endregion
 
     #region private fields
 
-    private Animator m_Animator;
+    #region serialize fields
 
-    private float m_YPositionBeforeJump;
-    private bool isPlayerBusy = false;
-    private bool m_IsAttacking;
-    private float m_AttackUpdateTime;
-    private Vector2 m_ThrowBackVector;
+    [SerializeField, Range(-3, -20)] private float YFallDeath = -3f; //max y fall 
+
+    [SerializeField] private GameObject m_AttackRangeAnimation; //player attack range
+    [SerializeField] private AnimationClip m_AttackAnimation; //attack animation
+    [SerializeField] private Transform m_AttackPosition; //attack position
+    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX; //attack range x
+    [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY; //attack range y
+    [SerializeField] private LayerMask m_WhatIsEnemy; //defines what is enemy
+    [SerializeField] private string m_AttackSound = "Player Attack"; //player attack sound
+
+    #endregion
+
+    private Animator m_Animator; //player animator
+    private float m_YPositionBeforeJump; //player y position before jump
+    private bool isPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
+    private bool m_IsAttacking; //is player attacking
+    private float m_AttackUpdateTime; //next attack time
+    private Vector2 m_ThrowBackVector; //throw back values
 
     #endregion
 
-    #region public fields
-
-    public PlayerStats playerStats;
-    
-    [HideInInspector] public bool IsDamageFromFace;
-
-    #endregion
+    #region private methods
 
     #region Initialize
 
     private void Start()
     {
-        Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform);
+        Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform); //set new camera target
 
-        playerStats.Initialize(gameObject);
+        m_Animator = GetComponent<Animator>(); //reference to the player animator
 
-        InitializeAnimator();
+        playerStats.Initialize(gameObject); //initialize player stats
 
+        SubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
         PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
         InfoManager.Instance.OnJournalOpen += TriggerPlayerBussy;
 
-        GetComponent<PlatformerCharacter2D>().OnLandEvent += PlayLandSound;
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("Player.InitializeAnimator: Can't find Animator component on Gameobject");
-        }
+        GetComponent<PlatformerCharacter2D>().OnLandEvent += () => AudioManager.Instance.Play("Land"); 
     }
 
     #endregion
 
-    private void PlayLandSound()
-    {
-        AudioManager.Instance.Play("Land");
-    }
-
     // Update is called once per frame
     private void Update () {
 		
-        JumpHeightControl();
+        JumpHeightControl(); //check player jump height
 
-        if (m_AttackUpdateTime < Time.time)
+        if (m_AttackUpdateTime < Time.time) //can player attack
         {
-            if (!isPlayerBusy)
+            if (!isPlayerBusy) //is not player bussy
             {
-                if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                if (CrossPlatformInputManager.GetButtonDown("Fire1")) //if player press attack button
                 {
-                    m_AttackUpdateTime = Time.time + PlayerStats.AttackSpeed;
-                    StartCoroutine(Attack());
+                    m_AttackUpdateTime = Time.time + PlayerStats.AttackSpeed; //next attack time
+                    StartCoroutine(Attack()); //attack
                 }
             }
         }
@@ -96,9 +85,9 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (m_Animator.GetBool("Hit"))
+        if (m_Animator.GetBool("Hit")) //if someone hit player
         {
-            if (m_ThrowBackVector == Vector2.zero)
+            if (m_ThrowBackVector == Vector2.zero) //if there is not throw back values
                 m_ThrowBackVector = GetThrowBackVector();
             else
                 GetComponent<Rigidbody2D>().velocity = m_ThrowBackVector;
@@ -109,13 +98,14 @@ public class Player : MonoBehaviour {
 
     private IEnumerator Attack()
     {
-        m_AttackRangeAnimation.SetActive(true); //attack animation
+        m_AttackRangeAnimation.SetActive(true); //play attack animation
 
-        AudioManager.Instance.Play(m_AttackSound);
+        AudioManager.Instance.Play(m_AttackSound); //attack sound
 
         var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position, 
-            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, m_WhatIsEnemy);
+            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, m_WhatIsEnemy); //check is there enemy in attack range
 
+        //hit every enemy in attack range
         foreach (var enemy in enemiesToDamage)
         {
             float distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
@@ -123,8 +113,8 @@ public class Player : MonoBehaviour {
             playerStats.HitEnemy(enemy.GetComponent<EnemyStatsGO>().EnemyStats, GetHitZone(distance));
         }
 
-        yield return new WaitForSeconds(m_AttackAnimation.length);
-        m_AttackRangeAnimation.SetActive(false); //attack animation
+        yield return new WaitForSeconds(m_AttackAnimation.length); //wait until animation play
+        m_AttackRangeAnimation.SetActive(false); //stop attack animation
     }
 
     private int GetHitZone(float distance)
@@ -165,26 +155,29 @@ public class Player : MonoBehaviour {
 
     private void JumpHeightControl()
     {
-        if (transform.position.y <= YBoundaries)
+        //if player is not on the ground
+        if (!m_Animator.GetBool("Ground")) 
         {
-            playerStats.TakeDamage(playerStats.MaxHealth);
-        }
-
-        if (!m_Animator.GetBool("Ground"))
-        {
-            if (m_YPositionBeforeJump + YFallDeath >= transform.position.y & !GameMaster.Instance.isPlayerDead)
+            //check is player move from y restrictions
+            if (m_YPositionBeforeJump + YFallDeath > transform.position.y & !GameMaster.Instance.isPlayerDead)
             {
-                playerStats.TakeDamage(999);
+                playerStats.KillPlayer();
             }
         }
-        else
+        else //save current position before jump
         {
             m_YPositionBeforeJump = transform.position.y;
         }
     }
 
+    #endregion
+
+    #region public methods
+
     public void TriggerPlayerBussy(bool value)
     {
         isPlayerBusy = value;
     }
+
+    #endregion
 }
