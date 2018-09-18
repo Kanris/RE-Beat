@@ -107,6 +107,8 @@ public class InfoManager : MonoBehaviour {
     {
         var value = true; //open journal
 
+        m_Page.ClearText();
+
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
             OpenBookmark(id); 
