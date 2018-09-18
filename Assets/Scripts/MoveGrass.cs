@@ -5,47 +5,45 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
 public class MoveGrass : MonoBehaviour {
 
+    #region private fields
+
     private Animator m_Animator;
+    private int m_Health = 1;
+
+    #endregion
+
+    #region private methods
 
     #region Initialize
 
     // Use this for initialization
     void Start () {
 
-        InitializeAnimator();
-
-    }
-
-    private void InitializeAnimator()
-    {
         m_Animator = GetComponent<Animator>();
+
     }
 
     #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") & m_Health > 0) //if player in grass
         {
-            PlayMoveAnimation();
+            m_Animator.SetTrigger("Move"); //play move grass animation
         }
 
-        if (collision.CompareTag("PlayerAttackRange") )
+        if (collision.CompareTag("PlayerAttackRange") & m_Health > 0) //if player attack grass
         {
-            DestroyGrass();
+            m_Health--;
+            DestroyGrass(); //show destroy grass animation
         }
-    }
-
-    private void PlayMoveAnimation()
-    {
-        m_Animator.SetTrigger("Move");
     }
 
     private void DestroyGrass()
     {
-        ShowDestroyParticles();
-        m_Animator.SetTrigger("Hit");
-        transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f);
+        ShowDestroyParticles(); //show destroy particles
+        m_Animator.SetTrigger("Hit"); //play grass hit animation
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f); //move grass a little below
     }
 
     private void ShowDestroyParticles()
@@ -58,4 +56,5 @@ public class MoveGrass : MonoBehaviour {
         Destroy(resourceDestroyParticlesInstantiate, 5f);
     }
 
+    #endregion
 }

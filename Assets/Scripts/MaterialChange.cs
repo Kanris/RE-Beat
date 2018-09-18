@@ -1,58 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class MaterialChange : MonoBehaviour {
+
+    #region private fields
+
+    #region serialize fields
 
     [SerializeField] private Material DefaultMaterial;
     [SerializeField] private Material LightMaterial;
     [SerializeField] private GameObject LightOnObject;
 
+    #endregion
+
     private SpriteRenderer m_SpriteRenderer;
 
-    #region Initialize
+    #endregion
 
-    private void Awake()
-    {
-        InitializeSpriteRenderer();
-    }
+    #region private methods
 
-    private void InitializeSpriteRenderer()
+    private void Start()
     {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (m_SpriteRenderer == null)
-        {
-            Debug.LogError("Player.InitializeSpriteRenderer: Can't find sprite renderer on player gameobject");
-        }
     }
 
     #endregion
 
+    #region public methods
+
     public void Change(bool isLight)
     {
-        ChangeLight(isLight);
-        ChangeMaterial(isLight);
+        ChangeLight(isLight); //change light state
+        ChangeMaterial(isLight); //change sprite material
     }
 
     public void ChangeMaterial(bool isLight)
     {
-        if (m_SpriteRenderer != null)
+        if (isLight) //if there is light
         {
-            if (isLight)
-            {
-                m_SpriteRenderer.material = LightMaterial;
-            }
-            else
-            {
-                m_SpriteRenderer.material = DefaultMaterial;
-            }
+            m_SpriteRenderer.material = LightMaterial; //change to light material
+        }
+        else //there is no light
+        {
+            m_SpriteRenderer.material = DefaultMaterial; //change to default material
         }
     }
 
     public void ChangeLight(bool isLight)
     {
         if (LightOnObject != null)
-            LightOnObject.SetActive(isLight);
+            LightOnObject.SetActive(isLight); //activate or deactivate light
     }
+
+    #endregion
 }

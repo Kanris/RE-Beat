@@ -5,19 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class FallBlock : MonoBehaviour {
 
+    #region private fields
+
     #region serialize fields
 
-    [SerializeField] private float IdleTime = 4f;
-    [SerializeField] private float FallTime = 2f;
+    [SerializeField] private float IdleTime = 4f; //block idle time
+    [SerializeField] private float FallTime = 2f; //block fall time
 
     #endregion
 
-    #region private fields
-
-    private Rigidbody2D m_Rigidbody;
-    private float m_UpdateTime;
-    private bool m_IsIdle;
-    private float m_FallValue;
+    private Rigidbody2D m_Rigidbody; //block rigidbody
+    private float m_UpdateTime; //change state time
+    private bool m_IsIdle; //is block idling
+    private float m_YPosition;
 
     #endregion
 
@@ -28,7 +28,7 @@ public class FallBlock : MonoBehaviour {
     private void Start()
     {
         InitializeRigidbody();
-        m_FallValue = -5f;
+        m_YPosition = -5f;
     }
 
     private void InitializeRigidbody()
@@ -40,47 +40,47 @@ public class FallBlock : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (m_UpdateTime <= Time.time)
+        if (m_UpdateTime <= Time.time) //if need to change state
         {
             m_UpdateTime = Time.time;
 
-            m_IsIdle = !m_IsIdle;
+            m_IsIdle = !m_IsIdle; //change state
 
-            if (m_IsIdle)
+            if (m_IsIdle) //is idle state
             {
-                m_UpdateTime += IdleTime;
+                m_UpdateTime += IdleTime; //add idle time
             }
             else
             {
-                m_UpdateTime += FallTime;
+                m_UpdateTime += FallTime; //add fall time
             }
 
-            MoveBlock();
+            MoveBlock(); //move or stop block (base on state)
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) //if player in block's trigger
         {
-            collision.GetComponent<Player>().playerStats.TakeDamage(999);
+            collision.GetComponent<Player>().playerStats.KillPlayer(); //kill player
         }
     }
 
     private void MoveBlock()
     {
-        var moveVector = Vector2.zero;
+        var moveVector = Vector2.zero; //stop block's moving
 
-        if (!m_IsIdle)
+        if (!m_IsIdle) //if block is not idle
         {
-            moveVector = new Vector2(0f, m_FallValue);
-            m_FallValue *= -1;
+            moveVector = new Vector2(0f, m_YPosition); //get move vector
+            m_YPosition *= -1; //get next y value
 
-            if (m_FallValue > 0)
+            if (m_YPosition > 0) //idle on top
                 m_IsIdle = true;
         }
 
-        m_Rigidbody.velocity = moveVector;
+        m_Rigidbody.velocity = moveVector; //move block
     }
 
     #endregion
