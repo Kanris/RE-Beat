@@ -2602,6 +2602,7 @@ MonoBehaviour:
   - {fileID: 424000592}
   - {fileID: 12145148}
   - {fileID: 247247798}
+  ChangeObjectsMaterial: []
   m_DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
 --- !u!19719996 &232266375
@@ -13667,7 +13668,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BackgroundAnimator: {fileID: 1803359821}
   MistAnimator: {fileID: 0}
-  ChangeMaterialTilemap: []
+  ChangeMaterialTilemap:
+  - {fileID: 1115813204}
+  - {fileID: 829069164}
+  ChangeObjectsMaterial:
+  - {fileID: 1249872545}
+  - {fileID: 2144031615}
+  - {fileID: 2083963026}
+  - {fileID: 1127617310}
+  - {fileID: 1803359820}
   m_DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
 --- !u!114 &477436189
@@ -28130,6 +28139,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: GrassRunning
+--- !u!212 &1127617310 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212631559444169388, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1241499788}
 --- !u!1 &1162898743
 GameObject:
   m_ObjectHideFlags: 0
@@ -28783,6 +28797,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!212 &1249872545 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212930742101144268, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+    type: 2}
+  m_PrefabInternal: {fileID: 97458082}
 --- !u!1001 &1281201347
 Prefab:
   m_ObjectHideFlags: 0
@@ -33379,6 +33398,11 @@ Transform:
   m_Father: {fileID: 1763203241}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2083963026 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212281152426236110, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1241499788}
 --- !u!1001 &2104051378
 Prefab:
   m_ObjectHideFlags: 0

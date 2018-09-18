@@ -11,6 +11,7 @@ public class DisableBackground : MonoBehaviour {
     [SerializeField] private Animator BackgroundAnimator; //reference to the background image
     [SerializeField] private Animator MistAnimator; //reference to the cave mist
     [SerializeField] private TilemapRenderer[] ChangeMaterialTilemap;
+    [SerializeField] private SpriteRenderer[] ChangeObjectsMaterial;
     [SerializeField] private Material m_DefaultMaterial;
     [SerializeField] private Material m_LightMaterial;
 
@@ -118,6 +119,12 @@ public class DisableBackground : MonoBehaviour {
                 {
                     if (ChangeMaterialTilemap[index] != null)
                         ChangeMaterialTilemap[index].material = material;
+                }
+
+                for (var index = 0; index < ChangeObjectsMaterial.Length; index++)
+                {
+                    if (ChangeObjectsMaterial[index] != null)
+                        ChangeObjectsMaterial[index].material = material;
                 }
             }
         }
