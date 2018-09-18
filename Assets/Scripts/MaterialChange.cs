@@ -39,7 +39,6 @@ public class MaterialChange : MonoBehaviour {
         if (isLight) //if there is light
         {
             m_SpriteRenderer.material = LightMaterial; //change to light material
-            Debug.LogError(transform.name);
         }
         else //there is no light
         {

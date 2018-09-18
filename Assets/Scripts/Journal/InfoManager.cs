@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -7,30 +6,30 @@ using TMPro;
 
 public class InfoManager : MonoBehaviour {
 
-    #region serialize fields
+    #region public fields
 
-    [SerializeField] private GameObject m_JournalUI;
-    [SerializeField] private TextPage m_Page;
-    [SerializeField] private GameObject m_Bookmarks;
-    [SerializeField] private Transform m_Content;
+    public delegate void VoidDelegate(bool value);
+    public event VoidDelegate OnJournalOpen; //event on journal open
+
+    public Dictionary<string, Task> CurrentTasks; //current tasks list
+    public Dictionary<string, Task> CompletedTasks; //complete task list
 
     #endregion
 
     #region private fields
 
-    private int m_CurrentOpenBookmark = 0;
-    private Dictionary<int, List<Button>> m_ButtonsList;
-    private static Sprite[] itemsSpriteAtlas;
+    #region serialize fields
+
+    [SerializeField] private GameObject m_JournalUI; //journal ui
+    [SerializeField] private TextPage m_Page; //main page text
+    [SerializeField] private GameObject m_Bookmarks; //bookmark list
+    [SerializeField] private Transform m_Content; //buttons grid
 
     #endregion
 
-    #region public fields
-
-    public delegate void VoidDelegate(bool value);
-    public event VoidDelegate OnJournalOpen;
-
-    public Dictionary<string, Task> CurrentTasks;
-    public Dictionary<string, Task> CompletedTasks;
+    private int m_CurrentOpenBookmark = 0; //current open tab
+    private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
+    private static Sprite[] itemsSpriteAtlas; //atals for items
 
     #endregion
 
@@ -60,31 +59,26 @@ public class InfoManager : MonoBehaviour {
     }
 
     #endregion
-   
-    // Use this for initialization
-    void Start () {
-        
-        m_JournalUI.SetActive(false);
-
-        if (CurrentTasks == null)
-            CurrentTasks = new Dictionary<string, Task>();
-
-        if (CompletedTasks == null)
-            CompletedTasks = new Dictionary<string, Task>();
-
-        InitializeItemsAtlas();
-    }
 
     #region Initialize
 
-    private void InitializeItemsAtlas()
-    {
-        itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1");
+    // Use this for initialization
+    private void Start () {
+        
+        m_JournalUI.SetActive(false); //hide journal ui
+
+        if (CurrentTasks == null)
+            CurrentTasks = new Dictionary<string, Task>(); //initialize current tasks
+
+        if (CompletedTasks == null)
+            CompletedTasks = new Dictionary<string, Task>(); //initialize completed tasks
+
+        itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1"); //initialize items atlas
     }
 
     private void InitializeButtonsDictionary()
     {
-        for(int index = 0; index < m_Bookmarks.transform.childCount; index++)
+        for(int index = 0; index < m_Bookmarks.transform.childCount; index++)  //initialize buttons list for each bookmark
         {
             m_ButtonsList.Add(index, new List<Button>());
         }
@@ -93,17 +87,17 @@ public class InfoManager : MonoBehaviour {
     #endregion
 
     // Update is called once per frame
-    void Update () {
+    private void Update () {
 		
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J)) //open journal
         {
             InfoManagement(0);
         }
-        else if (Input.GetKeyDown(KeyCode.I))
+        else if (Input.GetKeyDown(KeyCode.I)) //open inventory
         {
             InfoManagement(2);
         }
-        else if (Input.GetKeyDown(KeyCode.B))
+        else if (Input.GetKeyDown(KeyCode.B)) //open "bestiary"
         {
             InfoManagement(3);
         }
@@ -111,23 +105,23 @@ public class InfoManager : MonoBehaviour {
 
     private void InfoManagement(int id)
     {
-        var value = true;
+        var value = true; //open journal
 
-        if (m_CurrentOpenBookmark != id)
+        if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
-            OpenBookmark(id);
+            OpenBookmark(id); 
         }
-        else if (m_JournalUI.activeSelf)
+        else if (m_JournalUI.activeSelf) //if journal is already open
         {
-            value = false;
+            value = false; //close journal
         }
 
         m_JournalUI.SetActive(value);
 
-        OnJournalOpen(m_JournalUI.activeSelf);
+        OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
     }
 
-    private void ChangeButtonsVision(bool value, IEnumerable<Button> buttons)
+    private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)
     {
         foreach (var item in buttons)
         {
@@ -140,8 +134,8 @@ public class InfoManager : MonoBehaviour {
         var buttonFromResources = Resources.Load("Managers/Journal/TaskButton") as GameObject;
         var instantiateTaskButton = Instantiate(buttonFromResources, m_Content);
 
-        instantiateTaskButton.name = name;
-        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = name;
+        instantiateTaskButton.name = name; //set button name to task
+        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = name; //change button caption to the task name
 
         return instantiateTaskButton.GetComponent<Button>();
     }
@@ -151,13 +145,13 @@ public class InfoManager : MonoBehaviour {
         var resourceItemButton = Resources.Load("Managers/Journal/InventoryItem") as GameObject;
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
-        instantiateItemButton.name = item.Name;
-        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.Name;
-        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = itemsSpriteAtlas.SingleOrDefault(x => x.name == item.Image);
+        instantiateItemButton.name = item.Name; //change button name to the item name
+        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.Name; //change button caption to the item name
+        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = itemsSpriteAtlas.SingleOrDefault(x => x.name == item.Image); //add item image from atlas
 
-        instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_Page);
+        instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_Page); //initialize item button info
 
-        instantiateItemButton.SetActive(false);
+        instantiateItemButton.SetActive(false); //hide button
 
         return instantiateItemButton.GetComponent<Button>();
     }
@@ -168,21 +162,23 @@ public class InfoManager : MonoBehaviour {
 
     public void OpenBookmark(int id)
     {
-        ChangeButtonsVision(true, m_ButtonsList[id]);
-        ChangeButtonsVision(false, m_ButtonsList[m_CurrentOpenBookmark]);
+        ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
+        ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
 
+        //change bookmarks positions too show player what bookmark is currently open
         m_Bookmarks.transform.GetChild(id).transform.position -= new Vector3(10, 0);
         m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).transform.position -= new Vector3(-10, 0);
 
-        m_CurrentOpenBookmark = id;
-        m_Page.ClearText();
-        AudioManager.Instance.Play("OpenJournal");
+        m_CurrentOpenBookmark = id; //change current book mark id
+        m_Page.ClearText(); //clear main text 
+
+        AudioManager.Instance.Play("OpenJournal"); //play open journal sound
     }
 
     public void CloseJournal()
     {
-        m_JournalUI.SetActive(false);
-        OnJournalOpen(m_JournalUI.activeSelf);
+        m_JournalUI.SetActive(false); //hide journal ui
+        OnJournalOpen(false); //notify that journal is close
     }
 
     #endregion
@@ -191,48 +187,48 @@ public class InfoManager : MonoBehaviour {
 
     public void DisplayTaskText(string taskName)
     {
-        if (CurrentTasks.ContainsKey(taskName))
+        if (CurrentTasks.ContainsKey(taskName)) //search task in current tasks
         {
-            m_Page.ShowText(CurrentTasks[taskName].Text);
+            m_Page.ShowText(CurrentTasks[taskName].Text); //show task description
         }
-        else if (CompletedTasks.ContainsKey(taskName))
+        else if (CompletedTasks.ContainsKey(taskName)) //search task in completed tasks
         {
-            m_Page.ShowText(CompletedTasks[taskName].Text);
+            m_Page.ShowText(CompletedTasks[taskName].Text); //show task description
         }
     }
 
     public bool AddTask(string taskName, string taskText)
     {
-        if (!CurrentTasks.ContainsKey(taskName))
+        if (!CurrentTasks.ContainsKey(taskName)) //add new task if it is not already added
         {
-            m_ButtonsList[0].Add(CreateTaskButton(taskName));
-            var newTask = new Task(taskName, taskText);
-            CurrentTasks.Add(taskName, newTask);
+            m_ButtonsList[0].Add(CreateTaskButton(taskName)); //create new task button
+            var newTask = new Task(taskName, taskText); //create new task
+            CurrentTasks.Add(taskName, newTask); //add task to the list
 
-            return true;
+            return true; //task was successfuly added
         }
 
-        return false;
+        return false; //can't add task
     }
 
     public void RecreateState()
     {
         if (CurrentTasks != null)
         {
-            if (m_ButtonsList[0] != null)
+            if (m_ButtonsList[0] != null) //if current task buttons is initialized
             {
-                foreach (var item in CurrentTasks)
+                foreach (var item in CurrentTasks) //add all current tasks from the saved state
                 {
-                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.Name));
+                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.Name)); 
                 }
             }
         }
 
         if (CompletedTasks != null)
         {
-            if (m_ButtonsList[1] != null)
+            if (m_ButtonsList[1] != null) //if completed task buttons is initialized
             {
-                foreach (var item in CompletedTasks)
+                foreach (var item in CompletedTasks) //add all completed tasks from the saved state
                 {
                     m_ButtonsList[1].Add(CreateTaskButton(item.Key));
                 }
@@ -241,9 +237,9 @@ public class InfoManager : MonoBehaviour {
 
         if (PlayerStats.PlayerInventory != null)
         {
-            if (m_ButtonsList[2] != null)
+            if (m_ButtonsList[2] != null) //if inventory buttons is initialized
             {
-                foreach (var item in PlayerStats.PlayerInventory.m_Bag)
+                foreach (var item in PlayerStats.PlayerInventory.m_Bag) //add all items from the saved state
                 {
                     AddItem(item);
                 }
@@ -253,29 +249,30 @@ public class InfoManager : MonoBehaviour {
 
     public bool UpdateTask(string taskName, string taskText)
     {
-        if (CurrentTasks.ContainsKey(taskName))
+        if (CurrentTasks.ContainsKey(taskName)) //if task in the journal
         {
-            CurrentTasks[taskName].TaskUpdate(taskText);
+            CurrentTasks[taskName].TaskUpdate(taskText); //updated task
 
-            return true;
+            return true; //task was updated
         }
 
-        return false;
+        return false; //can't updated task
     }
 
     public bool CompleteTask(string taskname, string taskText)
     {
-        if (CurrentTasks.ContainsKey(taskname))
+        if (CurrentTasks.ContainsKey(taskname)) //if task is in the journal
         {
-            CurrentTasks[taskname].TaskComplete(taskText);
+            CurrentTasks[taskname].TaskComplete(taskText); //complete task
 
+            //move task from the current task to the completed
             CompletedTasks.Add(taskname, CurrentTasks[taskname]);
             CurrentTasks.Remove(taskname);
 
-            return true;
+            return true; //task was successfuly updated
         }
 
-        return false;
+        return false; //can't updated task
     }
 
     #endregion
@@ -284,19 +281,19 @@ public class InfoManager : MonoBehaviour {
 
     public void AddItem(Item item)
     {
-        var button = CreateItemButton(item);
+        var button = CreateItemButton(item); //create new item button
 
-        m_ButtonsList[2].Add(button);
+        m_ButtonsList[2].Add(button); //add new item to the button list
     }
 
     public void RemoveItem(string name)
     {
-        var itemToRemove = m_ButtonsList[2].FirstOrDefault(x => x.name == name);
+        var itemToRemove = m_ButtonsList[2].FirstOrDefault(x => x.name == name); //search item to delete
 
-        if (itemToRemove != null)
+        if (itemToRemove != null) //if item was successfuly found
         {
-            m_ButtonsList[2].Remove(itemToRemove);
-            Destroy(itemToRemove.gameObject);
+            m_ButtonsList[2].Remove(itemToRemove); //remove item from the buttons
+            Destroy(itemToRemove.gameObject); //remove item from the inventory
         }
     }
 

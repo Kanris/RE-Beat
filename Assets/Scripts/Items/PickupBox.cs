@@ -21,9 +21,9 @@ public class PickupBox : MonoBehaviour {
     private BoxCollider2D m_BoxCollider; //box collider
     private GameObject m_InteractionButton; //box ui
     private Vector3 m_SpawnPosition; //box spawn position
-    public Transform m_Player; //player reference
+    private Transform m_Player; //player reference
     
-    public bool m_IsBoxUp; //is box in player's hand
+    private bool m_IsBoxUp; //is box in player's hand
     private bool m_IsQuitting; //is application closing
 
     #endregion

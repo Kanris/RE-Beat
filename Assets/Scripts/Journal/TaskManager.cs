@@ -1,59 +1,72 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class TaskManager : MonoBehaviour {
 
-    public enum TaskTriggerType { OnTrigger, OnCollision, OnSubmit, OnDestroy  }
+    #region enum
+
+    public enum TaskTriggerType { OnTrigger, OnCollision, OnSubmit, OnDestroy }
+    [SerializeField] private TaskTriggerType taskTriggerType; //task trigger type
+
     public enum TaskType { Giver, Updater, Finisher }
+    [SerializeField] private TaskType taskType; //task type
 
-    [SerializeField] private TaskType taskType;
-    [SerializeField] private TaskTriggerType taskTriggerType;
-    [SerializeField] private bool DestroyEntireObject;
-    [SerializeField] private string Name;
-    [SerializeField, TextArea(2, 20)] private string TaskText;
+    #endregion
 
-    private bool m_IsPlayerNear;
-    private bool m_IsQuitting;
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private bool DestroyEntireObject; //if need to destroy entier object
+    [SerializeField] private string Name; //task name
+    [SerializeField, TextArea(2, 20)] private string TaskText; //task description
+
+    #endregion
+
+    private bool m_IsPlayerNear; //is player is near
+    private bool m_IsQuitting; //is application is closing
+
+    #endregion
+
+    #region private methods
+
+    #region Initialize
 
     private void Start()
     {
-        ChangeIsQuitting(false);
+        ChangeIsQuitting(false); //aplication is not closing
 
         SubscribeToEvents();
     }
 
-    #region Initialize
-
     private void SubscribeToEvents()
     {
-        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
-        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //player moving to the start screen
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //player moving to the next scene
     }
 
     #endregion
 
     private void OnApplicationQuit()
     {
-        ChangeIsQuitting(true);
+        ChangeIsQuitting(true); //aplication is closing
     }
 
     private void OnDestroy()
     {
-        if (!m_IsQuitting & taskTriggerType == TaskTriggerType.OnDestroy)
+        if (!m_IsQuitting & taskTriggerType == TaskTriggerType.OnDestroy) //if application is not closing and task manager type is destroy
         {
-            ChangeTaskStatus();
+            ChangeTaskStatus(); //change task status
         }
     }
 
     private void Update()
     {
-        if (m_IsPlayerNear)
+        if (m_IsPlayerNear) //if player is near
         {
-            if (taskTriggerType == TaskTriggerType.OnSubmit)
+            if (taskTriggerType == TaskTriggerType.OnSubmit) //if task type - on submit
             {
-                if ( CrossPlatformInputManager.GetButtonDown("Submit") )
+                if ( CrossPlatformInputManager.GetButtonDown("Submit") ) //if player press submit button
                 {
                     ChangeTaskStatus();
                 }
@@ -63,10 +76,10 @@ public class TaskManager : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
-        {
-            m_IsPlayerNear = true;
-            if (taskTriggerType == TaskTriggerType.OnTrigger)
+        if (collision.CompareTag("Player") & !m_IsPlayerNear) //if player in triger
+        { 
+            m_IsPlayerNear = true; //player in trigger
+            if (taskTriggerType == TaskTriggerType.OnTrigger) //if task have to update status on trigger
             {
                 ChangeTaskStatus();
             }
@@ -75,10 +88,10 @@ public class TaskManager : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & !m_IsPlayerNear)
+        if (collision.transform.CompareTag("Player") & !m_IsPlayerNear) //if player in collision
         {
-            m_IsPlayerNear = true;
-            if (taskTriggerType == TaskTriggerType.OnCollision)
+            m_IsPlayerNear = true; //player in collision
+            if (taskTriggerType == TaskTriggerType.OnCollision) //if task have to update status on collision
             {
                 ChangeTaskStatus();
             }
@@ -87,35 +100,34 @@ public class TaskManager : MonoBehaviour {
 
     private void ChangeTaskStatus()
     {
-        if (CheckTask())
+        if (CheckTask()) //if there is task name
         {
-            var isSuccess = false;
+            var isSuccess = false; //is task update success
 
             switch (taskType)
             {
-                case TaskType.Giver:
+                case TaskType.Giver: //give task to player
                     isSuccess = InfoManager.Instance.AddTask(Name, TaskText);
                     break;
 
-                case TaskType.Updater:
+                case TaskType.Updater: //update task
                     isSuccess = InfoManager.Instance.UpdateTask(Name, TaskText);
                     break;
 
-                case TaskType.Finisher:
+                case TaskType.Finisher: //finish task
                     isSuccess = InfoManager.Instance.CompleteTask(Name, TaskText);
                     break;
             }
 
-            if (isSuccess)
+            if (isSuccess) //if task give/update/finish was success
             {
-                AudioManager.Instance.Play("Task");
-                GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task);
-                DestroyObject();
+                AudioManager.Instance.Play("Task"); //play task update sound
+                GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task); //save task state
+                DestroyObject(); //destroy if needed
             }
         }
     }
-
-
+    
     private bool CheckTask()
     {
         if (string.IsNullOrEmpty(Name))
@@ -129,9 +141,9 @@ public class TaskManager : MonoBehaviour {
 
     public void DestroyObject()
     {
-        if (DestroyEntireObject)
-            Destroy(gameObject);
-        else
+        if (DestroyEntireObject) //if need to destroy whole gameobject
+            Destroy(gameObject); 
+        else //if need to remove this script
             Destroy(this);
     }
 
@@ -139,4 +151,7 @@ public class TaskManager : MonoBehaviour {
     {
         m_IsQuitting = value;
     }
+
+    #endregion
+
 }

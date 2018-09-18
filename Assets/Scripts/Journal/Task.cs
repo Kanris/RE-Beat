@@ -1,45 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 [System.Serializable]
 public class Task
 {
-    public string Name;
-    public string Text;
-    public bool IsTaskComplete;
+    #region public fields
+
+    public string Name; //task name
+    public string Text; //task text
+    public bool IsTaskComplete; //is task complete
 
     public delegate void VoidDelegate();
-    public event VoidDelegate OnTaskComplete;
-    public event VoidDelegate OnTaskUpdate;
+    public event VoidDelegate OnTaskComplete; //event on task complete
+    public event VoidDelegate OnTaskUpdate; //event on task update
 
-    public Task(string taskName, string taskText)
+    #endregion
+
+    #region public methods
+
+    public Task(string taskName, string taskText) //add new task
     {
-        this.Name = taskName;
-        this.Text = taskText;
+        this.Name = taskName; //save task name
+        this.Text = taskText; //save initial task text
 
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been added to journal - <#000000>J</color>", 3f));
+        ShowAnnouncerMessage("added to journal"); //show announcer message about additing new task
     }
 
     public void TaskUpdate(string text)
     {
-        this.Text = text + this.Text;
-        if (OnTaskUpdate != null) OnTaskUpdate();
+        this.Text = text + this.Text; //add new text to task
+        if (OnTaskUpdate != null) OnTaskUpdate(); //notify on task update
 
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been updated - <#000000>J</color>", 3f));
+        ShowAnnouncerMessage("updated"); //show announcer message about updating task
     }
 
     public void TaskComplete(string text)
     {
-        IsTaskComplete = true;
-        this.Text = text + this.Text;
+        IsTaskComplete = true; //task is complete
+        this.Text = text + this.Text; //update task text
 
-        if (OnTaskComplete != null) OnTaskComplete();
+        if (OnTaskComplete != null) OnTaskComplete(); //notify on task complete
 
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been complete - <#000000>J</color>", 3f));
+        ShowAnnouncerMessage("complete"); //show announcer message about task completion
     }
+
+    #endregion
+
+    #region private methods
+
+    private void ShowAnnouncerMessage(string text)
+    {
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(
+            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been " + text + "  - <#000000>J</color>", 3f));
+    }
+
+    #endregion
 }
 

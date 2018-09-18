@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TaskButtonClick : MonoBehaviour {
 
-	public void DisplayTaskText()
+    #region public methods
+
+    public void DisplayTaskText() //if task button was pressed
     {
-        PlayClickSound();
-        InfoManager.Instance.DisplayTaskText(transform.name);
+        PlayClickSound(); //play click sound
+        InfoManager.Instance.DisplayTaskText(transform.name); //show clicked task description
     }
+
+    #endregion
 
     #region Sound
 
