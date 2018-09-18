@@ -5,10 +5,12 @@ using TMPro;
 
 public class AnnouncerManager : MonoBehaviour {
 
+    #region message class
+
     public class Message
     {
-        public string message = "Empty message";
-        public float time = 1.5f;
+        public string message = "Empty message"; //message to display
+        public float time = 1.5f; //time to display
 
         public Message() { }
 
@@ -18,6 +20,8 @@ public class AnnouncerManager : MonoBehaviour {
             this.time = time;
         }
     }
+
+    #endregion
 
     #region Singleton
     public static AnnouncerManager Instance;
@@ -36,99 +40,44 @@ public class AnnouncerManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
         }
-
-        #region Initialize
-
-        InitializeUI();
-
-        InitializeMessageAnnouncer();
-
-        InitializeSceneAnnouncer();
-
-        #endregion
     }
     #endregion
 
-    private GameObject m_MessageAnnouncer;
-    private TextMeshProUGUI m_TextMessage;
-    private GameObject m_SceneAnnouncer;
-    private TextMeshProUGUI m_TextScene;
+    #region private fields
 
-    private GameObject m_UI;
-    private List<Message> m_MessagePipeline;
-    private bool m_isShowingPipeline = false;
+    #region serialize fields
 
-    // Use this for initialization
-    void Start () {
+    [SerializeField] private GameObject m_UI; //announcer ui
 
-        ActiveSceneAnnouncer(false);
+    [SerializeField] private GameObject m_MessageAnnouncer;
+    [SerializeField] private TextMeshProUGUI m_TextMessage;
 
-        ActiveMessageAnnouncer(false);
+    [SerializeField] private GameObject m_SceneAnnouncer;
+    [SerializeField] private TextMeshProUGUI m_TextScene;
 
-        if (m_UI != null) ActiveAnnouncerUI(false);
+    #endregion
 
-        m_MessagePipeline = new List<Message>();
-    }
+    private List<Message> m_MessagePipeline; //display message pipeline
+    private bool m_isShowingPipeline = false; //is currently showing pipeline
+
+    #endregion
+
+    #region private methods
 
     #region Initialize
+    // Use this for initialization
+    private void Start () {
 
-    private void InitializeUI()
-    {
-        if (transform.GetChild(0) != null)
-        {
-            m_UI = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("AnnouncerManager.InitializeUI: Can't find child");
-        }
-    }
+        ActiveSceneAnnouncer(false); //hide scene announcer
+         
+        ActiveMessageAnnouncer(false); //hide message announcer
 
-    private void InitializeMessageAnnouncer()
-    {
-        if (m_UI.transform.childCount > 1)
-        {
-            m_MessageAnnouncer = m_UI.transform.GetChild(0).gameObject;
+        ActiveAnnouncerUI(false); //hide ui
 
-            m_TextMessage = m_MessageAnnouncer.GetComponentInChildren<TextMeshProUGUI>();
-        }
-        else
-        {
-            Debug.LogError("AnnouncerManager.InitializeMessageAnnouncer: m_UI has only one children");
-        }
-    }
-
-    private void InitializeSceneAnnouncer()
-    {
-        if (m_UI.transform.childCount > 1)
-        {
-            m_SceneAnnouncer = m_UI.transform.GetChild(1).gameObject;
-
-            m_TextScene = m_SceneAnnouncer.GetComponentInChildren<TextMeshProUGUI>();
-        }
-        else
-        {
-            Debug.LogError("AnnouncerManager.InitializeSceneAnnouncer: m_UI has only one children");
-        }
+        m_MessagePipeline = new List<Message>(); //initialize pipeline
     }
 
     #endregion
-
-    public void DisplayAnnouncerMessage(Message message)
-    {
-        m_MessagePipeline.Add(message);
-
-        if (!m_isShowingPipeline)
-        {
-            m_isShowingPipeline = true;
-            StartCoroutine(DisplayMessage());
-        }
-    }
-
-    public void DisplaySceneName(string sceneName)
-    {
-        StartCoroutine(DisplayScene(sceneName));
-    }
 
     private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 1f)
     {
@@ -185,4 +134,26 @@ public class AnnouncerManager : MonoBehaviour {
     {
         m_SceneAnnouncer.SetActive(active);
     }
+
+    #endregion
+
+    #region public methods
+
+    public void DisplayAnnouncerMessage(Message message)
+    {
+        m_MessagePipeline.Add(message);
+
+        if (!m_isShowingPipeline)
+        {
+            m_isShowingPipeline = true;
+            StartCoroutine(DisplayMessage());
+        }
+    }
+
+    public void DisplaySceneName(string sceneName)
+    {
+        StartCoroutine(DisplayScene(sceneName));
+    }
+
+    #endregion
 }

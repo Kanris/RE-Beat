@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.EventSystems;
 
@@ -26,96 +24,55 @@ public class PauseMenuManager : MonoBehaviour {
     }
     #endregion
 
+    #region public fields
+
     public delegate void DelegateVoid(bool state);
     public event DelegateVoid OnGamePause;
     public event DelegateVoid OnReturnToStartSceen;
 
-    //public bool isGamePause = false;
-    private GameObject m_PauseGame;
+    #endregion
+
+    #region private fields
 
     [SerializeField] private GameObject m_FirstSelectedGameobject;
+    [SerializeField] private GameObject m_UI;
+
+    #endregion
+
+    #region private methods
 
     // Use this for initialization
-    void Start () {
-
-        InitializePauseGame();
-        SetActive(false);
+    private void Start () {
+        
+        SetActiveUI();
     }
 
-    private void InitializePauseGame()
+    private void SetActiveUI()
     {
-        var pauseGameTransform = transform.GetChild(0);
+        m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
 
-        if (pauseGameTransform != null)
+        if (m_UI.activeSelf == true) //if pause manager show ui
         {
-            m_PauseGame = pauseGameTransform.gameObject;
+            Time.timeScale = 0f; //stop game time
+
+            if (m_FirstSelectedGameobject != null)
+                EventSystem.current.SetSelectedGameObject(m_FirstSelectedGameobject); //choose first item in menu
         }
         else
-        {
-            Debug.LogError("PauseMenuManager.InitializePauseGame: can't find child");
-        }
-    }
+            Time.timeScale = 1f; //resume game time
 
-    private void SetActive(bool active)
-    {
-        if (m_PauseGame != null)
-        {
-            m_PauseGame.SetActive(active);
-
-            if (active == true)
-            {
-                Time.timeScale = 0f;
-
-                if (m_FirstSelectedGameobject != null)
-                    EventSystem.current.SetSelectedGameObject(m_FirstSelectedGameobject);
-            }
-            else
-                Time.timeScale = 1f;
-
-            if (OnGamePause != null)
-                OnGamePause(active);
-        }
+        if (OnGamePause != null)
+            OnGamePause(m_UI.activeSelf);
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-        if (m_PauseGame != null)
+	private void Update () {
+
+        //if player pressed pause button
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
         {
-            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
-            {
-                SetActive(!m_PauseGame.activeSelf);
-            }
+            SetActiveUI();
         }
-	}
-
-    public void ResumeGame()
-    {
-        PlayClickSound();
-
-        SetActive(!m_PauseGame.activeSelf);
-    }
-
-    public void ReturnToStartScreen()
-    {
-        PlayClickSound();
-
-        SetActive(!m_PauseGame.activeSelf);
-
-        if (OnReturnToStartSceen != null)
-            OnReturnToStartSceen(true);
-
-        LoadSceneManager.Instance.Load("StartScreen");
-
-        DestroyManagers();
-        Destroy(GameMaster.Instance.gameObject);
-        Destroy(gameObject);
-    }
-
-    public void ExitGame()
-    {
-        PlayClickSound();
-        LoadSceneManager.Instance.CloseGame();
     }
 
     #region Sound
@@ -136,12 +93,48 @@ public class PauseMenuManager : MonoBehaviour {
 
     private void DestroyManagers()
     {
+        //destroy managers that don't need on start screen
         Destroy(GameObject.Find("PauseMenuManager(Clone)"));
         Destroy(GameObject.Find("AnnouncerManager(Clone)"));
         Destroy(GameObject.Find("DialogueManager(Clone)"));
         Destroy(GameObject.Find("UIManager(Clone)"));
         Destroy(GameObject.Find("InfoManager(Clone)"));
         Destroy(GameObject.Find("MapManager(Clone)"));
-        
+
     }
+
+    #endregion
+
+    #region public methods
+
+    public void ResumeGame()
+    {
+        PlayClickSound();
+
+        SetActiveUI();
+    }
+
+    public void ReturnToStartScreen()
+    {
+        PlayClickSound();
+
+        SetActiveUI();
+
+        if (OnReturnToStartSceen != null)
+            OnReturnToStartSceen(true);
+
+        LoadSceneManager.Instance.Load("StartScreen");
+
+        DestroyManagers();
+        Destroy(GameMaster.Instance.gameObject);
+        Destroy(gameObject);
+    }
+
+    public void ExitGame()
+    {
+        PlayClickSound();
+        LoadSceneManager.Instance.CloseGame();
+    }
+
+    #endregion
 }

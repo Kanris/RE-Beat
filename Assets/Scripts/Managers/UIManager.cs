@@ -26,56 +26,39 @@ public class UIManager : MonoBehaviour {
 
     #endregion
 
-    private GameObject m_UI;
-    private GameObject m_LayoutGrid;
+    #region private fields
+
+    #region serialize fields
+
+    [SerializeField] private TextMeshProUGUI Text; //current coins amount
+    [SerializeField] private TextMeshProUGUI AddCoins; //coins to add
+    [SerializeField] private GameObject m_UI;
+    [SerializeField] private GameObject m_LifePanel;
+    [SerializeField] private GameObject m_LifeImage;
+
+    #endregion
+
     private List<GameObject> m_HealthInPanel = new List<GameObject>();
 
-    [SerializeField] private TextMeshProUGUI Text;
-    [SerializeField] private TextMeshProUGUI AddCoins;
+    #endregion
+
+    #region private methods
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
-        InitializeUI();
-
-        InitializeLayoutGrid();
-
-        PlayerStats.OnCoinsAmountChange += ChangeCoinsAmount;
+        PlayerStats.OnCoinsAmountChange += ChangeCoinsAmount; //subscribe on coins amount change
     }
 
-    private void InitializeUI()
-    {
-        if (transform.childCount > 0)
-        {
-            m_UI = transform.GetChild(0).gameObject;
-        }
-        else
-        {
-            Debug.LogError("UIManager.InitializeUI: Can't find child in UIManager.");
-        }
-    }
+    #endregion
 
-    private void InitializeLayoutGrid()
-    {
-        m_LayoutGrid = m_UI.transform.GetChild(0).gameObject;
-
-        if (m_LayoutGrid == null)
-        {
-            Debug.LogError("UIManager.InitializeLayoutGrid: Can't find layout grid");
-        }
-    }
-
-    private void SetActiveUI(bool isActive)
-    {
-        m_UI.SetActive(isActive);
-    }
+    #region public methods
 
     public void AddHealth(int amount)
     {
         for (int index = 0; index < amount; index++)
         {
-            var healthObject = GetHealthObject();
-            m_HealthInPanel.Add(healthObject);
+            m_HealthInPanel.Add(Instantiate(m_LifeImage, m_LifePanel.transform));
         }
     }
 
@@ -128,12 +111,5 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    private GameObject GetHealthObject()
-    {
-        var health = Resources.Load("UI/Health") as GameObject;
-        var healthGameObject = Instantiate(health);
-        healthGameObject.transform.SetParent(m_LayoutGrid.transform);
-        
-        return healthGameObject;
-    }
+    #endregion
 }

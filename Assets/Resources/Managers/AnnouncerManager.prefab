@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222320518700724720}
   - component: {fileID: 114623603114592768}
   m_Layer: 0
-  m_Name: Text
+  m_Name: TextScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 222878087625258368}
   - component: {fileID: 114922125400194156}
   m_Layer: 0
-  m_Name: BackgroundImage
+  m_Name: MessageAnnouncer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 222389576779665546}
   - component: {fileID: 114481971329727570}
   m_Layer: 0
-  m_Name: Text
+  m_Name: TextMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 114600527809671772}
   - component: {fileID: 95105495920228090}
   m_Layer: 0
-  m_Name: BackgroundImage
+  m_Name: SceneAnnouncer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,6 +174,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fbf8291448c7a4e90b2b7144eee8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_UI: {fileID: 1904991852680354}
+  m_MessageAnnouncer: {fileID: 1041355466178386}
+  m_TextMessage: {fileID: 114481971329727570}
+  m_SceneAnnouncer: {fileID: 1816118580510472}
+  m_TextScene: {fileID: 114623603114592768}
 --- !u!114 &114151353288239762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -641,7 +646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
+  m_AnchoredPosition: {x: 0, y: -117}
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224682861229708846

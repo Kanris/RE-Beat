@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour {
     [System.Serializable]
     public class Audio
     {
+        #region public fields
+
         public string Name;
         public AudioClip Clip;
         [Range(0f, 1f)] public float Volume = 0.5f;
@@ -18,10 +20,17 @@ public class AudioManager : MonoBehaviour {
         public AudioType m_AudioType;
         public bool Loop = false;
 
+        #endregion
+
+        #region private fields
 
         private AudioSource m_AudioSource;
         private bool m_PlayerReturn = true;
         private bool Unload = false;
+
+        #endregion
+
+        #region public methods
 
         public void SetSource(AudioSource source, AudioMixerGroup mixerGroup)
         {
@@ -100,12 +109,18 @@ public class AudioManager : MonoBehaviour {
             return audio.Name;
         }
 
+        #endregion
+
+        #region private methods
+
         private void ChangeMusicSettings()
         {
             m_AudioSource.volume = Volume * (1 + Random.Range(-VolumeOffset / 2f, VolumeOffset / 2f));
             m_AudioSource.pitch = Pitch * (1 + Random.Range(-PitchOffset / 2f, PitchOffset / 2f)); ;
             m_AudioSource.loop = Loop;
         }
+
+        #endregion
     }
 
     #region Singleton
@@ -131,14 +146,25 @@ public class AudioManager : MonoBehaviour {
     }
 
     #endregion
+
+    #region public fields
+
     public enum AudioType { Environment, Music }
 
     public Audio[] AudioArray;
+
+    #endregion
+
+    #region private fields
 
     [SerializeField] private AudioMixerGroup MusicAudioMixer;
     [SerializeField] private AudioMixerGroup EnvironmentAudioMixer;
 
     private string m_BackgroundMusic;
+
+    #endregion
+
+    #region private methods
 
     private void InitializeAudioPlaylist()
     {
@@ -146,6 +172,7 @@ public class AudioManager : MonoBehaviour {
         {
             var audioSource = new GameObject("AudioSource_" + index + "_" + AudioArray[index]);
             audioSource.transform.SetParent(transform);
+
             AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>(), 
                 GetAudioMixerGroup(AudioArray[index].m_AudioType));
         }
@@ -160,6 +187,20 @@ public class AudioManager : MonoBehaviour {
 
         return mixerGroup;
     }
+
+    private Audio GetAudioFromArray(string name)
+    {
+        Audio returnAudio = null;
+
+        if (!string.IsNullOrEmpty(name))
+            returnAudio = AudioArray.FirstOrDefault(x => x.Name == name);
+
+        return returnAudio;
+    }
+
+    #endregion
+
+    #region public methods
 
     public void Play(string name, bool PlayFadeSound = false)
     {
@@ -199,7 +240,7 @@ public class AudioManager : MonoBehaviour {
     {
         if (m_BackgroundMusic != name)
         {
-            if (!string.IsNullOrEmpty(m_BackgroundMusic))
+            if (!string.IsNullOrEmpty(m_BackgroundMusic)) //stop current background music
             {
                 var sound = GetAudioFromArray(m_BackgroundMusic);
 
@@ -209,7 +250,7 @@ public class AudioManager : MonoBehaviour {
                 }
             }
 
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name)) //play new background music
             {
                 m_BackgroundMusic = name;
                 var sound = GetAudioFromArray(m_BackgroundMusic);
@@ -233,13 +274,5 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    private Audio GetAudioFromArray(string name)
-    {
-        Audio returnAudio = null;
-
-        if (!string.IsNullOrEmpty(name))
-            returnAudio = AudioArray.FirstOrDefault(x => x.Name == name);
-
-        return returnAudio;
-    }
+    #endregion
 }

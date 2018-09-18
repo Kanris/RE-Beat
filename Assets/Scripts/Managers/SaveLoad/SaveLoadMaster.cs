@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public static class SaveLoadMaster {
 
-    #region fields
+    #region private const fields
 
-    private const string SAVE_PLAYER_FILE_NAME = "Player.sav";
-    private const string SAVE_GENERAL_FILE_NAME = "General.sav";
-    private const string SAVE_OPTIONS_FILE_NAME = "Options.sav";
+    private const string SAVE_PLAYER_FILE_NAME = "Player.sav"; //player save file name
+    private const string SAVE_GENERAL_FILE_NAME = "General.sav"; //general save file name
+    private const string SAVE_OPTIONS_FILE_NAME = "Options.sav"; //options save file name
 
     #endregion
 
@@ -46,16 +46,16 @@ public static class SaveLoadMaster {
         return LoadData<OptionsGameData>(SAVE_OPTIONS_FILE_NAME);
     }
 
-    public static string GetLoadScene()
+    public static string GetSceneToLoad()
     {
-        if (IsSaveFileExists(SAVE_GENERAL_FILE_NAME))
+        if (IsSaveFileExists(SAVE_GENERAL_FILE_NAME)) //if general save file exists
         {
-            using (var stream = new FileStream(GetPathToSaveFile(SAVE_GENERAL_FILE_NAME), FileMode.Open))
+            using (var stream = new FileStream(GetPathToSaveFile(SAVE_GENERAL_FILE_NAME), FileMode.Open)) //open general save file
             {
                 var binaryFormatter = new BinaryFormatter();
                 var gameData = binaryFormatter.Deserialize(stream) as GeneralGameData;
 
-                return gameData.CurrentScene;
+                return gameData.CurrentScene; //get scene name
             }
         }
 
@@ -75,7 +75,7 @@ public static class SaveLoadMaster {
     private static void SaveData<T>(string path)
         where T : new()
     {
-        using (var stream = new FileStream(GetPathToSaveFile(path), FileMode.Create))
+        using (var stream = new FileStream(GetPathToSaveFile(path), FileMode.Create)) //create save file
         {
             var binaryFormatter = new BinaryFormatter();
             var dataToSave = new T();
@@ -87,9 +87,9 @@ public static class SaveLoadMaster {
     private static T LoadData<T>(string path)
         where T : class, IGameData
     {
-        if (IsSaveFileExists(path))
+        if (IsSaveFileExists(path)) //if file exists
         {
-            using (var stream = new FileStream(GetPathToSaveFile(path), FileMode.Open))
+            using (var stream = new FileStream(GetPathToSaveFile(path), FileMode.Open)) //open saved file
             {
                 var binaryFormatter = new BinaryFormatter();
                 var gameData = binaryFormatter.Deserialize(stream) as T;
@@ -127,20 +127,21 @@ public class GeneralGameData : IGameData
 {
     #region fields
 
-    public List<State> ScenesState;
-    public string CurrentScene;
+    public List<State> ScenesState; //get state scene
+    public string CurrentScene; //current scene name
 
-    public float RespawnPointX;
-    public float RespawnPointY;
+    public float RespawnPointX; //current respawn point x
+    public float RespawnPointY; //current respawn point y
 
-    public Dictionary<string, Task> CurrentTasks;
-    public Dictionary<string, Task> CompletedTasks;
+    public Dictionary<string, Task> CurrentTasks; //current tasks list
+    public Dictionary<string, Task> CompletedTasks; //complete tasks list
     #endregion
 
     #region constructor
 
     public GeneralGameData()
     {
+        //get current game state
         ScenesState = State.ScenesState;
         CurrentScene = SceneManager.GetActiveScene().name;
         RespawnPointX = GameMaster.Instance.m_RespawnPointPosition.x;
@@ -161,6 +162,7 @@ public class GeneralGameData : IGameData
 
     public void RecreateState()
     {
+        //load saved scene state
         State.ScenesState = ScenesState;
         GameMaster.Instance.m_RespawnPointPosition = new Vector3(RespawnPointX, RespawnPointY);
 
@@ -181,12 +183,11 @@ public class PlayerGameData : IGameData
 {
     #region fields
 
-    public int DamageAmount;
-    public float AttackSpeed;
-    public float Invincible;
-    public Inventory PlayerInventory;
-    public int CurrentPlayerHealth;
-    public int Coins;
+    public int DamageAmount; //player damage amount
+    public float AttackSpeed; //player attack speed
+    public Inventory PlayerInventory; //player inventory
+    public int CurrentPlayerHealth; //current health
+    public int Coins; //current amount of money
 
     #endregion
 
@@ -194,9 +195,9 @@ public class PlayerGameData : IGameData
 
     public PlayerGameData()
     {
+        //save current player state
         DamageAmount = PlayerStats.DamageAmount;
         AttackSpeed = PlayerStats.AttackSpeed;
-        Invincible = PlayerStats.Invincible;
         PlayerInventory = PlayerStats.PlayerInventory;
         CurrentPlayerHealth = PlayerStats.CurrentPlayerHealth;
         Coins = PlayerStats.Coins;
@@ -208,9 +209,9 @@ public class PlayerGameData : IGameData
 
     public void RecreateState()
     {
+        //load saved player state
         PlayerStats.DamageAmount = DamageAmount;
         PlayerStats.AttackSpeed = AttackSpeed;
-        PlayerStats.Invincible = Invincible;
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
         PlayerStats.Coins = Coins;

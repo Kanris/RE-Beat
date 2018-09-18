@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -9,7 +7,7 @@ public class StartScreenManager : MonoBehaviour {
 
     #region static fields
 
-    public static bool IsLoadPressed;
+    public static bool IsLoadPressed; //is load button pressed
     public static int ResolutionIndex;
     public static bool IsFullscreen;
     public static float VolumeMaster;
@@ -19,11 +17,12 @@ public class StartScreenManager : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private string BackgroundMusic;
-    [SerializeField] private GameObject MainMenuGrid;
-    [SerializeField] private GameObject OptionsMenuGrid;
-    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private string BackgroundMusic; //background music
+    [SerializeField] private GameObject MainMenuGrid; //main menu ui
+    [SerializeField] private GameObject OptionsMenuGrid; //option ui
+    [SerializeField] private AudioMixer audioMixer; //main game mixer
 
+    //options items
     [SerializeField] private Dropdown resoulutionsDropDown;
     [SerializeField] private Slider volumeMasterSlider;
     [SerializeField] private Slider volumeEnvironmentSlider;
@@ -33,7 +32,7 @@ public class StartScreenManager : MonoBehaviour {
 
     #region private fields
 
-    private Resolution[] resolutions;
+    private Resolution[] resolutions; //available resolutions
 
     #endregion
 
@@ -41,6 +40,7 @@ public class StartScreenManager : MonoBehaviour {
 
     private void Awake()
     {
+        //initialize needed managers
         Initialize("Managers/EventSystem");
 
         Initialize("Managers/AudioManager");
@@ -51,21 +51,23 @@ public class StartScreenManager : MonoBehaviour {
 
         Initialize("Managers/SaveLoadManager");
 
-        InitializeBackgroundMusic();
+        //play background music
+        if (!string.IsNullOrEmpty(BackgroundMusic))
+            AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
     }
 
     private void Start()
     {
-        resolutions = Screen.resolutions;
+        resolutions = Screen.resolutions; //get available resolutions
 
-        InitializeDropDownResolutions();
+        InitializeDropDownResolutions(); //show available resolutions
 
         if (SaveLoadManager.Instance != null)
         {
-            var result = SaveLoadManager.Instance.LoadOptions();
+            var result = SaveLoadManager.Instance.LoadOptions(); //try to load saved options
 
-            if (result)
-                InitializeOptions();
+            if (result) //if there is save options file
+                InitializeOptions(); //load options
         }
     }
 
@@ -75,18 +77,12 @@ public class StartScreenManager : MonoBehaviour {
         Instantiate(gameObjectToInstantiate);
     }
 
-    private void InitializeBackgroundMusic()
-    {
-        if (!string.IsNullOrEmpty(BackgroundMusic))
-            AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
-    }
-
     private void InitializeOptions()
     {
-        resoulutionsDropDown.value = ResolutionIndex;
-        volumeMasterSlider.value = VolumeMaster;
-        volumeEnvironmentSlider.value = VolumeEnvironment;
-        fullscreenToggle.isOn = IsFullscreen;
+        resoulutionsDropDown.value = ResolutionIndex; //set current resolution index
+        volumeMasterSlider.value = VolumeMaster; //set general volume
+        volumeEnvironmentSlider.value = VolumeEnvironment; //set environment volume
+        fullscreenToggle.isOn = IsFullscreen; //set fullscreen
 
         SetMasterFloat(VolumeMaster);
         SetEnvironmentFloat(VolumeEnvironment);
@@ -101,9 +97,9 @@ public class StartScreenManager : MonoBehaviour {
 
     private void InitializeDropDownResolutions()
     {
-        resoulutionsDropDown.ClearOptions();
+        resoulutionsDropDown.ClearOptions(); //clear options
 
-        var resolutionsList = new List<string>();
+        var resolutionsList = new List<string>(); //resolutions list
 
         var currentResolutionItem = string.Empty;
 
@@ -130,7 +126,7 @@ public class StartScreenManager : MonoBehaviour {
         }
     }
 
-    private void ChangeGridsVisibility()
+    private void ChangeGridsVisibility() //change visible menus
     {
         MainMenuGrid.SetActive(!MainMenuGrid.activeSelf);
         OptionsMenuGrid.SetActive(!OptionsMenuGrid.activeSelf);

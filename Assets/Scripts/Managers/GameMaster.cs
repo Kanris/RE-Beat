@@ -8,20 +8,21 @@ public class GameMaster : MonoBehaviour {
 
     #region public fields
 
-    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task }
+    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
 
-    public Transform m_RespawnPoint;
-    [HideInInspector] public Vector3 m_RespawnPointPosition;
-    public bool isPlayerDead;
-    public string SceneName;
+    public Transform m_RespawnPoint; //current respawn point
+    [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
+    public bool isPlayerDead; //is player dead
+    public string SceneName; //current scene name
 
     #endregion
 
     #region private fields
 
-    private GameObject m_PlayerToRespawn;
-    private bool isPlayerRespawning;
+    [SerializeField] private GameObject m_PlayerToRespawn;
     [SerializeField] private string Music = "Background";
+
+    private bool m_IsPlayerRespawning; //is player respawning
 
     #endregion
 
@@ -65,19 +66,17 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/MapManager");
 
-            if (StartScreenManager.IsLoadPressed)
+            //is load button was pressed in start screen
+            if (StartScreenManager.IsLoadPressed) 
             {
                 SaveLoadManager.Instance.LoadGameData();
 
                 InfoManager.Instance.RecreateState();
             }
-
             
-            InitializeRespawnPoint();
+            InitializeRespawnPointPosition();
 
-            InitalizePlayerToRespawn();
-
-            InitializeBackgroundMusic();
+            AudioManager.Instance.SetBackgroundMusic(Music);
 
             InitializeSceneState();
             
@@ -87,10 +86,60 @@ public class GameMaster : MonoBehaviour {
 
     #endregion
 
+    #region Initializers
+    private void Initialize(string name)
+    {
+        var gameObjectToInstantiate = Resources.Load(name);
+        Instantiate(gameObjectToInstantiate);
+    }
+
+    private void InitializeSceneState()
+    {
+        if (State.ScenesState == null) //if there is no current state for this scene
+            State.ScenesState = new List<State>();
+        else //recreate scene state
+            RecreateSceneState(SceneName);
+    }
+
+    private void InitializeRespawnPointPosition()
+    {
+        if (m_RespawnPointPosition == Vector3.zero & m_RespawnPoint != null)
+        {
+            m_RespawnPointPosition = m_RespawnPoint.position;
+        }
+    }
+
+    public void ChangeRespawnPoint(Transform respawnPointTransform)
+    {
+        if (!ReferenceEquals(m_RespawnPointPosition, respawnPointTransform))
+        {
+            if (m_RespawnPoint != null) //deactivate previous respawn point flame
+                m_RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
+
+            //change respawn point
+            m_RespawnPoint = respawnPointTransform;
+            m_RespawnPointPosition = respawnPointTransform.position;
+        }
+    }
+
+    public void StartPlayerRespawn(bool respawnWithFade)
+    {
+        if (!m_IsPlayerRespawning) //if player is not respawning now
+        {
+            m_IsPlayerRespawning = true;
+
+            if (respawnWithFade)
+                StartCoroutine(RespawnWithFade());
+            else
+                RespawnWithoutFade();
+        }
+    }
+    #endregion
+
+    //put player on the scene
     private void Start()
     {
-        if (Camera.main.GetComponent<Camera2DFollow>().target == null)
-            InitializePlayerRespawn(false);
+        StartPlayerRespawn(false); 
     }
 
     #region SceneRecreation
@@ -99,11 +148,12 @@ public class GameMaster : MonoBehaviour {
 
     public void RecreateSceneState(string sceneName)
     {
-        SceneName = sceneName;
+        SceneName = sceneName; //save scene name
 
-        var searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
+        var searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == SceneName); //find saved state
 
-        if (searchResult != null)
+        //recreate all objects
+        if (searchResult != null) 
         {
             Recreate(searchResult.ObjectsState, RecreateType.Object);
             Recreate(searchResult.ObjectsPosition, RecreateType.Position);
@@ -114,6 +164,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    //recreate simple objects state
     private void Recreate(List<string> list, RecreateType recreateType)
     {
         foreach (var item in list)
@@ -122,6 +173,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    //recreate complex objects state
     private void Recreate<T>(Dictionary<string, T> list, RecreateType recreateType)
     {
         if (recreateType == RecreateType.Position)
@@ -140,6 +192,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    //general recriation
     private void RecreateObjectState<T>(string objectToFind, T value, RecreateType recreateType)
     {
         var searchGameObjectResult = GameObject.Find(objectToFind);
@@ -181,7 +234,7 @@ public class GameMaster : MonoBehaviour {
     {
         State searchResult = null;
 
-        if (!string.IsNullOrEmpty(sceneName))
+        if (!string.IsNullOrEmpty(sceneName)) 
             searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == sceneName);
         else
             searchResult = State.ScenesState.FirstOrDefault(x => x.SceneName == SceneName);
@@ -246,6 +299,7 @@ public class GameMaster : MonoBehaviour {
 
     #endregion
 
+    //clear object name
     private string ClearName(string name)
     {
         return name.Replace("(Clone)", "");
@@ -253,96 +307,11 @@ public class GameMaster : MonoBehaviour {
 
     #endregion
 
-    #region Initializers
-    void Initialize(string name)
-    {
-        var gameObjectToInstantiate = Resources.Load(name);
-        Instantiate(gameObjectToInstantiate);
-    }
-
-    private void InitializeSceneState()
-    {
-        if (State.ScenesState == null)
-            State.ScenesState = new List<State>();
-        else
-            RecreateSceneState(SceneName);
-    }
-
-    void InitializeRespawnPoint()
-    {
-        if (m_RespawnPoint == null)
-        {
-            m_RespawnPoint = GameObject.FindWithTag("RespawnPoint").transform;
-        }
-
-        if (m_RespawnPointPosition == Vector3.zero)
-        {
-            m_RespawnPointPosition = m_RespawnPoint.position;
-        }
-    }
-
-    private void InitializeBackgroundMusic()
-    {
-        AudioManager.Instance.SetBackgroundMusic(Music);
-    }
-
-    void InitalizePlayerToRespawn()
-    {
-        m_PlayerToRespawn = Resources.Load("Player") as GameObject;
-
-        if (m_PlayerToRespawn == null)
-        {
-            Debug.LogError("GameMaster: Can't fint Player to respawn");
-        }
-    }
-
-    public void ChangeRespawnPoint(Transform respawnPointTransform)
-    {
-        if (respawnPointTransform != null)
-        {
-            if (!ReferenceEquals(m_RespawnPointPosition, respawnPointTransform))
-            {
-                if (m_RespawnPoint != null)
-                    m_RespawnPoint.GetComponent<RespawnPoint>().SetActiveFlame(false);
-                
-                m_RespawnPoint = respawnPointTransform;
-                m_RespawnPointPosition = respawnPointTransform.position;
-            }
-        }
-        else
-        {
-            Debug.LogError("GameMaster: can't reasign m_Respawn point, because new respawn point is null");
-        }
-    }
-
-    public void InitializePlayerRespawn(bool isPlayerDied)
-    {
-        if (!isPlayerRespawning)
-        {
-            if (m_RespawnPointPosition != null)
-            {
-                if (m_PlayerToRespawn != null)
-                {
-                    isPlayerRespawning = true;
-
-                    if (isPlayerDied)
-                        StartCoroutine(RespawnWithFade());
-                    else
-                        RespawnWithoutFade();
-                }
-                else
-                {
-                    Debug.LogError("GameMaster: Couldn't respawn player, because GameMaster couldn't load Player from Resources.");
-                }
-            }
-        }
-    }
-    #endregion
-
     #region Respawn
 
-    public void SetPlayerPosition(Vector2 spawnPosition)
+    public void RespawnWithSpawnPosition(Vector2 spawnPosition)
     {
+        //if there is no player on scene
         if (!GameObject.FindGameObjectWithTag("Player"))
         {
             RespawnWithoutFade(spawnPosition);
@@ -373,7 +342,7 @@ public class GameMaster : MonoBehaviour {
         var playerGameObject = Instantiate(m_PlayerToRespawn);
         playerGameObject.transform.position = m_RespawnPointPosition;
 
-        isPlayerRespawning = false;
+        m_IsPlayerRespawning = false;
         isPlayerDead = false;
 
         return playerGameObject.transform;

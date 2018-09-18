@@ -1,24 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class State {
 
-    public static List<State> ScenesState;
+    #region public fields
 
-    public string SceneName;
+    public static List<State> ScenesState; //list of scenes state
 
-    public List<string> ObjectsState;
+    public string SceneName; //scene name
+    public List<string> ObjectsState; //object to remove from scene
+    public Dictionary<string, ObjectPosition> ObjectsPosition; //object to change position on scene
+    public List<string> DialogueIsComplete; //indicates that dialogue is complete
+    public Dictionary<string, string> ChestItems; //items to remove from ches
+    public List<string> Tasks; //task that have been add/update/complete on scene
 
-    public Dictionary<string, ObjectPosition> ObjectsPosition;
+    #endregion
 
-    public List<string> DialogueIsComplete;
-
-    public Dictionary<string, string> ChestItems;
-
-    public List<string> Tasks;
-
+    //initialize lists
     public State(string SceneName)
     {
         this.SceneName = SceneName;

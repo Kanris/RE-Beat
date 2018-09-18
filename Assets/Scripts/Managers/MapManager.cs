@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour {
@@ -16,16 +14,21 @@ public class MapManager : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private TextMeshProUGUI m_LocationName;
-    [SerializeField] private GameObject m_UI;
-    [SerializeField] private RawImage m_Minimap;
-    [SerializeField] private Image[] imagesToTransparent;
+    #region serialize fields
 
-    private bool m_IsMoving;
-    private bool m_IsTransparent;
-    private bool m_IsTransparing;
-    private Animator m_PlayerAnimator;
-    private float m_UpdateSearchTime;
+    [SerializeField] private TextMeshProUGUI m_LocationName; //scene name
+    [SerializeField] private GameObject m_UI; //map manager ui
+    [SerializeField] private RawImage m_Minimap; //mini map
+    [SerializeField] private Image[] imagesToTransparent; //image to transparent when player moves
+
+    #endregion
+
+    private bool m_IsMoving; //is player moving
+    private bool m_IsTransparent; //is images transparent
+    private bool m_IsTransparing; //is transparent in progress
+    private Animator m_PlayerAnimator; //player animator
+    private float m_UpdateSearchTime; //search player time
+
     #endregion
 
     #region singleton
@@ -50,47 +53,55 @@ public class MapManager : MonoBehaviour {
 
     #endregion
 
+    #region private methods
+
     private void Start()
     {
         m_UI.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update () {
-		
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            m_UI.SetActive(!m_UI.activeSelf);
+    private void Update () {
 
-            m_LocationName.text = GameMaster.Instance.SceneName;
+        //if map button pressed
+        if (Input.GetKeyDown(KeyCode.M)) 
+        {
+            m_UI.SetActive(!m_UI.activeSelf); //show/hide map ui
+
+            if (m_UI.activeSelf & m_LocationName.text != GameMaster.Instance.SceneName) //change location name
+                m_LocationName.text = GameMaster.Instance.SceneName;
 
             if (OnMapOpen != null)
-                OnMapOpen(m_UI.activeSelf);
+                OnMapOpen(m_UI.activeSelf); //notify that map is close or open
         }
 
-        if (m_UI.activeSelf & m_PlayerAnimator != null)
+        //if map is open and we have reference to the player animator
+        if (m_UI.activeSelf & m_PlayerAnimator != null) 
         {
+            //get player current movement
             float h = m_PlayerAnimator.GetFloat("Speed");
             float v = m_PlayerAnimator.GetFloat("vSpeed");
 
-            if ((h != 0f | v != 0f) & !m_IsMoving)
+            if ((h != 0f | v != 0f) & !m_IsMoving) //if player is moving
             {
-                m_IsTransparent = true;
+                m_IsTransparent = true; //need to transparent 
                 m_IsMoving = true;
             }
-            else if ((h == 0f & v == 0f) & m_IsMoving)
+            else if ((h == 0f & v == 0f) & m_IsMoving) //if is not moving but game think it is
             {
-                m_IsTransparent = true;
+                m_IsTransparent = true; //stop transparent
                 m_IsMoving = false;
             }
 
         }
 
-        if (m_IsTransparent & !m_IsTransparing)
+        //transparent image
+        if (m_IsTransparent & !m_IsTransparing) 
         {
             StartCoroutine(TransparentImages(m_IsMoving));
         }
 
+        //search for player is there is no reference to the player animator
         if (m_PlayerAnimator == null)
         {
             if (m_UpdateSearchTime < Time.time)
@@ -109,12 +120,15 @@ public class MapManager : MonoBehaviour {
 
     private IEnumerator TransparentImages(bool value)
     {
-        m_IsTransparing = true;
+        m_IsTransparing = true; //notify that transparents starts
 
         yield return new WaitForSeconds(0.5f);
 
-        if (value == m_IsMoving)
+        //if player still moving
+        if (value == m_IsMoving) 
         {
+
+            //transparent all images
             var alphaValue = 0.5f / 10f;
 
             if (value)
@@ -133,4 +147,6 @@ public class MapManager : MonoBehaviour {
         m_IsTransparent = false;
         m_IsTransparing = false;
     }
+
+    #endregion
 }

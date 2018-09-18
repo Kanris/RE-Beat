@@ -25,9 +25,9 @@ public class SaveLoadManager : MonoBehaviour {
 
     #endregion
 
-    #region private serialize fields
+    #region private fields
 
-    [SerializeField] private GameObject m_SaveImage;
+    [SerializeField] private GameObject m_SaveImage; //save image
 
     #endregion
 
@@ -35,61 +35,7 @@ public class SaveLoadManager : MonoBehaviour {
 
     private void Start()
     {
-        ActiveSaveImage(false);
-    }
-
-    #endregion
-
-    #region Public methods
-
-    public void LoadGameData()
-    {
-        SaveLoadMaster.LoadPlayerData();
-        SaveLoadMaster.LoadGeneralData();
-    }
-
-    public void LoadScene()
-    {
-        var sceneToLoad = SaveLoadMaster.GetLoadScene();
-
-        if (!string.IsNullOrEmpty(sceneToLoad))
-        {
-            LoadScene(sceneToLoad);
-        }
-        else
-        {
-            Debug.LogError("SaveLoadManager.LoadScene: scene name is empty");
-        }
-    }
-
-    public void SaveGameData()
-    {
-        StartCoroutine(SaveGame());
-    }
-
-    private IEnumerator SaveGame()
-    {
-        ActiveSaveImage(true);
-        AudioManager.Instance.Play("Respawn Torch Activation");
-
-        SaveLoadMaster.SaveGeneralData();
-        SaveLoadMaster.SavePlayerData();
-
-        yield return new WaitForSeconds(2f);
-
-        ActiveSaveImage(false);
-    }
-
-    public void SaveOptions()
-    {
-        SaveLoadMaster.SaveOptionsData();
-    }
-
-    public bool LoadOptions()
-    {
-        var instance = SaveLoadMaster.LoadOptionsData();
-
-        return instance != null;
+        ActiveSaveImage(false); //hide save fields
     }
 
     #endregion
@@ -106,8 +52,63 @@ public class SaveLoadManager : MonoBehaviour {
 
     private void ActiveSaveImage(bool value)
     {
-        m_SaveImage.SetActive(value);
+        m_SaveImage.SetActive(value); //active or hide image
     }
+
+    #endregion
+
+    #region public methods
+
+    public void LoadGameData()
+    {
+        SaveLoadMaster.LoadPlayerData(); //load player data
+        SaveLoadMaster.LoadGeneralData(); //load general data
+    }
+
+    public void LoadScene()
+    {
+        var sceneToLoad = SaveLoadMaster.GetSceneToLoad(); //get scene to load
+
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            LoadScene(sceneToLoad);
+        }
+        else
+        {
+            Debug.LogError("SaveLoadManager.LoadScene: scene name is empty");
+        }
+    }
+
+    public void SaveGameData()
+    {
+        StartCoroutine(SaveGame()); //save game data
+    }
+
+    private IEnumerator SaveGame()
+    {
+        ActiveSaveImage(true); //show save image
+        AudioManager.Instance.Play("Respawn Torch Activation"); //play save sound
+
+        SaveLoadMaster.SaveGeneralData();
+        SaveLoadMaster.SavePlayerData();
+
+        yield return new WaitForSeconds(2f);
+
+        ActiveSaveImage(false); //hide save image
+    }
+
+    public void SaveOptions()
+    {
+        SaveLoadMaster.SaveOptionsData(); //save options data (on start screen)
+    }
+
+    public bool LoadOptions()
+    {
+        var instance = SaveLoadMaster.LoadOptionsData(); //load options (for start screen)
+
+        return instance != null;
+    }
+
     #endregion
 
 }
