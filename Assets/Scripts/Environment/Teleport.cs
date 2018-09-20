@@ -69,9 +69,7 @@ public class Teleport : MonoBehaviour {
 
             StartCoroutine(ScreenFaderManager.Instance.FadeToClear()); //show sceen to the player
 
-            m_Player = null;
-            SetActiveInteractionButton(false); //hide ui buttons
-            SetAnimationTrigger("Idle"); //return to the idle animation
+            ResetToDefaultState();
         }
         else
         {
@@ -93,9 +91,7 @@ public class Teleport : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player is leave teleport trigger
         {
-            m_Player = null; //remove player reference
-            SetAnimationTrigger("Idle"); //return to the idle animation
-            SetActiveInteractionButton(false); //hide ui buttons
+            ResetToDefaultState();
         }
     }
 
@@ -110,6 +106,13 @@ public class Teleport : MonoBehaviour {
         {
             m_InteractionButton.SetActive(isActive);
         }
+    }
+
+    private void ResetToDefaultState()
+    {
+        m_Player = null; //remove player reference
+        SetAnimationTrigger("Idle"); //return to the idle animation
+        SetActiveInteractionButton(false); //hide ui buttons
     }
 
     #endregion
