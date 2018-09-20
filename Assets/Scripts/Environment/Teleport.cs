@@ -68,6 +68,10 @@ public class Teleport : MonoBehaviour {
             m_Animator.SetBool("Teleport", false); //stop teleprt animation
 
             StartCoroutine(ScreenFaderManager.Instance.FadeToClear()); //show sceen to the player
+
+            m_Player = null;
+            SetActiveInteractionButton(false); //hide ui buttons
+            SetAnimationTrigger("Idle"); //return to the idle animation
         }
         else
         {
