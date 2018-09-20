@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 61964182125721058}
   - component: {fileID: 114993187217315622}
   - component: {fileID: 50961689492914324}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: GreenFireball
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -189,6 +189,7 @@ MonoBehaviour:
   DamageAmount: 1
   Speed: 2.5
   isNeedRotation: 1
+  DestroyDelay: 0.2
 --- !u!212 &212220767979711470
 SpriteRenderer:
   m_ObjectHideFlags: 1
