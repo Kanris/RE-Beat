@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4846380334338922}
-  - component: {fileID: 61637316015067924}
   m_Layer: 16
   m_Name: GroundCheck
   m_TagString: Untagged
@@ -118,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1057935578576618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.007, y: 0.02, z: 0}
+  m_LocalPosition: {x: -0.333, y: -0.484, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4191418293414282}
@@ -182,31 +181,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2096577, y: 0.74410176}
   m_EdgeRadius: 0
---- !u!61 &61637316015067924
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1057935578576618}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.29197502, y: -0.3585551}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.09631729, y: 0.082889795}
-  m_EdgeRadius: 0
 --- !u!70 &70494095002269910
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -251,7 +225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a792c8203fad94438b48c5d41115d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveUpdateTime: 0
+  m_GroundCheck: {fileID: 4846380334338922}
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 16384
   IdleTime: 2
   isPlayerNear: 0
 --- !u!114 &114425864084102134

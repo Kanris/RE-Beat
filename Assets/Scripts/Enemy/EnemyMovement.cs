@@ -8,6 +8,11 @@ public class EnemyMovement : MonoBehaviour {
 
     #region private fields
 
+    [SerializeField] private Transform m_GroundCheck;
+    [SerializeField] private LayerMask m_WhatIsGround; // A mask determining what is ground to the character
+
+    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
     private Enemy m_EnemyStats;
@@ -18,9 +23,10 @@ public class EnemyMovement : MonoBehaviour {
     private bool m_IsWaiting = false;
     private bool m_IsJumping = false;
     private bool m_IsThrowBack;
+    private bool m_Grounded;
     private bool m_CantMoveFurther;
 
-    public float m_MoveUpdateTime;
+    private float m_MoveUpdateTime;
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
 
@@ -125,9 +131,23 @@ public class EnemyMovement : MonoBehaviour {
 
     #endregion
 
+    private void Update()
+    {
+        m_Grounded = false;
+
+        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+                m_Grounded = true;
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (m_CantMoveFurther)
+        if (!m_Grounded | m_CantMoveFurther)
         {
             m_CantMoveFurther = false;
             TurnAround();
@@ -214,14 +234,6 @@ public class EnemyMovement : MonoBehaviour {
     private void SpeedChange(float speed)
     {
         m_Speed = speed;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground") & !isPlayerNear)
-        {
-            m_CantMoveFurther = true;
-        }
     }
 
     private IEnumerator Idle(bool haveToTurnAround)
