@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class Enemy : Stats
@@ -18,9 +16,9 @@ public class Enemy : Stats
 
     #region public fields
 
-    public int DamageAmount = 1;
-    public float Speed = 1f;
-    public float AttackSpeed = 2f;
+    [Range(1, 10)]public int DamageAmount = 1;
+    [Range(0.1f, 10f)] public float Speed = 1f;
+    [Range(0.1f, 10f)] public float AttackSpeed = 2f;
     public bool m_IsBigMonster;
     [SerializeField, Range(1, 100)] private int DropCoins = 1;
 
@@ -48,7 +46,7 @@ public class Enemy : Stats
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
-        OnObjectDeath += GiveCoinsToPlayer;
+        OnObjectDeath += GiveCoinsToPlayer; //give player conins on death
 
         base.Initialize(gameObject, animator);
     }

@@ -16,7 +16,7 @@ public class PlayerStats : Stats
 
     public static int DamageAmount = 50;
     public static float AttackSpeed = 0.3f;
-    public static float Invincible = 2f;
+    public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
     private static int m_Coins = 0;
@@ -31,7 +31,7 @@ public class PlayerStats : Stats
         {
             m_Coins += value;
 
-            if (OnCoinsAmountChange != null)
+            if (OnCoinsAmountChange != null) //notify that coins amount changed
                 GameMaster.Instance.StartCoroutine(OnCoinsAmountChange(value));
         }
         get
@@ -44,10 +44,10 @@ public class PlayerStats : Stats
 
     #region private fields
 
-    private bool isInvincible;
-    private int m_SeriesCombo = 0;
-    private float m_CheckNextComboTime;
-    private int m_CurrentComboIndex;
+    private bool m_IsInvincible; //is player invincible right now
+    private int m_SeriesCombo = 0; //hits count in combo
+    private float m_CheckNextComboTime; //next check combo
+    private int m_CurrentComboIndex; //current combo index
 
     #endregion
 
@@ -55,32 +55,33 @@ public class PlayerStats : Stats
 
     public void HealPlayer(int amount)
     {
-        if (CurrentHealth == MaxHealth)
+        if (CurrentHealth == MaxHealth) //if player is already full health
         {
-            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(10));
+            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(10)); //add coins
         }
-        else
+        else //heal player
         {
-            if ((CurrentHealth + amount) > MaxHealth)
+            if ((CurrentHealth + amount) > MaxHealth) //if heal amount plus current health is greater than maxhealth
             {
-                var excess = (CurrentHealth + amount) - MaxHealth;
-                amount = amount - excess;
+                var excess = (CurrentHealth + amount) - MaxHealth; //get excess heal amount
+                amount = amount - excess; //new heal amount
             }
 
+            //heal player
             CurrentPlayerHealth += amount;
             CurrentHealth += amount;
 
-            UIManager.Instance.AddHealth(amount);
+            UIManager.Instance.AddHealth(amount); //add health in player's ui
         }
     }
 
     public void HitEnemy(Enemy enemy, int zone)
     {
-        var damageToEnemy = GetDamageAmount(zone);
+        var damageToEnemy = GetDamageAmount(zone); //get damage amount base on the distance between enemy and player
         enemy.TakeDamage(damageToEnemy, zone);
     }
 
-    public void KillPlayer()
+    public void KillPlayer() //kill player even if he invincible
     {
         var damageAmount = 999;
 
@@ -96,16 +97,16 @@ public class PlayerStats : Stats
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
-        if (PlayerInventory == null)
-            PlayerInventory = new Inventory(9);
-
         base.Initialize(gameObject);
 
-        UIManager.Instance.Clear();
+        if (PlayerInventory == null) //initialize player's inventory with size of nine
+            PlayerInventory = new Inventory(9);
 
-        if (CurrentPlayerHealth > 0)
-            UIManager.Instance.AddHealth(CurrentPlayerHealth);
-        else
+        UIManager.Instance.Clear(); //clear health ui
+
+        if (CurrentPlayerHealth > 0) //save current player's health
+            UIManager.Instance.AddHealth(CurrentPlayerHealth); 
+        else //player was dead initialize full hp
         {
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
@@ -116,36 +117,36 @@ public class PlayerStats : Stats
 
     public override void TakeDamage(int amount, int divider = 1)
     {
-        if (!isInvincible)
+        if (!m_IsInvincible) //player is not invincible
         {
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
 
-            UIManager.Instance.RemoveHealth(amount);
+            UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
         }
     }
 
-    protected override IEnumerator PlayTakeDamageAnimation(int divider)
+    protected override IEnumerator ObjectTakeDamage(int divider)
     {
-        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false;
-        PlayHitAnimation(true);
+        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false; //take control from the player
+        PlayHitAnimation(true); 
 
-        isInvincible = true;
+        m_IsInvincible = true; //player is invincible
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.2f); //time to return player's control
 
-        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true;
+        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true; //return control to the player
 
         PlayHitAnimation(false);
 
-        yield return InvincibleAnimation();
+        yield return InvincibleAnimation(); //play invincible animation
 
-        isInvincible = false;
+        m_IsInvincible = false; //player is not invincible
     }
 
     protected override void KillObject()
     {
-        GameMaster.Instance.StartPlayerRespawn(true);
+        GameMaster.Instance.StartPlayerRespawn(true); //respawn new player on respawn point
         base.KillObject();
     }
 
@@ -155,40 +156,40 @@ public class PlayerStats : Stats
 
     private int GetDamageAmount(int zone)
     {
-        var damageToEnemy = DamageAmount / zone;
+        var damageToEnemy = DamageAmount / zone; //damage to enemy base on the hit zone
 
-        if (m_CheckNextComboTime > Time.time)
+        if (m_CheckNextComboTime > Time.time) //simple combo check
         {
-            m_SeriesCombo++;
+            m_SeriesCombo++; //hit in series
 
-            CheckIsComboComplete(ref damageToEnemy);
+            CheckIsComboComplete(ref damageToEnemy); //maybe combo is complete
         }
-        else if (m_SeriesCombo == 1 & (m_CheckNextComboTime + 1f) > Time.time)
+        else if (m_SeriesCombo == 1 & (m_CheckNextComboTime + 1f) > Time.time) //move to complecate combo (hit pause hit)
         {
-            m_CurrentComboIndex = 1;
-            m_SeriesCombo++;
-            m_CheckNextComboTime = Time.time + 1f;
+            m_CurrentComboIndex = 1; //change combo index
+            m_SeriesCombo++; //hit in series
+            m_CheckNextComboTime = Time.time + 1f; //pause that been checked (pause)
         }
-        else
+        else //player missed combo
         {
             m_CurrentComboIndex = 0;
             m_SeriesCombo = 1;
         }
 
-        m_CheckNextComboTime = Time.time + 0.6f;
+        m_CheckNextComboTime = Time.time + 0.6f; //check next hit in combo
 
         return damageToEnemy;
     }
 
     private void CheckIsComboComplete(ref int damageToEnemy)
     {
-        if (m_CurrentComboIndex == 1)
+        if (m_CurrentComboIndex == 1) //index is 1 than it's third hit in combo
         {
             m_SeriesCombo = 0;
             m_CurrentComboIndex = 0;
             Debug.LogError("Pause combo");
         }
-        else if (m_SeriesCombo == 3)
+        else if (m_SeriesCombo == 3) //three hits in combo
         {
             m_CurrentComboIndex = 0;
             m_SeriesCombo = 0;
@@ -199,7 +200,7 @@ public class PlayerStats : Stats
 
     private IEnumerator InvincibleAnimation()
     {
-        var invincibleTime = Time.time + Invincible;
+        var invincibleTime = Time.time + Invincible - 0.2f;
         var playerSprite = m_GameObject.GetComponent<SpriteRenderer>().material;
         var color = playerSprite.color;
 

@@ -6,28 +6,28 @@ public class Stats {
 
     #region public fields
 
-    public int MaxHealth = 200;
-    [Range(0f, 10f)] public float m_ThrowX = 2f;
+    [Range(1, 4000)] public int MaxHealth = 200;
+    [Range(0f, 10f)] public float m_ThrowX = 2f; 
     [Range(0f, 10f)] public float m_ThrowY = 0.5f;
 
     #endregion
 
     #region protected fields
 
-    protected GameObject m_GameObject;
-    protected Animator m_Animator;
+    protected GameObject m_GameObject; //gameobject that contains stat class
+    protected Animator m_Animator; //animator of the gameobject
 
     #endregion
 
     #region private fields
 
-    private int m_CurrentHealth;
+    private int m_CurrentHealth; //current object health
 
     #region private serialize fields
 
-    [SerializeField] private GameObject DeathParticle;
-    [SerializeField] private string HitSound;
-    [SerializeField] private string DeathSound;
+    [SerializeField] private GameObject DeathParticle; //particles that will be spawn after object death
+    [SerializeField] private string HitSound; //sound that will be played when object gets hit
+    [SerializeField] private string DeathSound; //sound that will be played when object died
 
     #endregion
 
@@ -50,7 +50,7 @@ public class Stats {
         }
         set
         {
-            m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);
+            m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth); //current health value can't be higher than max health and less than zero
         }
     }
 
@@ -60,42 +60,12 @@ public class Stats {
 
     public virtual void Initialize(GameObject gameObject, Animator animator = null)
     {
-        InitializeGameObject(gameObject);
-        InitializeHealth();
+        m_CurrentHealth = MaxHealth;
 
         if (animator == null)
-            InitializeAnimator();
+            m_Animator = m_GameObject.GetComponent<Animator>();
         else
             m_Animator = animator;
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = m_GameObject.GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("PlayerStats.InitializeAnimator: Can't initialize animator.");
-        }
-    }
-
-    private void InitializeGameObject(GameObject gameObject)
-    {
-        if (gameObject == null)
-            Debug.LogError("Stats: GameObject is null");
-        else
-            m_GameObject = gameObject;
-    }
-
-    private void InitializeHealth()
-    {
-        if (MaxHealth <= 0)
-        {
-            Debug.LogError("Stats: Max health is less or equals to 0. Destroying Game object");
-            GameMaster.Destroy(m_GameObject);
-        }
-        else
-            m_CurrentHealth = MaxHealth;
     }
 
     #endregion
@@ -104,56 +74,59 @@ public class Stats {
 
     public virtual void TakeDamage(int amount, int divider = 1)
     {
-        CurrentHealth -= amount;
+        CurrentHealth -= amount; //change current health
 
-        if (CurrentHealth == 0)
+        if (CurrentHealth == 0) //if object is dead
         {
-            if (OnObjectDeath != null)
+            if (OnObjectDeath != null) //notify event
                 OnObjectDeath();
 
             PlayDeathSound();
-            KillObject();
+            KillObject(); //destroy gameobject
         }
-
-        if (CurrentHealth > 0)
+        else if (CurrentHealth > 0) //object still alive
         {
-            GameMaster.Instance.StartCoroutine(PlayTakeDamageAnimation(divider));
+            GameMaster.Instance.StartCoroutine(ObjectTakeDamage(divider)); //play hit animation and throw back object
             PlayHitSound();
         }
     }
 
-    protected virtual IEnumerator PlayTakeDamageAnimation(int divider)
+    protected virtual IEnumerator ObjectTakeDamage(int divider)
     {
-        PlayHitAnimation(true);
+        PlayHitAnimation(true); //play hit animation
 
+        //save default throw values
         var m_prevThrowX = m_ThrowX;
         var m_prevThrowY = m_ThrowY;
 
+        //get new throw values base on divider
         m_ThrowX /= divider;
         m_ThrowY /= divider;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.1f); //thorw time
 
+        //return default throw values
         m_ThrowX = m_prevThrowX;
         m_ThrowY = m_prevThrowY;
 
-        PlayHitAnimation(false);
+        PlayHitAnimation(false); //stop hit animation
     }
 
     protected virtual void KillObject()
     {
-        SpawnParticle();
-        GameMaster.Destroy(m_GameObject);
+        PlayDeathParticles(); //show death particles
+        GameMaster.Destroy(m_GameObject); //destroy gameobject
     }
 
-    protected virtual void SpawnParticle()
+    protected virtual void PlayDeathParticles()
     {
-        if (DeathParticle != null)
+        if (DeathParticle != null) //if there is death particles
         {
-            if (m_GameObject != null)
+            if (m_GameObject != null) //if object still exists
             {
                 var gameObjectToDestroy =
                     GameMaster.Instantiate(DeathParticle, m_GameObject.transform.position, m_GameObject.transform.rotation);
+
                 GameMaster.Destroy(gameObjectToDestroy, 1f);
             }
         }
