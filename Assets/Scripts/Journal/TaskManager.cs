@@ -143,6 +143,7 @@ public class TaskManager : MonoBehaviour {
     {
         if (DestroyEntireObject) //if need to destroy whole gameobject
             Destroy(gameObject); 
+
         else //if need to remove this script
             Destroy(this);
     }

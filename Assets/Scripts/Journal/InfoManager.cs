@@ -271,6 +271,13 @@ public class InfoManager : MonoBehaviour {
             CompletedTasks.Add(taskname, CurrentTasks[taskname]);
             CurrentTasks.Remove(taskname);
 
+            //move task button from current list to the completed
+            var currentTaskButton = m_ButtonsList[0].FirstOrDefault(x => x.name == taskname);
+            m_ButtonsList[1].Add(currentTaskButton);
+            m_ButtonsList[0].Remove(currentTaskButton);
+
+            OpenBookmark(1);
+
             return true; //task was successfuly updated
         }
 
