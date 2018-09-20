@@ -1,42 +1,31 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackPlayerOnTrigger : MonoBehaviour {
 
     #region private fields
 
-    private bool m_IsAttack;
-    private PlayerStats m_PlayerStats;
-    private Animator m_Animator;
-    private Enemy m_EnemyStats;
+    private bool m_IsAttack; //indicates that enemy is attacking
+    private PlayerStats m_PlayerStats; //player stats to attack
+    private Enemy m_EnemyStats; //to get damage amount
+    private Animator m_Animator; //to play hit animation
 
     #endregion
 
     private void Start()
     {
-        InitializeAnimator();
-        InitializeStats();
-    }
-
-    private void InitializeAnimator()
-    {
         m_Animator = transform.parent.GetComponent<Animator>();
-    }
-
-    private void InitializeStats()
-    {
         m_EnemyStats = transform.parent.GetComponent<EnemyStatsGO>().EnemyStats;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsAttack)
+        if (collision.CompareTag("Player") & !m_IsAttack) //if enemy is not attacking
         {
             m_IsAttack = true;
-            m_PlayerStats = collision.GetComponent<Player>().playerStats;
+            m_PlayerStats = collision.GetComponent<Player>().playerStats; //get player stats
 
-            StartCoroutine(Attack());
+            StartCoroutine(Attack()); //start attac
         }
     }
 
