@@ -60,6 +60,8 @@ public class Stats {
 
     public virtual void Initialize(GameObject gameObject, Animator animator = null)
     {
+        m_GameObject = gameObject;
+
         m_CurrentHealth = MaxHealth;
 
         if (animator == null)

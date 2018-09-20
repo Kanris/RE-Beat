@@ -97,7 +97,7 @@ public class PlayerStats : Stats
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
-        base.Initialize(gameObject);
+        base.Initialize(gameObject, animator);
 
         if (PlayerInventory == null) //initialize player's inventory with size of nine
             PlayerInventory = new Inventory(9);
