@@ -97,10 +97,11 @@ public class StartScreenManager : MonoBehaviour {
         SetFullScreen(IsFullscreen);
         SetResolution(ResolutionIndex);
 
-        if (LocalizationToLoad != LocalizationManager.LocalizationToLoad)
+        LocalizationManager.Instance.LoadGeneralLocalizationData(LocalizationToLoad);
+
+        if (LocalizationManager.LocalizationToLoad != LocalizationToLoad)
         {
             LocalizationManager.LocalizationToLoad = LocalizationToLoad;
-            LocalizationManager.Instance.LoadGeneralLocalizationData(LocalizationToLoad);
             SceneManager.LoadScene("StartScreen");
         }
     }
