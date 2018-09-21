@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -87,11 +88,11 @@ public class InfoManager : MonoBehaviour {
     #endregion
 
     // Update is called once per frame
-    private void Update () {
+    private void FixedUpdate () {
 		
         if (Input.GetKeyDown(KeyCode.J)) //open journal
         {
-            InfoManagement(0);
+           InfoManagement(0);
         }
         else if (Input.GetKeyDown(KeyCode.I)) //open inventory
         {
@@ -164,12 +165,12 @@ public class InfoManager : MonoBehaviour {
 
     public void OpenBookmark(int id)
     {
+        //change bookmarks positions too show player what bookmark is currently open
+        m_Bookmarks.transform.GetChild(id).transform.localPosition -= new Vector3(10, 0);
+        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).transform.localPosition += new Vector3(10, 0);
+
         ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
         ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
-
-        //change bookmarks positions too show player what bookmark is currently open
-        m_Bookmarks.transform.GetChild(id).transform.position -= new Vector3(10, 0);
-        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).transform.position -= new Vector3(-10, 0);
 
         m_CurrentOpenBookmark = id; //change current book mark id
         m_Page.ClearText(); //clear main text 
