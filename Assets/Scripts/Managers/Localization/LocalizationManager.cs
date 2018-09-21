@@ -4,7 +4,7 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour {
 
-    public static string LocalizationToLoad = "en";
+    public static string LocalizationToLoad = "ru";
 
     private Dictionary<string, string> localizedText;
     private Dictionary<string, string> journalText;
@@ -35,7 +35,7 @@ public class LocalizationManager : MonoBehaviour {
             LoadGeneralLocalizationData(LocalizationToLoad);
             LoadJournalLocalizationData(LocalizationToLoad);
             LoadDialogueLocalizationData(LocalizationToLoad);
-            /*LoadItemsLocalizationData(LocalizationToLoad);*/
+            LoadItemsLocalizationData(LocalizationToLoad);
         }
     }
 
@@ -65,24 +65,25 @@ public class LocalizationManager : MonoBehaviour {
         {
             fileName = "localization-dialogue-" + fileName + ".json";
             LoadLocalizationData(fileName, out dialogueText);
-            Debug.LogError(fileName + ":" + dialogueText.Count);
         }
     }
 
     public void LoadItemsLocalizationData(string fileName)
     {
-        /*if (!string.IsNullOrEmpty(fileName))
+        if (!string.IsNullOrEmpty(fileName))
         {
             fileName = "localization-items-" + fileName + ".json";
             LoadLocalizationData(fileName, out itemsText);
-        }*/
+            Debug.LogError(fileName + ":" + itemsText.Count);
+        }
     }
 
     private void LoadLocalizationData(string fileName, out Dictionary<string, string> localizationData)
     {
         localizationData = new Dictionary<string, string>();
 
-        var filePath = Path.Combine(Application.streamingAssetsPath, fileName); //get path to the localized text
+        var filePath = Path.Combine(Application.streamingAssetsPath, LocalizationToLoad); //get path to the localized text
+        filePath = Path.Combine(filePath, fileName);
 
         if (File.Exists(filePath))
         {

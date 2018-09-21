@@ -73,7 +73,8 @@ public class Chest : MonoBehaviour {
     {
         if (chestType == ChestType.Destroyable & Health != 0) //if chest is destroyable but still have health
         {
-            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message("This chest is too rusty, can't open it.")); //display warning message
+            var chestInfo = LocalizationManager.Instance.GetItemsLocalizedValue("chest_info");
+            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(chestInfo)); //display warning message
         }
         else //if chest can be open
         {

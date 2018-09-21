@@ -15,8 +15,11 @@ public class ChestItem : MonoBehaviour {
     {
         PlayerStats.PlayerInventory.Add(item, GetComponent<Image>().sprite.name); //add item to the player inventory
 
+        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name);
+        var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(item.Name + " add to the inventory")); //display additing message
+            new AnnouncerManager.Message(itemName + " " + itemAddMessage + " - I")); //display additing message
 
         GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
 

@@ -25,7 +25,7 @@ public class InventoryItem : MonoBehaviour {
 
     public void ShowItemInfo()
     {
-        m_ItemDescriptionText.ShowText(m_ItemDescription);
+        m_ItemDescriptionText.ShowText(LocalizationManager.Instance.GetItemsLocalizedValue(m_ItemDescription));
     }
 
     #endregion

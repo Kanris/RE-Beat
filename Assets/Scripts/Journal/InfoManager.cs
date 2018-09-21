@@ -147,7 +147,7 @@ public class InfoManager : MonoBehaviour {
         var resourceItemButton = Resources.Load("Managers/Journal/InventoryItem") as GameObject;
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
-        instantiateItemButton.name = item.Name; //change button name to the item name
+        instantiateItemButton.name = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button name to the item name
         instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.Name; //change button caption to the item name
         instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = itemsSpriteAtlas.SingleOrDefault(x => x.name == item.Image); //add item image from atlas
 

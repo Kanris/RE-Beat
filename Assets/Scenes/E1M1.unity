@@ -585,12 +585,17 @@ Prefab:
     - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
       propertyPath: item.Description
-      value: Key that can open blue door
+      value: blue_key_description
       objectReference: {fileID: 0}
     - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
       propertyPath: item.Image
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: item.Name
+      value: blue_key
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a3c115df6dde7342b4c49385ad1e4f9, type: 2}
@@ -955,7 +960,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 753630515}
+      objectReference: {fileID: 77665800}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -2749,7 +2754,7 @@ MonoBehaviour:
     Description: 
     itemType: 0
     HealAmount: 3
-  DisplayMessage: Blue magic seal on door
+  DisplayMessage: blue_seal_door
 --- !u!483693784 &247247798
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -23838,7 +23843,7 @@ Prefab:
     - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
       propertyPath: item.Name
-      value: Magnetic Arm
+      value: magnetic_arm
       objectReference: {fileID: 0}
     - target: {fileID: 114243296667031276, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
@@ -23853,7 +23858,7 @@ Prefab:
     - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
       propertyPath: item.Description
-      value: Allow to carry magnetic box
+      value: magnetic_arm_description
       objectReference: {fileID: 0}
     - target: {fileID: 114003596219998202, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
         type: 2}
@@ -29028,6 +29033,11 @@ Prefab:
       propertyPath: Name
       value: Find_out
       objectReference: {fileID: 0}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: DisplayMessage
+      value: world_door
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
@@ -29289,12 +29299,32 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114161512031941948, guid: 237801e1f659d3c4f88f48b4506494bd,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114161512031941948, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -29309,142 +29339,9 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1257307612774262, guid: 237801e1f659d3c4f88f48b4506494bd, type: 2}
+    - target: {fileID: 1817112859137058, guid: 237801e1f659d3c4f88f48b4506494bd, type: 2}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1300907995924108, guid: 237801e1f659d3c4f88f48b4506494bd, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchorMin.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224497235713533120, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224331603690301612, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: c62513a353a4d3848a63496a5f43532c,
-        type: 2}
-    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 21115445363112236, guid: c62513a353a4d3848a63496a5f43532c,
-        type: 2}
-    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: c62513a353a4d3848a63496a5f43532c,
-        type: 2}
-    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 21115445363112236, guid: c62513a353a4d3848a63496a5f43532c,
-        type: 2}
-    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontSize
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 114816037284887956, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontSize
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 114926666771994644, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_firstOverflowCharacterIndex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224243119444632874, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224243119444632874, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224191259429772452, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.7199999
-      objectReference: {fileID: 0}
-    - target: {fileID: 224191259429772452, guid: 237801e1f659d3c4f88f48b4506494bd,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: -9.44
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 237801e1f659d3c4f88f48b4506494bd, type: 2}
@@ -31948,8 +31845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     Image: '*'
-    Name: Note
-    Description: Haha! What a noob!
+    Name: noob_note
+    Description: noob_note_description
     itemType: 1
     HealAmount: 3
 --- !u!61 &1892891043
@@ -32965,8 +32862,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     Image: '*'
-    Name: Magnetic Boots
-    Description: Allow to walk on steel surface
+    Name: magnetic_boots
+    Description: magnetic_boots_description
     itemType: 0
     HealAmount: 3
 --- !u!114 &1965731664
@@ -33270,7 +33167,7 @@ Prefab:
     - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
         type: 2}
       propertyPath: DisplayMessage
-      value: Blue Key is required
+      value: blue_door
       objectReference: {fileID: 0}
     - target: {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f,
         type: 2}

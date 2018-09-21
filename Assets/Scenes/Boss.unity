@@ -10721,7 +10721,7 @@ Prefab:
     - target: {fileID: 114778988770884914, guid: c552b45c7f052cb45ae9e0b32b053ea8,
         type: 2}
       propertyPath: item.Name
-      value: Red Key
+      value: red_key
       objectReference: {fileID: 0}
     - target: {fileID: 212027545632034738, guid: c552b45c7f052cb45ae9e0b32b053ea8,
         type: 2}
@@ -10737,6 +10737,11 @@ Prefab:
     - target: {fileID: 1369387537225338, guid: c552b45c7f052cb45ae9e0b32b053ea8, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114778988770884914, guid: c552b45c7f052cb45ae9e0b32b053ea8,
+        type: 2}
+      propertyPath: item.Description
+      value: red_key_description
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c552b45c7f052cb45ae9e0b32b053ea8, type: 2}

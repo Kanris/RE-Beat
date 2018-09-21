@@ -96,14 +96,20 @@ public class PickUpItem : MonoBehaviour {
     private void AddToTheInventory()
     {
         PlayerStats.PlayerInventory.Add(item, GetComponent<SpriteRenderer>().sprite.name); //add item to the player's bag
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Name + " add to inventory")); //show announcer message about new item in the bag
+
+        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name);
+        var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(itemName + " " + 
+            itemAddMessage + " - I")); //show announcer message about new item in the bag
 
         Destroy(gameObject); //destroy this item
     }
 
     private void ReadNote()
     {
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(item.Description, 4f)); //show announcer with message in the note
+        var noteText = LocalizationManager.Instance.GetItemsLocalizedValue(item.Description);
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(noteText, 4f)); //show announcer with message in the note
     }
 
     #endregion

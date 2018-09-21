@@ -79,7 +79,8 @@ public class Door : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player")) //if player is in collision
         {
-            ShowAnnouncerMessage(DisplayMessage); //show tip
+            var displayMessage = LocalizationManager.Instance.GetItemsLocalizedValue(DisplayMessage);
+            ShowAnnouncerMessage(displayMessage); //show tip
         }
     }
 
