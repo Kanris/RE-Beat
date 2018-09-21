@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using TMPro;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
@@ -9,9 +10,17 @@ public class LocalizedText : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        var text = GetComponent<TextMeshProUGUI>();
-        text.text = LocalizationManager.Instance.GetLocalizedValue(key);
+        StartCoroutine(GetLocalize());
 
-	}
+    }
+
+    private IEnumerator GetLocalize()
+    {
+        while (!LocalizationManager.Instance.GetIsReady())
+            yield return null;
+
+        var text = GetComponent<TextMeshProUGUI>();
+        text.text = LocalizationManager.Instance.GetGeneralLocalizedValue(key);
+    }
 
 }

@@ -137,7 +137,7 @@ public class InfoManager : MonoBehaviour {
         var instantiateTaskButton = Instantiate(buttonFromResources, m_Content);
 
         instantiateTaskButton.name = name; //set button name to task
-        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = name; //change button caption to the task name
+        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationManager.Instance.GetJournalLocalizedValue(name); //change button caption to the task name
 
         return instantiateTaskButton.GetComponent<Button>();
     }
@@ -191,20 +191,20 @@ public class InfoManager : MonoBehaviour {
     {
         if (CurrentTasks.ContainsKey(taskName)) //search task in current tasks
         {
-            m_Page.ShowText(CurrentTasks[taskName].Text); //show task description
+            m_Page.ShowText(CurrentTasks[taskName].GetText()); //show task description
         }
         else if (CompletedTasks.ContainsKey(taskName)) //search task in completed tasks
         {
-            m_Page.ShowText(CompletedTasks[taskName].Text); //show task description
+            m_Page.ShowText(CompletedTasks[taskName].GetText()); //show task description
         }
     }
 
-    public bool AddTask(string taskName, string taskText)
+    public bool AddTask(string taskName, string taskNameKey,  string key)
     {
         if (!CurrentTasks.ContainsKey(taskName)) //add new task if it is not already added
         {
             m_ButtonsList[0].Add(CreateTaskButton(taskName)); //create new task button
-            var newTask = new Task(taskName, taskText); //create new task
+            var newTask = new Task(taskName, taskNameKey, key); //create new task
             CurrentTasks.Add(taskName, newTask); //add task to the list
 
             return true; //task was successfuly added
@@ -221,7 +221,7 @@ public class InfoManager : MonoBehaviour {
             {
                 foreach (var item in CurrentTasks) //add all current tasks from the saved state
                 {
-                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.Name)); 
+                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.NameKey)); 
                 }
             }
         }
@@ -249,11 +249,11 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-    public bool UpdateTask(string taskName, string taskText)
+    public bool UpdateTask(string taskName, string key)
     {
         if (CurrentTasks.ContainsKey(taskName)) //if task in the journal
         {
-            CurrentTasks[taskName].TaskUpdate(taskText); //updated task
+            CurrentTasks[taskName].TaskUpdate(key); //updated task
 
             return true; //task was updated
         }
@@ -261,11 +261,11 @@ public class InfoManager : MonoBehaviour {
         return false; //can't updated task
     }
 
-    public bool CompleteTask(string taskname, string taskText)
+    public bool CompleteTask(string taskname, string key)
     {
         if (CurrentTasks.ContainsKey(taskname)) //if task is in the journal
         {
-            CurrentTasks[taskname].TaskComplete(taskText); //complete task
+            CurrentTasks[taskname].TaskComplete(key); //complete task
 
             //move task from the current task to the completed
             CompletedTasks.Add(taskname, CurrentTasks[taskname]);

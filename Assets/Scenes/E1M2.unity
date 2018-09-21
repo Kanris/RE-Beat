@@ -2460,8 +2460,8 @@ MonoBehaviour:
   taskTriggerType: 0
   taskType: 0
   DestroyEntireObject: 1
-  Name: Find out
-  TaskText: I have to <#000000>find out</color> what is going on
+  Name: Find_out
+  key: find_out_giver
 --- !u!4 &920444240
 Transform:
   m_ObjectHideFlags: 0
@@ -4063,7 +4063,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1485157930}
+      objectReference: {fileID: 836543101}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn

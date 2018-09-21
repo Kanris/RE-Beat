@@ -1,11 +1,12 @@
-﻿
+﻿using System.Collections.Generic;
+
 [System.Serializable]
 public class Task
 {
     #region public fields
-
-    public string Name; //task name
-    public string Text; //task text
+    
+    public string NameKey;
+    public List<string> TextKey; //task text
     public bool IsTaskComplete; //is task complete
 
     public delegate void VoidDelegate();
@@ -16,30 +17,44 @@ public class Task
 
     #region public methods
 
-    public Task(string taskName, string taskText) //add new task
+    public Task(string name, string nameKey, string key) //add new task
     {
-        this.Name = taskName; //save task name
-        this.Text = taskText; //save initial task text
+        this.TextKey = new List<string>();
+        
+        this.NameKey = nameKey; //save task name
+        this.TextKey.Add(key); //save initial task text
 
-        ShowAnnouncerMessage("added to journal"); //show announcer message about additing new task
+        ShowAnnouncerMessage(LocalizationManager.Instance.GetJournalLocalizedValue("task_add")); //show announcer message about additing new task
     }
 
-    public void TaskUpdate(string text)
+    public void TaskUpdate(string key)
     {
-        this.Text = text + this.Text; //add new text to task
+        this.TextKey.Add(key); //add new text to task
         if (OnTaskUpdate != null) OnTaskUpdate(); //notify on task update
 
-        ShowAnnouncerMessage("updated"); //show announcer message about updating task
+        ShowAnnouncerMessage(LocalizationManager.Instance.GetJournalLocalizedValue("task_update")); //show announcer message about updating task
     }
 
-    public void TaskComplete(string text)
+    public void TaskComplete(string key)
     {
         IsTaskComplete = true; //task is complete
-        this.Text = text + this.Text; //update task text
+        this.TextKey.Add(key); //update task text
 
         if (OnTaskComplete != null) OnTaskComplete(); //notify on task complete
 
-        ShowAnnouncerMessage("complete"); //show announcer message about task completion
+        ShowAnnouncerMessage(LocalizationManager.Instance.GetJournalLocalizedValue("task_complete")); //show announcer message about task completion
+    }
+
+    public string GetText()
+    {
+        var returnText = string.Empty;
+
+        for (var index = TextKey.Count - 1; index >= 0; index--)
+        {
+            returnText += LocalizationManager.Instance.GetJournalLocalizedValue(TextKey[index]) + "<br><br>";
+        }
+
+        return returnText;
     }
 
     #endregion
@@ -49,7 +64,8 @@ public class Task
     private void ShowAnnouncerMessage(string text)
     {
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message("<#000000>" + Name + "</color> task has been " + text + "  - <#000000>J</color>", 3f));
+            new AnnouncerManager.Message("<#000000>" + LocalizationManager.Instance.GetJournalLocalizedValue(NameKey) + 
+            "</color> " + text + "  - <#000000>J</color>", 3f));
     }
 
     #endregion

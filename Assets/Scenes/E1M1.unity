@@ -405,12 +405,8 @@ MonoBehaviour:
   taskTriggerType: 1
   taskType: 1
   DestroyEntireObject: 0
-  Name: Find out
-  TaskText: 'I have to find a way how to <#000000>open the red door</color> and talk
-    with android
-
-
-'
+  Name: Find_out
+  key: find_out_red_door
 --- !u!1001 &42753888
 Prefab:
   m_ObjectHideFlags: 0
@@ -959,7 +955,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 77665800}
+      objectReference: {fileID: 753630515}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -24569,20 +24565,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
-      propertyPath: m_Name
-      value: Junk
-      objectReference: {fileID: 0}
-    - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: ActionObject
-      value: 
-      objectReference: {fileID: 1892891040}
     - target: {fileID: 114160986447167942, guid: 35779c41c71fc9d47a33239e6ea0a153,
         type: 2}
       propertyPath: ActionObject
       value: 
       objectReference: {fileID: 1370085298}
+    - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: ActionObject
+      value: 
+      objectReference: {fileID: 1892891040}
+    - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
+      propertyPath: m_Name
+      value: Junk
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948439663149570, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: Name
+      value: Find_out
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
   m_IsPrefabParent: 0
@@ -29027,7 +29028,13 @@ Prefab:
       propertyPath: m_Name
       value: BossDoor
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: Name
+      value: Find_out
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1370085297 stripped
@@ -31673,11 +31680,8 @@ MonoBehaviour:
   taskTriggerType: 2
   taskType: 2
   DestroyEntireObject: 1
-  Name: Find out
-  TaskText: 'Junk is just a troll...
-
-
-'
+  Name: Find_out
+  key: find_out_read_note
 --- !u!114 &1892891042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33015,6 +33019,16 @@ Prefab:
         type: 2}
       propertyPath: DisplayMessage
       value: Blue Key is required
+      objectReference: {fileID: 0}
+    - target: {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: key
+      value: find_out_door_open
+      objectReference: {fileID: 0}
+    - target: {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: Name
+      value: Find_out
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}

@@ -140,7 +140,6 @@ MonoBehaviour:
       firstSentence: []
       secondSentence: []
     IsDialogueFinished: 0
-  m_UI: {fileID: 1224415610681330, guid: 027009091b3d0254e9b7d11cd360d4eb, type: 2}
 --- !u!114 &114808322752333964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,14 +165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskType: 1
   taskTriggerType: 2
+  taskType: 1
   DestroyEntireObject: 0
   Name: Find out
-  TaskText: 'I have to kill <#000000>Monster</color> in the <#000000>Cave</color>
-
-
-'
+  key: find_out_kill_boss
 --- !u!212 &212039298943561222
 SpriteRenderer:
   m_ObjectHideFlags: 1

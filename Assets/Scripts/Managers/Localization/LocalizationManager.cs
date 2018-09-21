@@ -4,9 +4,13 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour {
 
-    public static string LocalizationToLoad = "localization-en";
+    public static string LocalizationToLoad = "en";
 
     private Dictionary<string, string> localizedText;
+    private Dictionary<string, string> journalText;
+    private Dictionary<string, string> dialogueText;
+    private Dictionary<string, string> itemsText;
+
     private bool isReady = false;
     private string missingTextString = "Localized text not found";
 
@@ -28,42 +32,98 @@ public class LocalizationManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
 
-            LoadLocalizedText(LocalizationToLoad);
+            /*LoadGeneralLocalizationData(LocalizationToLoad);
+            LoadJournalLocalizationData(LocalizationToLoad);
+            LoadDialogueLocalizationData(LocalizationToLoad);
+            LoadItemsLocalizationData(LocalizationToLoad);*/
         }
     }
 
     #endregion
 
-    public void LoadLocalizedText(string fileName)
+    public void LoadGeneralLocalizationData(string fileName)
     {
         if (!string.IsNullOrEmpty(fileName))
         {
-            localizedText = new Dictionary<string, string>();
-            fileName += ".json";
-            var filePath = Path.Combine(Application.streamingAssetsPath, fileName); //get path to the localized text
+            fileName = "localization-" + fileName + ".json";
+            LoadLocalizationData(fileName, out localizedText);
+        }
+    }
 
-            if (File.Exists(filePath))
-            {
-                var dataAsJson = File.ReadAllText(filePath); //get all text from json file
+    public void LoadJournalLocalizationData(string fileName)
+    {
+        if (!string.IsNullOrEmpty(fileName))
+        {
+            fileName = "localization-journal-" + fileName + ".json";
+            LoadLocalizationData(fileName, out journalText);
+        }
+    }
 
-                var loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
-                localizedText = loadedData.GetAsDictionary();
-            }
-            else
-            {
-                Debug.LogError("LocalizationManager.LoadLocalizedText: Cannot find localized text - +" + fileName);
-            }
+    public void LoadDialogueLocalizationData(string fileName)
+    {
+        /*if (!string.IsNullOrEmpty(fileName))
+        {
+            fileName = "localization-dialogue-" + fileName + ".json";
+            LoadLocalizationData(fileName, out dialogueText);
+        }*/
+    }
+
+    public void LoadItemsLocalizationData(string fileName)
+    {
+        /*if (!string.IsNullOrEmpty(fileName))
+        {
+            fileName = "localization-items-" + fileName + ".json";
+            LoadLocalizationData(fileName, out itemsText);
+        }*/
+    }
+
+    private void LoadLocalizationData(string fileName, out Dictionary<string, string> localizationData)
+    {
+        localizationData = new Dictionary<string, string>();
+
+        var filePath = Path.Combine(Application.streamingAssetsPath, fileName); //get path to the localized text
+
+        if (File.Exists(filePath))
+        {
+            var dataAsJson = File.ReadAllText(filePath); //get all text from json file
+
+            var loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+            localizationData = loadedData.GetAsDictionary();
+        }
+        else
+        {
+            Debug.LogError("LocalizationManager.LoadLocalizedText: Cannot find localized text - +" + fileName);
         }
 
         isReady = true;
     }
 
-    public string GetLocalizedValue(string key)
+    public string GetGeneralLocalizedValue(string key)
+    {
+        return GetLocalizedValue(key, ref localizedText);
+    }
+
+    public string GetJournalLocalizedValue(string key)
+    {
+        return GetLocalizedValue(key, ref journalText);
+    }
+
+    public string GetDialogueLocalizedValue(string key)
+    {
+        return GetLocalizedValue(key, ref dialogueText);
+    }
+
+    public string GetItemsLocalizedValue(string key)
+    {
+        return GetLocalizedValue(key, ref itemsText);
+    }
+
+    private string GetLocalizedValue(string key, ref Dictionary<string, string> localizedData)
     {
         var result = missingTextString;
 
-        if (localizedText.ContainsKey(key))
-            result = localizedText[key];
+        if (localizedData.ContainsKey(key))
+            result = localizedData[key];
 
         return result;
     }

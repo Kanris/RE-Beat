@@ -59,9 +59,11 @@ public class StartScreenManager : MonoBehaviour {
         //play background music
         if (!string.IsNullOrEmpty(BackgroundMusic))
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
+
+        InitializeOptionsOnStart();
     }
 
-    private void Start()
+    private void InitializeOptionsOnStart()
     {
         resolutions = Screen.resolutions; //get available resolutions
 
@@ -89,13 +91,18 @@ public class StartScreenManager : MonoBehaviour {
         volumeEnvironmentSlider.value = VolumeEnvironment; //set environment volume
         fullscreenToggle.isOn = IsFullscreen; //set fullscreen
 
-        LocalizationManager.Instance.LoadLocalizedText(LocalizationToLoad); //load localization file
-
         SetMasterFloat(VolumeMaster);
         SetEnvironmentFloat(VolumeEnvironment);
 
         SetFullScreen(IsFullscreen);
         SetResolution(ResolutionIndex);
+
+        if (LocalizationToLoad != LocalizationManager.LocalizationToLoad)
+        {
+            LocalizationManager.LocalizationToLoad = LocalizationToLoad;
+            LocalizationManager.Instance.LoadGeneralLocalizationData(LocalizationToLoad);
+            SceneManager.LoadScene("StartScreen");
+        }
     }
 
     #endregion
@@ -167,13 +174,20 @@ public class StartScreenManager : MonoBehaviour {
         IsLoadPressed = false;
         PlayClickSound();
         LoadSceneManager.Instance.Load(name);
+
+        LocalizationManager.Instance.LoadJournalLocalizationData(LocalizationToLoad);
+        LocalizationManager.Instance.LoadDialogueLocalizationData(LocalizationToLoad);
     }
 
     public void LoadGame()
     {
         IsLoadPressed = true;
         PlayClickSound();
+
         SaveLoadManager.Instance.LoadScene();
+
+        LocalizationManager.Instance.LoadJournalLocalizationData(LocalizationToLoad);
+        LocalizationManager.Instance.LoadDialogueLocalizationData(LocalizationToLoad);
     }
 
     public void ExitGame()
@@ -213,7 +227,7 @@ public class StartScreenManager : MonoBehaviour {
 
     public void SetLocalization(string fileName)
     {
-        LocalizationManager.Instance.LoadLocalizedText(fileName);
+        LocalizationManager.Instance.LoadGeneralLocalizationData(fileName);
         LocalizationToLoad = fileName;
         StartCoroutine( LoadLocalizationData() );
     }

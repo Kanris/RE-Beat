@@ -19,7 +19,7 @@ public class TaskManager : MonoBehaviour {
 
     [SerializeField] private bool DestroyEntireObject; //if need to destroy entier object
     [SerializeField] private string Name; //task name
-    [SerializeField, TextArea(2, 20)] private string TaskText; //task description
+    [SerializeField] private string key; //task description
 
     #endregion
 
@@ -103,19 +103,19 @@ public class TaskManager : MonoBehaviour {
         if (CheckTask()) //if there is task name
         {
             var isSuccess = false; //is task update success
-
+            
             switch (taskType)
             {
                 case TaskType.Giver: //give task to player
-                    isSuccess = InfoManager.Instance.AddTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.AddTask(Name, Name, key);
                     break;
 
                 case TaskType.Updater: //update task
-                    isSuccess = InfoManager.Instance.UpdateTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.UpdateTask(Name, key);
                     break;
 
                 case TaskType.Finisher: //finish task
-                    isSuccess = InfoManager.Instance.CompleteTask(Name, TaskText);
+                    isSuccess = InfoManager.Instance.CompleteTask(Name, key);
                     break;
             }
 
