@@ -4,7 +4,7 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour {
 
-    public static string LocalizationToLoad = "ru";
+    public static string LocalizationToLoad = "en";
 
     private Dictionary<string, string> localizedText;
     private Dictionary<string, string> journalText;
@@ -45,6 +45,8 @@ public class LocalizationManager : MonoBehaviour {
     {
         if (!string.IsNullOrEmpty(fileName))
         {
+            LocalizationToLoad = fileName;
+
             fileName = "localization-" + fileName + ".json";
             LoadLocalizationData(fileName, out localizedText);
         }
@@ -94,7 +96,7 @@ public class LocalizationManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("LocalizationManager.LoadLocalizedText: Cannot find localized text - +" + fileName);
+            Debug.LogError("LocalizationManager.LoadLocalizedText: Cannot find localized text - \n" + filePath);
         }
 
         isReady = true;
