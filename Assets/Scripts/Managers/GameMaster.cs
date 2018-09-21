@@ -66,6 +66,8 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/MapManager");
 
+            Initialize("Managers/LocalizationManager");
+
             //is load button was pressed in start screen
             if (StartScreenManager.IsLoadPressed) 
             {

@@ -229,6 +229,7 @@ public class OptionsGameData : IGameData
     public bool IsFullscreen;
     public float VolumeMaster;
     public float VolumeEnvironment;
+    public string LocalizationToLoad;
 
     #endregion
 
@@ -240,6 +241,7 @@ public class OptionsGameData : IGameData
         this.IsFullscreen = StartScreenManager.IsFullscreen;
         this.VolumeMaster = StartScreenManager.VolumeMaster;
         this.VolumeEnvironment = StartScreenManager.VolumeEnvironment;
+        this.LocalizationToLoad = StartScreenManager.LocalizationToLoad;
     }
 
     #endregion
@@ -252,6 +254,7 @@ public class OptionsGameData : IGameData
         StartScreenManager.IsFullscreen = IsFullscreen;
         StartScreenManager.VolumeMaster = VolumeMaster;
         StartScreenManager.VolumeEnvironment = VolumeEnvironment;
+        StartScreenManager.LocalizationToLoad = LocalizationToLoad;
     }
 
     #endregion

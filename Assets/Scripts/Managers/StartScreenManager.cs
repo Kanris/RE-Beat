@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour {
 
@@ -12,6 +14,7 @@ public class StartScreenManager : MonoBehaviour {
     public static bool IsFullscreen;
     public static float VolumeMaster;
     public static float VolumeEnvironment;
+    public static string LocalizationToLoad;
 
     #endregion
 
@@ -51,6 +54,8 @@ public class StartScreenManager : MonoBehaviour {
 
         Initialize("Managers/SaveLoadManager");
 
+        Initialize("Managers/LocalizationManager");
+
         //play background music
         if (!string.IsNullOrEmpty(BackgroundMusic))
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
@@ -83,6 +88,8 @@ public class StartScreenManager : MonoBehaviour {
         volumeMasterSlider.value = VolumeMaster; //set general volume
         volumeEnvironmentSlider.value = VolumeEnvironment; //set environment volume
         fullscreenToggle.isOn = IsFullscreen; //set fullscreen
+
+        LocalizationManager.Instance.LoadLocalizedText(LocalizationToLoad); //load localization file
 
         SetMasterFloat(VolumeMaster);
         SetEnvironmentFloat(VolumeEnvironment);
@@ -202,6 +209,25 @@ public class StartScreenManager : MonoBehaviour {
     {
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
         ResolutionIndex = resolutionIndex;
+    }
+
+    public void SetLocalization(string fileName)
+    {
+        LocalizationManager.Instance.LoadLocalizedText(fileName);
+        LocalizationToLoad = fileName;
+        StartCoroutine( LoadLocalizationData() );
+    }
+
+    private IEnumerator LoadLocalizationData()
+    {
+        while (!LocalizationManager.Instance.GetIsReady())
+        {
+            yield return null;
+        }
+
+        SaveLoadManager.Instance.SaveOptions();
+
+        SceneManager.LoadScene("StartScreen");
     }
 
     #endregion
