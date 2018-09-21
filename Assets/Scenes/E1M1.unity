@@ -24565,24 +24565,29 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114160986447167942, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: ActionObject
-      value: 
-      objectReference: {fileID: 1370085298}
     - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
         type: 2}
       propertyPath: ActionObject
       value: 
       objectReference: {fileID: 1892891040}
+    - target: {fileID: 114160986447167942, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: ActionObject
+      value: 
+      objectReference: {fileID: 1370085298}
     - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
       propertyPath: m_Name
       value: Junk
       objectReference: {fileID: 0}
-    - target: {fileID: 114948439663149570, guid: 35779c41c71fc9d47a33239e6ea0a153,
+    - target: {fileID: 114354878163579086, guid: 35779c41c71fc9d47a33239e6ea0a153,
         type: 2}
-      propertyPath: Name
-      value: Find_out
+      propertyPath: dialogue.MainSentences.Array.data[0].firstAnswer
+      value: junk_start_a1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114354878163579086, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: dialogue.MainSentences.Array.data[0].secondAnswer
+      value: junk_start_a2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
@@ -33557,4 +33562,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SignName: Dirty Sign
-  SignText: Magnetic boots are required
+  SignText: magnetic_sign

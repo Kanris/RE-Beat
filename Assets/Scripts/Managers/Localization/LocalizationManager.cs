@@ -32,10 +32,10 @@ public class LocalizationManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
 
-            /*LoadGeneralLocalizationData(LocalizationToLoad);
+            LoadGeneralLocalizationData(LocalizationToLoad);
             LoadJournalLocalizationData(LocalizationToLoad);
             LoadDialogueLocalizationData(LocalizationToLoad);
-            LoadItemsLocalizationData(LocalizationToLoad);*/
+            /*LoadItemsLocalizationData(LocalizationToLoad);*/
         }
     }
 
@@ -61,11 +61,12 @@ public class LocalizationManager : MonoBehaviour {
 
     public void LoadDialogueLocalizationData(string fileName)
     {
-        /*if (!string.IsNullOrEmpty(fileName))
+        if (!string.IsNullOrEmpty(fileName))
         {
             fileName = "localization-dialogue-" + fileName + ".json";
             LoadLocalizationData(fileName, out dialogueText);
-        }*/
+            Debug.LogError(fileName + ":" + dialogueText.Count);
+        }
     }
 
     public void LoadItemsLocalizationData(string fileName)

@@ -103,8 +103,10 @@ public class DialogueManager : MonoBehaviour {
 
         m_IsSentenceTyping = true; //notify that sentence is typing
 
+        var typeSentence = LocalizationManager.Instance.GetDialogueLocalizedValue(sentence);
+
         //start type sentence
-        foreach (var letter in sentence)
+        foreach (var letter in typeSentence)
         {
             if (m_IsSentenceTyping) //if player didn't press skip button
                 yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
@@ -142,8 +144,8 @@ public class DialogueManager : MonoBehaviour {
     //set up answers
     private void SetButtonsText(string firstButtonText, string secondButtonText)
     {
-        m_FirstButton.text = firstButtonText;
-        m_SecondButton.text = secondButtonText;
+        m_FirstButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(firstButtonText);
+        m_SecondButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(secondButtonText);
 
         m_Buttons.SetActive(true);
     }

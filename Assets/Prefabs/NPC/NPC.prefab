@@ -97,44 +97,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     MainSentences:
-    - DisplaySentence: You are new here?
-      firstAnswer: Maybe
-      secondAnswer: Not Your Business
+    - DisplaySentence: junk_start
+      firstAnswer: junk_start_a1
+      secondAnswer: junk_start_a2
       firstSentence:
-      - DisplaySentence: So you need to find two bells one is... wait..
-        firstAnswer: Something wrong?
-        secondAnswer: It's dark souls story?
+      - DisplaySentence: junk_a1_continue
+        firstAnswer: junk_a1_continue_a1
+        secondAnswer: junk_a1_continue_a2
         firstSentence:
-        - DisplaySentence: Just go and kill monster in the cave
+        - DisplaySentence: junk_a2_continue_a1
           firstAnswer: 
           secondAnswer: 
           firstSentence: []
           secondSentence: []
         secondSentence:
-        - DisplaySentence: If you are so smart just go and kill monster in the cave
+        - DisplaySentence: junk_a2_continue_a2
           firstAnswer: 
           secondAnswer: 
           firstSentence: []
           secondSentence: []
       secondSentence:
-      - DisplaySentence: I dont wan't to talk with you! Just go and kill monster in
-          the cave
+      - DisplaySentence: junk_a2
         firstAnswer: 
         secondAnswer: 
         firstSentence: []
         secondSentence: []
     RepeatSentences:
-    - DisplaySentence: Just let...
+    - DisplaySentence: junk_r1
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
       secondSentence: []
-    - DisplaySentence: '...me...'
+    - DisplaySentence: junk_r2
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
       secondSentence: []
-    - DisplaySentence: ..be!
+    - DisplaySentence: junk_r3
       firstAnswer: 
       secondAnswer: 
       firstSentence: []
@@ -168,7 +167,7 @@ MonoBehaviour:
   taskTriggerType: 2
   taskType: 1
   DestroyEntireObject: 0
-  Name: Find out
+  Name: Find_out
   key: find_out_kill_boss
 --- !u!212 &212039298943561222
 SpriteRenderer:
