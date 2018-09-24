@@ -94,7 +94,7 @@ public class Door : MonoBehaviour {
         else if (PlayerStats.PlayerInventory.IsInBag(KeyName.Name)) //if there is key name and player have it in the bag
         {
             if (PlayerStats.PlayerInventory.Remove(KeyName)) //remove key from the inventory
-                ShowAnnouncerMessage(KeyName.Name + " was removed from inventory"); //display announcer message that key was removed from the bag
+                ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification_key")); //display announcer message that key was removed from the bag
 
             GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
 
@@ -102,7 +102,7 @@ public class Door : MonoBehaviour {
         }
         else //if player havn't needed key
         {
-            ShowAnnouncerMessage(KeyName.Name + " required"); //display message that key is required
+            ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification")); //display message that key is required
         }
     }
 

@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
-        Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform); //set new camera target
+        Camera.main.GetComponent<CinemachineFollow>().SetCameraTarget(transform); //set new camera target
 
         m_Animator = GetComponent<Animator>(); //reference to the player animator
 

@@ -354,8 +354,6 @@ public class GameMaster : MonoBehaviour {
     {
         var respawnPlayer = Instantiate(m_PlayerToRespawn);
         respawnPlayer.transform.position = respawnPosition;
-
-        Camera.main.GetComponent<Camera2DFollow>().SetTarget(respawnPlayer.transform);
     }
 
     #endregion
