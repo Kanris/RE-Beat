@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4308504711946834
 Transform:
   m_ObjectHideFlags: 1
@@ -185,6 +185,8 @@ MonoBehaviour:
   TeleportSpeed: 5
   Stage2Health: 500
   Stage3Health: 200
+  TeleportAudio: {fileID: 11400000, guid: 4c557bad1b5a84608a5632ae31e4ca3c, type: 2}
+  AttackAudio: {fileID: 11400000, guid: 7fa9eb5e90dee4682abbf1cc05c6d23b, type: 2}
 --- !u!114 &114727188107457268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,8 +219,8 @@ MonoBehaviour:
     m_ThrowX: 2
     m_ThrowY: 0.5
     DeathParticle: {fileID: 0}
-    HitSound: 
-    DeathSound: Enemy Death
+    HitSound: {fileID: 0}
+    DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2

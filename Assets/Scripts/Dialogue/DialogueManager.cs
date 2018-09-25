@@ -8,6 +8,7 @@ public class DialogueManager : MonoBehaviour {
 
     #region Singleton
     public static DialogueManager Instance; //singleton instance
+    [SerializeField] private Audio UIClickAudio;
 
     private void Awake()
     {
@@ -165,7 +166,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (AudioManager.Instance != null) //if audiomanager instance initialized
         {
-            AudioManager.Instance.Play("UI-Click"); //play ui click sound
+            AudioManager.Instance.Play(UIClickAudio); //play ui click sound
         }
         else
         {

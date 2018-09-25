@@ -5,7 +5,7 @@ public class FootSound : MonoBehaviour {
 
     #region fields
 
-    public string Sound;
+    [HideInInspector] public string Sound;
 
     private Animator m_Animator;
 

@@ -34,13 +34,13 @@ public class EnemyMovement : MonoBehaviour {
 
     #region inspector fields
 
-    [SerializeField] private float IdleTime = 2f;
+    [SerializeField, Range(0f, 20f)] private float IdleTime = 2f;
 
     #endregion
 
     #region public fields
 
-    public bool isPlayerNear; //for jump
+    [HideInInspector] public bool isPlayerNear; //for jump
 
     #endregion
 

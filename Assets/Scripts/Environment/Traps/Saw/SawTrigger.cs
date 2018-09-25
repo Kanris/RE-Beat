@@ -9,8 +9,9 @@ public class SawTrigger : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private float SawMoveTime = 2.5f; //saw move timer
+    [SerializeField, Range(0.5f, 10f)] private float SawMoveTime = 2.5f; //saw move timer
     [SerializeField] private Saw m_Saw; //saw script
+    [SerializeField] private Audio ButtonSwitchAudio;
 
     #endregion
 
@@ -68,7 +69,7 @@ public class SawTrigger : MonoBehaviour {
 
     private void PlayTriggerSound()
     {
-        AudioManager.Instance.Play("Button Switch");
+        AudioManager.Instance.Play(ButtonSwitchAudio);
     }
 
     #endregion

@@ -20,6 +20,9 @@ public class ArchlightBoss : MonoBehaviour
     [SerializeField] private int Stage2Health = 500;
     [SerializeField] private int Stage3Health = 200;
 
+    [SerializeField] private Audio TeleportAudio;
+    [SerializeField] private Audio AttackAudio;
+
     #endregion
 
     #region private
@@ -222,7 +225,7 @@ public class ArchlightBoss : MonoBehaviour
 
     private void TeleportSound()
     {
-        AudioManager.Instance.Play("Teleport");
+        AudioManager.Instance.Play(TeleportAudio);
     }
 
     private Vector3 GetDestination()
@@ -310,7 +313,7 @@ public class ArchlightBoss : MonoBehaviour
 
     private void PlayAttackSound()
     {
-        AudioManager.Instance.Play("Archlight-attack");
+        AudioManager.Instance.Play(AttackAudio);
     }
 
     #endregion

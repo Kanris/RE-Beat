@@ -4,7 +4,7 @@ public class ChangeFootStepsSound : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private string Sound; //foot sound
+    [SerializeField] private Audio Sound; //foot sound
 
     #endregion
 

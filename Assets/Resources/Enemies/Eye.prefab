@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1427525428804550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.355464, y: -0.058595657, z: 0.12766367}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,8 +114,8 @@ MonoBehaviour:
     m_ThrowX: 2
     m_ThrowY: 0.5
     DeathParticle: {fileID: 0}
-    HitSound: 
-    DeathSound: 
+    HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
+    DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2

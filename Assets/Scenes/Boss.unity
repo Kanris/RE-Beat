@@ -8679,6 +8679,10 @@ Prefab:
       propertyPath: Key
       value: 
       objectReference: {fileID: 179992248}
+    - target: {fileID: 1859725932341948, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
   m_IsPrefabParent: 0
@@ -8864,6 +8868,12 @@ Prefab:
       propertyPath: m_PlayerToRespawn
       value: 
       objectReference: {fileID: 1587882821856884, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
+        type: 2}
+    - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
+        type: 2}
+      propertyPath: BackgroundMusic
+      value: 
+      objectReference: {fileID: 11400000, guid: 46079873bf39b4b9e85ddfe9b665a738,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
@@ -19379,7 +19389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: StoneRunning
+  Sound: {fileID: 11400000, guid: 53a132f71e7f944a496d33572f09242e, type: 2}
 --- !u!1 &2122859127
 GameObject:
   m_ObjectHideFlags: 3

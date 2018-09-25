@@ -17,6 +17,7 @@ public class FireballTrigger : MonoBehaviour {
     [SerializeField, Range(1, 10)] private int Count = 3; //fireballs count
     [SerializeField] GameObject m_FireballGameObject;
     [SerializeField] private Transform m_ThrowerTransform; //from where throw fireballs
+    [SerializeField] private Audio ButtonSwitchAudio;
 
     private Animator m_Animator; //trigger animation
     private bool isCreatingFireballs; //is player triggered trap
@@ -83,7 +84,7 @@ public class FireballTrigger : MonoBehaviour {
 
     private void PlayTriggerSound()
     {
-        AudioManager.Instance.Play("Button Switch");
+        AudioManager.Instance.Play(ButtonSwitchAudio);
     }
 
     #endregion

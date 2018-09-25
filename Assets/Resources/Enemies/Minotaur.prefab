@@ -442,8 +442,8 @@ MonoBehaviour:
     m_ThrowY: 2
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
-    HitSound: Enemy Hit
-    DeathSound: Enemy Death
+    HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
+    DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2

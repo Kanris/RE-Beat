@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1104603196120006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.33, y: 1.08, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children:
   - {fileID: 4198109176521906}
@@ -131,7 +131,7 @@ MonoBehaviour:
   NeededItem: {fileID: 11400000, guid: fac1d0e49fc5c4af4a640e2b5dae2299, type: 2}
   DeathParticles: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
     type: 2}
-  DestroySound: Box Destroy
+  DestroySound: {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
 --- !u!114 &114574506071127314
 MonoBehaviour:
   m_ObjectHideFlags: 1

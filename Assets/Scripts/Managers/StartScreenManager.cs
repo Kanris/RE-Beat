@@ -24,7 +24,7 @@ public class StartScreenManager : MonoBehaviour {
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
     [SerializeField] private GameObject OptionsMenuGrid; //option ui
     [SerializeField] private AudioMixer audioMixer; //main game mixer
-
+    [SerializeField] private Audio UIClickAudio;
     //options items
     [SerializeField] private Dropdown resoulutionsDropDown;
     [SerializeField] private Slider volumeMasterSlider;
@@ -156,7 +156,7 @@ public class StartScreenManager : MonoBehaviour {
     {
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.Play("UI-Click");
+            AudioManager.Instance.Play(UIClickAudio);
         }
         else
         {

@@ -17,6 +17,7 @@ public class Door : MonoBehaviour {
     [SerializeField] private DoorType Type; //current door type
     [SerializeField] private Item KeyName; //key that have to open the door (if door type is key)
     [SerializeField] private string DisplayMessage; //display message if door is close
+    [SerializeField] private Audio DoorOpenAudio;
 
     #endregion
 
@@ -124,7 +125,7 @@ public class Door : MonoBehaviour {
 
     public void PlayOpenDoorAnimation()
     {
-        AudioManager.Instance.Play("DoorOpen");
+        AudioManager.Instance.Play(DoorOpenAudio);
         PlayAnimation("Open");
     }
 

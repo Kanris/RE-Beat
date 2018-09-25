@@ -16,6 +16,7 @@ public class Chest : MonoBehaviour {
 
     [SerializeField] private GameObject m_Inventory; //chest inventory
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
+    [SerializeField] private Audio ChestOpenAudio;
 
     private GameObject m_InteractionButton; //chest ui
     private Player m_Player; //player
@@ -162,7 +163,7 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) m_Player.TriggerPlayerBussy(active); //allow or dont allow player to attack when chest inventory is open
 
-        AudioManager.Instance.Play("Chest Open"); //play chest open sound
+        AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
 
         m_Inventory.SetActive(active); //show or hide chest inventory
     }

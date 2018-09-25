@@ -8,7 +8,8 @@ public class Teleport : MonoBehaviour {
     #region private fields
 
     [SerializeField] private Transform target; //where to teleport player
-    
+    [SerializeField] private Audio TeleportAudio;
+
     private Animator m_Animator; //teleport animator
     private GameObject m_InteractionButton; //teleport ui
     private GameObject m_Player; //player reference
@@ -53,7 +54,7 @@ public class Teleport : MonoBehaviour {
         if (target != null) //if there is destination
         {
             m_Animator.SetBool("Teleport", true); //show teleport animation
-            AudioManager.Instance.Play("Teleport"); //play teleport sound
+            AudioManager.Instance.Play(TeleportAudio); //play teleport sound
             m_Player.SetActive(false); //hide player
 
             StartCoroutine(ScreenFaderManager.Instance.FadeToBlack()); //show black screen

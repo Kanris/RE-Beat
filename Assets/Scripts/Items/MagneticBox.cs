@@ -15,7 +15,7 @@ public class MagneticBox : MonoBehaviour {
     #region serialize fields
 
     [SerializeField] private GameObject DeathParticles; //destroying particles
-    [SerializeField] private string DestroySound; //destroying sound
+    [SerializeField] private Audio DestroySound; //destroying sound
 
     #endregion
 

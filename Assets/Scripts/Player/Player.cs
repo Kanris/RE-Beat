@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX; //attack range x
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY; //attack range y
     [SerializeField] private LayerMask m_WhatIsEnemy; //defines what is enemy
-    [SerializeField] private string m_AttackSound = "Player Attack"; //player attack sound
+    [SerializeField] private Audio m_AttackSound; //player attack sound
 
     #endregion
 

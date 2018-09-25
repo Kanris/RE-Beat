@@ -5,6 +5,7 @@ public class RespawnPoint : MonoBehaviour {
     #region private fields
 
     [SerializeField] private bool isLight;
+    [SerializeField] private Audio audioSave;
 
     private Transform m_Flame;
 
@@ -27,7 +28,7 @@ public class RespawnPoint : MonoBehaviour {
             SetActiveFlame(true); //enable flame animation
             ChangePlayerMaterial(collision); //if respawn point has light on it change player material
 
-            SaveLoadManager.Instance.SaveGameData(); //save game data
+            SaveLoadManager.Instance.SaveGameData(audioSave); //save game data
         }
     }
 

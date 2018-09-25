@@ -171,12 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd728c74812d4d439fe0f701f63de7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    Image: 
-    Name: Blue Key
-    Description: 
-    itemType: 0
-    HealAmount: 3
+  item: {fileID: 0}
 --- !u!114 &114094747804750066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,10 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Inventory: {fileID: 1154822480254138}
-  m_Animator: {fileID: 95362797881797484}
   chestType: 0
+  m_Inventory: {fileID: 1154822480254138}
   Health: 0
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!114 &114402521748237394
 MonoBehaviour:
   m_ObjectHideFlags: 1

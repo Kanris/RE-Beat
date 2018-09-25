@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248686669654070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.43, y: -2.57, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4814384279827420}
@@ -173,9 +173,7 @@ MonoBehaviour:
   YRestrictions: -10
   DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
     type: 2}
-  DestroySound: Box Destroy
-  m_Player: {fileID: 0}
-  m_IsBoxUp: 0
+  DestroySound: {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
 --- !u!212 &212211230881872706
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -210,7 +208,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1001
   m_Sprite: {fileID: 21300000, guid: 9e75ee81b5b9b21479ac3d53485bac53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

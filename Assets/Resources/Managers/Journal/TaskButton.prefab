@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6663cc5b52d3cd3428e0da17da2fc134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
 --- !u!114 &114829829053673844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,11 +182,11 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

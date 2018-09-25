@@ -334,6 +334,7 @@ MonoBehaviour:
   Type: 1
   KeyName: {fileID: 0}
   DisplayMessage: red_seal_door
+  DoorOpenAudio: {fileID: 0}
 --- !u!483693784 &12145148
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -568,6 +569,16 @@ Prefab:
         type: 2}
       propertyPath: isLight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114935907817546864, guid: d6671bf13a804944f97cd2951da1a8e7,
+        type: 2}
+      propertyPath: audioSave
+      value: 
+      objectReference: {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d,
+        type: 2}
+    - target: {fileID: 4980485113619306, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
@@ -853,8 +864,9 @@ Prefab:
     - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
         type: 2}
       propertyPath: Sound
-      value: Waterfall
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617,
+        type: 2}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Layer
       value: 0
@@ -931,6 +943,12 @@ Prefab:
       propertyPath: m_PlayerToRespawn
       value: 
       objectReference: {fileID: 1587882821856884, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
+        type: 2}
+    - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
+        type: 2}
+      propertyPath: BackgroundMusic
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f0f092c1f4664a969d720c685c1bcc4,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
@@ -2715,6 +2733,7 @@ MonoBehaviour:
   Type: 1
   KeyName: {fileID: 0}
   DisplayMessage: blue_seal_door
+  DoorOpenAudio: {fileID: 0}
 --- !u!483693784 &247247798
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -3272,7 +3291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: StoneRunning
+  Sound: {fileID: 11400000, guid: 53a132f71e7f944a496d33572f09242e, type: 2}
 --- !u!66 &424000589
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -4566,6 +4585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLight: 0
+  audioSave: {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d, type: 2}
 --- !u!61 &468405520
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13573,7 +13593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2858be727af43bdbdaaeaf2d6353f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: Rain
+  Sound: {fileID: 11400000, guid: 214514dec3fff4919b2c158d6541a601, type: 2}
 --- !u!1 &481402581
 GameObject:
   m_ObjectHideFlags: 0
@@ -19464,7 +19484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: WoodRunning
+  Sound: {fileID: 11400000, guid: 793ff1801b3614218895893701016b2c, type: 2}
 --- !u!66 &638057562
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -25027,6 +25047,7 @@ MonoBehaviour:
   chestType: 0
   m_Inventory: {fileID: 1177889941}
   Health: 0
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &986122675
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28570,7 +28591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: GrassRunning
+  Sound: {fileID: 11400000, guid: 0ce8d84b5904147759972210b5e2bd49, type: 2}
 --- !u!212 &1127617310 stripped
 SpriteRenderer:
   m_PrefabParentObject: {fileID: 212631559444169388, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
@@ -28837,6 +28858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLight: 0
+  audioSave: {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d, type: 2}
 --- !u!61 &1218462893
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29036,6 +29058,7 @@ MonoBehaviour:
   chestType: 1
   m_Inventory: {fileID: 2053566476}
   Health: 2
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &1243147778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29481,6 +29504,12 @@ Prefab:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
+        type: 2}
+      propertyPath: Sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 214514dec3fff4919b2c158d6541a601,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
   m_IsPrefabParent: 0
@@ -29617,6 +29646,12 @@ Prefab:
       propertyPath: DisplayMessage
       value: world_door
       objectReference: {fileID: 0}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: DoorOpenAudio
+      value: 
+      objectReference: {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
@@ -30699,6 +30734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLight: 0
+  audioSave: {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d, type: 2}
 --- !u!61 &1643330432
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32239,7 +32275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: GrassRunning
+  Sound: {fileID: 11400000, guid: 0ce8d84b5904147759972210b5e2bd49, type: 2}
 --- !u!1001 &1846462293
 Prefab:
   m_ObjectHideFlags: 0
@@ -32278,19 +32314,6 @@ Prefab:
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
       propertyPath: m_RootOrder
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4814384279827420, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4814384279827420, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 212211230881872706, guid: 74393718dd00ee1439233ebe530cb04c,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: -1001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 74393718dd00ee1439233ebe530cb04c, type: 2}
@@ -33414,6 +33437,7 @@ MonoBehaviour:
   chestType: 0
   m_Inventory: {fileID: 626046782}
   Health: 0
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &1997503561
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33693,6 +33717,12 @@ Prefab:
       propertyPath: KeyName
       value: 
       objectReference: {fileID: 11400000, guid: 4c5ca7ca9f3df406abcf9f84623e890a,
+        type: 2}
+    - target: {fileID: 114277011240081968, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: DoorOpenAudio
+      value: 
+      objectReference: {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}
@@ -34020,8 +34050,9 @@ Prefab:
     - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
         type: 2}
       propertyPath: Sound
-      value: Waterfall
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617,
+        type: 2}
     - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
       propertyPath: m_Layer
       value: 0

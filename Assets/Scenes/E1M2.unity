@@ -2154,6 +2154,12 @@ Prefab:
       propertyPath: m_Name
       value: Rain
       objectReference: {fileID: 0}
+    - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
+        type: 2}
+      propertyPath: Sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 214514dec3fff4919b2c158d6541a601,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
   m_IsPrefabParent: 0
@@ -2774,6 +2780,7 @@ GameObject:
   - component: {fileID: 1043901828}
   - component: {fileID: 1043901827}
   - component: {fileID: 1043901829}
+  - component: {fileID: 1043901830}
   m_Layer: 14
   m_Name: GroundGrass
   m_TagString: Untagged
@@ -2885,6 +2892,18 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+--- !u!114 &1043901830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1043901825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sound: {fileID: 11400000, guid: 0ce8d84b5904147759972210b5e2bd49, type: 2}
 --- !u!1 &1058527125
 GameObject:
   m_ObjectHideFlags: 0
@@ -4292,6 +4311,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1587882821856884, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
         type: 2}
+    - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
+        type: 2}
+      propertyPath: BackgroundMusic
+      value: 
+      objectReference: {fileID: 11400000, guid: 47341f7c802b548c5b1231658295456a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabParent: 0
@@ -4365,8 +4390,9 @@ Prefab:
     - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
         type: 2}
       propertyPath: Sound
-      value: Waterfall
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
   m_IsPrefabParent: 0
@@ -6203,7 +6229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: WoodRunning
+  Sound: {fileID: 11400000, guid: 793ff1801b3614218895893701016b2c, type: 2}
 --- !u!1 &2038800950
 GameObject:
   m_ObjectHideFlags: 0
@@ -8080,7 +8106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d658f00d5c24b17a33b749e0ca4ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: StoneRunning
+  Sound: {fileID: 11400000, guid: 53a132f71e7f944a496d33572f09242e, type: 2}
 --- !u!1001 &2039272099
 Prefab:
   m_ObjectHideFlags: 0

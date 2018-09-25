@@ -2,6 +2,8 @@
 
 public class TaskButtonClick : MonoBehaviour {
 
+    [SerializeField] private Audio UIClickAudio;
+
     #region public methods
 
     public void DisplayTaskText() //if task button was pressed
@@ -18,7 +20,7 @@ public class TaskButtonClick : MonoBehaviour {
     {
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.Play("UI-Click");
+            AudioManager.Instance.Play(UIClickAudio);
         }
         else
         {

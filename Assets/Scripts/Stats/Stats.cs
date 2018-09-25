@@ -26,8 +26,8 @@ public class Stats {
     #region private serialize fields
 
     [SerializeField] private GameObject DeathParticle; //particles that will be spawn after object death
-    [SerializeField] private string HitSound; //sound that will be played when object gets hit
-    [SerializeField] private string DeathSound; //sound that will be played when object died
+    [SerializeField] private Audio HitSound; //sound that will be played when object gets hit
+    [SerializeField] private Audio DeathSound; //sound that will be played when object died
 
     #endregion
 
@@ -151,7 +151,7 @@ public class Stats {
 
     private void PlayHitSound()
     {
-        if (!string.IsNullOrEmpty(HitSound))
+        if (HitSound != null)
         {
             AudioManager.Instance.Play(HitSound);
         }
@@ -159,7 +159,7 @@ public class Stats {
 
     private void PlayDeathSound()
     {
-        if (!string.IsNullOrEmpty(DeathSound))
+        if (DeathSound != null)
         {
             AudioManager.Instance.Play(DeathSound);
         }

@@ -52,206 +52,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioArray:
-  - Name: Waterfall
-    Clip: {fileID: 8300000, guid: 16b09fa78a2ac5043a21f133d28c1b9d, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 1
-  - Name: GrassRunning
-    Clip: {fileID: 8300000, guid: 126bcadb6881045c5a38ff4cf3432502, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 1
-  - Name: WoodRunning
-    Clip: {fileID: 8300000, guid: 8a8573cbf4afb494cb62c1908bf36800, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 1
-  - Name: StoneRunning
-    Clip: {fileID: 8300000, guid: 168aa2404550a3c488262ad9d69ced0e, type: 3}
-    Volume: 0.5
-    Pitch: 0.8
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 1
-  - Name: Background-Mushroom
-    Clip: {fileID: 8300000, guid: ca454120fe6800e41806d119bc2ee9e0, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0
-    PitchOffset: 0
-    m_AudioType: 1
-    Loop: 1
-  - Name: Rain
-    Clip: {fileID: 8300000, guid: 1cda64e0a172f884aa256fc77b3c89d8, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 1
-  - Name: Teleport
-    Clip: {fileID: 8300000, guid: be3ac78ee77d986419c9fdd82222abdb, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: DoorOpen
-    Clip: {fileID: 8300000, guid: c83abf09d0945fc4bbe100cf574816b0, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Cast
-    Clip: {fileID: 8300000, guid: 760ed72a961ca0548822e85b8bd98258, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Hit
-    Clip: {fileID: 8300000, guid: 714fb7839b9d5ed4ca660474dfbf78aa, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: OpenJournal
-    Clip: {fileID: 8300000, guid: a460732f3e0e5754c8a24454f290e93e, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Task
-    Clip: {fileID: 8300000, guid: a460732f3e0e5754c8a24454f290e93e, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Background-Dark
-    Clip: {fileID: 8300000, guid: 2d26a2278756b2f44883b5011c0f417d, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0
-    PitchOffset: 0
-    m_AudioType: 1
-    Loop: 1
-  - Name: Chest Open
-    Clip: {fileID: 8300000, guid: 78106635abbd7e8438a786fd41f5694f, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Respawn Torch Activation
-    Clip: {fileID: 8300000, guid: 3a36f45b865789344b6a44da0e3ef9a5, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Player Attack
-    Clip: {fileID: 8300000, guid: 8fd1181e305ccd74f95e3135414a9658, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Enemy Hit
-    Clip: {fileID: 8300000, guid: fdc0511e72eea6741a092717dd5ffd5b, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Enemy Death
-    Clip: {fileID: 8300000, guid: a852d91d3b5f0374baa1b45dbe5b7ce5, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Box Destroy
-    Clip: {fileID: 8300000, guid: 8a2a79ff15bcffd4c8d52f509dd57cf5, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Player Death
-    Clip: {fileID: 8300000, guid: 3dd81414053ec0747a899cfac90d8d5c, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Button Switch
-    Clip: {fileID: 8300000, guid: 059079dba9e264145a11c1f8506c23fe, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: Boss-Fight
-    Clip: {fileID: 8300000, guid: 53e187815b824ba429e723959a570dac, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0
-    PitchOffset: 0
-    m_AudioType: 1
-    Loop: 1
-  - Name: Archlight-attack
-    Clip: {fileID: 8300000, guid: bb8a7e16882e9f440a8ad348655641ff, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0.1
-    PitchOffset: 0.1
-    m_AudioType: 0
-    Loop: 0
-  - Name: UI-Click
-    Clip: {fileID: 8300000, guid: b534c04817300bd438e982593e594b67, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0
-    PitchOffset: 0
-    m_AudioType: 0
-    Loop: 0
-  - Name: Land
-    Clip: {fileID: 8300000, guid: 14bc6a2fbf22cdc429d468b4632f46b9, type: 3}
-    Volume: 1
-    Pitch: 1
-    VolumeOffset: 0
-    PitchOffset: 0
-    m_AudioType: 0
-    Loop: 0
+  - {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617, type: 2}
+  - {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
+  - {fileID: 11400000, guid: 46079873bf39b4b9e85ddfe9b665a738, type: 2}
+  - {fileID: 11400000, guid: 47341f7c802b548c5b1231658295456a, type: 2}
+  - {fileID: 11400000, guid: 2f0f092c1f4664a969d720c685c1bcc4, type: 2}
+  - {fileID: 11400000, guid: 7fa9eb5e90dee4682abbf1cc05c6d23b, type: 2}
+  - {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
+  - {fileID: 11400000, guid: fa3caefeed9964043b2768358b2c9a06, type: 2}
+  - {fileID: 11400000, guid: d47a530c5920c41ee884a38821990e60, type: 2}
+  - {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
+  - {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40, type: 2}
+  - {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
+  - {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
+  - {fileID: 11400000, guid: 07ab6369b724b474ca78db672987e82e, type: 2}
+  - {fileID: 11400000, guid: b1e62fe13a4984e4ebcbec3b3ed4de9e, type: 2}
+  - {fileID: 11400000, guid: 214514dec3fff4919b2c158d6541a601, type: 2}
+  - {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d, type: 2}
+  - {fileID: 11400000, guid: 38eeca057424848a1b0ffdda972906e6, type: 2}
+  - {fileID: 11400000, guid: 4c557bad1b5a84608a5632ae31e4ca3c, type: 2}
+  - {fileID: 11400000, guid: 6085203cf7fd0418a9b66d3f4b752e59, type: 2}
+  - {fileID: 11400000, guid: f859384afb79445c6b412abb02be2b81, type: 2}
+  - {fileID: 11400000, guid: 97494bfcffca64af3b9c162a7cca4592, type: 2}
+  - {fileID: 11400000, guid: 0ce8d84b5904147759972210b5e2bd49, type: 2}
+  - {fileID: 11400000, guid: 53a132f71e7f944a496d33572f09242e, type: 2}
+  - {fileID: 11400000, guid: 793ff1801b3614218895893701016b2c, type: 2}
   MusicAudioMixer: {fileID: 24300002, guid: dfbedbf087579a6478c2fad70d1f8c04, type: 2}
   EnvironmentAudioMixer: {fileID: 243275582251444420, guid: dfbedbf087579a6478c2fad70d1f8c04,
     type: 2}

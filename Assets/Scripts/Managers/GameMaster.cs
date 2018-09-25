@@ -12,7 +12,7 @@ public class GameMaster : MonoBehaviour {
 
     public Transform m_RespawnPoint; //current respawn point
     [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
-    public bool isPlayerDead; //is player dead
+    [HideInInspector] public bool isPlayerDead; //is player dead
     public string SceneName; //current scene name
 
     #endregion
@@ -20,7 +20,7 @@ public class GameMaster : MonoBehaviour {
     #region private fields
 
     [SerializeField] private GameObject m_PlayerToRespawn;
-    [SerializeField] private string Music = "Background";
+    [SerializeField] private Audio BackgroundMusic;
 
     private bool m_IsPlayerRespawning; //is player respawning
 
@@ -78,7 +78,7 @@ public class GameMaster : MonoBehaviour {
             
             InitializeRespawnPointPosition();
 
-            AudioManager.Instance.SetBackgroundMusic(Music);
+            AudioManager.Instance.SetBackgroundMusic(BackgroundMusic.name);
 
             InitializeSceneState();
             

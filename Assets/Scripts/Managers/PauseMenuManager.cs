@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PauseMenuManager : MonoBehaviour {
 
+    [SerializeField] private Audio UIClickAudio;
+
     #region Singleton
     public static PauseMenuManager Instance;
 
@@ -81,7 +83,7 @@ public class PauseMenuManager : MonoBehaviour {
     {
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.Play("UI-Click");
+            AudioManager.Instance.Play(UIClickAudio);
         }
         else
         {

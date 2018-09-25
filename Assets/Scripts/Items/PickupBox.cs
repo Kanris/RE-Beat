@@ -5,7 +5,7 @@ public class PickupBox : MonoBehaviour {
 
     #region public fields
 
-    public float YRestrictions = -10f; //y fall restrictions
+    [SerializeField, Range(100f, -100f)] private float YRestrictions = -10f; //y fall restrictions
 
     #endregion
 
@@ -14,7 +14,7 @@ public class PickupBox : MonoBehaviour {
     #region serialize fields
 
     [SerializeField] private GameObject DeathParticle; //box destroying particles
-    [SerializeField] private string DestroySound; //box destroying sound
+    [SerializeField] private Audio DestroySound; //box destroying sound
 
     #endregion
 

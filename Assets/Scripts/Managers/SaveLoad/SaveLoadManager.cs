@@ -79,15 +79,15 @@ public class SaveLoadManager : MonoBehaviour {
         }
     }
 
-    public void SaveGameData()
+    public void SaveGameData(Audio saveAudio)
     {
-        StartCoroutine(SaveGame()); //save game data
+        StartCoroutine(SaveGame(saveAudio)); //save game data
     }
 
-    private IEnumerator SaveGame()
+    private IEnumerator SaveGame(Audio saveAudio)
     {
         ActiveSaveImage(true); //show save image
-        AudioManager.Instance.Play("Respawn Torch Activation"); //play save sound
+        AudioManager.Instance.Play(saveAudio); //play save sound
 
         SaveLoadMaster.SaveGeneralData();
         SaveLoadMaster.SavePlayerData();
