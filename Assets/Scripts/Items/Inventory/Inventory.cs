@@ -7,7 +7,7 @@ public class Inventory {
 
     #region public fields
 
-    public List<Item> m_Bag; //player's inventory
+    public List<ItemDescription> m_Bag; //player's inventory
 
     #endregion
 
@@ -15,10 +15,10 @@ public class Inventory {
 
     public Inventory(int size) //initialize player's inventory with the set size
     {
-        m_Bag = new List<Item>(size);
+        m_Bag = new List<ItemDescription>(size);
     }
 
-    public bool Add(Item item, string image) //add item to the inventory
+    public bool Add(ItemDescription item, string image) //add item to the inventory
     {
         if (m_Bag.Capacity > m_Bag.Count) //if player's bag can contains more item
         {
@@ -28,7 +28,7 @@ public class Inventory {
             }
             else //add new item to the inventory
             {
-                item.Image = image;
+                item.ImageInAtlas = image;
                 m_Bag.Add(item); //add item to the bag
                 InfoManager.Instance.AddItem(item); //add item to the "book"
             }
@@ -47,11 +47,11 @@ public class Inventory {
 
     public bool Remove(Item item) //remove item from the bag
     {
-        if (IsInBag(item.Name)) //if item is in the bag
+        if (IsInBag(item.itemDescription.Name)) //if item is in the bag
         {
-            var searchResult = m_Bag.First(x => x.Name == item.Name); //find need item
+            var searchResult = m_Bag.First(x => x.Name == item.itemDescription.Name); //find need item
             m_Bag.RemoveAt(m_Bag.IndexOf(searchResult)); //remove item from the bag
-            InfoManager.Instance.RemoveItem(item.Name); //remove item from the book
+            InfoManager.Instance.RemoveItem(item.itemDescription.Name); //remove item from the book
 
             return true; //item was removed
         }

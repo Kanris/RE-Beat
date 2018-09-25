@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 
+
+[CreateAssetMenu(fileName = "New Item", menuName = "Item")]
+public class Item : ScriptableObject
+{
+    public Sprite Image;
+    public ItemDescription itemDescription;
+}
+
 [System.Serializable]
-public class Item
+public class ItemDescription
 {
     #region public fields
 
-    [HideInInspector] public string Image; //item image
+    [HideInInspector] public string ImageInAtlas; //item image
     public string Name; //item name
-    [TextArea(3, 10)] public string Description; //item description
+    public string Description; //item description
 
     #region enum
     public enum ItemType { Item, Note, Heal }

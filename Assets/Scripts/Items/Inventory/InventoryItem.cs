@@ -16,7 +16,7 @@ public class InventoryItem : MonoBehaviour {
 
     #region public methods
 
-    public void Initialize(Item item, TextPage itemDescriptionText)
+    public void Initialize(ItemDescription item, TextPage itemDescriptionText)
     {
         m_ItemDescriptionText = itemDescriptionText;
 

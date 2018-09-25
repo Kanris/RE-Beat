@@ -26,10 +26,13 @@ public class Chest : MonoBehaviour {
 
     #region private methods
 
+    private void Awake()
+    {
+        m_Animator = GetComponent<Animator>();
+    }
+
     // Use this for initialization
     void Start () {
-
-        m_Animator = GetComponent<Animator>();
 
         InitializeInteractionButton();
 
@@ -44,16 +47,6 @@ public class Chest : MonoBehaviour {
     {
         var interactionButton = Resources.Load("UI/InteractionUI");
         m_InteractionButton = Instantiate(interactionButton, transform) as GameObject;
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-        {
-            Debug.LogError("Chest.InitializeAnimator: Can't find animator on gameObject");
-        }
     }
 
     #endregion
@@ -151,7 +144,10 @@ public class Chest : MonoBehaviour {
     {
         isChestEmpty = true; //chest is empty
 
+        if (m_Animator == null) m_Animator = GetComponent<Animator>();
+
         m_Animator.SetTrigger("Open"); //play chest open animation
+
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f); //change chest position
     }
 

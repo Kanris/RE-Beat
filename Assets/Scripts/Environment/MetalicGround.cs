@@ -8,7 +8,7 @@ public class MetalicGround : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private string NeededItem = "Magnetic Boots"; //required item to move on the metalic ground
+    [SerializeField] private Item NeededItem; //required item to move on the metalic ground
 
     private TilemapCollider2D m_Ground; //metalic ground
     private Animator m_Animator; //metalic ground animator
@@ -28,7 +28,7 @@ public class MetalicGround : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player")) //if player on metalic ground
         {
-            if (PlayerStats.PlayerInventory.IsInBag(NeededItem)) //if player has needed item
+            if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player has needed item
             {
                 collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = false; //dont allow player to jump
                 PlayAnimation("Active"); //change ground animation

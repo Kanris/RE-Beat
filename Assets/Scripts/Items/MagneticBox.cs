@@ -6,7 +6,7 @@ public class MagneticBox : MonoBehaviour {
 
     #region public fields
 
-    public string NeededItem = "Magnetic Arm"; //required item to pickup item
+    public Item NeededItem; //required item to pickup item
 
     #endregion
 
@@ -110,14 +110,15 @@ public class MagneticBox : MonoBehaviour {
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
-                if (PlayerStats.PlayerInventory.IsInBag(NeededItem)) //if player have needed item
+                if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {
                     PickUpBox(true); //pick up box
                 }
                 else //if player haven't needed item
                 {
                     AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                        new AnnouncerManager.Message(NeededItem + " - required to pickup this box.")); //display warning message
+                        new AnnouncerManager.Message(LocalizationManager.Instance.GetItemsLocalizedValue (
+                            NeededItem.itemDescription.Name) + " - required to pickup this box.")); //display warning message
                 }
             }
         }

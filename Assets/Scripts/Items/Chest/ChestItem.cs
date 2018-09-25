@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class ChestItem : MonoBehaviour {
 
     #region private fields
@@ -13,9 +14,9 @@ public class ChestItem : MonoBehaviour {
 
     public void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item, GetComponent<Image>().sprite.name); //add item to the player inventory
+        PlayerStats.PlayerInventory.Add(item.itemDescription, GetComponent<Image>().sprite.name); //add item to the player inventory
 
-        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name);
+        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
         var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
@@ -27,4 +28,13 @@ public class ChestItem : MonoBehaviour {
     }
 
     #endregion
+
+    private void OnValidate()
+    {
+        if (item != null)
+        {
+            GetComponent<Image>().sprite = item.Image;
+            transform.name = item.name;
+        }
+    }
 }

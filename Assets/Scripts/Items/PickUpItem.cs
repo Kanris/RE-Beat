@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class PickUpItem : MonoBehaviour {
 
     #region private fields
@@ -31,6 +32,15 @@ public class PickUpItem : MonoBehaviour {
 
     }
 
+    private void OnValidate()
+    {
+        if (item != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = item.Image;
+            transform.name = item.name;
+        }
+    }
+
     #endregion
 
     private void Update()
@@ -46,19 +56,19 @@ public class PickUpItem : MonoBehaviour {
 
     private void InteractWithItem()
     {            
-        switch (item.itemType) //base on item type
+        switch (item.itemDescription.itemType) //base on item type
         {
-            case Item.ItemType.Item: //if it is item
+            case ItemDescription.ItemType.Item: //if it is item
                 AddToTheInventory(); //add to the inventory
                 break;
 
-            case Item.ItemType.Note: //it is is note
+            case ItemDescription.ItemType.Note: //it is is note
                 ReadNote(); //read note
                 break;
 
-            case Item.ItemType.Heal: //if it is heal
+            case ItemDescription.ItemType.Heal: //if it is heal
                 if (m_PlayerStats != null)
-                    m_PlayerStats.HealPlayer(item.HealAmount); //heal player
+                    m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
 
                 Destroy(gameObject);
                 break;
@@ -73,7 +83,7 @@ public class PickUpItem : MonoBehaviour {
         {
             m_IsPlayerNearDoor = true; //player is near item
 
-            if (item.itemType == Item.ItemType.Heal) //if item type is heal
+            if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
 
             m_InteractionButton.gameObject.SetActive(true); // show item ui
@@ -86,7 +96,7 @@ public class PickUpItem : MonoBehaviour {
         {
             m_IsPlayerNearDoor = false; //player is not near the door
 
-            if (item.itemType == Item.ItemType.Heal) //if item type is heal
+            if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = null; //remove reference to the player stats
 
             m_InteractionButton.gameObject.SetActive(false); //hide item ui
@@ -95,9 +105,9 @@ public class PickUpItem : MonoBehaviour {
 
     private void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item, GetComponent<SpriteRenderer>().sprite.name); //add item to the player's bag
+        PlayerStats.PlayerInventory.Add(item.itemDescription, GetComponent<SpriteRenderer>().sprite.name); //add item to the player's bag
 
-        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name);
+        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
         var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(itemName + " " + 
@@ -108,7 +118,7 @@ public class PickUpItem : MonoBehaviour {
 
     private void ReadNote()
     {
-        var noteText = LocalizationManager.Instance.GetItemsLocalizedValue(item.Description);
+        var noteText = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Description);
         AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(noteText, 4f)); //show announcer with message in the note
     }
 

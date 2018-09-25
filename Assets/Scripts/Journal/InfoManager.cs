@@ -138,19 +138,22 @@ public class InfoManager : MonoBehaviour {
         var instantiateTaskButton = Instantiate(buttonFromResources, m_Content);
 
         instantiateTaskButton.name = name; //set button name to task
-        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationManager.Instance.GetJournalLocalizedValue(name); //change button caption to the task name
+        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = 
+            LocalizationManager.Instance.GetJournalLocalizedValue(name); //change button caption to the task name
 
         return instantiateTaskButton.GetComponent<Button>();
     }
 
-    private Button CreateItemButton(Item item)
+    private Button CreateItemButton(ItemDescription item)
     {
         var resourceItemButton = Resources.Load("Managers/Journal/InventoryItem") as GameObject;
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
         instantiateItemButton.name = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button name to the item name
-        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.Name; //change button caption to the item name
-        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = itemsSpriteAtlas.SingleOrDefault(x => x.name == item.Image); //add item image from atlas
+        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = 
+            LocalizationManager.Instance.GetItemsLocalizedValue( item.Name ); //change button caption to the item name
+        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = 
+            itemsSpriteAtlas.SingleOrDefault(x => x.name == item.ImageInAtlas); //add item image from atlas
 
         instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_Page); //initialize item button info
 
@@ -289,7 +292,7 @@ public class InfoManager : MonoBehaviour {
 
     #region inventory methods
 
-    public void AddItem(Item item)
+    public void AddItem(ItemDescription item)
     {
         var button = CreateItemButton(item); //create new item button
 
