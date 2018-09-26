@@ -56,6 +56,8 @@ public class StartScreenManager : MonoBehaviour {
 
         Initialize("Managers/LocalizationManager");
 
+        Initialize("Managers/FPSManager");
+
         //play background music
         if (!string.IsNullOrEmpty(BackgroundMusic))
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
