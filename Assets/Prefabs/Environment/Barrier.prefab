@@ -142,7 +142,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85954d3767c947842a172daf3de201fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdleTime: 3
+  IdleTime: 2
   ActiveTime: 5
   DamageAmount: 1
 --- !u!114 &114604087883660814

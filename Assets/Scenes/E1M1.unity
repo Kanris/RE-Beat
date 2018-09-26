@@ -334,7 +334,7 @@ MonoBehaviour:
   Type: 1
   KeyName: {fileID: 0}
   DisplayMessage: red_seal_door
-  DoorOpenAudio: {fileID: 0}
+  DoorOpenAudio: {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40, type: 2}
 --- !u!483693784 &12145148
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -2733,7 +2733,7 @@ MonoBehaviour:
   Type: 1
   KeyName: {fileID: 0}
   DisplayMessage: blue_seal_door
-  DoorOpenAudio: {fileID: 0}
+  DoorOpenAudio: {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40, type: 2}
 --- !u!483693784 &247247798
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -18980,6 +18980,16 @@ Prefab:
       propertyPath: m_Intensity
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
   m_IsPrefabParent: 0
@@ -24663,6 +24673,16 @@ Prefab:
       propertyPath: m_Intensity
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
   m_IsPrefabParent: 0
@@ -24812,6 +24832,11 @@ Prefab:
       propertyPath: m_Intensity
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
   m_IsPrefabParent: 0
@@ -24867,6 +24892,11 @@ Prefab:
         type: 2}
       propertyPath: m_Intensity
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
@@ -30673,7 +30703,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -30892,6 +30922,11 @@ Prefab:
         type: 2}
       propertyPath: m_Intensity
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 108622715681203612, guid: d145d663c753f6142b976a9cccffb34a,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}

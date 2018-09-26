@@ -131,22 +131,18 @@ public class AudioManager : MonoBehaviour {
 
             if (!string.IsNullOrEmpty(name)) //play new background music
             {
-                m_BackgroundMusic = name;
-                var sound = GetAudioFromArray(m_BackgroundMusic);
-
-                if (sound != null)
+                for (int index = 0; index < AudioArray.Length; index++)
                 {
-                    for (int index = 0; index < AudioArray.Length; index++)
+                    if (AudioArray[index].name != m_BackgroundMusic)
                     {
                         AudioArray[index].StopSound();
                     }
+                }
 
-                    StartCoroutine(sound.FadeIn());
-                }
-                else
-                {
-                    Debug.LogError("AudioManager.SetBackgroundMusic: can't find audio with name - " + name);
-                }
+                m_BackgroundMusic = name;
+                var sound = GetAudioFromArray(m_BackgroundMusic);
+
+                StartCoroutine(sound.FadeIn());
             }
             else
                 Debug.LogError("AudioManager.SetBackgroundMusic: can't change background music, because name is null or empty");

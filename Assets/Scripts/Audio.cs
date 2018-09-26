@@ -74,7 +74,7 @@ public class Audio : ScriptableObject
         }
     }
 
-    public IEnumerator FadeOut(float fadeTime = 0.5f, float increment = 0.02f)
+    public IEnumerator FadeOut(float fadeTime = 0.05f, float increment = 0.02f)
     {
         m_PlayerReturn = false;
 
@@ -85,7 +85,9 @@ public class Audio : ScriptableObject
         }
 
         if (!m_PlayerReturn)
+        {
             m_AudioSource.Stop();
+        }
     }
 
     public IEnumerator FadeIn(float fadeTime = 0.5f, float increment = 0.02f)
