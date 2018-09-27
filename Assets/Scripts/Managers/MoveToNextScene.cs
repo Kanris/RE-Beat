@@ -16,7 +16,7 @@ public class MoveToNextScene : MonoBehaviour {
     [SerializeField] private string NextScene; //next scene name
     [SerializeField] private string NextScenename; //next scene caption
     [SerializeField] private Vector2 SpawnPosition; //where to spawn player
-    [SerializeField] private string BackgroundMusic; //play new background music
+    [SerializeField] private Audio BackgroundMusic; //play new background music
 
     #endregion
 

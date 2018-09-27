@@ -254,7 +254,7 @@ MonoBehaviour:
   NextScene: Boss
   NextScenename: Weird Dream
   SpawnPosition: {x: -17.89, y: 0.75}
-  BackgroundMusic: Boss-Fight
+  BackgroundMusic: {fileID: 11400000, guid: 46079873bf39b4b9e85ddfe9b665a738, type: 2}
 --- !u!1 &12145143
 GameObject:
   m_ObjectHideFlags: 0
@@ -33875,7 +33875,7 @@ MonoBehaviour:
   NextScene: E1M2
   NextScenename: Cave
   SpawnPosition: {x: -4.5, y: -0.75}
-  BackgroundMusic: Background-Dark
+  BackgroundMusic: {fileID: 11400000, guid: 47341f7c802b548c5b1231658295456a, type: 2}
 --- !u!61 &2052888317
 BoxCollider2D:
   m_ObjectHideFlags: 0
