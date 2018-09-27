@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50426549288151390}
   - component: {fileID: 95099321073130048}
   - component: {fileID: 114227916230212862}
-  - component: {fileID: 114161895529574252}
+  - component: {fileID: 61036129911797682}
   m_Layer: 13
   m_Name: Drone Kamikaze
   m_TagString: Untagged
@@ -80,6 +80,31 @@ CircleCollider2D:
   m_Offset: {x: 0.0065790415, y: 0.02412343}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!61 &61036129911797682
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427525428804550}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.020823717, y: -0.00000047683716}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.59375}
+    newSize: {x: 0.32, y: 0.38}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.4162774, y: 1.2184858}
+  m_EdgeRadius: 0
 --- !u!95 &95099321073130048
 Animator:
   serializedVersion: 3
@@ -98,30 +123,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114161895529574252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1427525428804550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyStats:
-    MaxHealth: 50
-    m_ThrowX: 2
-    m_ThrowY: 0.5
-    DeathParticle: {fileID: 0}
-    HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
-    DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
-    DamageAmount: 1
-    Speed: 1
-    AttackSpeed: 2
-    m_IsBigMonster: 0
-    DropCoins: 1
-  DontResurect: 0
 --- !u!114 &114227916230212862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,6 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29692c04fe240574792e99a7aff90447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+    type: 2}
+  DamageAmount: 1
 --- !u!212 &212945065711264990
 SpriteRenderer:
   m_ObjectHideFlags: 1
