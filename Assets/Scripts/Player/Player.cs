@@ -160,7 +160,7 @@ public class Player : MonoBehaviour {
         if (!m_Animator.GetBool("Ground")) 
         {
             //check is player move from y restrictions
-            if (m_YPositionBeforeJump + YFallDeath > transform.position.y & !GameMaster.Instance.isPlayerDead)
+            if (m_YPositionBeforeJump + YFallDeath > transform.position.y & !GameMaster.Instance.IsPlayerDead)
             {
                 playerStats.KillPlayer();
             }

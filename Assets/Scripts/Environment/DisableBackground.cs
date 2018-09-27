@@ -40,10 +40,10 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_PlayerInCave) //if player leave cave
         {
-            var isNeedWaiting = false; //fade mist without waiting
+            var isNeedWaiting = false;
 
-            if (GameMaster.Instance.isPlayerDead) //if player died in cave
-                isNeedWaiting = true; //fade mist with waiting
+            if (GameMaster.Instance.IsPlayerDead)
+                isNeedWaiting = true;
 
             StartCoroutine(PlayerLeaveCave(isNeedWaiting)); //fade in mist
         }

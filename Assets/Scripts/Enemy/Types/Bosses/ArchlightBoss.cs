@@ -33,7 +33,6 @@ public class ArchlightBoss : MonoBehaviour
     private Enemy m_Stats;
     private bool m_Stage2;
     private bool m_Stage3;
-    private bool m_IsReset;
     private float m_TeleportTimer;
     private Vector3 m_NextDestination;
     #endregion
@@ -99,6 +98,11 @@ public class ArchlightBoss : MonoBehaviour
     {
         ChangeState();
 
+        if (GameMaster.Instance.IsPlayerDead)
+        {
+            GameMaster.Instance.StartCoroutine(ResetState());
+        }
+
         if (m_TeleportTimer <= Time.time)
         {
             m_TeleportTimer = Time.time + TeleportSpeed;
@@ -109,14 +113,6 @@ public class ArchlightBoss : MonoBehaviour
 
             m_NextDestination = GetDestination();
         }
-
-        if (GameMaster.Instance.isPlayerDead)
-        {
-            if (!m_IsReset)
-                StartCoroutine(ResetState());
-        }
-        else if (m_IsReset)
-            m_IsReset = false;
     }
 
     #region State
@@ -137,8 +133,6 @@ public class ArchlightBoss : MonoBehaviour
 
     private IEnumerator ResetState()
     {
-        m_IsReset = true;
-
         GetComponent<EnemyStatsGO>().InitializeStats();
 
         m_Stage2 = false;

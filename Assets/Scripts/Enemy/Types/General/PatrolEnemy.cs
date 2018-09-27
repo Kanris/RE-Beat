@@ -31,9 +31,9 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void Update()
     {
-        if (m_EnemyStats.IsPlayerNear)
+        if (GameMaster.Instance.IsPlayerDead)
         {
-            if (GameMaster.Instance.isPlayerDead)
+            if (m_EnemyStats.IsPlayerNear)
             {
                 m_EnemyStats.ChangeIsPlayerNear(false);
                 StartCoroutine(PlayerSpot(false));

@@ -12,7 +12,7 @@ public class GameMaster : MonoBehaviour {
 
     public Transform m_RespawnPoint; //current respawn point
     [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
-    [HideInInspector] public bool isPlayerDead; //is player dead
+    [HideInInspector] public bool IsPlayerDead; //is player dead
     public string SceneName; //current scene name
 
     #endregion
@@ -328,7 +328,7 @@ public class GameMaster : MonoBehaviour {
 
     private IEnumerator RespawnWithFade()
     {
-        isPlayerDead = true;
+        IsPlayerDead = true;
 
         yield return new WaitForSeconds(1f);
 
@@ -336,7 +336,7 @@ public class GameMaster : MonoBehaviour {
 
         var playerTransform = RespawnWithoutFade();
 
-        isPlayerDead = false;
+        IsPlayerDead = false;
 
         yield return new WaitForSeconds(0.5f);
 
@@ -345,13 +345,13 @@ public class GameMaster : MonoBehaviour {
 
     private Transform RespawnWithoutFade()
     {
-        isPlayerDead = true;
+        IsPlayerDead = true;
 
         var playerGameObject = Instantiate(m_PlayerToRespawn);
         playerGameObject.transform.position = m_RespawnPointPosition;
 
         m_IsPlayerRespawning = false;
-        isPlayerDead = false;
+        IsPlayerDead = false;
 
         return playerGameObject.transform;
     }
