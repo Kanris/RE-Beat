@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets._2D;
 using System.Linq;
+using Cinemachine;
 
 public class GameMaster : MonoBehaviour {
 
@@ -21,6 +21,7 @@ public class GameMaster : MonoBehaviour {
 
     [SerializeField] private GameObject m_PlayerToRespawn;
     [SerializeField] private Audio BackgroundMusic;
+    [SerializeField] private CinemachineVirtualCamera m_Camera;
 
     private bool m_IsPlayerRespawning; //is player respawning
 
@@ -110,6 +111,9 @@ public class GameMaster : MonoBehaviour {
         if (m_RespawnPointPosition == Vector3.zero & m_RespawnPoint != null)
         {
             m_RespawnPointPosition = m_RespawnPoint.position;
+
+            if (m_Camera != null)
+                m_Camera.transform.position = new Vector3(m_RespawnPointPosition.x, m_RespawnPointPosition.y, -10f);
         }
     }
 
