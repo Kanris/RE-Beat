@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114227916230212862}
   - component: {fileID: 114161895529574252}
   m_Layer: 13
-  m_Name: Eye
+  m_Name: Drone Kamikaze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyStats:
-    MaxHealth: 100
+    MaxHealth: 50
     m_ThrowX: 2
     m_ThrowY: 0.5
     DeathParticle: {fileID: 0}

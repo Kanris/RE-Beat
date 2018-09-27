@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(EnemyStatsGO))]
-public class Eye : MonoBehaviour {
+public class DroneKamikaze : MonoBehaviour {
     
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
@@ -46,6 +46,7 @@ public class Eye : MonoBehaviour {
         if (collision.transform.CompareTag("Player"))
         {
             m_EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
+            m_EnemyStats.TakeDamage(999);
         }
     }
 

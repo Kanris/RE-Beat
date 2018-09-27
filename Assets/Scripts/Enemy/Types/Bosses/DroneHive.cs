@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(EnemyStatsGO))]
-public class ArchlightBoss : MonoBehaviour
+public class DroneHive : MonoBehaviour
 {
 
     #region SerializeField
@@ -22,6 +22,8 @@ public class ArchlightBoss : MonoBehaviour
 
     [SerializeField] private Audio TeleportAudio;
     [SerializeField] private Audio AttackAudio;
+    [SerializeField] private GameObject DeathParticle;
+    [SerializeField] private GameObject HitParticle;
 
     #endregion
 
@@ -174,16 +176,14 @@ public class ArchlightBoss : MonoBehaviour
         FlyingPlatform.SetActive(true);
         Key.SetActive(true);
 
-        ShowParticles("Effects/Archlight/Archlight Death Particle", 10f);
+        ShowParticles(DeathParticle, 10f);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
         GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
     }
 
-    private void ShowParticles(string path, float time = 1.5f)
+    private void ShowParticles(GameObject particle, float time = 1.5f)
     {
-        var particle = Resources.Load(path) as GameObject;
-
         if (particle != null)
         {
             var DeathParticleInstantiate =
@@ -197,7 +197,7 @@ public class ArchlightBoss : MonoBehaviour
     private void OnPlayerHitTeleport(bool value)
     {
         m_TeleportTimer = Time.time;
-        ShowParticles("Effects/Archlight/Archlight Hit Particle", 5f);
+        ShowParticles(HitParticle, 5f);
     }
 
     private IEnumerator TeleportSequence(Vector3 destination)

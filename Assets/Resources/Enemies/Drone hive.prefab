@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114832504023990750}
   - component: {fileID: 114727188107457268}
   m_Layer: 13
-  m_Name: Archlight
+  m_Name: Drone hive
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,6 +187,10 @@ MonoBehaviour:
   Stage3Health: 200
   TeleportAudio: {fileID: 11400000, guid: 4c557bad1b5a84608a5632ae31e4ca3c, type: 2}
   AttackAudio: {fileID: 11400000, guid: 7fa9eb5e90dee4682abbf1cc05c6d23b, type: 2}
+  DeathParticle: {fileID: 1202077413848300, guid: f05580bdf673ca04d884edc6eff2f3eb,
+    type: 2}
+  HitParticle: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
+    type: 2}
 --- !u!114 &114727188107457268
 MonoBehaviour:
   m_ObjectHideFlags: 1
