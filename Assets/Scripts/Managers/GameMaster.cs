@@ -334,7 +334,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        var playerTransform = RespawnWithoutFade();
+        RespawnWithoutFade();
 
         IsPlayerDead = false;
 

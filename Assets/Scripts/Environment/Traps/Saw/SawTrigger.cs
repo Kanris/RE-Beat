@@ -8,8 +8,7 @@ public class SawTrigger : MonoBehaviour {
     #region private fields
 
     #region serialize fields
-
-    [SerializeField, Range(0.5f, 10f)] private float SawMoveTime = 2.5f; //saw move timer
+    
     [SerializeField] private Saw m_Saw; //saw script
     [SerializeField] private Audio ButtonSwitchAudio;
 

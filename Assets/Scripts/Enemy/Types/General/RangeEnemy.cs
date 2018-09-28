@@ -9,7 +9,7 @@ public class RangeEnemy : MonoBehaviour {
     public event VoidDelegate OnPlayerSpot;
 
     private Enemy m_EnemyStats;
-    private EnemyMovement m_EnemyMovement; private Animator m_Animator;
+    private Animator m_Animator;
     private TextMeshProUGUI m_Text;
     private bool m_CanCreateNewFireball = true;
 
@@ -22,9 +22,7 @@ public class RangeEnemy : MonoBehaviour {
     void Start()
     {
         InitializeStats();
-
-        InitializeEnemyMovement();
-
+        
         InitializeAnimator();
 
         m_AlarmImage.gameObject.SetActive(false);
@@ -33,11 +31,6 @@ public class RangeEnemy : MonoBehaviour {
     private void InitializeStats()
     {
         m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
-    }
-
-    private void InitializeEnemyMovement()
-    {
-        m_EnemyMovement = GetComponent<EnemyMovement>();
     }
 
     private void InitializeAnimator()
