@@ -76,7 +76,6 @@ public class LocalizationManager : MonoBehaviour {
         {
             fileName = "localization-items-" + fileName + ".json";
             LoadLocalizationData(fileName, out itemsText);
-            Debug.LogError(fileName + ":" + itemsText.Count);
         }
     }
 

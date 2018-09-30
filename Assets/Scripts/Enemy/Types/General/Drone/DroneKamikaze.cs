@@ -13,14 +13,14 @@ public class DroneScriptEditor : Editor
              bulletPrefab_Prop,
              deathParticles_Prop,
              detectionTrigger_Prop,
+             shootTrigger_Prop,
              deathDetonationTimer_Prop,
              damageAmount_Prop,
              speed_Prop,
              updateRate_Prop,
-             minPosition_Prop,
-             maxPosition_Prop,
              health_Prop,
-             attackSpeed_Prop;
+             attackSpeed_Prop,
+             patrolPoints_Prop;
 
     private void OnEnable()
     {
@@ -30,16 +30,15 @@ public class DroneScriptEditor : Editor
         trailMaterial_Prop = serializedObject.FindProperty("TrailMaterial");
         bulletPrefab_Prop = serializedObject.FindProperty("BulletTrailPrefab");
         deathParticles_Prop = serializedObject.FindProperty("DeathParticles");
-        detectionTrigger_Prop = serializedObject.FindProperty("DetectionTrigger");
+        detectionTrigger_Prop = serializedObject.FindProperty("ChasingRange");
         deathDetonationTimer_Prop = serializedObject.FindProperty("DeathDetonationTimer");
         damageAmount_Prop = serializedObject.FindProperty("DamageAmount");
         speed_Prop = serializedObject.FindProperty("Speed");
-
+        shootTrigger_Prop = serializedObject.FindProperty("ShootingRange");
         updateRate_Prop = serializedObject.FindProperty("UpdateRate");
-        minPosition_Prop = serializedObject.FindProperty("m_MinPosition");
-        maxPosition_Prop = serializedObject.FindProperty("m_MaxPosition");
         health_Prop = serializedObject.FindProperty("Health");
         attackSpeed_Prop = serializedObject.FindProperty("AttackSpeed");
+        patrolPoints_Prop = serializedObject.FindProperty("m_PatrolPoints");
     }
 
     public override void OnInspectorGUI()
@@ -59,7 +58,6 @@ public class DroneScriptEditor : Editor
         EditorGUILayout.IntSlider(health_Prop, 0, 10, new GUIContent("Health"));
 
         serializedObject.ApplyModifiedProperties();
-        
     }
    
 
@@ -67,12 +65,12 @@ public class DroneScriptEditor : Editor
     {
         EditorGUILayout.ObjectField(trailMaterial_Prop, new GUIContent("TrailMaterial"));
         EditorGUILayout.ObjectField(bulletPrefab_Prop, new GUIContent("BulletPrefab"));
-        EditorGUILayout.ObjectField(detectionTrigger_Prop, new GUIContent("Detection Trigger"));
+        EditorGUILayout.ObjectField(detectionTrigger_Prop, new GUIContent("Chasing Range"));
+        EditorGUILayout.ObjectField(shootTrigger_Prop, new GUIContent("Shooting Range"));
         EditorGUILayout.Slider(speed_Prop, 100f, 1000f, new GUIContent("Speed"));
         EditorGUILayout.Slider(updateRate_Prop, 1f, 10f, new GUIContent("Update Rate"));
-        EditorGUILayout.Slider(minPosition_Prop, 0f, -5f, new GUIContent("Min Position"));
-        EditorGUILayout.Slider(maxPosition_Prop, 10f, 5f, new GUIContent("Max Position"));
         EditorGUILayout.Slider(attackSpeed_Prop, 1f, 5f, new GUIContent("Attack Speed"));
+        EditorGUILayout.PropertyField(patrolPoints_Prop, true);
     }
 }
 
@@ -86,16 +84,16 @@ public class DroneKamikaze : MonoBehaviour {
     [SerializeField] private Material TrailMaterial;
     [SerializeField] private GameObject BulletTrailPrefab;
     [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
-    [SerializeField] private PlayerInTrigger DetectionTrigger; //trigger that detect player
+    [SerializeField] private PlayerInTrigger ChasingRange; //trigger that detect player
+    [SerializeField] private PlayerInTrigger ShootingRange;
 
+    [SerializeField] private Transform[] m_PatrolPoints;
     [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
     [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
     [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
-    [SerializeField, Range(0f, -5f)] private float m_MinPosition = -3f; //min position around the drone
-    [SerializeField, Range(0f, 5f)] private float m_MaxPosition = 3f; //max poisition around the drone
     [SerializeField, Range(1, 5)] private int Health = 1; //drone health
-    [SerializeField, Range(1f, 5f)] private float AttackSpeed = 2f;
+    [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
@@ -104,11 +102,13 @@ public class DroneKamikaze : MonoBehaviour {
     private bool m_PathIsEnded = false; //path is reached
     private float m_NextWaypointDistance = 0.5f; 
     private int m_CurrentWaypoint = 0;
+    private int m_CurrentPatrolPoint = 0;
 
     private bool m_IsDestroying = false; //is drone going to blow up
-    private bool m_IsPlayerInAttackRange = false; //is drone chasing player
+    private bool m_IsPlayerInChasingRange = false;
+    private bool m_IsPlayerInShootingRange = false; //is drone chasing player
     private bool m_IsAttacking = false;
-    private float m_AttackCooldown;
+    private float m_AttackCooldownTimer;
 
     #region initialize
 
@@ -125,8 +125,9 @@ public class DroneKamikaze : MonoBehaviour {
 
     private void InitializeShooter()
     {
-        StartCoroutine(PatrolingInRandomDirection()); //start random movement
-        DetectionTrigger.OnPlayerInTrigger += PlayerInTrigger; //player in range detection
+        StartCoroutine ( PatrolBetweenPoints() );
+        ChasingRange.OnPlayerInTrigger += PlayerInChasingRange; //player in range detection
+        ShootingRange.OnPlayerInTrigger += PlayerInShootingRange;
     }
 
     private void InitializeKamikaze()
@@ -156,16 +157,21 @@ public class DroneKamikaze : MonoBehaviour {
         }
         else if (m_DroneType == DroneType.Shooter) //if drone - shooter
         {
-            if (m_IsAttacking & !m_IsDestroying) //player in range and drone is not destroying
+            if (m_IsPlayerInShootingRange & !m_IsDestroying)
             {
-                if (m_AttackCooldown < Time.time) //drone can attack
+                if (m_IsAttacking) //player in range and drone is not destroying
                 {
-                    m_AttackCooldown = Time.time + AttackSpeed; //next available attack time
-                    StartCoroutine(Shoot()); //shoot at player
+                    if (m_AttackCooldownTimer < Time.time) //drone can attack
+                    {
+                        m_AttackCooldownTimer = Time.time + AttackSpeed; //next available attack time
+                        StartCoroutine(Shoot()); //shoot at player
+                    }
                 }
             }
-            else //drone has to patrol the are
+            else if (m_Path != null)
+            {
                 MoveInDirection();
+            }
         }
     }
 
@@ -226,24 +232,44 @@ public class DroneKamikaze : MonoBehaviour {
         }
     }
 
-    private void PlayerInTrigger(bool value)
+    private void PlayerInChasingRange(bool value)
     {
-        m_IsPlayerInAttackRange = value;
+        m_IsPlayerInChasingRange = value;
 
-        if (!m_IsDestroying)
+        if (!m_IsDestroying) //is drone not going to destroy
         {
-            if (m_IsPlayerInAttackRange)
+            if (m_IsPlayerInChasingRange & !m_IsPlayerInShootingRange)
             {
-                FindPlayer();
-                //InitializeChasing();
-                StopAllCoroutines();
-                m_IsAttacking = true;
+                FindPlayer(); //find targe
+                InitializeChasing();
             }
-            else
+            else if (!m_IsPlayerInChasingRange)
             {
                 Target = null;
                 m_IsAttacking = false;
-                StartCoroutine(PatrolingInRandomDirection());
+                StartCoroutine(PatrolBetweenPoints());
+            }
+        }
+    }
+
+    private void PlayerInShootingRange(bool value)
+    {
+        m_IsPlayerInShootingRange = value; //is player in attack range
+
+        if (!m_IsDestroying) //is drone not going to destroy
+        {
+            if (m_IsPlayerInShootingRange) //if player in attack range
+            {
+                FindPlayer(); //find targe
+                //InitializeChasing();
+                StopAllCoroutines(); //start shooting
+                m_IsAttacking = true;
+                m_AttackCooldownTimer = 1f + Time.time;
+            }
+            else if (m_IsPlayerInChasingRange) //player is not in attack range but drone can still see him
+            {
+                FindPlayer(); //find targe
+                InitializeChasing();
             }
         }
     }
@@ -261,12 +287,6 @@ public class DroneKamikaze : MonoBehaviour {
             DrawShootingLine(m_firePointPosition, whereToShoot, Color.red, 0.5f);
 
             yield return new WaitForSeconds(0.6f); //wait before shoot
-
-            var hit2D = Physics2D.Raycast(m_firePointPosition,
-                                                           whereToShoot - m_firePointPosition,
-                                                           10f, 8);
-
-            //PlayShootSound();
 
             DrawBulletTrailEffect(whereToShoot);
         }
@@ -319,18 +339,16 @@ public class DroneKamikaze : MonoBehaviour {
 
     #region move in direction A*
 
-    private IEnumerator PatrolingInRandomDirection()
+    private IEnumerator PatrolBetweenPoints()
     {
-        var randX = Random.Range(m_MinPosition, m_MaxPosition);
-        var randY = Random.Range(m_MinPosition, m_MaxPosition);
+        if (m_CurrentPatrolPoint == m_PatrolPoints.Length) //end of the list
+            m_CurrentPatrolPoint = 0; //start over
 
-        var target = new Vector3(transform.position.x - randX, transform.position.y - randY);
+        yield return new WaitForSeconds(4f); //wait before moving to the next point
+        
+        m_Seeker.StartPath(transform.position, m_PatrolPoints[m_CurrentPatrolPoint].position, OnPathComplete); //path to the next patrol point
 
-        var waitBeforeMove = Random.Range(2f, 5f);
-
-        yield return new WaitForSeconds(waitBeforeMove); //wait before moving
-
-        m_Seeker.StartPath(transform.position, target, OnPathComplete);
+        m_CurrentPatrolPoint++; //next patrol point
     }
 
     private IEnumerator UpdatePath()
@@ -352,9 +370,6 @@ public class DroneKamikaze : MonoBehaviour {
         {
             m_Path = path;
             m_CurrentWaypoint = 0;
-
-            if (!m_IsPlayerInAttackRange)
-                StartCoroutine(PatrolingInRandomDirection());
         }
     }
 
@@ -368,6 +383,9 @@ public class DroneKamikaze : MonoBehaviour {
                     return;
 
                 m_PathIsEnded = true;
+
+                if (!m_IsPlayerInChasingRange)
+                    StartCoroutine ( PatrolBetweenPoints() );
             }
             else
             {
