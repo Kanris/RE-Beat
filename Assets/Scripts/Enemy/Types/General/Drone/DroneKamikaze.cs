@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using Pathfinding;
 
-[CustomEditor(typeof(DroneKamikaze)), CanEditMultipleObjects]
+/*[CustomEditor(typeof(DroneKamikaze)), CanEditMultipleObjects]
 public class DroneScriptEditor : Editor
 {
     public SerializedProperty
@@ -72,7 +72,7 @@ public class DroneScriptEditor : Editor
         EditorGUILayout.Slider(attackSpeed_Prop, 1f, 5f, new GUIContent("Attack Speed"));
         EditorGUILayout.PropertyField(patrolPoints_Prop, true);
     }
-}
+}*/
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(Seeker))]
 public class DroneKamikaze : MonoBehaviour {
