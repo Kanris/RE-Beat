@@ -19,6 +19,23 @@ namespace UnityStandardAssets.CrossPlatformInput
         // This define is set or unset by a menu item that is included with
         // the Cross Platform Input package.
 
+        public static MobileControlRig Instance;
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                if (Instance != this)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
+            }
+        }
 
 #if !UNITY_EDITOR
 	void OnEnable()

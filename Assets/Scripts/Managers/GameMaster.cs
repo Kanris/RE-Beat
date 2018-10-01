@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class GameMaster : MonoBehaviour {
 
-    #region public fields
+#region public fields
 
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
 
@@ -15,9 +15,9 @@ public class GameMaster : MonoBehaviour {
     [HideInInspector] public bool IsPlayerDead; //is player dead
     public string SceneName; //current scene name
 
-    #endregion
+#endregion
 
-    #region private fields
+#region private fields
 
     [SerializeField] private GameObject m_PlayerToRespawn;
     [SerializeField] private Audio BackgroundMusic;
@@ -25,9 +25,9 @@ public class GameMaster : MonoBehaviour {
 
     private bool m_IsPlayerRespawning; //is player respawning
 
-    #endregion
+#endregion
 
-    #region Singleton
+#region Singleton
     public static GameMaster Instance;
 
     public void Awake()
@@ -71,6 +71,10 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/FPSManager");
 
+#if MOBILE_INPUT
+            Initialize("Managers/MobileTouchControl");
+#endif
+
             //is load button was pressed in start screen
             if (StartScreenManager.IsLoadPressed) 
             {
@@ -85,13 +89,13 @@ public class GameMaster : MonoBehaviour {
 
             InitializeSceneState();
             
-            #endregion
+#endregion
         }
     }
 
-    #endregion
+#endregion
 
-    #region Initializers
+#region Initializers
     private void Initialize(string name)
     {
         var gameObjectToInstantiate = Resources.Load(name);
@@ -142,7 +146,7 @@ public class GameMaster : MonoBehaviour {
                 RespawnWithoutFade();
         }
     }
-    #endregion
+#endregion
 
     //put player on the scene
     private void Start()
@@ -150,9 +154,9 @@ public class GameMaster : MonoBehaviour {
         StartPlayerRespawn(false); 
     }
 
-    #region SceneRecreation
+#region SceneRecreation
 
-    #region Recreate
+#region Recreate
 
     public void RecreateSceneState(string sceneName)
     {
@@ -234,9 +238,9 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
 
-    #region SaveState
+#region SaveState
 
     private State GetState(string sceneName)
     {
@@ -305,7 +309,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
 
     //clear object name
     private string ClearName(string name)
@@ -313,9 +317,9 @@ public class GameMaster : MonoBehaviour {
         return name.Replace("(Clone)", "");
     }
 
-    #endregion
+#endregion
 
-    #region Respawn
+#region Respawn
 
     public void RespawnWithSpawnPosition(Vector2 spawnPosition)
     {
@@ -362,5 +366,5 @@ public class GameMaster : MonoBehaviour {
         respawnPlayer.transform.position = respawnPosition;
     }
 
-    #endregion
+#endregion
 }

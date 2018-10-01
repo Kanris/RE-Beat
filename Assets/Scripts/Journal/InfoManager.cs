@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class InfoManager : MonoBehaviour {
 
@@ -90,7 +91,7 @@ public class InfoManager : MonoBehaviour {
     // Update is called once per frame
     private void FixedUpdate () {
 		
-        if (Input.GetKeyDown(KeyCode.J)) //open journal
+        if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
         {
            InfoManagement(0);
         }

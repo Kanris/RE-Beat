@@ -103,6 +103,9 @@ public class PauseMenuManager : MonoBehaviour {
         Destroy(GameObject.Find("InfoManager(Clone)"));
         Destroy(GameObject.Find("MapManager(Clone)"));
 
+#if MOBILE_INPUT
+        Destroy(GameObject.Find("MobileTouchControl(Clone)"));
+#endif
     }
 
     #endregion
@@ -138,5 +141,5 @@ public class PauseMenuManager : MonoBehaviour {
         LoadSceneManager.Instance.CloseGame();
     }
 
-    #endregion
+#endregion
 }

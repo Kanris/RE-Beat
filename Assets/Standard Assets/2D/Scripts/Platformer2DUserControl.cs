@@ -36,7 +36,7 @@ namespace UnityStandardAssets._2D
 
             if (!m_Dash & m_UpdateDashTime < Time.time)
             {
-                m_Dash = Input.GetKeyDown(KeyCode.LeftShift); //TODO: replace with CrossPlatformInput
+                m_Dash = CrossPlatformInputManager.GetButtonDown("Shift"); //TODO: replace with CrossPlatformInput
 
                 if (m_Dash) m_UpdateDashTime = Time.time + 1f;
             }

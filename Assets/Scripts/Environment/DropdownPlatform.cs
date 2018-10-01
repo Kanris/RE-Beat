@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class DropdownPlatform : MonoBehaviour {
@@ -30,7 +31,8 @@ public class DropdownPlatform : MonoBehaviour {
     {
         if (player != null) //if player is on the platform
         {
-            if (Input.GetKey(KeyCode.S) & Input.GetKey(KeyCode.Space)) //if player pressed s and space 
+            if (CrossPlatformInputManager.GetAxis("Vertical") < 0f 
+                & CrossPlatformInputManager.GetButton("Jump")) //if player pressed s and space 
             {
                 player.IsCanJump = false; //dont allow player to jump
                 CollisionActive(false); //allow to drop down from platform

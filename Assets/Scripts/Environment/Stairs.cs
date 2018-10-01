@@ -42,14 +42,14 @@ public class Stairs : MonoBehaviour {
     {
         if (m_Player != null) //if player is on stairs
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") != 0f & !m_VerticalMove) //if player moves on stairs
-            {
-                m_VerticalMove = true;
-            }
-            else if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f &
-                CrossPlatformInputManager.GetButton("Jump") & !isJumping) //if player want to jump from stairs
+            if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f &
+                   CrossPlatformInputManager.GetButton("Jump") & !isJumping) //if player want to jump from stairs
             {
                 isJumping = true;
+            }
+            else if (CrossPlatformInputManager.GetAxis("Vertical") != 0f & !m_VerticalMove & !isJumping) //if player moves on stairs
+            {
+                m_VerticalMove = true;
             }
         }
     }
