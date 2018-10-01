@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.IO;
 
-public class LocalizationManager : MonoBehaviour {
+public class LocalizationManager : MonoBehaviour
+{
 
     public static string LocalizationToLoad = "en";
 
@@ -48,7 +50,12 @@ public class LocalizationManager : MonoBehaviour {
             LocalizationToLoad = fileName;
 
             fileName = "localization-" + fileName + ".json";
-            LoadLocalizationData(fileName, out localizedText);
+
+            StartCoroutine(LoadLocalizationData(fileName, (result) =>
+            {
+                localizedText = new Dictionary<string, string>();
+                localizedText = result;
+            }));
         }
     }
 
@@ -57,7 +64,12 @@ public class LocalizationManager : MonoBehaviour {
         if (!string.IsNullOrEmpty(fileName))
         {
             fileName = "localization-journal-" + fileName + ".json";
-            LoadLocalizationData(fileName, out journalText);
+
+            StartCoroutine(LoadLocalizationData(fileName, (result) =>
+            {
+                journalText = new Dictionary<string, string>();
+                journalText = result;
+            }));
         }
     }
 
@@ -66,7 +78,12 @@ public class LocalizationManager : MonoBehaviour {
         if (!string.IsNullOrEmpty(fileName))
         {
             fileName = "localization-dialogue-" + fileName + ".json";
-            LoadLocalizationData(fileName, out dialogueText);
+
+            StartCoroutine( LoadLocalizationData(fileName, (result) =>
+            {
+                dialogueText = new Dictionary<string, string>();
+                dialogueText = result;
+            }));
         }
     }
 
@@ -75,28 +92,35 @@ public class LocalizationManager : MonoBehaviour {
         if (!string.IsNullOrEmpty(fileName))
         {
             fileName = "localization-items-" + fileName + ".json";
-            LoadLocalizationData(fileName, out itemsText);
+
+            StartCoroutine( LoadLocalizationData(fileName, (result) =>
+            {
+                itemsText = new Dictionary<string, string>();
+                itemsText = result;
+            }));
         }
     }
 
-    private void LoadLocalizationData(string fileName, out Dictionary<string, string> localizationData)
+    private IEnumerator LoadLocalizationData(string fileName, System.Action<Dictionary<string, string>> callback)
     {
-        localizationData = new Dictionary<string, string>();
-
         var filePath = Path.Combine(Application.streamingAssetsPath, LocalizationToLoad); //get path to the localized text
         filePath = Path.Combine(filePath, fileName);
+        string result = string.Empty;
 
-        if (File.Exists(filePath))
+        if (filePath.Contains("://") || filePath.Contains(":///"))
         {
-            var dataAsJson = File.ReadAllText(filePath); //get all text from json file
+            var www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
+            yield return www.SendWebRequest();
+            result = www.downloadHandler.text;
+        }
+        else if (File.Exists(filePath))
+        {
+            result = File.ReadAllText(filePath); //get all text from json file
+        }
 
-            var loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
-            localizationData = loadedData.GetAsDictionary();
-        }
-        else
-        {
-            Debug.LogError("LocalizationManager.LoadLocalizedText: Cannot find localized text - \n" + filePath);
-        }
+        var loadedData = JsonUtility.FromJson<LocalizationData>(result);
+
+        if (callback != null) callback(loadedData.GetAsDictionary());
 
         isReady = true;
     }
