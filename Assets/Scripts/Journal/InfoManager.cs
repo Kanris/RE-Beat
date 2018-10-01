@@ -89,7 +89,7 @@ public class InfoManager : MonoBehaviour {
     #endregion
 
     // Update is called once per frame
-    private void FixedUpdate () {
+    private void Update () {
 		
         if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
         {
