@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 114080415213014296}
   - component: {fileID: 114895353022877540}
   - component: {fileID: 114856098373034728}
+  - component: {fileID: 95526924686475680}
   m_Layer: 5
   m_Name: JournalButton
   m_TagString: Untagged
@@ -97,6 +98,7 @@ GameObject:
   - component: {fileID: 114331880799586076}
   - component: {fileID: 114858044998496370}
   - component: {fileID: 114070118505237736}
+  - component: {fileID: 95793908873425020}
   m_Layer: 5
   m_Name: ShiftButton
   m_TagString: Untagged
@@ -116,6 +118,7 @@ GameObject:
   - component: {fileID: 114025185198144754}
   - component: {fileID: 114543300277478556}
   - component: {fileID: 114692240783437676}
+  - component: {fileID: 95204067189973740}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -135,6 +138,7 @@ GameObject:
   - component: {fileID: 114426707846386872}
   - component: {fileID: 114660958554968292}
   - component: {fileID: 114365418302145476}
+  - component: {fileID: 95844448919140128}
   m_Layer: 5
   m_Name: SubmitButton
   m_TagString: Untagged
@@ -169,6 +173,7 @@ GameObject:
   - component: {fileID: 114558721747756516}
   - component: {fileID: 114972145799410560}
   - component: {fileID: 114009469654326894}
+  - component: {fileID: 95368863523369338}
   m_Layer: 5
   m_Name: JumpButton
   m_TagString: Untagged
@@ -176,6 +181,96 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95204067189973740
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1685084963671668}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6141fcaff17985048b48bf3898a74808, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95368863523369338
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1887360464156280}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6141fcaff17985048b48bf3898a74808, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95526924686475680
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1302855484153390}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6141fcaff17985048b48bf3898a74808, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95793908873425020
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569349233473480}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6141fcaff17985048b48bf3898a74808, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &95844448919140128
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1704536530170422}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6141fcaff17985048b48bf3898a74808, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114009469654326894
 MonoBehaviour:
   m_ObjectHideFlags: 1

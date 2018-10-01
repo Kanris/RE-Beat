@@ -5,8 +5,14 @@ namespace UnityStandardAssets.CrossPlatformInput
 {
     public class ButtonHandler : MonoBehaviour
     {
+        private Animator m_Animator;
 
         public string Name;
+
+        private void Start()
+        {
+            m_Animator = GetComponent<Animator>();
+        }
 
         void OnEnable()
         {
@@ -15,12 +21,16 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         public void SetDownState()
         {
+            if (m_Animator != null) m_Animator.SetTrigger("Pressed");
+
             CrossPlatformInputManager.SetButtonDown(Name);
         }
 
 
         public void SetUpState()
         {
+            if (m_Animator != null) m_Animator.SetTrigger("Unpressed");
+
             CrossPlatformInputManager.SetButtonUp(Name);
         }
 

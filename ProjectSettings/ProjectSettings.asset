@@ -150,7 +150,9 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.reTeam.reBeat
     Standalone: com.Company.ProductName
+    iOS: com.re-team.reBeat
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -559,9 +561,9 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 0
   scriptingDefineSymbols:
-    1: LIGHT2D_2DTK
+    1: 
     4: CROSS_PLATFORM_INPUT;MOBILE_INPUT
-    7: LIGHT2D_2DTK
+    7: CROSS_PLATFORM_INPUT;MOBILE_INPUT
     13: LIGHT2D_2DTK
     14: LIGHT2D_2DTK
     17: LIGHT2D_2DTK
