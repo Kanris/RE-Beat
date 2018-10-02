@@ -111,14 +111,14 @@ public class InfoManager : MonoBehaviour {
     {
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
-
             m_Page.ClearText();
 
             OpenBookmark(id);
-            m_JournalUI.SetActive(true);
-
-            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
         }
+
+        m_JournalUI.SetActive(true);
+
+        OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)
