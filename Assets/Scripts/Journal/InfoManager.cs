@@ -78,9 +78,6 @@ public class InfoManager : MonoBehaviour {
             CompletedTasks = new Dictionary<string, Task>(); //initialize completed tasks
 
         itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1"); //initialize items atlas
-
-        if (m_LocationName.text != GameMaster.Instance.SceneName) 
-            m_LocationName.text = GameMaster.Instance.SceneName;
     }
 
     private void InitializeButtonsDictionary()
@@ -112,22 +109,16 @@ public class InfoManager : MonoBehaviour {
 
     private void InfoManagement(int id)
     {
-        var value = true; //open journal
-
-        m_Page.ClearText();
-
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
-            OpenBookmark(id); 
-        }
-        else if (m_JournalUI.activeSelf) //if journal is already open
-        {
-            value = false; //close journal
-        }
 
-        m_JournalUI.SetActive(value);
+            m_Page.ClearText();
 
-        OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+            OpenBookmark(id);
+            m_JournalUI.SetActive(true);
+
+            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+        }
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)
@@ -168,6 +159,29 @@ public class InfoManager : MonoBehaviour {
         return instantiateItemButton.GetComponent<Button>();
     }
 
+    private string GetBookmarkname(int id)
+    {
+        var name = "NO NAME";
+
+        switch (id)
+        {
+            case 0:
+                name = "CURRENT";
+                break;
+            case 1:
+                name = "COMPLETED";
+                break;
+            case 2:
+                name = "INVENTORY";
+                break;
+            case 3:
+                name = GameMaster.Instance.SceneName;
+                break;
+        }
+
+        return name;
+    }
+
 #endregion
 
 #region public methods
@@ -192,6 +206,7 @@ public class InfoManager : MonoBehaviour {
 
         m_CurrentOpenBookmark = id; //change current book mark id
         m_Page.ClearText(); //clear main text 
+        m_LocationName.text = GetBookmarkname(id);
 
         AudioManager.Instance.Play("OpenJournal"); //play open journal sound
     }
