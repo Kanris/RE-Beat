@@ -116,9 +116,12 @@ public class InfoManager : MonoBehaviour {
             OpenBookmark(id);
         }
 
-        m_JournalUI.SetActive(true);
+        if (m_JournalUI.activeSelf != true)
+        {
+            m_JournalUI.SetActive(true);
 
-        OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+        }
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)
@@ -188,27 +191,30 @@ public class InfoManager : MonoBehaviour {
 
     public void OpenBookmark(int id)
     {
-        //change bookmarks positions too show player what bookmark is currently open
-        m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255,255,225,255);
-        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(162,162,162,255);
-
-        ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
-
-        if (id != 3)
+        if (m_CurrentOpenBookmark != id)
         {
-            m_Map.SetActive(false);
-            ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
-        }
-        else
-        {
-            m_Map.SetActive(true);
-        }
+            //change bookmarks positions too show player what bookmark is currently open
+            m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(162, 162, 162, 255);
+            m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255, 255, 225, 255);
 
-        m_CurrentOpenBookmark = id; //change current book mark id
-        m_Page.ClearText(); //clear main text 
-        m_LocationName.text = GetBookmarkname(id);
+            ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
 
-        AudioManager.Instance.Play("OpenJournal"); //play open journal sound
+            if (id != 3)
+            {
+                m_Map.SetActive(false);
+                ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
+            }
+            else
+            {
+                m_Map.SetActive(true);
+            }
+
+            m_CurrentOpenBookmark = id; //change current book mark id
+            m_Page.ClearText(); //clear main text 
+            m_LocationName.text = GetBookmarkname(id);
+
+            AudioManager.Instance.Play("OpenJournal"); //play open journal sound
+        }
     }
 
     public void CloseJournal()
