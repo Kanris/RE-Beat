@@ -34,7 +34,7 @@ public class InfoManager : MonoBehaviour {
     private int m_CurrentOpenBookmark = 0; //current open tab
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
     private static Sprite[] itemsSpriteAtlas; //atals for items
-
+    private bool m_IsCantOpenJournal;
 
 #endregion
 
@@ -69,7 +69,9 @@ public class InfoManager : MonoBehaviour {
 
     // Use this for initialization
     private void Start () {
-        
+
+        PauseMenuManager.Instance.OnGamePause += SetIsCantOpenJournal;
+
         m_JournalUI.SetActive(false); //hide journal ui
 
         if (CurrentTasks == null)
@@ -94,25 +96,28 @@ public class InfoManager : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+        if (!m_IsCantOpenJournal)
         {
-            if (m_JournalUI.activeSelf)
+            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
             {
-                StartCoroutine(CloseJournalWithDelay());
+                if (m_JournalUI.activeSelf)
+                {
+                    StartCoroutine(CloseJournalWithDelay());
+                }
             }
-        }
 
-        if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
-        {
-           InfoManagement(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.I)) //open inventory
-        {
-            InfoManagement(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.M)) //open map
-        {
-            InfoManagement(3);
+            if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
+            {
+                InfoManagement(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.I)) //open inventory
+            {
+                InfoManagement(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.M)) //open map
+            {
+                InfoManagement(3);
+            }
         }
     }
 
@@ -238,6 +243,11 @@ public class InfoManager : MonoBehaviour {
     {
         m_JournalUI.SetActive(false); //hide journal ui
         OnJournalOpen(false); //notify that journal is close
+    }
+
+    public void SetIsCantOpenJournal(bool value)
+    {
+        m_IsCantOpenJournal = value;
     }
 
 #endregion
