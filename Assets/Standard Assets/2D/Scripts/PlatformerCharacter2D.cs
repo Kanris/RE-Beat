@@ -91,6 +91,13 @@ namespace UnityStandardAssets._2D
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
+                if (move > 0)
+                    move = 1;
+                else if (move < 0)
+                    move = -1;
+                else
+                    move = 0;
+
                 // Reduce the speed if crouching by the crouchSpeed multiplier
                 move = (crouch ? move*m_CrouchSpeed : move);
 
