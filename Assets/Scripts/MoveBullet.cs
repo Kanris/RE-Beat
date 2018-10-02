@@ -14,7 +14,7 @@ public class MoveBullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        transform.Translate(Vector3.right * Time.deltaTime * 50f);
+        transform.Translate(Vector3.right * Time.deltaTime * 20f);
 
     }
 
