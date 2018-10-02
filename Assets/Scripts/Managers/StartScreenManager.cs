@@ -63,6 +63,11 @@ public class StartScreenManager : MonoBehaviour {
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
 
         InitializeOptionsOnStart();
+
+#if MOBILE_INPUT
+        MainMenuGrid.transform.localPosition = MainMenuGrid.transform.localPosition.With(y: 60f);
+        MainMenuGrid.transform.GetChild(2).gameObject.SetActive(false);
+#endif
     }
 
     private void InitializeOptionsOnStart()

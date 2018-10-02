@@ -65,8 +65,6 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/SaveLoadManager");
 
-            Initialize("Managers/MapManager");
-
             Initialize("Managers/LocalizationManager");
 
             Initialize("Managers/FPSManager");

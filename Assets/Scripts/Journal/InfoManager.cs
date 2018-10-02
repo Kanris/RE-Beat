@@ -8,7 +8,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class InfoManager : MonoBehaviour {
 
-    #region public fields
+#region public fields
 
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnJournalOpen; //event on journal open
@@ -16,28 +16,30 @@ public class InfoManager : MonoBehaviour {
     public Dictionary<string, Task> CurrentTasks; //current tasks list
     public Dictionary<string, Task> CompletedTasks; //complete task list
 
-    #endregion
+#endregion
 
-    #region private fields
+#region private fields
 
-    #region serialize fields
+#region serialize fields
 
     [SerializeField] private GameObject m_JournalUI; //journal ui
     [SerializeField] private TextPage m_Page; //main page text
     [SerializeField] private GameObject m_Bookmarks; //bookmark list
     [SerializeField] private Transform m_Content; //buttons grid
+    [SerializeField] private GameObject m_Map;
+    [SerializeField] private TextMeshProUGUI m_LocationName;
 
-    #endregion
+#endregion
 
     private int m_CurrentOpenBookmark = 0; //current open tab
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
     private static Sprite[] itemsSpriteAtlas; //atals for items
 
-    #endregion
+#endregion
 
-    #region private methods
+#region private methods
 
-    #region Singleton
+#region Singleton
 
     public static InfoManager Instance;
 
@@ -60,9 +62,9 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
 
-    #region Initialize
+#region Initialize
 
     // Use this for initialization
     private void Start () {
@@ -76,6 +78,9 @@ public class InfoManager : MonoBehaviour {
             CompletedTasks = new Dictionary<string, Task>(); //initialize completed tasks
 
         itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1"); //initialize items atlas
+
+        if (m_LocationName.text != GameMaster.Instance.SceneName) 
+            m_LocationName.text = GameMaster.Instance.SceneName;
     }
 
     private void InitializeButtonsDictionary()
@@ -86,7 +91,7 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
 
     // Update is called once per frame
     private void Update () {
@@ -99,7 +104,7 @@ public class InfoManager : MonoBehaviour {
         {
             InfoManagement(2);
         }
-        else if (Input.GetKeyDown(KeyCode.B)) //open "bestiary"
+        else if (Input.GetKeyDown(KeyCode.M)) //open map
         {
             InfoManagement(3);
         }
@@ -163,18 +168,27 @@ public class InfoManager : MonoBehaviour {
         return instantiateItemButton.GetComponent<Button>();
     }
 
-    #endregion
+#endregion
 
-    #region public methods
+#region public methods
 
     public void OpenBookmark(int id)
     {
         //change bookmarks positions too show player what bookmark is currently open
-        m_Bookmarks.transform.GetChild(id).transform.localPosition -= new Vector3(10, 0);
-        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).transform.localPosition += new Vector3(10, 0);
+        m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255,255,225,255);
+        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(162,162,162,255);
 
         ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
-        ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
+
+        if (id != 3)
+        {
+            m_Map.SetActive(false);
+            ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
+        }
+        else
+        {
+            m_Map.SetActive(true);
+        }
 
         m_CurrentOpenBookmark = id; //change current book mark id
         m_Page.ClearText(); //clear main text 
@@ -188,9 +202,9 @@ public class InfoManager : MonoBehaviour {
         OnJournalOpen(false); //notify that journal is close
     }
 
-    #endregion
+#endregion
 
-    #region task methods
+#region task methods
 
     public void DisplayTaskText(string taskName)
     {
@@ -289,9 +303,9 @@ public class InfoManager : MonoBehaviour {
         return false; //can't updated task
     }
 
-    #endregion
+#endregion
 
-    #region inventory methods
+#region inventory methods
 
     public void AddItem(ItemDescription item)
     {
@@ -311,5 +325,5 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
 }

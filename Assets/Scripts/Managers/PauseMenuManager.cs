@@ -6,7 +6,7 @@ public class PauseMenuManager : MonoBehaviour {
 
     [SerializeField] private Audio UIClickAudio;
 
-    #region Singleton
+#region Singleton
     public static PauseMenuManager Instance;
 
     private void Awake()
@@ -24,28 +24,32 @@ public class PauseMenuManager : MonoBehaviour {
             DontDestroyOnLoad(this);
         }
     }
-    #endregion
+#endregion
 
-    #region public fields
+#region public fields
 
     public delegate void DelegateVoid(bool state);
     public event DelegateVoid OnGamePause;
     public event DelegateVoid OnReturnToStartSceen;
 
-    #endregion
+#endregion
 
-    #region private fields
+#region private fields
 
     [SerializeField] private GameObject m_FirstSelectedGameobject;
     [SerializeField] private GameObject m_UI;
 
-    #endregion
+    private bool m_IsCantOpenPauseMenu;
 
-    #region private methods
+#endregion
+
+#region private methods
 
     // Use this for initialization
     private void Start () {
-        
+
+        InfoManager.Instance.OnJournalOpen += SetIsCantOpenPauseMenu;
+
         SetActiveUI();
     }
 
@@ -70,14 +74,17 @@ public class PauseMenuManager : MonoBehaviour {
 	// Update is called once per frame
 	private void Update () {
 
-        //if player pressed pause button
-        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+        if (!m_IsCantOpenPauseMenu)
         {
-            SetActiveUI();
+            //if player pressed pause button
+            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            {
+                SetActiveUI();
+            }
         }
     }
 
-    #region Sound
+#region Sound
 
     private void PlayClickSound()
     {
@@ -91,7 +98,12 @@ public class PauseMenuManager : MonoBehaviour {
         }
     }
 
-    #endregion
+#endregion
+
+    private void SetIsCantOpenPauseMenu(bool value)
+    {
+        m_IsCantOpenPauseMenu = value;
+    }
 
     private void DestroyManagers()
     {
@@ -101,16 +113,15 @@ public class PauseMenuManager : MonoBehaviour {
         Destroy(GameObject.Find("DialogueManager(Clone)"));
         Destroy(GameObject.Find("UIManager(Clone)"));
         Destroy(GameObject.Find("InfoManager(Clone)"));
-        Destroy(GameObject.Find("MapManager(Clone)"));
 
 #if MOBILE_INPUT
         Destroy(GameObject.Find("MobileTouchControl(Clone)"));
 #endif
     }
 
-    #endregion
+#endregion
 
-    #region public methods
+#region public methods
 
     public void ResumeGame()
     {
