@@ -35,6 +35,7 @@ public class InfoManager : MonoBehaviour {
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
     private static Sprite[] itemsSpriteAtlas; //atals for items
 
+
 #endregion
 
 #region private methods
@@ -93,6 +94,14 @@ public class InfoManager : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+        {
+            if (m_JournalUI.activeSelf)
+            {
+                StartCoroutine(CloseJournalWithDelay());
+            }
+        }
+
         if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
         {
            InfoManagement(0);
@@ -215,6 +224,14 @@ public class InfoManager : MonoBehaviour {
 
             AudioManager.Instance.Play("OpenJournal"); //play open journal sound
         }
+    }
+
+    public IEnumerator CloseJournalWithDelay()
+    {
+
+        m_JournalUI.SetActive(false); //hide journal ui
+        yield return null;
+        OnJournalOpen(false); //notify that journal is close
     }
 
     public void CloseJournal()
