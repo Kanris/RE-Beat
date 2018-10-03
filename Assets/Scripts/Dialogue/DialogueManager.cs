@@ -156,6 +156,11 @@ public class DialogueManager : MonoBehaviour {
     {
         m_IsDialogueInProgress = value;
 
+#if MOBILE_INPUT
+        if (!value)
+            MobileButtonsManager.Instance.HideOnlyNeedButtons();
+#endif
+
         if (OnDialogueInProgressChange != null)
             OnDialogueInProgressChange(value);
     }
@@ -197,6 +202,10 @@ public class DialogueManager : MonoBehaviour {
     {
         if (dialogue != null) //if dialogue is not empty
         {
+#if MOBILE_INPUT
+            MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
+#endif
+
             ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
             m_Dialogue = dialogue; //save dialogue reference
             m_NameText.text = npcName; //display npc name
@@ -223,6 +232,11 @@ public class DialogueManager : MonoBehaviour {
 
     public IEnumerator DisplaySingleSentence(string sentence, string name)
     {
+
+#if MOBILE_INPUT
+        MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
+#endif
+
         m_DialogueUI.SetActive(true); //show dialogue ui
         ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
         m_DisplayingSingleSentence = true; //notify update that single sentence is displaying
