@@ -156,6 +156,7 @@ public class PickupBox : MonoBehaviour {
         if (parrent != null) //if parent there is parent
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
+            transform.localPosition = transform.localPosition.With(x: 0.5f, y: 0.5f);
             ChangeBoxProperty(true, 0);   
         }
         else
@@ -170,7 +171,9 @@ public class PickupBox : MonoBehaviour {
         m_BoxCollider.enabled = !isActive; //remove or enable collider on the box
 
         if (isActive)
+        {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        }
         else
         {
             GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
