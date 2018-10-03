@@ -96,11 +96,12 @@ public class InfoManager : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
+
         if (!m_IsCantOpenJournal)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            if (m_JournalUI.activeSelf)
             {
-                if (m_JournalUI.activeSelf)
+                if (CrossPlatformInputManager.GetButtonDown("Cancel") | CrossPlatformInputManager.GetButtonDown("Submit"))
                 {
                     StartCoroutine(CloseJournalWithDelay());
                 }
