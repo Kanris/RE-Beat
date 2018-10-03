@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114630551484648664}
   - component: {fileID: 114657021091533584}
   - component: {fileID: 114718780865189778}
+  - component: {fileID: 114427076564067364}
   m_Layer: 5
   m_Name: MobileTouchControl
   m_TagString: Untagged
@@ -524,6 +525,24 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114427076564067364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101576614982848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c3945a154403e4b9856e46996ab806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Stick: {fileID: 114402205202074460}
+  m_Journal: {fileID: 114080415213014296}
+  m_Pause: {fileID: 114836391583750432}
+  m_Jump: {fileID: 114558721747756516}
+  m_Attack: {fileID: 114025185198144754}
+  m_Submit: {fileID: 114426707846386872}
+  m_Shift: {fileID: 114331880799586076}
 --- !u!114 &114543300277478556
 MonoBehaviour:
   m_ObjectHideFlags: 1
