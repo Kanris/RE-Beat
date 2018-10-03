@@ -15,6 +15,7 @@ public class RangeEnemy : MonoBehaviour {
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
     [SerializeField] private GameObject[] ThrowObjects;
+    [SerializeField] private Transform m_FirePoint;
 
 
     #region Initialize
@@ -133,7 +134,7 @@ public class RangeEnemy : MonoBehaviour {
     {
         var throwObject = ThrowObjects[GetRandomIndex()];
 
-        var instantiateFireball = Instantiate(throwObject, transform.position, transform.rotation) as GameObject;
+        var instantiateFireball = Instantiate(throwObject, m_FirePoint.position, Quaternion.identity) as GameObject;
 
         if (-transform.localScale.x < 0)
         {

@@ -4,10 +4,12 @@ public class Fireball : MonoBehaviour {
 
     [HideInInspector] public Vector3 Direction;
     [HideInInspector] public float DestroyTime;
+
     [SerializeField] private int DamageAmount = 2;
     [SerializeField] private float Speed = 2.5f;
     [SerializeField] private bool isNeedRotation = true;
     [SerializeField] private float DestroyDelay = 0.2f;
+    [SerializeField] private LayerMask m_LayerMask;
 
     private Animator m_Animator;
     private bool isDestroying = false;
@@ -74,27 +76,30 @@ public class Fireball : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") & !isDestroying)
+        if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) & !isDestroying)
         {
-            DamagePlayer(collision.gameObject.GetComponent<Player>());
-        }
+            Stats statsToTakeDamage = null;
 
-       if (!collision.gameObject.CompareTag("Enemy"))
+            if (collision.transform.CompareTag("Player"))
+                statsToTakeDamage = collision.gameObject.GetComponent<Player>().playerStats;
+            else
+                if (collision.transform.CompareTag("Enemy"))
+            {
+                statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
+            }
+
+            Damage(statsToTakeDamage);
+        }
+        else
             DestroyFireball();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Damage(Stats statsToTakeDamage)
     {
-        if (collision.gameObject.CompareTag("Player") & !isDestroying)
-        {
-            DamagePlayer(collision.GetComponent<Player>());
-            DestroyFireball();
-        }
-    }
+        if (statsToTakeDamage != null)
+            statsToTakeDamage.TakeDamage(DamageAmount);
 
-    private void DamagePlayer(Player player)
-    {
-        player.playerStats.TakeDamage(DamageAmount);
+        DestroyFireball();
     }
 
     private void DestroyFireball()

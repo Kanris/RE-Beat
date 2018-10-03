@@ -190,6 +190,9 @@ MonoBehaviour:
   Speed: 2.5
   isNeedRotation: 1
   DestroyDelay: 0.2
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!212 &212220767979711470
 SpriteRenderer:
   m_ObjectHideFlags: 1

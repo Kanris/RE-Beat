@@ -2,11 +2,14 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
+using System;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
 
     #region public fields
+
+    public delegate void VoidDelegate();
 
     public PlayerStats playerStats; //player stats
 
@@ -25,8 +28,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private Transform m_AttackPosition; //attack position
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX; //attack range x
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY; //attack range y
+    [SerializeField] private Transform m_FirePosition;
     [SerializeField] private LayerMask m_WhatIsEnemy; //defines what is enemy
     [SerializeField] private Audio m_AttackSound; //player attack sound
+    [SerializeField] private GameObject m_ShootEffect;
 
     #endregion
 
@@ -34,7 +39,8 @@ public class Player : MonoBehaviour {
     private float m_YPositionBeforeJump; //player y position before jump
     private bool isPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
     private bool m_IsAttacking; //is player attacking
-    private float m_AttackUpdateTime; //next attack time
+    private float m_MeleeAttackCooldown; //next attack time
+    private float m_RangeAttackCooldown;
     private Vector2 m_ThrowBackVector; //throw back values
 
     #endregion
@@ -70,14 +76,28 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl(); //check player jump height
 
-        if (m_AttackUpdateTime < Time.time) //can player attack
+        Attack(m_MeleeAttackCooldown, "Fire1", () =>
+        {
+            m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
+            StartCoroutine(Attack());
+        });
+
+        Attack(m_RangeAttackCooldown, "Fire2", () =>
+        {
+            m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
+            RangeAttack();
+        });
+    }
+
+    private void Attack(float timeToCheck, string buttonToCheck, VoidDelegate action)
+    {
+        if (timeToCheck < Time.time) //can player attack
         {
             if (!isPlayerBusy) //is not player bussy
             {
-                if (CrossPlatformInputManager.GetButtonDown("Fire1")) //if player press attack button
+                if (CrossPlatformInputManager.GetButtonDown(buttonToCheck))
                 {
-                    m_AttackUpdateTime = Time.time + PlayerStats.AttackSpeed; //next attack time
-                    StartCoroutine(Attack()); //attack
+                    action();
                 }
             }
         }
@@ -94,6 +114,18 @@ public class Player : MonoBehaviour {
         }
         else if (m_ThrowBackVector != Vector2.zero)
             m_ThrowBackVector = Vector2.zero;
+    }
+
+    private void RangeAttack()
+    {
+        var instantiateFireball = Instantiate(m_ShootEffect, m_FirePosition.position, Quaternion.identity);
+
+        if (transform.localScale.x < 0)
+        {
+            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.left;
+        }
+        else
+            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
     }
 
     private IEnumerator Attack()

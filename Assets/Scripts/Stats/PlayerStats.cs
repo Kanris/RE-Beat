@@ -15,7 +15,8 @@ public class PlayerStats : Stats
     #region public fields
 
     public static int DamageAmount = 50;
-    public static float AttackSpeed = 0.3f;
+    public static float MeleeAttackSpeed = 0.3f;
+    public static float RangeAttackSpeed = 2f;
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;

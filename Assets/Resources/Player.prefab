@@ -59,6 +59,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1320188520908440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4923380061252928}
+  m_Layer: 8
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1391971232050634
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,6 +206,7 @@ Transform:
   - {fileID: 4335630267855806}
   - {fileID: 4205120234044832}
   - {fileID: 4159934838997664}
+  - {fileID: 4923380061252928}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -258,6 +274,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4244789493701248}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4923380061252928
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320188520908440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4244789493701248}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50016643965845196
 Rigidbody2D:
@@ -504,10 +533,13 @@ MonoBehaviour:
   m_AttackPosition: {fileID: 4632782172215112}
   m_AttackRangeX: 1
   m_AttackRangeY: 0.5
+  m_FirePosition: {fileID: 4923380061252928}
   m_WhatIsEnemy:
     serializedVersion: 2
     m_Bits: 8192
   m_AttackSound: {fileID: 11400000, guid: f859384afb79445c6b412abb02be2b81, type: 2}
+  m_ShootEffect: {fileID: 1767650810126290, guid: d3123f53f3d2e9346a65658a73192ea6,
+    type: 2}
 --- !u!114 &114565561385868806
 MonoBehaviour:
   m_ObjectHideFlags: 1

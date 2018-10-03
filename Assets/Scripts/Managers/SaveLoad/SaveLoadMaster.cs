@@ -197,7 +197,7 @@ public class PlayerGameData : IGameData
     {
         //save current player state
         DamageAmount = PlayerStats.DamageAmount;
-        AttackSpeed = PlayerStats.AttackSpeed;
+        AttackSpeed = PlayerStats.MeleeAttackSpeed;
         PlayerInventory = PlayerStats.PlayerInventory;
         CurrentPlayerHealth = PlayerStats.CurrentPlayerHealth;
         Coins = PlayerStats.Coins;
@@ -211,7 +211,7 @@ public class PlayerGameData : IGameData
     {
         //load saved player state
         PlayerStats.DamageAmount = DamageAmount;
-        PlayerStats.AttackSpeed = AttackSpeed;
+        PlayerStats.MeleeAttackSpeed = AttackSpeed;
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
         PlayerStats.Coins = Coins;

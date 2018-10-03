@@ -8,7 +8,7 @@ public class CinemachineFollow : MonoBehaviour {
     public void Start()
     {
 #if MOBILE_INPUT
-        m_VirtualCamera.m_Lens.OrthographicSize = 3f;
+        m_VirtualCamera.m_Lens.OrthographicSize = 5f;
 #endif
     }
 
