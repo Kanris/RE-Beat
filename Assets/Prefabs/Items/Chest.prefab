@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestType: 0
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   m_Inventory: {fileID: 1154822480254138}
   Health: 0
   ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
@@ -420,7 +421,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300018, guid: 545e3f6ad65c48d40a96534d4c3ecd84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
