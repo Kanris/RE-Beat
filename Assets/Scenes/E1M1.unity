@@ -937,7 +937,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 753630515}
+      objectReference: {fileID: 77665800}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -4225,7 +4225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 462734750}
   m_Layer: 0
-  m_Name: Mage
+  m_Name: MageSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24837,6 +24837,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SwitchToObserve: {fileID: 1387431269}
+  EnemiesToSpawn:
+  - RespawnPosition: {fileID: 462734750}
+    Enemy: {fileID: 1642957300447368, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 2}
+  - RespawnPosition: {fileID: 1162898744}
+    Enemy: {fileID: 1355790987852450, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
 --- !u!1001 &1008130552
 Prefab:
   m_ObjectHideFlags: 0
@@ -27904,7 +27909,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1162898744}
   m_Layer: 0
-  m_Name: Bald
+  m_Name: BaldSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

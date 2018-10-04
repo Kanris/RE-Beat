@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class SpawnEnemy
+{
+    public Transform RespawnPosition;
+    public GameObject Enemy;
+}
+
 public class SpawnEnemies : MonoBehaviour {
     
     [SerializeField] private DoorSwitch SwitchToObserve;
+    [SerializeField] private SpawnEnemy[] EnemiesToSpawn;
 
     private void Start()
     {
@@ -21,16 +29,10 @@ public class SpawnEnemies : MonoBehaviour {
 
     private void SpawnOnChildren()
     {
-        for (int index = 0; gameObject != null & index < transform.childCount; index++)
+        foreach (var item in EnemiesToSpawn)
         {
-            var child = transform.GetChild(index);
-            SpawnEnemy(child.name, child);
+            Instantiate(item.Enemy, item.RespawnPosition);
         }
-    }
 
-    private void SpawnEnemy(string name, Transform parent)
-    {
-        var enemyToSpawn = Resources.Load("Enemies/" + name);
-        Instantiate(enemyToSpawn, parent);
     }
 }
