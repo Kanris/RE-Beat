@@ -14,6 +14,7 @@ namespace UnityStandardAssets._2D
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField] private GameObject JumpPlatformPrefab;
 
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
@@ -27,8 +28,8 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private bool m_IsHaveDoubleJump;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        private bool m_IsDashing;                 // A mask determining what is ground to the character
         private GameObject m_JumpPlatform;
-        private bool m_IsDashing;
 
         private void Awake()
         {
@@ -43,8 +44,7 @@ namespace UnityStandardAssets._2D
 
         private void InitializeJumpPlatform()
         {
-            var platformResources = Resources.Load("Platform") as GameObject;
-            m_JumpPlatform = Instantiate(platformResources);
+            m_JumpPlatform = Instantiate(JumpPlatformPrefab);
             m_JumpPlatform.SetActive(false);
         }
 
