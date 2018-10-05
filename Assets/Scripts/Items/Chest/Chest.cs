@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class Chest : MonoBehaviour {
 
     #region enum
@@ -14,6 +14,7 @@ public class Chest : MonoBehaviour {
 
     #region private fields
 
+    [SerializeField] private Sprite m_OpenChestSprite;
     [SerializeField] private GameObject m_Inventory; //chest inventory
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
     [SerializeField] private Audio ChestOpenAudio;
@@ -145,9 +146,7 @@ public class Chest : MonoBehaviour {
     {
         isChestEmpty = true; //chest is empty
 
-        if (m_Animator == null) m_Animator = GetComponent<Animator>();
-
-        m_Animator.SetTrigger("Open"); //play chest open animation
+        GetComponent<SpriteRenderer>().sprite = m_OpenChestSprite;
 
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f); //change chest position
     }
