@@ -6,9 +6,11 @@ public class TaskManager : MonoBehaviour {
     #region enum
 
     public enum TaskTriggerType { OnTrigger, OnCollision, OnSubmit, OnDestroy }
+    [Header("React condition")]
     [SerializeField] private TaskTriggerType taskTriggerType; //task trigger type
 
     public enum TaskType { Giver, Updater, Finisher }
+    [Header("Task update type")]
     [SerializeField] private TaskType taskType; //task type
 
     #endregion
@@ -17,9 +19,12 @@ public class TaskManager : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private bool DestroyEntireObject; //if need to destroy entier object
+    [Header("Task description")]
     [SerializeField] private string Name; //task name
     [SerializeField] private string key; //task description
+
+    [Header("Destroy conditions")]
+    [SerializeField] private bool DestroyEntireObject; //if need to destroy entier object
 
     #endregion
 

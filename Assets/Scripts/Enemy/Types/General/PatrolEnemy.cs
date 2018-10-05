@@ -10,9 +10,13 @@ public class PatrolEnemy : MonoBehaviour {
     private Enemy m_EnemyStats;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
-    [SerializeField, Range(0f, 20f)] private float WaitTimeAfterSpot = 2f;
+
+    [Header("Move Information")]
     [SerializeField, Range(0.1f, 20f)] private float m_IdleSpeed = 1f;
     [SerializeField, Range(0.1f, 20f)] private float m_SpeedUpSpeed = 2f;
+    [SerializeField, Range(0f, 20f)] private float WaitTimeAfterSpot = 2f;
+
+    [Header("Death conditions")]
     [SerializeField, Range(-100f, 100f)] private float m_YBoundaries = -30f;
     
 

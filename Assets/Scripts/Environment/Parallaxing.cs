@@ -6,7 +6,10 @@ public class Parallaxing : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("Background to move")]
     [SerializeField] private Transform[] m_backgrounds; //array of all the transfortms to be parallaxed
+
+    [Header("Effects strength")]
     [SerializeField, Range(0f, 10f)] private float smoothing = 1f; // how smooth the parallax is going to be (needs to be above 0)
 
     #endregion

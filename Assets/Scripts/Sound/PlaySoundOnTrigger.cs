@@ -4,6 +4,7 @@ public class PlaySoundOnTrigger : MonoBehaviour {
 
     #region private fields
 
+    [Header("Effects")]
     [SerializeField] private Audio Sound;
 
     #endregion

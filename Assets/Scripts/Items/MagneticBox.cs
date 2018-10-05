@@ -6,6 +6,7 @@ public class MagneticBox : MonoBehaviour {
 
     #region public fields
 
+    [Header("Item")]
     public Item NeededItem; //required item to pickup item
 
     #endregion
@@ -14,6 +15,7 @@ public class MagneticBox : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("Effects")]
     [SerializeField] private GameObject DeathParticles; //destroying particles
     [SerializeField] private Audio DestroySound; //destroying sound
 

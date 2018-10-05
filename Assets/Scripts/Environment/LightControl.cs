@@ -9,6 +9,8 @@ public class LightControl : MonoBehaviour {
 
     [SerializeField] private Light LightToControl; //light to change it's "volume"
     [SerializeField] private bool ControlWithoutAnimator = false; //is light can be controlled without animation
+
+    [Header("Without animator properties")]
     [SerializeField, Range(1, 20)] private float BlinkAfter = 3f; //update time
     [SerializeField, Range(1, 50)] private float IntensivityIteration = 20f; //itensivity each iteration
     [SerializeField, Range(1, 10)] private int Iterations = 4; //change light value iterations

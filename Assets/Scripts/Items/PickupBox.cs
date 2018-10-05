@@ -5,18 +5,20 @@ public class PickupBox : MonoBehaviour {
 
     #region public fields
 
+    #region serialize fields
+
+    [Header("Effects")]
+    [SerializeField] private GameObject DeathParticle; //box destroying particles
+    [SerializeField] private Audio DestroySound; //box destroying sound
+
+    #endregion
+
+    [Header("Destroy conditions")]
     [SerializeField, Range(100f, -100f)] private float YRestrictions = -10f; //y fall restrictions
 
     #endregion
 
     #region private fields
-
-    #region serialize fields
-
-    [SerializeField] private GameObject DeathParticle; //box destroying particles
-    [SerializeField] private Audio DestroySound; //box destroying sound
-
-    #endregion
 
     private BoxCollider2D m_BoxCollider; //box collider
     private GameObject m_InteractionButton; //box ui

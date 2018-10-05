@@ -4,7 +4,10 @@ public class RespawnPoint : MonoBehaviour {
 
     #region private fields
 
+    [Header("Light")]
     [SerializeField] private bool isLight;
+
+    [Header("Effects")]
     [SerializeField] private Audio audioSave;
 
     private Transform m_Flame;

@@ -8,6 +8,8 @@ public class Teleport : MonoBehaviour {
     #region private fields
 
     [SerializeField] private Transform target; //where to teleport player
+
+    [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
 
     private Animator m_Animator; //teleport animator

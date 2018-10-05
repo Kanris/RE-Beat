@@ -14,9 +14,16 @@ public class Door : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("How to open")]
     [SerializeField] private DoorType Type; //current door type
+
+    [Header("Item to open")]
     [SerializeField] private Item KeyName; //key that have to open the door (if door type is key)
+
+    [Header("Announcer message")]
     [SerializeField] private string DisplayMessage; //display message if door is close
+
+    [Header("Effects")]
     [SerializeField] private Audio DoorOpenAudio;
 
     #endregion

@@ -8,10 +8,15 @@ public class DisableBackground : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private Animator BackgroundAnimator; //reference to the background image
-    [SerializeField] private Animator MistAnimator; //reference to the cave mist
+    [Header("Animators that react on player")]
+    [SerializeField] private Animator Background; //reference to the background image
+    [SerializeField] private Animator Mist; //reference to the cave mist
+
+    [Header("Objects that change material")]
     [SerializeField] private TilemapRenderer[] ChangeMaterialTilemap;
     [SerializeField] private SpriteRenderer[] ChangeObjectsMaterial;
+
+    [Header("Materials to change")]
     [SerializeField] private Material m_DefaultMaterial;
     [SerializeField] private Material m_LightMaterial;
 
@@ -90,9 +95,9 @@ public class DisableBackground : MonoBehaviour {
     {
         m_IsFading = true; //fade in progress
 
-        if (MistAnimator != null) MistAnimator.SetTrigger(trigger); //fade mist
+        if (Mist != null) Mist.SetTrigger(trigger); //fade mist
 
-        if (BackgroundAnimator != null) BackgroundAnimator.SetTrigger(trigger); //fade background
+        if (Background != null) Background.SetTrigger(trigger); //fade background
 
         while (m_IsFading) //continue to execute this method until animation is over
             yield return null;

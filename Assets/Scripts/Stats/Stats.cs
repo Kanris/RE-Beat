@@ -6,7 +6,19 @@ public class Stats {
 
     #region public fields
 
+    #region private serialize fields
+
+    [Header("Effects")]
+    [SerializeField] private GameObject DeathParticle; //particles that will be spawn after object death
+    [SerializeField] private Audio HitSound; //sound that will be played when object gets hit
+    [SerializeField] private Audio DeathSound; //sound that will be played when object died
+
+    #endregion
+
+    [Header("General stats")]
     [Range(1, 4000)] public int MaxHealth = 200;
+
+    [Header("Throw stats")]
     [Range(0f, 10f)] public float m_ThrowX = 2f; 
     [Range(0f, 10f)] public float m_ThrowY = 0.5f;
 
@@ -22,14 +34,6 @@ public class Stats {
     #region private fields
 
     private int m_CurrentHealth; //current object health
-
-    #region private serialize fields
-
-    [SerializeField] private GameObject DeathParticle; //particles that will be spawn after object death
-    [SerializeField] private Audio HitSound; //sound that will be played when object gets hit
-    [SerializeField] private Audio DeathSound; //sound that will be played when object died
-
-    #endregion
 
     #endregion
 

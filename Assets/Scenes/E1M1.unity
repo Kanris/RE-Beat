@@ -472,9 +472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTriggerType: 1
   taskType: 1
-  DestroyEntireObject: 0
   Name: Find_out
   key: find_out_red_door
+  DestroyEntireObject: 0
 --- !u!224 &17464649 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224239558851913682, guid: c552b45c7f052cb45ae9e0b32b053ea8,
@@ -974,9 +974,9 @@ GameObject:
   - component: {fileID: 232266373}
   - component: {fileID: 232266372}
   - component: {fileID: 232266375}
-  - component: {fileID: 232266374}
   - component: {fileID: 232266377}
   - component: {fileID: 232266376}
+  - component: {fileID: 232266374}
   m_Layer: 0
   m_Name: CaveBackground
   m_TagString: CaveBackground
@@ -2584,8 +2584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6e4e18dbfa84af5887102aef975f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundAnimator: {fileID: 1803359821}
-  MistAnimator: {fileID: 1244399663}
+  Background: {fileID: 1803359821}
+  Mist: {fileID: 1244399663}
   ChangeMaterialTilemap:
   - {fileID: 1819579451}
   - {fileID: 424000592}
@@ -2613,7 +2613,7 @@ CompositeCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 232266370}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -13395,8 +13395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6e4e18dbfa84af5887102aef975f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundAnimator: {fileID: 1803359821}
-  MistAnimator: {fileID: 0}
+  Background: {fileID: 1803359821}
+  Mist: {fileID: 0}
   ChangeMaterialTilemap:
   - {fileID: 1115813204}
   - {fileID: 829069164}
@@ -24944,9 +24944,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTriggerType: 2
   taskType: 2
-  DestroyEntireObject: 1
   Name: Find_out
   key: find_out_read_note
+  DestroyEntireObject: 1
 --- !u!1001 &1102590377
 Prefab:
   m_ObjectHideFlags: 0

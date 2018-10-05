@@ -7,8 +7,11 @@ public class MaterialChange : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("Materials")]
     [SerializeField] private Material DefaultMaterial;
     [SerializeField] private Material LightMaterial;
+
+    [Header("Light")]
     [SerializeField] private GameObject LightOnObject;
 
     #endregion

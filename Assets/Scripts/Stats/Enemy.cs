@@ -16,11 +16,15 @@ public class Enemy : Stats
 
     #region public fields
 
+    [Header("Enemy main stats")]
     [Range(1, 10)]public int DamageAmount = 1;
     [Range(0.1f, 10f)] public float Speed = 1f;
     [Range(0.1f, 10f)] public float AttackSpeed = 2f;
-    public bool m_IsBigMonster;
     [SerializeField, Range(1, 100)] private int DropCoins = 1;
+
+    [Header("Special stats")]
+    public bool m_IsBigMonster;
+    [SerializeField] private bool DontResurect;
 
     #endregion
 
@@ -47,6 +51,9 @@ public class Enemy : Stats
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
         OnObjectDeath += GiveCoinsToPlayer; //give player conins on death
+
+        if (DontResurect)
+            OnObjectDeath += SaveState;
 
         base.Initialize(gameObject, animator);
     }
@@ -84,6 +91,12 @@ public class Enemy : Stats
 
         if (OnSpeedChange != null)
             OnSpeedChange(value);
+    }
+
+    public void SaveState()
+    {
+        
+        GameMaster.Instance.SaveState(m_GameObject.transform.name, 0, GameMaster.RecreateType.Object);
     }
 
     #endregion

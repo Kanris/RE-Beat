@@ -8,6 +8,7 @@ public class MetalicGround : MonoBehaviour {
 
     #region private fields
 
+    [Header("Item")]
     [SerializeField] private Item NeededItem; //required item to move on the metalic ground
 
     private TilemapCollider2D m_Ground; //metalic ground
