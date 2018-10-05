@@ -5,6 +5,10 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class Chest : MonoBehaviour {
 
+    #region private fields
+
+    [SerializeField] private GameObject m_Inventory; //chest inventory
+
     #region enum
 
     public enum ChestType { Common, Destroyable }
@@ -12,11 +16,12 @@ public class Chest : MonoBehaviour {
 
     #endregion
 
-    #region private fields
 
-    [SerializeField] private Sprite m_OpenChestSprite;
-    [SerializeField] private GameObject m_Inventory; //chest inventory
+    [Header("Stats for destroyable")]
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
+
+    [Header("Effects")]
+    [SerializeField] private Sprite m_OpenChestSprite;
     [SerializeField] private Audio ChestOpenAudio;
 
     private GameObject m_InteractionButton; //chest ui

@@ -13,9 +13,14 @@ public class MoveToNextScene : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("Next scene properties")]
     [SerializeField] private string NextScene; //next scene name
     [SerializeField] private string NextScenename; //next scene caption
+
+    [Header("Player spawn location")]
     [SerializeField] private Vector2 SpawnPosition; //where to spawn player
+
+    [Header("Effects")]
     [SerializeField] private Audio BackgroundMusic; //play new background music
 
     #endregion

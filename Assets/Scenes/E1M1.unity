@@ -193,8 +193,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 10918601}
-  - component: {fileID: 10918603}
   - component: {fileID: 10918602}
+  - component: {fileID: 10918603}
   m_Layer: 0
   m_Name: DreamEnter
   m_TagString: Untagged
@@ -24764,10 +24764,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestType: 0
-  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   m_Inventory: {fileID: 1177889941}
+  chestType: 0
   Health: 0
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &986122675
 BoxCollider2D:
@@ -28359,10 +28359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestType: 1
-  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   m_Inventory: {fileID: 2053566476}
+  chestType: 1
   Health: 2
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &1243147778
 BoxCollider2D:
@@ -32578,10 +32578,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b85bde3f76db84090dc56a4b65ba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestType: 0
-  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   m_Inventory: {fileID: 626046782}
+  chestType: 0
   Health: 0
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
   ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &1997503561
 BoxCollider2D:
@@ -32944,8 +32944,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2052888315}
-  - component: {fileID: 2052888316}
   - component: {fileID: 2052888317}
+  - component: {fileID: 2052888316}
   m_Layer: 0
   m_Name: CaveExit
   m_TagString: Untagged

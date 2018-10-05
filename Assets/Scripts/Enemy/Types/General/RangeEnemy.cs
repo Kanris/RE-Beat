@@ -14,8 +14,9 @@ public class RangeEnemy : MonoBehaviour {
     private bool m_CanCreateNewFireball = true;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
-    [SerializeField] private GameObject[] ThrowObjects;
     [SerializeField] private Transform m_FirePoint;
+    [Header("Spells that mage knows")]
+    [SerializeField] private GameObject[] ThrowObjects;
 
 
     #region Initialize

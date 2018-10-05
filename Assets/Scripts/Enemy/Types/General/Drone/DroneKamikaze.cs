@@ -4,15 +4,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class DroneKamikaze : MonoBehaviour
 {
-
-
     [SerializeField] private LayerMask WhatIsEnemy;
-    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
-    [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
-    [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
-    [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
+
+    [Header("Stats")]
     [SerializeField, Range(1, 5)] private int Health = 1; //drone health
+    [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
     [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
+    [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
+
+    [Header("Effects")]
+    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
 
     private Rigidbody2D m_Rigidbody;
 

@@ -5,18 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class FireballTrigger : MonoBehaviour {
 
-    #region enum
-
-    public enum Direction { left, right } //direction where to move
-    public Direction FireballDirection; //current fireball direction
-
-    #endregion
 
     #region private fields
 
+    [Header("Fireball spawn location")]
+    [SerializeField] private Transform m_ThrowerTransform; //from where throw fireballs
+
+    #region enum
+
+    public enum Direction { left, right } //direction where to move
+    [Header("Fireball properties")]
+    public Direction FireballDirection; //current fireball direction
+
+    #endregion
     [SerializeField, Range(1, 10)] private int Count = 3; //fireballs count
     [SerializeField] GameObject m_FireballGameObject;
-    [SerializeField] private Transform m_ThrowerTransform; //from where throw fireballs
+
+
+    [Header("Effects")]
     [SerializeField] private Audio ButtonSwitchAudio;
 
     private Animator m_Animator; //trigger animation

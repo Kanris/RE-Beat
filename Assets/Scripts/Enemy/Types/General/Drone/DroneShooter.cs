@@ -78,18 +78,23 @@ public class DroneShooter : MonoBehaviour {
 
     [SerializeField] private LayerMask WhatIsEnemy;
     [SerializeField] private Material TrailMaterial;
-    [SerializeField] private GameObject BulletTrailPrefab;
-    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
     [SerializeField] private PlayerInTrigger ChasingRange; //trigger that detect player
     [SerializeField] private PlayerInTrigger ShootingRange;
 
+    [Header("Movement points")]
     [SerializeField] private Transform[] m_PatrolPoints;
+
+    [Header("Drone stats")]
     [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
     [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
     [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
     [SerializeField, Range(1, 5)] private int Health = 1; //drone health
     [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
+
+    [Header("Effects")]
+    [SerializeField] private GameObject BulletTrailPrefab;
+    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;

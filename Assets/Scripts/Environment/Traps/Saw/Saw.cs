@@ -5,26 +5,29 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class Saw : MonoBehaviour {
 
-    #region enum
+    #region private fields
 
+    #region serialize fields
+
+    #region enum
     public enum Direction { Horizontal, Vertical, Idle } //saw move direction
+    [Header("Saw properties")]
     public Direction direction; //this saw direction
 
     public enum WhereToMove { LeftDown, RightUp } //where to move
     public WhereToMove whereToMove; //where this saw have to move
 
     #endregion
-
-    #region private fields
-
-    #region serialize fields
-
     [SerializeField, Range(0.5f, 20f)] private float SawMoveTime = 2.5f; //saw move time
-    [SerializeField, Range(1, 10)] private int DamageAmount = 2; //saw damage amount
     [SerializeField, Range(1f, 5f)] private float MoveVelocity = 2f; //saw move speed
-    [SerializeField] private bool WithTrigger = false; //is saw have to move with trigger
+    [SerializeField, Range(1, 10)] private int DamageAmount = 2; //saw damage amount
+
+    [Header("Player throw")]
     [SerializeField, Range(1f, 10f)] private float m_ThrowX = 5f; //saw throws value
     [SerializeField, Range(1f, 10f)] private float m_ThrowY = 3f;
+
+    [Header("Is Saw bound with trigger")]
+    [SerializeField] private bool WithTrigger = false; //is saw have to move with trigger
 
     #endregion
 

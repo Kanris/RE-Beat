@@ -7,19 +7,24 @@ public class DroneHive : MonoBehaviour
 {
 
     #region SerializeField
+    [Header("Teleport Points")]
     [SerializeField] private GameObject LeftTeleport;
     [SerializeField] private GameObject CenterTeleport;
     [SerializeField] private GameObject RightTeleport;
     
+    [Header("Stats")]
     [SerializeField] private GameObject FireballGO;
+    [SerializeField] private float TeleportSpeed = 5f;
 
+    [Header("Items activate after drone death")]
     [SerializeField] private GameObject FlyingPlatform;
     [SerializeField] private GameObject Key;
 
-    [SerializeField] private float TeleportSpeed = 5f;
+    [Header("Boss stage hp")]
     [SerializeField] private int Stage2Health = 500;
     [SerializeField] private int Stage3Health = 200;
 
+    [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
     [SerializeField] private Audio AttackAudio;
     [SerializeField] private GameObject DeathParticle;
