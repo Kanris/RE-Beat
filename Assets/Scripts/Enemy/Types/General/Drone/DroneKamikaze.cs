@@ -97,6 +97,6 @@ public class DroneKamikaze : MonoBehaviour
         if (hit2D != null)
             hit2D.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
 
-        Destroy(gameObject.transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }
