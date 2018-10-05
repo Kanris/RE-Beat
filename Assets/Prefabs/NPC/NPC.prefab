@@ -166,9 +166,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTriggerType: 2
   taskType: 1
-  DestroyEntireObject: 0
   Name: Find_out
   key: find_out_kill_boss
+  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
+  DestroyEntireObject: 0
 --- !u!212 &212039298943561222
 SpriteRenderer:
   m_ObjectHideFlags: 1

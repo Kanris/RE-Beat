@@ -474,6 +474,7 @@ MonoBehaviour:
   taskType: 1
   Name: Find_out
   key: find_out_red_door
+  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
   DestroyEntireObject: 0
 --- !u!224 &17464649 stripped
 RectTransform:
@@ -24630,16 +24631,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
-        type: 2}
-      propertyPath: ActionObject
-      value: 
-      objectReference: {fileID: 1077229227}
     - target: {fileID: 114160986447167942, guid: 35779c41c71fc9d47a33239e6ea0a153,
         type: 2}
       propertyPath: ActionObject
       value: 
       objectReference: {fileID: 1370085298}
+    - target: {fileID: 114808322752333964, guid: 35779c41c71fc9d47a33239e6ea0a153,
+        type: 2}
+      propertyPath: ActionObject
+      value: 
+      objectReference: {fileID: 1077229227}
     - target: {fileID: 1990950036120288, guid: 35779c41c71fc9d47a33239e6ea0a153, type: 2}
       propertyPath: m_Name
       value: Junk
@@ -24952,6 +24953,7 @@ MonoBehaviour:
   taskType: 2
   Name: Find_out
   key: find_out_read_note
+  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
   DestroyEntireObject: 1
 --- !u!1001 &1102590377
 Prefab:
@@ -32868,6 +32870,12 @@ Prefab:
       propertyPath: DoorOpenAudio
       value: 
       objectReference: {fileID: 11400000, guid: e4541f9090b974debb27a7b7c8874d40,
+        type: 2}
+    - target: {fileID: 114748765543706924, guid: bff3b13da43165545afc098aa6e3695f,
+        type: 2}
+      propertyPath: m_TaskAudio
+      value: 
+      objectReference: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bff3b13da43165545afc098aa6e3695f, type: 2}

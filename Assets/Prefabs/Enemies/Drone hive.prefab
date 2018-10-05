@@ -180,9 +180,9 @@ MonoBehaviour:
   CenterTeleport: {fileID: 0}
   RightTeleport: {fileID: 0}
   FireballGO: {fileID: 1931802493666614, guid: eed2c44fac63847bbac225c857bfea96, type: 2}
+  TeleportSpeed: 5
   FlyingPlatform: {fileID: 0}
   Key: {fileID: 0}
-  TeleportSpeed: 5
   Stage2Health: 500
   Stage3Health: 200
   TeleportAudio: {fileID: 11400000, guid: 4c557bad1b5a84608a5632ae31e4ca3c, type: 2}
@@ -204,9 +204,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTriggerType: 3
   taskType: 1
-  DestroyEntireObject: 0
   Name: Find_out
   key: find_out_boss_death
+  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
+  DestroyEntireObject: 0
 --- !u!114 &114832504023990750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,18 +220,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyStats:
-    MaxHealth: 600
-    m_ThrowX: 2
-    m_ThrowY: 0.5
     DeathParticle: {fileID: 0}
     HitSound: {fileID: 0}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
+    MaxHealth: 600
+    m_ThrowX: 2
+    m_ThrowY: 0.5
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2
-    m_IsBigMonster: 1
     DropCoins: 5
-  DontResurect: 0
+    m_IsBigMonster: 1
+    DontResurect: 0
 --- !u!212 &212388568018852434
 SpriteRenderer:
   m_ObjectHideFlags: 1
