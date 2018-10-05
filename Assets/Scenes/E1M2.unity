@@ -2545,9 +2545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTriggerType: 0
   taskType: 0
-  DestroyEntireObject: 1
   Name: Find_out
   key: find_out_giver
+  DestroyEntireObject: 1
 --- !u!4 &920444240
 Transform:
   m_ObjectHideFlags: 0
@@ -5792,8 +5792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6e4e18dbfa84af5887102aef975f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundAnimator: {fileID: 0}
-  MistAnimator: {fileID: 1359940893}
+  Background: {fileID: 0}
+  Mist: {fileID: 0}
   ChangeMaterialTilemap: []
   ChangeObjectsMaterial: []
   m_DefaultMaterial: {fileID: 0}

@@ -23,11 +23,14 @@ public class InfoManager : MonoBehaviour {
 #region serialize fields
 
     [SerializeField] private GameObject m_JournalUI; //journal ui
-    [SerializeField] private TextPage m_Page; //main page text
     [SerializeField] private GameObject m_Bookmarks; //bookmark list
-    [SerializeField] private Transform m_Content; //buttons grid
     [SerializeField] private GameObject m_Map;
-    [SerializeField] private TextMeshProUGUI m_LocationName;
+    [SerializeField] private Transform m_Content; //buttons grid
+    [SerializeField] private TextPage m_Page; //main page text
+    [SerializeField] private TextMeshProUGUI m_HeaderText;
+
+    [Header("Effects")]
+    [SerializeField] private Audio m_OpenJournalAudio;
 
 #endregion
 
@@ -124,6 +127,8 @@ public class InfoManager : MonoBehaviour {
 
     private void InfoManagement(int id)
     {
+        AudioManager.Instance.Play(m_OpenJournalAudio);
+
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
             OpenBookmark(id);
@@ -224,9 +229,9 @@ public class InfoManager : MonoBehaviour {
 
             m_CurrentOpenBookmark = id; //change current book mark id
             m_Page.ClearText(); //clear main text 
-            m_LocationName.text = GetBookmarkname(id);
+            m_HeaderText.text = GetBookmarkname(id);
 
-            AudioManager.Instance.Play("OpenJournal"); //play open journal sound
+            AudioManager.Instance.Play(m_OpenJournalAudio); //play open journal sound
         }
     }
 
@@ -234,14 +239,20 @@ public class InfoManager : MonoBehaviour {
     {
 
         m_JournalUI.SetActive(false); //hide journal ui
+
         yield return null;
+
         OnJournalOpen(false); //notify that journal is close
+
+        AudioManager.Instance.Play(m_OpenJournalAudio); //play open journal sound
     }
 
     public void CloseJournal()
     {
         m_JournalUI.SetActive(false); //hide journal ui
         OnJournalOpen(false); //notify that journal is close
+
+        AudioManager.Instance.Play(m_OpenJournalAudio); //play open journal sound
     }
 
     public void SetIsCantOpenJournal(bool value)
