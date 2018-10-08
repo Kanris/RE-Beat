@@ -14,6 +14,9 @@ public class PlayerStats : Stats
 
     #region public fields
 
+    [Header("Additional")]
+    public PlatformerCharacter2D platformerCharacter2D;
+
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
     public static float RangeAttackSpeed = 2f;
@@ -91,6 +94,72 @@ public class PlayerStats : Stats
 
         UIManager.Instance.RemoveHealth(damageAmount);
     }
+
+    #region debuff
+
+    private delegate IEnumerator IEnumeratorFloatDelegate(float duration);
+
+    public void DebuffPlayer(DebuffPanel.DebuffTypes debuffType, float duration)
+    {
+        DebuffPanel.Instance.SetDebuffUI(debuffType, duration);
+
+        var action = GetAction(debuffType, duration);
+
+        GameMaster.Instance.StartCoroutine(Debuff(action, duration));
+    }
+
+    private IEnumerator Debuff(IEnumeratorFloatDelegate action, float duration)
+    {
+        yield return action(duration);
+    }
+
+    private IEnumeratorFloatDelegate GetAction(DebuffPanel.DebuffTypes debuffType, float duration)
+    {
+        IEnumeratorFloatDelegate action = null;
+
+        switch (debuffType)
+        {
+            case DebuffPanel.DebuffTypes.AttackSpeed:
+                action = AttackSpeedDebuff;
+                break;
+
+            case DebuffPanel.DebuffTypes.Defense:
+                break;
+
+            case DebuffPanel.DebuffTypes.Cold:
+                action = SpeedDebuff;
+                break;
+
+            case DebuffPanel.DebuffTypes.Fire:
+                break;
+        }
+
+        return action;
+    }
+
+    private IEnumerator AttackSpeedDebuff(float duration)
+    {
+        var defaultValue = MeleeAttackSpeed;
+        MeleeAttackSpeed = 1f;
+
+        yield return new WaitForSeconds(duration);
+
+        MeleeAttackSpeed = defaultValue;
+    }
+
+    private IEnumerator SpeedDebuff(float duration)
+    {
+        var defaultValue = platformerCharacter2D.m_MaxSpeed;
+
+        platformerCharacter2D.m_MaxSpeed = 2f;
+
+        yield return new WaitForSeconds(duration);
+
+        platformerCharacter2D.m_MaxSpeed = defaultValue;
+
+    }
+
+    #endregion
 
     #endregion
 

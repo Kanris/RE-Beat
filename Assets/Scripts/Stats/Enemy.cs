@@ -25,6 +25,7 @@ public class Enemy : Stats
     [Header("Special stats")]
     public bool m_IsBigMonster;
     [SerializeField] private bool DontResurect;
+    [SerializeField] private ShieldInfo m_ShieldInfo;
 
     #endregion
 
@@ -109,4 +110,11 @@ public class Enemy : Stats
     }
 
     #endregion
+}
+
+[System.Serializable]
+public class ShieldInfo
+{
+    public bool IsHasShield = false;
+    public DebuffPanel.DebuffTypes ShieldType;
 }

@@ -6,6 +6,8 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
     [SerializeField] private GameObject ObjectToAppear; //object to show
     [SerializeField] private GameObject ShowOnDestroy; //show on destroy some object
+
+    [Header("Destroy conditions")]
     [SerializeField] private bool DestroyOnTrigger; 
 
     private bool m_IsQuitting; //is application is closing

@@ -79,7 +79,7 @@ public class Player : MonoBehaviour {
         Attack(m_MeleeAttackCooldown, "Fire1", () =>
         {
             m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
-            StartCoroutine(Attack());
+            StartCoroutine(MeleeAttack());
         });
 
         Attack(m_RangeAttackCooldown, "Fire2", () =>
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
             instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
     }
 
-    private IEnumerator Attack()
+    private IEnumerator MeleeAttack()
     {
         m_AttackRangeAnimation.SetActive(true); //play attack animation
 
