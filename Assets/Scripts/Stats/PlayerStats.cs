@@ -284,7 +284,8 @@ public class PlayerStats : Stats
     protected override void KillObject()
     {
         GameMaster.Instance.StartPlayerRespawn(true); //respawn new player on respawn point
-        base.KillObject();
+        PlayDeathParticles(); //show death particles
+        GameMaster.Destroy(m_GameObject.transform.parent.gameObject); //destroy gameobject
     }
 
     #endregion
