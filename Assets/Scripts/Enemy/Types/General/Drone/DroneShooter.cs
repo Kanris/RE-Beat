@@ -206,7 +206,12 @@ public class DroneShooter : MonoBehaviour {
         var hit2D = Physics2D.OverlapCircle(transform.position, 2, WhatIsEnemy);
 
         if (hit2D != null)
-            hit2D.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+        {
+            var playerStats = hit2D.GetComponent<Player>().playerStats;
+
+            playerStats.TakeDamage(DamageAmount);
+            playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
+        }
 
         Destroy(gameObject.transform.parent.gameObject);
     }
