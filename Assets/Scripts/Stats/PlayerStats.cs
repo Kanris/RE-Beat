@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityStandardAssets._2D;
 
@@ -24,7 +26,11 @@ public class PlayerStats : Stats
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
     private static int m_Coins = 0;
+    private static int DamageMultiplier = 1;
 
+    private static float DefaultMeleeAttackSpeed = 0.3f;
+    private static float DefaultSpeed = 4f;
+    private List<DebuffPanel.DebuffTypes> m_DebufQueue;
     #endregion
 
     #region properties
@@ -125,6 +131,7 @@ public class PlayerStats : Stats
                 break;
 
             case DebuffPanel.DebuffTypes.Defense:
+                action = DamageTakenDebuff;
                 break;
 
             case DebuffPanel.DebuffTypes.Cold:
@@ -140,24 +147,79 @@ public class PlayerStats : Stats
 
     private IEnumerator AttackSpeedDebuff(float duration)
     {
-        var defaultValue = MeleeAttackSpeed;
-        MeleeAttackSpeed = 1f;
+        MeleeAttackSpeed = 2f;
+
+        m_SeriesCombo = 0;
+        m_CheckNextComboTime = 0f;
+
+        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.AttackSpeed);
 
         yield return new WaitForSeconds(duration);
 
-        MeleeAttackSpeed = defaultValue;
+        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.AttackSpeed, item);
+
+        if (!isAnotherDebuff)
+        {
+            MeleeAttackSpeed = DefaultMeleeAttackSpeed;
+        }
     }
 
     private IEnumerator SpeedDebuff(float duration)
     {
-        var defaultValue = platformerCharacter2D.m_MaxSpeed;
-
         platformerCharacter2D.m_MaxSpeed = 2f;
+
+        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.Cold);
 
         yield return new WaitForSeconds(duration);
 
-        platformerCharacter2D.m_MaxSpeed = defaultValue;
+        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.Cold, item);
 
+        if (!isAnotherDebuff)
+        {
+            platformerCharacter2D.m_MaxSpeed = DefaultSpeed;
+        }
+    }
+
+    private IEnumerator DamageTakenDebuff(float duration)
+    {
+        DamageMultiplier = 2;
+
+        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.Defense);
+
+        yield return new WaitForSeconds(duration);
+
+        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.Defense, item);
+
+        if (!isAnotherDebuff)
+        {
+            DamageMultiplier = 1;
+        }
+    }
+
+    private DebuffPanel.DebuffTypes GetIndexInQueue(DebuffPanel.DebuffTypes debuffType)
+    {
+        var index = m_DebufQueue.Count;
+        m_DebufQueue.Add(DebuffPanel.DebuffTypes.AttackSpeed);
+
+        return m_DebufQueue[index];
+    }
+
+    private bool IsInQueue(DebuffPanel.DebuffTypes debuffType, DebuffPanel.DebuffTypes debuffItem)
+    {
+        m_DebufQueue.Remove(debuffItem);
+
+        var isAnotherDebuff = false;
+
+        foreach (var item in m_DebufQueue)
+        {
+            if (item == DebuffPanel.DebuffTypes.AttackSpeed)
+            {
+                isAnotherDebuff = true;
+                break;
+            }
+        }
+
+        return isAnotherDebuff;
     }
 
     #endregion
@@ -184,12 +246,16 @@ public class PlayerStats : Stats
         }
 
         UIManager.Instance.ChangeCoinsAmount(m_Coins);
+
+        m_DebufQueue = new List<DebuffPanel.DebuffTypes>();
     }
 
     public override void TakeDamage(int amount, int divider = 1)
     {
         if (!m_IsInvincible) //player is not invincible
         {
+            amount *= DamageMultiplier;
+
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
 

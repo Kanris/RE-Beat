@@ -71,7 +71,7 @@ public class Enemy : Stats
 
         if (m_ShieldInfo.IsHasShield)
         {
-            if (CurrentHealth <= MaxHealth * 0.3f & !m_IsShieldCreated)
+            if (CurrentHealth <= MaxHealth * 0.5f & !m_IsShieldCreated)
             {
                 m_IsShieldCreated = true;
                 Debug.LogError("Create shield");
@@ -116,7 +116,6 @@ public class Enemy : Stats
     
     public void CreateShield()
     {
-        Debug.LogError("Effects/Shields/" + m_ShieldInfo.ShieldType);
         var shieldGO = Resources.Load("Effects/Shields/" + m_ShieldInfo.ShieldType) as GameObject;
         GameMaster.Instantiate(shieldGO, m_GameObject.transform);
     }

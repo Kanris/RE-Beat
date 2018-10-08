@@ -272,19 +272,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyStats:
-    MaxHealth: 200
-    m_ThrowX: 2
-    m_ThrowY: 0.5
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
     HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
+    MaxHealth: 200
+    m_ThrowX: 2
+    m_ThrowY: 0.5
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2
-    m_IsBigMonster: 0
     DropCoins: 2
-  DontResurect: 0
+    m_IsBigMonster: 0
+    DontResurect: 0
+    m_ShieldInfo:
+      IsHasShield: 1
+      ShieldType: 3
 --- !u!114 &114826362762346134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,10 +314,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AlarmImage: {fileID: 212483226420415968}
+  m_FirePoint: {fileID: 4743678716356924}
   ThrowObjects:
   - {fileID: 1052902559322968, guid: f2dec8f507fb83e4db114f069c8f84e5, type: 2}
   - {fileID: 1931802493666614, guid: 99d49189405f3df42aa3f249f90b233a, type: 2}
-  m_FirePoint: {fileID: 4743678716356924}
 --- !u!212 &212483226420415968
 SpriteRenderer:
   m_ObjectHideFlags: 1

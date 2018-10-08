@@ -42,7 +42,8 @@ public class EnemyShield : MonoBehaviour {
     {
         if (collision.CompareTag("PlayerAttackRange"))
         {
-            collision.transform.parent.GetComponent<Player>().playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
+            collision.transform.parent.GetComponent<Player>()
+                .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
         }
     }
 }
