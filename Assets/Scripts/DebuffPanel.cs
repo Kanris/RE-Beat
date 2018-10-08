@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Collections;
 using UnityEngine;
 
 public class DebuffPanel : MonoBehaviour {
@@ -19,6 +18,10 @@ public class DebuffPanel : MonoBehaviour {
                 Destroy(Instance);
             }
         }
+        else
+        {
+            Instance = this;
+        }
     }
 
     public void SetDebuffUI(DebuffTypes debuffType, float displayTime)
@@ -28,8 +31,6 @@ public class DebuffPanel : MonoBehaviour {
         if (item != null)
         {
             var instantiateDebuff = Instantiate(item.gameObject, transform);
-
-            Debug.LogError("Debuff for " + displayTime);
 
             Destroy(instantiateDebuff, displayTime);
         }

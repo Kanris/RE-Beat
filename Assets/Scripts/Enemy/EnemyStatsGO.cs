@@ -15,4 +15,10 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         EnemyStats.Initialize(gameObject, GetComponent<Animator>());
     }
+
+    [ContextMenu("CreateShieldOnEnemy")]
+    public void CreateShield()
+    {
+        EnemyStats.CreateShield();
+    }
 }

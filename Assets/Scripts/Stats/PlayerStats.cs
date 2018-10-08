@@ -110,7 +110,8 @@ public class PlayerStats : Stats
 
     private IEnumerator Debuff(IEnumeratorFloatDelegate action, float duration)
     {
-        yield return action(duration);
+        if (action != null)
+            yield return action(duration);
     }
 
     private IEnumeratorFloatDelegate GetAction(DebuffPanel.DebuffTypes debuffType, float duration)
