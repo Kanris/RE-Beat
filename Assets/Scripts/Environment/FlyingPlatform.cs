@@ -105,7 +105,7 @@ public class FlyingPlatform : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player")) //if player is on the platform
         {
-            collision.transform.SetParent(transform); //attach player to the platform so he will be moved with platform
+            collision.transform.parent.SetParent(transform); //attach player to the platform so he will be moved with platform
         }
     }
 
@@ -113,7 +113,7 @@ public class FlyingPlatform : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player")) //if player is leave platform
         {
-            collision.transform.SetParent(null); //detach player from the platform
+            collision.transform.parent.SetParent(null); //detach player from the platform
         }
     }
 
