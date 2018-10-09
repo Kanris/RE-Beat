@@ -94,6 +94,16 @@ public class Fireball : MonoBehaviour {
             DestroyFireball();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //damage player (for green fireball)
+        if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) & !isDestroying)
+        {
+            var statsToTakeDamage = collision.gameObject.GetComponent<Player>().playerStats;
+            Damage(statsToTakeDamage);
+        }
+    }
+
     private void Damage(Stats statsToTakeDamage)
     {
         if (statsToTakeDamage != null)
