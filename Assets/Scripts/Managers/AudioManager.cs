@@ -81,6 +81,17 @@ public class AudioManager : MonoBehaviour {
 
     #region public methods
 
+    public void ChangeVolume(Audio.AudioType type, float value)
+    {
+        foreach (var audio in AudioArray)
+        {
+            if (audio.m_AudioType == type)
+            {
+                audio.SetVolume(value);
+            }
+        }
+    }
+
     public void Play(string name, bool PlayFadeSound = false)
     {
         var sound = GetAudioFromArray(name);

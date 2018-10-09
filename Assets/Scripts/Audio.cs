@@ -102,7 +102,11 @@ public class Audio : ScriptableObject
             m_AudioSource.volume += increment;
             yield return new WaitForSeconds(fadeTime);
         }
+    }
 
+    public void SetVolume(float value)
+    {
+        m_AudioSource.volume = value;
     }
 
     public static implicit operator string(Audio audio)

@@ -211,13 +211,15 @@ public class StartScreenManager : MonoBehaviour {
 
     public void SetMasterFloat(float volume)
     {
-        audioMixer.SetFloat("VolumeMaster", volume);
+        //audioMixer.SetFloat("VolumeMaster", volume);
+        AudioManager.Instance.ChangeVolume(Audio.AudioType.Music, volume);
         VolumeMaster = volume;
     }
 
     public void SetEnvironmentFloat(float volume)
     {
-        audioMixer.SetFloat("VolumeEnvironment", volume);
+        //audioMixer.SetFloat("VolumeEnvironment", volume);
+        AudioManager.Instance.ChangeVolume(Audio.AudioType.Environment, volume);
         VolumeEnvironment = volume;
     }
 
