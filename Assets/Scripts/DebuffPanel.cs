@@ -49,7 +49,7 @@ public class DebuffPanel : MonoBehaviour {
 
         if (item != null)
         {
-            item.gameObject.GetComponent<Image>().fillAmount = 1f;
+            item.gameObject.transform.GetChild(0).GetComponent<Image>().fillAmount = 1f;
 
             if (item.gameObject.activeSelf) //if debuff is already on pannel
             {
@@ -70,7 +70,7 @@ public class DebuffPanel : MonoBehaviour {
         var timeAmount = 0f;
         var ratio = 0.1f;
 
-        var image = debufUI.gameObject.GetComponent<Image>();
+        var image = debufUI.gameObject.transform.GetChild(0).GetComponent<Image>();
 
         while (timeAmount <= debufUI.appearTimer)
         {
@@ -82,7 +82,7 @@ public class DebuffPanel : MonoBehaviour {
         }
 
         m_PlayerStats.RemoveDebuff(debufUI.DebuffType);
-        image.gameObject.SetActive(false);
+        image.gameObject.transform.parent.gameObject.SetActive(false);
         debufUI.appearTimer = 0f;
     }
 
