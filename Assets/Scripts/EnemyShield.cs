@@ -2,18 +2,48 @@
 
 public class EnemyShield : MonoBehaviour {
 
+    public delegate void VoidBoolDelegate(bool value);
+    public event VoidBoolDelegate OnShieldDestroy;
+
     public DebuffPanel.DebuffTypes m_DebuffType;
 
     [Header("Durations")]
     [SerializeField, Range(1f, 5f)] private float m_DebuffDuration = 5f;
     [SerializeField, Range(1f, 5f)] private float m_ShieldDuration = 2f;
 
-	// Use this for initialization
-	private void Start () {
+    private bool m_IsQuitting; //is application closing
 
-        Destroy(gameObject, m_ShieldDuration);
+    // Use this for initialization
+    private void Start () {
 
         GetComponent<SpriteRenderer>().color = GetShieldColor();
+
+        SubscribeToEvents();
+
+        Destroy(gameObject, m_ShieldDuration);
+    }
+
+    private void SubscribeToEvents()
+    {
+        PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //is player return to the start screen
+        MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
+
+    }
+
+    private void OnApplicationQuit()
+    {
+        ChangeIsQuitting(true);
+    }
+
+    private void OnDestroy()
+    {
+        if (!m_IsQuitting)
+        {
+            if (OnShieldDestroy != null)
+            {
+                OnShieldDestroy(false);
+            }
+        }
     }
 
     private Color GetShieldColor()
@@ -45,5 +75,15 @@ public class EnemyShield : MonoBehaviour {
             collision.transform.parent.GetComponent<Player>()
                 .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
         }
+        else if (collision.CompareTag("PlayerBullet"))
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    private void ChangeIsQuitting(bool value)
+    {
+        m_IsQuitting = value;
     }
 }

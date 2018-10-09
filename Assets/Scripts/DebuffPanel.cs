@@ -34,10 +34,14 @@ public class DebuffPanel : MonoBehaviour {
 
     #endregion
 
+    #region initialize
+
     private void Start()
     {
-        m_PlayerStats = m_Player.playerStats;
+        m_PlayerStats = m_Player.playerStats; //initialize player stats
     }
+
+    #endregion
 
     public void SetDebuffUI(DebuffTypes debuffType, float displayTime)
     {
@@ -45,7 +49,6 @@ public class DebuffPanel : MonoBehaviour {
 
         if (item != null)
         {
-
             item.gameObject.GetComponent<Image>().fillAmount = 1f;
 
             if (item.gameObject.activeSelf) //if debuff is already on pannel
@@ -57,7 +60,6 @@ public class DebuffPanel : MonoBehaviour {
                 item.appearTimer = displayTime;
                 item.gameObject.SetActive(true);
 
-
                 StartCoroutine(ChangeImageFill(item));
             }
         }
@@ -67,6 +69,7 @@ public class DebuffPanel : MonoBehaviour {
     {
         var timeAmount = 0f;
         var ratio = 0.1f;
+
         var image = debufUI.gameObject.GetComponent<Image>();
 
         while (timeAmount <= debufUI.appearTimer)
@@ -82,6 +85,8 @@ public class DebuffPanel : MonoBehaviour {
         image.gameObject.SetActive(false);
         debufUI.appearTimer = 0f;
     }
+
+    #region test methods
 
     [ContextMenu("SetDebuffFor9Sec")]
     public void SetAttackDebuff()
@@ -107,6 +112,8 @@ public class DebuffPanel : MonoBehaviour {
         Debug.LogError("Set next debuff");
         SetDebuffUI(DebuffTypes.AttackSpeed, 4f);
     }
+
+    #endregion
 }
 
 [System.Serializable]

@@ -33,6 +33,7 @@ public class Enemy : Stats
 
     private bool m_IsPlayerNear;
     private bool m_IsShieldCreated;
+    private bool m_IsInvincible;
 
     #endregion
 
@@ -62,20 +63,23 @@ public class Enemy : Stats
 
     public override void TakeDamage(int amount, int divider = 1)
     {
-        if (OnEnemyTakeDamage != null)
+        if (!m_IsInvincible)
         {
-            OnEnemyTakeDamage(m_IsPlayerNear);
-        }
-
-        base.TakeDamage(amount, divider);
-
-        if (m_ShieldInfo.IsHasShield)
-        {
-            if (CurrentHealth <= MaxHealth * 0.5f & !m_IsShieldCreated)
+            if (OnEnemyTakeDamage != null)
             {
-                m_IsShieldCreated = true;
-                Debug.LogError("Create shield");
-                CreateShield();
+                OnEnemyTakeDamage(m_IsPlayerNear);
+            }
+
+            base.TakeDamage(amount, divider);
+
+            if (m_ShieldInfo.IsHasShield)
+            {
+                if (CurrentHealth <= MaxHealth * 0.5f & !m_IsShieldCreated)
+                {
+                    m_IsShieldCreated = true;
+                    m_IsInvincible = true;
+                    CreateShield();
+                }
             }
         }
     }
@@ -117,12 +121,19 @@ public class Enemy : Stats
     public void CreateShield()
     {
         var shieldGO = Resources.Load("Effects/Shields/" + m_ShieldInfo.ShieldType) as GameObject;
-        GameMaster.Instantiate(shieldGO, m_GameObject.transform);
+        var shieldInstantiate = GameMaster.Instantiate(shieldGO, m_GameObject.transform);
+
+        shieldInstantiate.GetComponent<EnemyShield>().OnShieldDestroy += SetInvincible;
     }
 
     private void GiveCoinsToPlayer()
     {
         PlayerStats.Coins = DropCoins;
+    }
+
+    private void SetInvincible(bool value)
+    {
+        m_IsInvincible = value;
     }
 
     #endregion
