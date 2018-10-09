@@ -30,7 +30,6 @@ public class PlayerStats : Stats
 
     private static float DefaultMeleeAttackSpeed = 0.3f;
     private static float DefaultSpeed = 4f;
-    private List<DebuffPanel.DebuffTypes> m_DebufQueue;
     #endregion
 
     #region properties
@@ -108,118 +107,53 @@ public class PlayerStats : Stats
     public void DebuffPlayer(DebuffPanel.DebuffTypes debuffType, float duration)
     {
         DebuffPanel.Instance.SetDebuffUI(debuffType, duration);
-
-        var action = GetAction(debuffType, duration);
-
-        GameMaster.Instance.StartCoroutine(Debuff(action, duration));
+        SetDebuff(debuffType);
     }
 
-    private IEnumerator Debuff(IEnumeratorFloatDelegate action, float duration)
+    public void SetDebuff(DebuffPanel.DebuffTypes debuffType)
     {
-        if (action != null)
-            yield return action(duration);
-    }
-
-    private IEnumeratorFloatDelegate GetAction(DebuffPanel.DebuffTypes debuffType, float duration)
-    {
-        IEnumeratorFloatDelegate action = null;
-
         switch (debuffType)
         {
             case DebuffPanel.DebuffTypes.AttackSpeed:
-                action = AttackSpeedDebuff;
-                break;
+                MeleeAttackSpeed = 2f;
 
-            case DebuffPanel.DebuffTypes.Defense:
-                action = DamageTakenDebuff;
+                m_SeriesCombo = 0;
+                m_CheckNextComboTime = 0f;
+
                 break;
 
             case DebuffPanel.DebuffTypes.Cold:
-                action = SpeedDebuff;
+                platformerCharacter2D.m_MaxSpeed = 2f;
+                break;
+
+            case DebuffPanel.DebuffTypes.Defense:
+                DamageMultiplier = 2;
                 break;
 
             case DebuffPanel.DebuffTypes.Fire:
                 break;
         }
-
-        return action;
     }
 
-    private IEnumerator AttackSpeedDebuff(float duration)
+    public void RemoveDebuff(DebuffPanel.DebuffTypes debuffType)
     {
-        MeleeAttackSpeed = 2f;
-
-        m_SeriesCombo = 0;
-        m_CheckNextComboTime = 0f;
-
-        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.AttackSpeed);
-
-        yield return new WaitForSeconds(duration);
-
-        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.AttackSpeed, item);
-
-        if (!isAnotherDebuff)
+        switch (debuffType)
         {
-            MeleeAttackSpeed = DefaultMeleeAttackSpeed;
-        }
-    }
-
-    private IEnumerator SpeedDebuff(float duration)
-    {
-        platformerCharacter2D.m_MaxSpeed = 2f;
-
-        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.Cold);
-
-        yield return new WaitForSeconds(duration);
-
-        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.Cold, item);
-
-        if (!isAnotherDebuff)
-        {
-            platformerCharacter2D.m_MaxSpeed = DefaultSpeed;
-        }
-    }
-
-    private IEnumerator DamageTakenDebuff(float duration)
-    {
-        DamageMultiplier = 2;
-
-        var item = GetIndexInQueue(DebuffPanel.DebuffTypes.Defense);
-
-        yield return new WaitForSeconds(duration);
-
-        var isAnotherDebuff = IsInQueue(DebuffPanel.DebuffTypes.Defense, item);
-
-        if (!isAnotherDebuff)
-        {
-            DamageMultiplier = 1;
-        }
-    }
-
-    private DebuffPanel.DebuffTypes GetIndexInQueue(DebuffPanel.DebuffTypes debuffType)
-    {
-        var index = m_DebufQueue.Count;
-        m_DebufQueue.Add(DebuffPanel.DebuffTypes.AttackSpeed);
-
-        return m_DebufQueue[index];
-    }
-
-    private bool IsInQueue(DebuffPanel.DebuffTypes debuffType, DebuffPanel.DebuffTypes debuffItem)
-    {
-        m_DebufQueue.Remove(debuffItem);
-
-        var isAnotherDebuff = false;
-
-        foreach (var item in m_DebufQueue)
-        {
-            if (item == DebuffPanel.DebuffTypes.AttackSpeed)
-            {
-                isAnotherDebuff = true;
+            case DebuffPanel.DebuffTypes.AttackSpeed:
+                MeleeAttackSpeed = DefaultMeleeAttackSpeed;
                 break;
-            }
-        }
 
-        return isAnotherDebuff;
+            case DebuffPanel.DebuffTypes.Cold:
+                platformerCharacter2D.m_MaxSpeed = DefaultSpeed;
+                break;
+
+            case DebuffPanel.DebuffTypes.Defense:
+                DamageMultiplier = 1;
+                break;
+
+            case DebuffPanel.DebuffTypes.Fire:
+                break;
+        }
     }
 
     #endregion
@@ -246,8 +180,6 @@ public class PlayerStats : Stats
         }
 
         UIManager.Instance.ChangeCoinsAmount(m_Coins);
-
-        m_DebufQueue = new List<DebuffPanel.DebuffTypes>();
     }
 
     public override void TakeDamage(int amount, int divider = 1)
