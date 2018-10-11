@@ -46,17 +46,15 @@ public class AnnouncerManager : MonoBehaviour {
     #region private fields
 
     #region serialize fields
-
-    [SerializeField] private GameObject m_UI; //announcer ui
-
+    
     [SerializeField] private GameObject m_MessageAnnouncer;
     [SerializeField] private TextMeshProUGUI m_TextMessage;
 
-    [SerializeField] private GameObject m_SceneAnnouncer;
     [SerializeField] private TextMeshProUGUI m_TextScene;
 
     #endregion
 
+    private GameObject m_SceneAnnouncer;
     private List<Message> m_MessagePipeline; //display message pipeline
     private bool m_isShowingPipeline = false; //is currently showing pipeline
 
@@ -68,20 +66,21 @@ public class AnnouncerManager : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        ActiveSceneAnnouncer(false); //hide scene announcer
-         
+        m_SceneAnnouncer = m_TextScene.gameObject;
+
+        m_TextScene.text = GameMaster.Instance.SceneName;
+
         ActiveMessageAnnouncer(false); //hide message announcer
 
-        ActiveAnnouncerUI(false); //hide ui
+        ActiveSceneAnnouncer(false);
 
         m_MessagePipeline = new List<Message>(); //initialize pipeline
     }
 
     #endregion
 
-    private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 1f)
+    private IEnumerator DisplayScene(string sceneName, float timeToDisplay = 3f)
     {
-        ActiveAnnouncerUI(true);
         ActiveSceneAnnouncer(true);
 
         m_TextScene.text = sceneName;
@@ -89,16 +88,10 @@ public class AnnouncerManager : MonoBehaviour {
         yield return new WaitForSeconds(timeToDisplay);
 
         ActiveSceneAnnouncer(false);
-        ActiveAnnouncerUI(false);
     }
 
     private IEnumerator DisplayMessage()
     {
-        if (!m_UI.activeSelf)
-        {
-            ActiveAnnouncerUI(true);
-        }
-
         if (!m_MessageAnnouncer.activeSelf)
             ActiveMessageAnnouncer(true);
 
@@ -115,14 +108,8 @@ public class AnnouncerManager : MonoBehaviour {
         else
         {
             m_isShowingPipeline = false;
-            ActiveAnnouncerUI(false);
             ActiveMessageAnnouncer(false);
         }
-    }
-
-    private void ActiveAnnouncerUI(bool active)
-    {
-        m_UI.SetActive(active);
     }
 
     private void ActiveMessageAnnouncer(bool active)
@@ -132,7 +119,42 @@ public class AnnouncerManager : MonoBehaviour {
 
     private void ActiveSceneAnnouncer(bool active)
     {
-        m_SceneAnnouncer.SetActive(active);
+        if (active)
+            StartCoroutine(SceneTextAppearance());
+        else
+            StartCoroutine(SceneTextDisappearance());
+    }
+
+    private IEnumerator SceneTextAppearance()
+    {
+        var value = 0f;
+
+        m_SceneAnnouncer.SetActive(true);
+
+        while (m_TextScene.color.a < 1)
+        {
+            m_TextScene.color = m_TextScene.color.ChangeColor(a: value);
+
+            yield return new WaitForSeconds(0.05f);
+
+            value += 0.05f;
+        }
+    }
+
+    private IEnumerator SceneTextDisappearance()
+    {
+        var value = 1f;
+
+        while (m_TextScene.color.a > 0)
+        {
+            m_TextScene.color = m_TextScene.color.ChangeColor(a: value);
+
+            yield return new WaitForSeconds(0.1f);
+
+            value -= 0.05f;
+        }
+        
+        m_SceneAnnouncer.SetActive(false);
     }
 
     #endregion
@@ -152,6 +174,7 @@ public class AnnouncerManager : MonoBehaviour {
 
     public void DisplaySceneName(string sceneName)
     {
+        StopAllCoroutines();
         StartCoroutine(DisplayScene(sceneName));
     }
 

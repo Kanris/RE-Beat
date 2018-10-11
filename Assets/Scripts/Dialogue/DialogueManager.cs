@@ -106,11 +106,21 @@ public class DialogueManager : MonoBehaviour {
 
         var typeSentence = LocalizationManager.Instance.GetDialogueLocalizedValue(sentence);
 
+        var isHtmlFound = false;
+
         //start type sentence
         foreach (var letter in typeSentence)
         {
-            if (m_IsSentenceTyping) //if player didn't press skip button
-                yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
+            if (letter == '<')
+                isHtmlFound = true;
+
+            if (!isHtmlFound)
+            {
+                if (m_IsSentenceTyping) //if player didn't press skip button
+                    yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
+            }
+            else if (letter == '>')
+                isHtmlFound = false;
 
             m_Text.text += letter; //type letter
         }

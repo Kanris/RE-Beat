@@ -50,7 +50,7 @@ public class LoadSceneManager : MonoBehaviour {
 
         yield return LoadSceneAsync(sceneName);
 
-        yield return new WaitForSeconds(2f); //TODO: Remove 
+        yield return new WaitForSeconds(0.02f); //TODO: Remove 
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
