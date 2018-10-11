@@ -106,21 +106,21 @@ public class DialogueManager : MonoBehaviour {
 
         var typeSentence = LocalizationManager.Instance.GetDialogueLocalizedValue(sentence);
 
-        var isHtmlFound = false;
+        var isTagFound = false;
 
         //start type sentence
         foreach (var letter in typeSentence)
         {
             if (letter == '<')
-                isHtmlFound = true;
+                isTagFound = true;
 
-            if (!isHtmlFound)
+            if (!isTagFound)
             {
                 if (m_IsSentenceTyping) //if player didn't press skip button
                     yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
             }
             else if (letter == '>')
-                isHtmlFound = false;
+                isTagFound = false;
 
             m_Text.text += letter; //type letter
         }
@@ -208,13 +208,17 @@ public class DialogueManager : MonoBehaviour {
 
     #region public methods
 
-    public void StartDialogue(string npcName, Dialogue dialogue)
+    public void StartDialogue(string npcName, Dialogue dialogue, 
+                                Transform parentTransform, Transform playerTransform)
     {
         if (dialogue != null) //if dialogue is not empty
         {
 #if MOBILE_INPUT
             MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
+            
+            transform.position = parentTransform.position.Add(y: 2.2f);
+            m_Buttons.transform.position = playerTransform.position.Add(x: 1.8f, y: 0.5f);
 
             ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
             m_Dialogue = dialogue; //save dialogue reference
@@ -240,12 +244,14 @@ public class DialogueManager : MonoBehaviour {
         }
     }
 
-    public IEnumerator DisplaySingleSentence(string sentence, string name)
+    public IEnumerator DisplaySingleSentence(string sentence, string name, Transform parentTransform)
     {
 
 #if MOBILE_INPUT
         MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
+
+        transform.position = parentTransform.position.Add(y: 2.2f);
 
         m_DialogueUI.SetActive(true); //show dialogue ui
         ChangeIsDialogueInProgress(true); //notify that dialogue is in progress

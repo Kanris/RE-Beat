@@ -53,7 +53,7 @@ public class Sign : MonoBehaviour {
                 {
                     EnableUserControl(false); //disable user controll
                     m_InteractionButton.SetActive(false); //hide sign ui
-                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName)); //show sign text
+                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName, transform)); //show sign text
 
                 } else if (!m_Player.enabled) //if player control is disabled
                 {

@@ -48,8 +48,8 @@ public class DialogueTrigger : MonoBehaviour {
             {
                 if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player want to start dialogue
                 {
-                    DialogueManager.Instance.StartDialogue(transform.name, dialogue); //start dialogue
                     DisplayUI(false); //disable npc ui
+                    DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
 
                     if (!dialogue.IsDialogueFinished) //if dialogue is not saved
                         GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
@@ -58,10 +58,6 @@ public class DialogueTrigger : MonoBehaviour {
                 if (!m_Player.enabled) //if dialogue is not in progress and player havn't character control
                 {
                     EnableUserControl(true); //enable character control
-                }
-
-                if (!m_UI.activeSelf) //if dialogue is not in progress, player is near show and NPC ui isn't shown
-                {
                     DisplayUI(true); //show NPC ui
                 }
             }
@@ -101,14 +97,7 @@ public class DialogueTrigger : MonoBehaviour {
     //show or hide npc ui
     private void DisplayUI(bool isActive)
     {
-        if (m_UI != null) //if npc ui was initialized
-        {
-            m_UI.SetActive(isActive); //show or hide npc ui
-        }
-        else //if npc ui wasn't initialized
-        {
-            Debug.LogError("DialogueTrigger.DisplayInteractionButton: m_InteractionButton is not initialized."); //show error
-        }
+        m_UI.SetActive(isActive); //show or hide npc ui
     }
 
     //change state of the m_IsDialogueInProgress value
