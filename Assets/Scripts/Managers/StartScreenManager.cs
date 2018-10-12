@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StartScreenManager : MonoBehaviour {
 
@@ -26,7 +27,7 @@ public class StartScreenManager : MonoBehaviour {
     [SerializeField] private AudioMixer audioMixer; //main game mixer
     [SerializeField] private Audio UIClickAudio;
     //options items
-    [SerializeField] private Dropdown resoulutionsDropDown;
+    [SerializeField] private TMP_Dropdown resoulutionsDropDown;
     [SerializeField] private Slider volumeMasterSlider;
     [SerializeField] private Slider volumeEnvironmentSlider;
     [SerializeField] private Toggle fullscreenToggle;

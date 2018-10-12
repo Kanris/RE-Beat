@@ -201,7 +201,10 @@ public class DroneHive : MonoBehaviour
 
     private void OnPlayerHitTeleport(bool value)
     {
+        WeirdAttack();
+
         m_TeleportTimer = Time.time;
+
         ShowParticles(HitParticle, 5f);
     }
 

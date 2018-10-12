@@ -52,7 +52,7 @@ public class TextPage : MonoBehaviour {
     {
         m_TaskText.text = taskText; //show given text
 
-        if (m_TaskText.textInfo.pageCount > 1) //if page counts grater than 1
+        if (m_TaskText.GetTextInfo(taskText).pageCount > 1) //if page counts grater than 1
         {
             ShowNextPage(true); //show next button
             ShowPreviousPage(false); //hide previous
@@ -65,6 +65,14 @@ public class TextPage : MonoBehaviour {
         }
 
         m_CurrentPage = 1; //current page index
+    }
+
+    [ContextMenu("ShowPredifinedText")]
+    public void ShowPredifinedText()
+    {
+        var text = "sdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdsssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdssdfsdfdsdfsdfdssdfsdfdssdfsdfds";
+
+        ShowText(text);
     }
 
     public void MoveToNextPage()
