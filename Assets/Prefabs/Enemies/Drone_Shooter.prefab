@@ -37,8 +37,8 @@ GameObject:
   - component: {fileID: 212057081376643012}
   - component: {fileID: 58039061244531070}
   - component: {fileID: 50477204696496924}
-  - component: {fileID: 114189616276374168}
   - component: {fileID: 95883086424202952}
+  - component: {fileID: 114189616276374168}
   - component: {fileID: 114280960268024750}
   m_Layer: 0
   m_Name: Body
@@ -341,10 +341,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   TrailMaterial: {fileID: 2100000, guid: caa4eea9855fb9a439c3d9018e5052f9, type: 2}
-  BulletTrailPrefab: {fileID: 1012339724157260, guid: bbbcfbbd180aee8448749dc10ab4830e,
-    type: 2}
-  DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
-    type: 2}
   ChasingRange: {fileID: 114331611186953348}
   ShootingRange: {fileID: 114973094009244786}
   m_PatrolPoints:
@@ -352,10 +348,14 @@ MonoBehaviour:
   - {fileID: 4481481314149496}
   DeathDetonationTimer: 2
   DamageAmount: 1
-  Speed: 600
+  Speed: 300
   UpdateRate: 3
   Health: 3
   AttackSpeed: 0.5
+  BulletTrailPrefab: {fileID: 1012339724157260, guid: bbbcfbbd180aee8448749dc10ab4830e,
+    type: 2}
+  DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+    type: 2}
 --- !u!114 &114280960268024750
 MonoBehaviour:
   m_ObjectHideFlags: 1

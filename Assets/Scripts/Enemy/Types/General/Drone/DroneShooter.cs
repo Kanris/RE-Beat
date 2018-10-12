@@ -80,6 +80,7 @@ public class DroneShooter : MonoBehaviour {
     [SerializeField] private Material TrailMaterial;
     [SerializeField] private PlayerInTrigger ChasingRange; //trigger that detect player
     [SerializeField] private PlayerInTrigger ShootingRange;
+    [SerializeField] private Animator m_Animator;
 
     [Header("Movement points")]
     [SerializeField] private Transform[] m_PatrolPoints;
@@ -141,6 +142,7 @@ public class DroneShooter : MonoBehaviour {
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Seeker = GetComponent<Seeker>();
+        m_Animator = GetComponent<Animator>();
     }
 
     #endregion
@@ -184,13 +186,17 @@ public class DroneShooter : MonoBehaviour {
         if (collision.CompareTag("PlayerAttackRange") & !m_IsDestroying)
         {
             Health--;
-
+            
             if (Health <= 0)
             {
+                PlayTriggerAnimation("Destroy");
+
                 m_IsDestroying = true;
                 m_Rigidbody.sharedMaterial = null;
                 m_Rigidbody.gravityScale = 3f;
             }
+            else
+                PlayTriggerAnimation("Hit");
         }
     }
 
@@ -317,9 +323,12 @@ public class DroneShooter : MonoBehaviour {
         Destroy(myLine, duration);
     }
 
-    #endregion
+    private void PlayTriggerAnimation(string name)
+    {
+        m_Animator.SetTrigger(name);
+    }
 
-    #region kamikaze
+    #endregion
 
     private void InitializeChasing()
     {
@@ -395,8 +404,6 @@ public class DroneShooter : MonoBehaviour {
             }
         }
     }
-
-    #endregion
 
     #endregion
 }

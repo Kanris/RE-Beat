@@ -16,6 +16,7 @@ public class DroneKamikaze : MonoBehaviour
     [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
 
     private Rigidbody2D m_Rigidbody;
+    private Animator m_Animator;
 
     private bool m_IsDestroying = false; //is drone going to blow up
 
@@ -26,6 +27,8 @@ public class DroneKamikaze : MonoBehaviour
     {
 
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_Animator = GetComponent<Animator>();
+
         InitializeKamikaze();
 
     }
@@ -37,10 +40,6 @@ public class DroneKamikaze : MonoBehaviour
         var randY = Random.Range(0, 2);
 
         m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
-    }
-
-    private void InitializeComponents()
-    {
     }
 
     #endregion
@@ -76,10 +75,14 @@ public class DroneKamikaze : MonoBehaviour
 
             if (Health <= 0)
             {
+                PlayTriggerAnimation("Destroy");
+
                 m_IsDestroying = true;
                 m_Rigidbody.sharedMaterial = null;
                 m_Rigidbody.gravityScale = 3f;
             }
+            else
+                PlayTriggerAnimation("Hit");
         }
     }
 
@@ -103,5 +106,10 @@ public class DroneKamikaze : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void PlayTriggerAnimation(string name)
+    {
+        m_Animator.SetTrigger(name);
     }
 }
