@@ -49,6 +49,8 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private GameObject m_DialogueUI; //dialogue ui
     [SerializeField] private Animator m_DialogueBackgroundAnimator;
     [SerializeField] private GameObject m_Buttons; //answer buttons
+    [SerializeField] private GameObject m_FirstButtonGO;
+    [SerializeField] private GameObject m_SecondButtonGO;
     [SerializeField] private TextMeshProUGUI m_FirstButton; //first answer ui text 
     [SerializeField] private TextMeshProUGUI m_SecondButton; //second answer ui text
     [SerializeField] private TextMeshProUGUI m_Text; //text to display sentences
@@ -80,7 +82,7 @@ public class DialogueManager : MonoBehaviour {
                 {
                     m_DisplayingSingleSentence = false; //dialogue is not displaying sign text
 
-                    StartCoroutine(DialogueHideAnimation());
+                    StartCoroutine(AnimateDialogueHide());
                 }
             }
         }
@@ -93,7 +95,7 @@ public class DialogueManager : MonoBehaviour {
 
         if (m_AnwswerChoose) //if player have to choose the answer
         {
-            SetButtonsText(m_CurrentSentence.firstAnswer, m_CurrentSentence.secondAnswer); //initialize buttons text and show buttons grid
+            ShowAnswerButtons(m_CurrentSentence.firstAnswer, m_CurrentSentence.secondAnswer); //initialize buttons text and show buttons grid
         }
     }
 
@@ -153,7 +155,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     //set up answers
-    private void SetButtonsText(string firstButtonText, string secondButtonText)
+    private void ShowAnswerButtons(string firstButtonText, string secondButtonText)
     {
         m_FirstButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(firstButtonText);
         m_SecondButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(secondButtonText);
@@ -161,6 +163,17 @@ public class DialogueManager : MonoBehaviour {
         m_FirstButton.color = m_SecondButton.color = m_SecondButton.color.ChangeColor(a: 0f);
 
         m_Buttons.SetActive(true);
+
+        StartCoroutine(AnimateButtonsAppearance());
+    }
+
+    private IEnumerator AnimateButtonsAppearance()
+    {
+        m_FirstButtonGO.SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+
+        m_SecondButtonGO.SetActive(true);
     }
 
     //notify subscribers that dialogue in progress or not
@@ -272,13 +285,14 @@ public class DialogueManager : MonoBehaviour {
         m_Dialogue.IsDialogueFinished = true; //save that dialogue is finished
         m_AnwswerChoose = false; //player don't have to choose the answer
 
-        StartCoroutine(DialogueHideAnimation());
+        StartCoroutine(AnimateDialogueHide());
     }
 
-    private IEnumerator DialogueHideAnimation()
+    private IEnumerator AnimateDialogueHide()
     {
         m_DialogueBackgroundAnimator.SetTrigger("Disappear");
 
+        m_NextImage.SetActive(false);
         m_Text.gameObject.SetActive(false);
 
         yield return new WaitForEndOfFrame(); //apply disappear animation
@@ -301,6 +315,8 @@ public class DialogueManager : MonoBehaviour {
 
         ReInitializeDialogueQueue(sentenceToStart); //reinitialize queue
 
+        m_FirstButtonGO.SetActive(false);
+        m_SecondButtonGO.SetActive(false);
         m_Buttons.SetActive(false); //hide buttons
     }
 

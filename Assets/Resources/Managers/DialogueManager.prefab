@@ -30,7 +30,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1291863335685490
 GameObject:
   m_ObjectHideFlags: 1
@@ -68,7 +68,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1484179587401876
 GameObject:
   m_ObjectHideFlags: 1
@@ -1019,6 +1019,8 @@ MonoBehaviour:
   m_DialogueUI: {fileID: 1913889748105390}
   m_DialogueBackgroundAnimator: {fileID: 95664611029984232}
   m_Buttons: {fileID: 1875590984514910}
+  m_FirstButtonGO: {fileID: 1170473546055548}
+  m_SecondButtonGO: {fileID: 1315041943581176}
   m_FirstButton: {fileID: 114547606291523434}
   m_SecondButton: {fileID: 114117862831417474}
   m_Text: {fileID: 114451435117010378}
