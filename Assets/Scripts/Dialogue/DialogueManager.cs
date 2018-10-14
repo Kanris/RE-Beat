@@ -47,6 +47,7 @@ public class DialogueManager : MonoBehaviour {
     #region serialize fields
 
     [SerializeField] private GameObject m_DialogueUI; //dialogue ui
+    [SerializeField] private Animator m_DialogueBackgroundAnimator;
     [SerializeField] private GameObject m_Buttons; //answer buttons
     [SerializeField] private TextMeshProUGUI m_FirstButton; //first answer ui text 
     [SerializeField] private TextMeshProUGUI m_SecondButton; //second answer ui text
@@ -77,10 +78,9 @@ public class DialogueManager : MonoBehaviour {
 
                 } else if (m_DisplayingSingleSentence) //if displaying sign text
                 {
-                    ChangeIsDialogueInProgress(false); //dialogue is not in ptrogress
                     m_DisplayingSingleSentence = false; //dialogue is not displaying sign text
 
-                    m_DialogueUI.SetActive(false); //hide dialogue ui
+                    StartCoroutine(DialogueHideAnimation());
                 }
             }
         }
@@ -158,6 +158,8 @@ public class DialogueManager : MonoBehaviour {
         m_FirstButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(firstButtonText);
         m_SecondButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(secondButtonText);
 
+        m_FirstButton.color = m_SecondButton.color = m_SecondButton.color.ChangeColor(a: 0f);
+
         m_Buttons.SetActive(true);
     }
 
@@ -216,7 +218,9 @@ public class DialogueManager : MonoBehaviour {
 #if MOBILE_INPUT
             MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
-            
+
+            m_Text.gameObject.SetActive(true);
+
             transform.position = parentTransform.position.Add(y: 2.2f);
             m_Buttons.transform.position = playerTransform.position.Add(x: 1.8f, y: 0.5f);
 
@@ -251,6 +255,8 @@ public class DialogueManager : MonoBehaviour {
         MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
 
+        m_Text.gameObject.SetActive(true);
+
         transform.position = parentTransform.position.Add(y: 2.2f);
 
         m_DialogueUI.SetActive(true); //show dialogue ui
@@ -265,7 +271,21 @@ public class DialogueManager : MonoBehaviour {
     {
         m_Dialogue.IsDialogueFinished = true; //save that dialogue is finished
         m_AnwswerChoose = false; //player don't have to choose the answer
-        ChangeIsDialogueInProgress(false); //notify that dialogue is complete
+
+        StartCoroutine(DialogueHideAnimation());
+    }
+
+    private IEnumerator DialogueHideAnimation()
+    {
+        m_DialogueBackgroundAnimator.SetTrigger("Disappear");
+
+        m_Text.gameObject.SetActive(false);
+
+        yield return new WaitForEndOfFrame(); //apply disappear animation
+        
+        yield return new WaitForSeconds(m_DialogueBackgroundAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        ChangeIsDialogueInProgress(false); //dialogue is not in ptrogress
 
         m_DialogueUI.SetActive(false); //hide dialogue ui
     }
