@@ -131,7 +131,10 @@ public class AnnouncerManager : MonoBehaviour {
         m_MessagePipeline.RemoveAt(0);
 
         if (m_MessagePipeline.Count != 0)
-            StartCoroutine(DisplayMessage());
+        {
+            yield return SetActiveUI(false);
+            yield return DisplayMessage();
+        }
         else
         {
             m_isShowingPipeline = false;
