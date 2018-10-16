@@ -152,7 +152,7 @@ public class InfoManager : MonoBehaviour {
 
     private Button CreateTaskButton(string name)
     {
-        var buttonFromResources = Resources.Load("Managers/Journal/TaskButton") as GameObject;
+        var buttonFromResources = Resources.Load("Managers/InfoManager/TaskButton") as GameObject;
         var instantiateTaskButton = Instantiate(buttonFromResources, m_Content);
 
         instantiateTaskButton.name = name; //set button name to task
@@ -164,7 +164,7 @@ public class InfoManager : MonoBehaviour {
 
     private Button CreateItemButton(ItemDescription item)
     {
-        var resourceItemButton = Resources.Load("Managers/Journal/InventoryItem") as GameObject;
+        var resourceItemButton = Resources.Load("Managers/InfoManager/InventoryItem") as GameObject;
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
         instantiateItemButton.name = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button name to the item name
