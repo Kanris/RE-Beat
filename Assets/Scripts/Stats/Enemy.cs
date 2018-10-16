@@ -7,6 +7,7 @@ public class Enemy : Stats
 
     public delegate void VoidFloatDelegate(float value);
     public event VoidFloatDelegate OnSpeedChange;
+    public event VoidFloatDelegate OnEnemyTakeDamageValue;
 
     public delegate void VoidBoolDelegate(bool value);
     public event VoidBoolDelegate OnEnemyTakeDamage;
@@ -68,6 +69,11 @@ public class Enemy : Stats
             if (OnEnemyTakeDamage != null)
             {
                 OnEnemyTakeDamage(m_IsPlayerNear);
+            }
+
+            if (OnEnemyTakeDamageValue != null)
+            {
+                OnEnemyTakeDamageValue(amount);
             }
 
             base.TakeDamage(amount, divider);

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator), typeof(EnemyStatsGO))]
 public class DroneHive : MonoBehaviour
 {
 
     #region SerializeField
+    [SerializeField] private Image m_Health;
+
     [Header("Teleport Points")]
     [SerializeField] private GameObject LeftTeleport;
     [SerializeField] private GameObject CenterTeleport;
@@ -96,6 +99,7 @@ public class DroneHive : MonoBehaviour
     {
         m_Stats.OnObjectDeath += ArchlightDead;
         m_Stats.OnEnemyTakeDamage += OnPlayerHitTeleport;
+        m_Stats.OnEnemyTakeDamageValue += ChangeUIHealth;
     }
 
     #endregion
@@ -150,6 +154,8 @@ public class DroneHive : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         ResetArchlightPosition();
+
+        m_Health.fillAmount = 1f;
 
         ChangeLightState(true);
         gameObject.SetActive(false);
@@ -206,6 +212,13 @@ public class DroneHive : MonoBehaviour
         m_TeleportTimer = Time.time;
 
         ShowParticles(HitParticle, 5f);
+    }
+
+    private void ChangeUIHealth(float value)
+    {
+        var fillValue = 100 * value / m_Stats.MaxHealth / 100;
+
+        m_Health.fillAmount -= fillValue;
     }
 
     private IEnumerator TeleportSequence(Vector3 destination)
