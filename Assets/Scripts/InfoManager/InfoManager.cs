@@ -127,18 +127,26 @@ public class InfoManager : MonoBehaviour {
 
     private void InfoManagement(int id)
     {
-        AudioManager.Instance.Play(m_OpenJournalAudio);
-
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
+            AudioManager.Instance.Play(m_OpenJournalAudio);
             OpenBookmark(id);
-        }
 
-        if (m_JournalUI.activeSelf != true)
+            m_JournalUI.SetActive(true);
+            m_Page.ClearText();
+
+            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+        }
+        else if (m_CurrentOpenBookmark == id & !m_JournalUI.activeSelf)
         {
             m_JournalUI.SetActive(true);
             m_Page.ClearText();
+
             OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+        }
+        else if (m_JournalUI.activeSelf)
+        {
+            CloseJournal();
         }
     }
 
