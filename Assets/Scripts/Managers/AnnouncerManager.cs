@@ -16,13 +16,15 @@ public class AnnouncerManager : MonoBehaviour {
         public float time = 1.5f; //time to display
 
         public Color color;
+        public MessageType messageType;
 
         public Message(string message, MessageType messageType, float time = 1.5f)
         {
             this.message = message;
             this.time = time;
+            this.messageType = messageType;
 
-            SetColor(messageType);
+            SetColor(this.messageType);
         }
 
         private void SetColor(MessageType messageType)
@@ -47,6 +49,11 @@ public class AnnouncerManager : MonoBehaviour {
             }
 
             color = color.ChangeColor(a: 0.8f);
+        }
+
+        public void PlayNotificationSound()
+        {
+            AudioManager.Instance.Play("Noti" + this.messageType);
         }
     }
 
@@ -120,10 +127,12 @@ public class AnnouncerManager : MonoBehaviour {
 
         var itemToDisplay = m_MessagePipeline[0];
 
+        //color animation
         m_StartColor = m_UI.GetComponent<Image>().color;
         m_EndColor = itemToDisplay.color;
         m_StartTime = Time.time;
 
+        itemToDisplay.PlayNotificationSound();
         m_Text.text = itemToDisplay.message;
 
         yield return new WaitForSeconds(itemToDisplay.time);
