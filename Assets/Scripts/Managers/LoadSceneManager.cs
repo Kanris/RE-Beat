@@ -94,7 +94,7 @@ public class LoadSceneManager : MonoBehaviour {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    public IEnumerator LoadWithFade(string sceneName, string nameToDisplay, Vector2 spawnPosition)
+    public IEnumerator LoadWithFade(string sceneName, string locationName, Vector2 spawnPosition)
     {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
@@ -110,8 +110,8 @@ public class LoadSceneManager : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToClear();
 
-        if (!string.IsNullOrEmpty(nameToDisplay) & AnnouncerManager.Instance != null)
-            AnnouncerManager.Instance.DisplaySceneName(nameToDisplay);
+        if (!string.IsNullOrEmpty(locationName) & AnnouncerManager.Instance != null)
+            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(locationName, AnnouncerManager.Message.MessageType.Scene, 3f));
     }
 
     public void CloseGame()

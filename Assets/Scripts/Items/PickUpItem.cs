@@ -111,7 +111,7 @@ public class PickUpItem : MonoBehaviour {
         var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(itemName + " " + 
-            itemAddMessage + " - I")); //show announcer message about new item in the bag
+            itemAddMessage, AnnouncerManager.Message.MessageType.Item)); //show announcer message about new item in the bag
 
         Destroy(gameObject); //destroy this item
     }
@@ -119,7 +119,7 @@ public class PickUpItem : MonoBehaviour {
     private void ReadNote()
     {
         var noteText = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Description);
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(noteText, 4f)); //show announcer with message in the note
+        AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(noteText, AnnouncerManager.Message.MessageType.Item, 4f)); //show announcer with message in the note
     }
 
     #endregion

@@ -55,7 +55,7 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/PauseMenuManager");
 
-            Initialize("Managers/AnnouncerManager");
+            //Initialize("Managers/AnnouncerManager");
 
             Initialize("Managers/DialogueManager");
 

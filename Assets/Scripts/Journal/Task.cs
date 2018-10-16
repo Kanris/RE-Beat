@@ -65,7 +65,7 @@ public class Task
     {
         AnnouncerManager.Instance.DisplayAnnouncerMessage(
             new AnnouncerManager.Message("<#000000>" + LocalizationManager.Instance.GetJournalLocalizedValue(NameKey) + 
-            "</color> " + text + "  - <#000000>J</color>", 3f));
+            "</color> " + text, AnnouncerManager.Message.MessageType.Task, 3f));
     }
 
     #endregion

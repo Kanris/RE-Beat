@@ -74,7 +74,7 @@ public class Chest : MonoBehaviour {
         if (chestType == ChestType.Destroyable & Health != 0) //if chest is destroyable but still have health
         {
             var chestInfo = LocalizationManager.Instance.GetItemsLocalizedValue("chest_info");
-            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(chestInfo)); //display warning message
+            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(chestInfo, AnnouncerManager.Message.MessageType.Message)); //display warning message
         }
         else //if chest can be open
         {

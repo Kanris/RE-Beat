@@ -8,6 +8,9 @@ public class ApearanceTMPro : MonoBehaviour {
 
     public void TextAppearance()
     {
+        if (!m_TextToAnimate.gameObject.activeSelf)
+            m_TextToAnimate.gameObject.SetActive(true);
+
         StartCoroutine(AnimateAppearanceText());
     }
 

@@ -120,7 +120,7 @@ public class MagneticBox : MonoBehaviour {
                 {
                     AnnouncerManager.Instance.DisplayAnnouncerMessage(
                         new AnnouncerManager.Message(LocalizationManager.Instance.GetItemsLocalizedValue (
-                            NeededItem.itemDescription.Name) + " - required to pickup this box.")); //display warning message
+                            NeededItem.itemDescription.Name) + " - required to pickup this box.", AnnouncerManager.Message.MessageType.Message)); //display warning message
                 }
             }
         }
