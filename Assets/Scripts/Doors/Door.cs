@@ -30,6 +30,7 @@ public class Door : MonoBehaviour {
 
     private Animator m_Animator; //reference to the gameobject animator
     private GameObject m_UI; //interaction button ui (needed only if door type is key)
+    private float m_TimeBetweenShowMessage;
 
     #endregion
 
@@ -88,7 +89,12 @@ public class Door : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player")) //if player is in collision
         {
             var displayMessage = LocalizationManager.Instance.GetItemsLocalizedValue(DisplayMessage);
-            ShowAnnouncerMessage(displayMessage); //show tip
+
+            if (m_TimeBetweenShowMessage < Time.time)
+            {
+                m_TimeBetweenShowMessage = Time.time + 2f;
+                ShowAnnouncerMessage(displayMessage); //show tip
+            }
         }
     }
 
@@ -108,8 +114,9 @@ public class Door : MonoBehaviour {
 
             Destroy(gameObject); //open the door
         }
-        else //if player havn't needed key
+        else if (m_TimeBetweenShowMessage < Time.time)
         {
+            m_TimeBetweenShowMessage = Time.time + 2f;//if player havn't needed key
             ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.itemDescription.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification")); //display message that key is required
         }
     }
