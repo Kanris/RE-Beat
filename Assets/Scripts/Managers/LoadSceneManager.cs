@@ -103,7 +103,7 @@ public class LoadSceneManager : MonoBehaviour {
         if (GameMaster.Instance != null)
         {
             GameMaster.Instance.RespawnWithSpawnPosition(spawnPosition);
-            GameMaster.Instance.RecreateSceneState(sceneName);
+            GameMaster.Instance.RecreateSceneState(locationName);
         }
 
         yield return new WaitForSeconds(1.5f);

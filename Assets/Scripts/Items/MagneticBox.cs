@@ -149,6 +149,7 @@ public class MagneticBox : MonoBehaviour {
             transform.SetParent(null); //detach from parent
             transform.gameObject.layer = 14; //chage layer so player can play ground animation
             m_Animator.SetTrigger("Inactive"); //play inactive animation
+
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
         }
     }

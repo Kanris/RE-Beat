@@ -40,6 +40,7 @@ namespace UnityStandardAssets._2D
             InitializeJumpPlatform();
 
             OnLandEvent += ShowDustEffect;
+            InfoManager.Instance.OnJournalOpen += OnInfoManagerOpen;
         }
 
         private void InitializeJumpPlatform()
@@ -216,6 +217,14 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        private void OnInfoManagerOpen(bool value)
+        {
+            if (value)
+                m_MaxSpeed = 3f;
+            else
+                m_MaxSpeed = 4f;
         }
     }
 }
