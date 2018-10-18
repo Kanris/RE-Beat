@@ -197,6 +197,8 @@ public class PlayerStats : Stats
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {
+        Camera.main.GetComponent<CinemachineFollow>().ShakeCam();
+
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false; //take control from the player
         PlayHitAnimation(true); 
 
