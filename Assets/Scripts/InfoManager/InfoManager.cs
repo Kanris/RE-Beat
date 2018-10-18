@@ -28,6 +28,7 @@ public class InfoManager : MonoBehaviour {
     [SerializeField] private Transform m_Content; //buttons grid
     [SerializeField] private TextPage m_Page; //main page text
     [SerializeField] private TextMeshProUGUI m_HeaderText;
+    [SerializeField] private TextMeshProUGUI m_ScrapText;
 
     [Header("Effects")]
     [SerializeField] private Audio m_OpenJournalAudio;
@@ -74,6 +75,7 @@ public class InfoManager : MonoBehaviour {
     private void Start () {
 
         PauseMenuManager.Instance.OnGamePause += SetIsCantOpenJournal;
+        PlayerStats.OnScrapAmountChange += ChangeScrapAmount;
 
         m_JournalUI.SetActive(false); //hide journal ui
 
@@ -98,7 +100,6 @@ public class InfoManager : MonoBehaviour {
 
     // Update is called once per frame
     private void Update () {
-		
 
         if (!m_IsCantOpenJournal)
         {
@@ -148,6 +149,11 @@ public class InfoManager : MonoBehaviour {
         {
             CloseJournal();
         }
+    }
+
+    private void ChangeScrapAmount(int value)
+    {
+        m_ScrapText.text = PlayerStats.Scrap.ToString();
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)

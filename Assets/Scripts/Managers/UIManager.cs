@@ -30,8 +30,6 @@ public class UIManager : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private TextMeshProUGUI Text; //current coins amount
-    [SerializeField] private TextMeshProUGUI AddCoins; //coins to add
     [SerializeField] private GameObject m_UI;
     [SerializeField] private GameObject m_LifePanel;
     [SerializeField] private GameObject m_LifeImage;
@@ -43,12 +41,6 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region private methods
-
-    // Use this for initialization
-    private void Start () {
-
-        PlayerStats.OnCoinsAmountChange += ChangeCoinsAmount; //subscribe on coins amount change
-    }
 
     #endregion
 
@@ -82,33 +74,6 @@ public class UIManager : MonoBehaviour {
         }
 
         m_HealthInPanel.Clear();
-    }
-
-    public IEnumerator ChangeCoinsAmount(int value)
-    { 
-        if (Text != null & AddCoins != null)
-        {
-            AddCoins.gameObject.SetActive(true);
-            AddCoins.text = "+" + value.ToString();
-
-            yield return new WaitForSeconds(1f);
-
-            var currentCoinsCount = int.Parse(Text.text);
-            var addAmount = value;
-
-            for (int index = 0; index < value; index++)
-            {
-                currentCoinsCount += 1;
-                Text.text = currentCoinsCount.ToString();
-
-                addAmount -= 1;
-                AddCoins.text = "+" + addAmount.ToString();
-
-                yield return new WaitForSeconds(0.01f);
-            }
-
-            AddCoins.gameObject.SetActive(false);
-        }
     }
 
     #endregion

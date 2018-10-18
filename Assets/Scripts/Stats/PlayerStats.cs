@@ -9,8 +9,8 @@ public class PlayerStats : Stats
 {
     #region delegates
 
-    public delegate IEnumerator IEnumeratorDelegate(int value);
-    public static event IEnumeratorDelegate OnCoinsAmountChange;
+    public delegate void VoidDelegate (int value);
+    public static event VoidDelegate OnScrapAmountChange;
 
     #endregion
 
@@ -34,14 +34,16 @@ public class PlayerStats : Stats
 
     #region properties
 
-    public static int Coins
+    public static int Scrap
     {
         set
         {
             m_Coins += value;
 
-            if (OnCoinsAmountChange != null) //notify that coins amount changed
-                GameMaster.Instance.StartCoroutine(OnCoinsAmountChange(value));
+            if (OnScrapAmountChange != null) //notify that coins amount changed
+            {
+                OnScrapAmountChange(value);
+            }
         }
         get
         {
@@ -66,7 +68,7 @@ public class PlayerStats : Stats
     {
         if (CurrentHealth == MaxHealth) //if player is already full health
         {
-            GameMaster.Instance.StartCoroutine(UIManager.Instance.ChangeCoinsAmount(10)); //add coins
+            Scrap = 10; //add scrap
         }
         else //heal player
         {
@@ -178,8 +180,6 @@ public class PlayerStats : Stats
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
         }
-
-        UIManager.Instance.ChangeCoinsAmount(m_Coins);
     }
 
     public override void TakeDamage(int amount, int divider = 1)

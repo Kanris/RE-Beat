@@ -200,7 +200,7 @@ public class PlayerGameData : IGameData
         AttackSpeed = PlayerStats.MeleeAttackSpeed;
         PlayerInventory = PlayerStats.PlayerInventory;
         CurrentPlayerHealth = PlayerStats.CurrentPlayerHealth;
-        Coins = PlayerStats.Coins;
+        Coins = PlayerStats.Scrap;
     }
 
     #endregion
@@ -214,7 +214,7 @@ public class PlayerGameData : IGameData
         PlayerStats.MeleeAttackSpeed = AttackSpeed;
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
-        PlayerStats.Coins = Coins;
+        PlayerStats.Scrap = Coins;
     }
 
     #endregion

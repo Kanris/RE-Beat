@@ -134,7 +134,7 @@ public class Enemy : Stats
 
     private void GiveCoinsToPlayer()
     {
-        PlayerStats.Coins = DropCoins;
+        PlayerStats.Scrap = DropCoins;
     }
 
     private void SetInvincible(bool value)
