@@ -6,6 +6,7 @@ public class RespawnPoint : MonoBehaviour {
 
     [Header("Light")]
     [SerializeField] private bool isLight;
+    [SerializeField] private GameObject m_ObjectLight;
 
     [Header("Effects")]
     [SerializeField] private Audio audioSave;
@@ -38,6 +39,9 @@ public class RespawnPoint : MonoBehaviour {
     private void ChangePlayerMaterial(Collider2D collision)
     {
         collision.GetComponent<MaterialChange>().Change(isLight); //if respawn point has light on it change player material
+
+        if (isLight)
+            m_ObjectLight.SetActive(true);
     }
 
     #endregion
