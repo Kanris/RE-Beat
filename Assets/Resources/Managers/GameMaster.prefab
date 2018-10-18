@@ -51,7 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e978bdc8213ed40d4bfaad6614f915f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: Background
-  RespawnPoint: {fileID: 0}
-  isPlayerDead: 0
+  m_RespawnPoint: {fileID: 0}
+  m_RespawnPointPosition: {x: 0, y: 0, z: 0}
+  IsPlayerDead: 0
   SceneName: 
+  m_PlayerToRespawn: {fileID: 0}
+  BackgroundMusic: {fileID: 0}
+  m_Camera: {fileID: 0}

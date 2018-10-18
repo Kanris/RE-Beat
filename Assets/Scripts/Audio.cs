@@ -31,13 +31,12 @@ public class Audio : ScriptableObject
 
     #region public methods
 
-    public void SetSource(AudioSource source, AudioMixerGroup mixerGroup)
+    public void SetSource(AudioSource source)
     {
         m_AudioSource = source;
         m_AudioSource.clip = Clip;
         m_AudioSource.playOnAwake = false;
         ChangeMusicSettings();
-        m_AudioSource.outputAudioMixerGroup = mixerGroup;
 
         if (!m_AudioSource.clip.preloadAudioData)
         {

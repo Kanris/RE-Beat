@@ -36,9 +36,6 @@ public class AudioManager : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private AudioMixerGroup MusicAudioMixer;
-    [SerializeField] private AudioMixerGroup EnvironmentAudioMixer;
-
     private string m_BackgroundMusic;
 
     #endregion
@@ -52,19 +49,8 @@ public class AudioManager : MonoBehaviour {
             var audioSource = new GameObject("AudioSource_" + index + "_" + AudioArray[index]);
             audioSource.transform.SetParent(transform);
 
-            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>(), 
-                                        GetAudioMixerGroup(AudioArray[index].m_AudioType));
+            AudioArray[index].SetSource(audioSource.AddComponent<AudioSource>());
         }
-    }
-
-    private AudioMixerGroup GetAudioMixerGroup(Audio.AudioType type)
-    {
-        var mixerGroup = MusicAudioMixer;
-
-        if (type == Audio.AudioType.Environment)
-            mixerGroup = EnvironmentAudioMixer;
-
-        return mixerGroup;
     }
 
     private Audio GetAudioFromArray(string name)
