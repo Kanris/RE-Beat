@@ -105,6 +105,7 @@ public class Audio : ScriptableObject
 
     public void SetVolume(float value)
     {
+        Volume = value;
         m_AudioSource.volume = value;
     }
 
@@ -119,8 +120,8 @@ public class Audio : ScriptableObject
 
     private void ChangeMusicSettings()
     {
-        m_AudioSource.volume = Volume * (1 + Random.Range(-VolumeOffset / 2f, VolumeOffset / 2f));
-        m_AudioSource.pitch = Pitch * (1 + Random.Range(-PitchOffset / 2f, PitchOffset / 2f)); ;
+        m_AudioSource.volume = Volume;
+        m_AudioSource.pitch = Pitch;
         m_AudioSource.loop = Loop;
     }
 
