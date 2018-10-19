@@ -28,6 +28,10 @@ public class MagneticBox : MonoBehaviour {
     private Vector2 m_RespawnPosition; //box respawn point
     private GameObject m_InteractionButton; //box ui
 
+    private Animator m_PlayerAnimator;
+    private float m_PreviousYPosition = 0f;
+    private float m_CheckPositionTime;
+
     #endregion
 
     #region private fields
@@ -130,6 +134,22 @@ public class MagneticBox : MonoBehaviour {
             {
                 PickUpBox(false); //put the box
             }
+            else if (!m_PlayerAnimator.GetBool("Ground"))
+            {
+                if (m_CheckPositionTime < Time.time)
+                {
+                    if (m_PreviousYPosition == transform.parent.position.y)
+                    {
+                        PickUpBox(false); //put the box
+                    }
+                    else
+                    {
+                        m_CheckPositionTime = Time.time + 0.1f;
+                        m_PreviousYPosition = transform.parent.position.y;
+                    }
+                }
+            }
+
         }
     }
 
@@ -143,6 +163,8 @@ public class MagneticBox : MonoBehaviour {
             transform.localPosition = new Vector2(0.5f, 0.5f); //put box in fron of the player
             transform.gameObject.layer = 0; //change layer so player animation will play correctly
             m_Animator.SetTrigger("Active"); //play active animation
+
+            m_PlayerAnimator = gameObject.transform.parent.GetComponent<Animator>(); //get player animator
         }
         else //if need to put box down
         {
