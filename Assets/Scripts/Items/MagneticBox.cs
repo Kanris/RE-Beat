@@ -134,18 +134,18 @@ public class MagneticBox : MonoBehaviour {
             {
                 PickUpBox(false); //put the box
             }
-            else if (!m_PlayerAnimator.GetBool("Ground"))
+            else if (!m_PlayerAnimator.GetBool("Ground")) //if player is in air
             {
-                if (m_CheckPositionTime < Time.time)
+                if (m_CheckPositionTime < Time.time) //if it's time to check
                 {
-                    if (m_PreviousYPosition == transform.parent.position.y)
+                    if (m_PreviousYPosition == transform.parent.position.y) //player stuck in jump with box
                     {
-                        PickUpBox(false); //put the box
+                        PickUpBox(false); //release the box
                     }
                     else
                     {
-                        m_CheckPositionTime = Time.time + 0.1f;
-                        m_PreviousYPosition = transform.parent.position.y;
+                        m_CheckPositionTime = Time.time + 0.1f; //next check timer
+                        m_PreviousYPosition = transform.parent.position.y; //save previous air position
                     }
                 }
             }
@@ -197,6 +197,14 @@ public class MagneticBox : MonoBehaviour {
     private void ChangeIsQuitting(bool value)
     {
         m_IsQuitting = value;
+    }
+
+    public void ResetPosition()
+    {
+        ShowDeathParticles(); //show destroying particles
+        PlayDestroySound(); //play destroying sound
+
+        transform.position = m_RespawnPosition;
     }
 
     #endregion
