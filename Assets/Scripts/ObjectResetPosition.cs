@@ -20,6 +20,8 @@ public class ObjectResetPosition : MonoBehaviour {
         SetActiveUI(false);
 
         m_TimerUI.SetActive(false);
+
+        m_ObjectToReset.OnBoxDestroy += ChangeBoxToObserve;
     }
 
     // Update is called once per frame
@@ -79,5 +81,11 @@ public class ObjectResetPosition : MonoBehaviour {
 
         m_TimerUI.SetActive(false);
         m_IsCanReset = true;
+    }
+
+    private void ChangeBoxToObserve(MagneticBox newBox)
+    {
+        m_ObjectToReset = newBox;
+        m_ObjectToReset.OnBoxDestroy += ChangeBoxToObserve;
     }
 }

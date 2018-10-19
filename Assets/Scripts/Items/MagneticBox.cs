@@ -6,6 +6,9 @@ public class MagneticBox : MonoBehaviour {
 
     #region public fields
 
+    public delegate void VoidDelegate(MagneticBox newBox);
+    public event VoidDelegate OnBoxDestroy;
+
     [Header("Item")]
     public Item NeededItem; //required item to pickup item
 
@@ -86,6 +89,9 @@ public class MagneticBox : MonoBehaviour {
             var objectToRespawn = Resources.Load("Items/MagneticBox") as GameObject;
             var instantiatedBox = Instantiate(objectToRespawn);
             instantiatedBox.transform.position = m_RespawnPosition;
+
+            if (OnBoxDestroy != null)
+                OnBoxDestroy(instantiatedBox.GetComponent<MagneticBox>());
         }
     }
 
