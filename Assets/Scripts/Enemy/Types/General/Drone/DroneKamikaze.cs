@@ -19,6 +19,8 @@ public class DroneKamikaze : MonoBehaviour
     private Animator m_Animator;
 
     private bool m_IsDestroying = false; //is drone going to blow up
+    private float m_UpdateTimer;
+    private Vector2 m_PreviousPosition;
 
     #region initialize
 
@@ -29,17 +31,8 @@ public class DroneKamikaze : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
 
-        InitializeKamikaze();
+        MoveInRandomDirection();
 
-    }
-
-    private void InitializeKamikaze()
-    {
-        //initialize random direction
-        var randX = Random.Range(0, 2);
-        var randY = Random.Range(0, 2);
-
-        m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
     }
 
     #endregion
@@ -47,7 +40,29 @@ public class DroneKamikaze : MonoBehaviour
     private void FixedUpdate()
     {
         m_Rigidbody.velocity =
-                        new Vector2(Mathf.Clamp(m_Rigidbody.velocity.x, -5f, 5f), Mathf.Clamp(m_Rigidbody.velocity.y, -5f, 5f));
+                        new Vector2(Mathf.Clamp(m_Rigidbody.velocity.x, -5f, 5f), 
+                        Mathf.Clamp(m_Rigidbody.velocity.y, -5f, 5f));
+
+        if (m_UpdateTimer < Time.time)
+        {
+            if (m_PreviousPosition == m_Rigidbody.position)
+            {
+                MoveInRandomDirection();
+            }
+            else
+            {
+                m_UpdateTimer = Time.time + 0.1f;
+                m_PreviousPosition = m_Rigidbody.position;
+            }
+        }
+    }
+
+    private void MoveInRandomDirection()
+    {
+        var randX = Random.Range(0, 2);
+        var randY = Random.Range(0, 2);
+
+        m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
     }
 
     #region collision/trigger detections

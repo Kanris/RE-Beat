@@ -249,6 +249,19 @@ Prefab:
       propertyPath: m_Color.r
       value: 0.62690717
       objectReference: {fileID: 0}
+    - target: {fileID: 50955518601525096, guid: d2ed4969e684141aa855ff1aab45d128,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 6fb2b872c7ae7f14fb91a51a8a41ff3a, type: 2}
+    - target: {fileID: 4945677124559636, guid: d2ed4969e684141aa855ff1aab45d128, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945677124559636, guid: d2ed4969e684141aa855ff1aab45d128, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2ed4969e684141aa855ff1aab45d128, type: 2}
   m_IsPrefabParent: 0
@@ -908,8 +921,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_VirtualCamera: {fileID: 1420743016}
-  m_ShakeAmount: 0.2
-  m_Duration: 2
 --- !u!114 &432040608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3058,6 +3069,16 @@ Prefab:
     - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
         type: 2}
       propertyPath: DestroyOnTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
+        type: 2}
+      propertyPath: m_AppearObject
+      value: 
+      objectReference: {fileID: 1213649461}
+    - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
+        type: 2}
+      propertyPath: m_DestroyOnTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8484,14 +8505,24 @@ Prefab:
     - target: {fileID: 108712600831354564, guid: d6671bf13a804944f97cd2951da1a8e7,
         type: 2}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114935907817546864, guid: d6671bf13a804944f97cd2951da1a8e7,
+        type: 2}
+      propertyPath: m_ObjectLight
+      value: 
+      objectReference: {fileID: 1166189681}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1160207096 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4178902492585998, guid: d6671bf13a804944f97cd2951da1a8e7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1160207095}
+--- !u!1 &1166189681 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1600313076646786, guid: d6671bf13a804944f97cd2951da1a8e7,
     type: 2}
   m_PrefabInternal: {fileID: 1160207095}
 --- !u!1001 &1207373863
@@ -8540,8 +8571,13 @@ Prefab:
     - target: {fileID: 108712600831354564, guid: d6671bf13a804944f97cd2951da1a8e7,
         type: 2}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114935907817546864, guid: d6671bf13a804944f97cd2951da1a8e7,
+        type: 2}
+      propertyPath: m_ObjectLight
+      value: 
+      objectReference: {fileID: 2014516025}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6671bf13a804944f97cd2951da1a8e7, type: 2}
   m_IsPrefabParent: 0
@@ -8683,6 +8719,11 @@ Prefab:
       propertyPath: Key
       value: 
       objectReference: {fileID: 179992248}
+    - target: {fileID: 114832504023990750, guid: 724559b7004e140408cb6d3a90c85200,
+        type: 2}
+      propertyPath: EnemyStats.MaxHealth
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
   m_IsPrefabParent: 0
@@ -11213,6 +11254,16 @@ Prefab:
       propertyPath: ShowOnDestroy
       value: 
       objectReference: {fileID: 1766445179}
+    - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
+        type: 2}
+      propertyPath: m_AppearObject
+      value: 
+      objectReference: {fileID: 1962130576}
+    - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
+        type: 2}
+      propertyPath: m_ShowOnDestroy
+      value: 
+      objectReference: {fileID: 179992248}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a2d3f1ca13744cf599b4d12055f560f, type: 2}
   m_IsPrefabParent: 0
@@ -11565,6 +11616,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2014516025 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1600313076646786, guid: d6671bf13a804944f97cd2951da1a8e7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1207373863}
 --- !u!1 &2038800950
 GameObject:
   m_ObjectHideFlags: 0
