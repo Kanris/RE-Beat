@@ -7,13 +7,17 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     public enum ReactOn { Player, PlayerBullet }
 
     [SerializeField] private ReactOn m_React;
-    [SerializeField] private GameObject ObjectToAppear; //object to show
-    [SerializeField] private GameObject ShowOnDestroy; //show on destroy some object
+    [SerializeField] private GameObject m_AppearObject; //object to show
+    [SerializeField] private GameObject m_ShowOnDestroy; //show on destroy some object
+
+    [Header("Animation (optional)")]
+    [SerializeField] private Animator m_AppearObjectAnimator;
+    [SerializeField] private string m_AnimationToPlay;
 
     [Header("Destroy conditions")]
-    [SerializeField] private bool DestroyOnTrigger;
+    [SerializeField] private bool m_DestroyOnTrigger;
 
-    [SerializeField] private bool LeftActiveAfterShow;
+    [SerializeField] private bool m_ActiveAfterDestroy;
 
     private bool m_IsQuitting; //is application is closing
 
@@ -44,15 +48,16 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
     private void AppearObject()
     {
-        if (ObjectToAppear != null)
+        if (m_AppearObject != null)
         {
-            ObjectToAppear.SetActive(true);
+            m_AppearObject.SetActive(true);
+            PlayAnimation();
         }
     }
 
     private void DestroyThisTrigger()
     {
-        if (DestroyOnTrigger)
+        if (m_DestroyOnTrigger)
         {
             GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object);
             Destroy(gameObject);
@@ -63,12 +68,12 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     {
         if (!m_IsQuitting)
         {
-            if (ShowOnDestroy != null)
+            if (m_ShowOnDestroy != null)
             {
-                ShowOnDestroy.SetActive(true);
+                m_ShowOnDestroy.SetActive(true);
             }
             
-            if (LeftActiveAfterShow)
+            if (m_ActiveAfterDestroy)
             {
                 AppearObject();
             }
@@ -83,6 +88,14 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     private void ChangeIsQuitting(bool value)
     {
         m_IsQuitting = value;
+    }
+
+    private void PlayAnimation()
+    {
+        if (m_AppearObjectAnimator != null)
+        {
+            m_AppearObjectAnimator.SetBool(m_AnimationToPlay, true);
+        }
     }
 
     #endregion

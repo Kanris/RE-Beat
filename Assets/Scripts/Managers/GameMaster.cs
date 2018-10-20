@@ -206,6 +206,7 @@ public class GameMaster : MonoBehaviour {
     private void RecreateObjectState<T>(string objectToFind, T value, RecreateType recreateType)
     {
         var searchGameObjectResult = GameObject.Find(objectToFind);
+        Debug.LogError(objectToFind);
 
         if (searchGameObjectResult != null)
         { 
