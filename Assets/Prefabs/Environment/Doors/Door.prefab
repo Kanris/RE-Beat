@@ -28,7 +28,7 @@ GameObject:
   m_Layer: 14
   m_Name: Door
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -125,14 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  KeyName:
-    Image: 
-    Name: 
-    Description: 
-    itemType: 0
-    HealAmount: 3
+  KeyName: {fileID: 0}
   DisplayMessage: Can't open this door by myself
-  m_UI: {fileID: 0}
+  DoorOpenAudio: {fileID: 0}
 --- !u!114 &114748765543706924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,14 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2e8e4e9be179c4a91c05092fa98ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskType: 1
   taskTriggerType: 3
-  DestroyEntireObject: 0
+  taskType: 1
   Name: Find out
-  TaskText: '<#000000>Talk with android</color> - Junk
-
-
-'
+  key: 
+  m_TaskAudio: {fileID: 0}
+  DestroyEntireObject: 0
 --- !u!212 &212191541132273930
 SpriteRenderer:
   m_ObjectHideFlags: 1
