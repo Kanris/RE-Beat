@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityStandardAssets._2D;
+using UnityEngine.PostProcessing;
 
 [System.Serializable]
 public class PlayerStats : Stats
@@ -18,6 +19,9 @@ public class PlayerStats : Stats
 
     [Header("Additional")]
     public PlatformerCharacter2D platformerCharacter2D;
+
+    private ChromaticAberrationModel.Settings m_ChromaticAbberationModel;
+    private PostProcessingProfile m_Profile;
 
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
@@ -83,6 +87,9 @@ public class PlayerStats : Stats
             CurrentHealth += amount;
 
             UIManager.Instance.AddHealth(amount); //add health in player's ui
+
+            if (CurrentHealth > 3)
+                AddCameraEffect(0f);
         }
     }
 
@@ -168,18 +175,32 @@ public class PlayerStats : Stats
     {
         base.Initialize(gameObject, animator);
 
+        m_Profile = Camera.main.GetComponent<PostProcessingBehaviour>().profile;
+        m_ChromaticAbberationModel = m_Profile.chromaticAberration.settings;
+
         if (PlayerInventory == null) //initialize player's inventory with size of nine
             PlayerInventory = new Inventory(9);
 
         UIManager.Instance.Clear(); //clear health ui
 
+        var cammeraEffectValue = 0f;
+
         if (CurrentPlayerHealth > 0) //save current player's health
-            UIManager.Instance.AddHealth(CurrentPlayerHealth); 
+        {
+            UIManager.Instance.AddHealth(CurrentPlayerHealth);
+
+            if (CurrentHealth < 4)
+            {
+                cammeraEffectValue = 0.5f;
+            }
+        }
         else //player was dead initialize full hp
         {
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
         }
+
+        AddCameraEffect(cammeraEffectValue);
     }
 
     public override void TakeDamage(int amount, int divider = 1)
@@ -191,8 +212,39 @@ public class PlayerStats : Stats
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
 
+
+                AddCameraEffect(0.5f);
+
             UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
         }
+    }
+
+    public void AddCameraEffect(float cameraEffectValue)
+    {
+        GameMaster.Instance.StartCoroutine(AnimateCameraEffect(cameraEffectValue));
+    }
+
+    private IEnumerator AnimateCameraEffect(float value)
+    {
+        var delta = 0.05f;
+
+        for (int index = 0; index < 5; index++)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            m_ChromaticAbberationModel.intensity = value - delta;
+            delta *= -1;
+
+            m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
+        }
+
+        var intensityValue = 0f;
+
+        if (CurrentHealth < 4)
+            intensityValue = value;
+
+        m_ChromaticAbberationModel.intensity = intensityValue;
+        m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
     }
 
     protected override IEnumerator ObjectTakeDamage(int divider)
