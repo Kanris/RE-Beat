@@ -8,7 +8,7 @@ public class CinemachineFollow : MonoBehaviour {
 
     [Header("Shake")]
     private float m_ShakeAmount = 1f;
-    private float m_Duration = 0.5f;
+    private float m_Duration = 1f;
 
     private bool m_IsShake = false;
     private CinemachineBasicMultiChannelPerlin m_VirtualCameraNoise;

@@ -183,21 +183,20 @@ public class PlayerStats : Stats
 
         UIManager.Instance.Clear(); //clear health ui
 
-        var cammeraEffectValue = 0f;
-
         if (CurrentPlayerHealth > 0) //save current player's health
         {
             UIManager.Instance.AddHealth(CurrentPlayerHealth);
-
-            if (CurrentHealth < 4)
-            {
-                cammeraEffectValue = 0.5f;
-            }
         }
         else //player was dead initialize full hp
         {
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
+        }
+
+        var cammeraEffectValue = 0f;
+        if (CurrentPlayerHealth < 4)
+        {
+            cammeraEffectValue = 0.5f;
         }
 
         AddCameraEffect(cammeraEffectValue);
@@ -209,48 +208,54 @@ public class PlayerStats : Stats
         {
             amount *= DamageMultiplier;
 
+            Camera.main.GetComponent<CinemachineFollow>().ShakeCam();
+            AddCameraEffect(0.5f);
+
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
-
-
-                AddCameraEffect(0.5f);
-
+            
             UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
         }
     }
 
     public void AddCameraEffect(float cameraEffectValue)
     {
-        GameMaster.Instance.StartCoroutine(AnimateCameraEffect(cameraEffectValue));
+        if (cameraEffectValue > 0)
+            GameMaster.Instance.StartCoroutine(AnimateCameraEffect(cameraEffectValue));
+        else
+        {
+            ChangeEffectValue(cameraEffectValue);
+        }
+    }
+
+    private void ChangeEffectValue(float value)
+    {
+        m_ChromaticAbberationModel.intensity = value;
+        m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
     }
 
     private IEnumerator AnimateCameraEffect(float value)
     {
-        var delta = 0.05f;
+        var delta = 0.1f;
 
-        for (int index = 0; index < 5; index++)
+        for (int index = 0; index < 10; index++)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
 
-            m_ChromaticAbberationModel.intensity = value - delta;
+            ChangeEffectValue(value - delta);
             delta *= -1;
-
-            m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
         }
 
         var intensityValue = 0f;
 
-        if (CurrentHealth < 4)
+        if (CurrentPlayerHealth < 4)
             intensityValue = value;
 
-        m_ChromaticAbberationModel.intensity = intensityValue;
-        m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
+        ChangeEffectValue(intensityValue);
     }
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {
-        Camera.main.GetComponent<CinemachineFollow>().ShakeCam();
-
         m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false; //take control from the player
         PlayHitAnimation(true); 
 

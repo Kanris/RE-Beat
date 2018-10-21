@@ -934,7 +934,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 77665800}
+      objectReference: {fileID: 1420229268}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -30709,52 +30709,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1471449184225938, guid: bff3b13da43165545afc098aa6e3695f,
     type: 2}
   m_PrefabInternal: {fileID: 1370085296}
---- !u!1001 &1374565108
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_RootOrder
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 1711713834508778, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1387431268
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ MonoBehaviour:
         motionVectorsResolution: 24
         motionVectorsAmplitude: 64
   fog:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       excludeSkybox: 1
   antialiasing:
@@ -85,8 +85,8 @@ MonoBehaviour:
   eyeAdaptation:
     m_Enabled: 0
     m_Settings:
-      lowPercent: 45
-      highPercent: 95
+      lowPercent: 1
+      highPercent: 50.999992
       minLuminance: -5
       maxLuminance: 1
       keyValue: 0.25
@@ -94,8 +94,8 @@ MonoBehaviour:
       adaptationType: 0
       speedUp: 2
       speedDown: 1
-      logMin: -8
-      logMax: 4
+      logMin: -16
+      logMax: 1
   bloom:
     m_Enabled: 0
     m_Settings:
