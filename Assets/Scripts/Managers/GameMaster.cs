@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Cinemachine;
+using UnityStandardAssets._2D;
 
 public class GameMaster : MonoBehaviour {
 
@@ -324,7 +325,7 @@ public class GameMaster : MonoBehaviour {
         //if there is no player on scene
         if (!GameObject.FindGameObjectWithTag("Player"))
         {
-            RespawnWithoutFade(spawnPosition);
+            StartCoroutine( RespawnWithoutFade(spawnPosition, 1.5f) );
         }
     }
 
@@ -358,10 +359,21 @@ public class GameMaster : MonoBehaviour {
         return playerGameObject.transform;
     }
 
-    private void RespawnWithoutFade(Vector2 respawnPosition)
+    private IEnumerator RespawnWithoutFade(Vector2 respawnPosition, float waitTimer)
     {
         var respawnPlayer = Instantiate(m_PlayerToRespawn);
         respawnPlayer.transform.position = respawnPosition;
+
+        //Debug.LogError(respawnPlayer.transform.childCount);
+
+        //restrict player movement
+        var playerBody = respawnPlayer.transform.GetChild(0).gameObject;
+
+        playerBody.GetComponent<Platformer2DUserControl>().enabled = false;
+
+        yield return new WaitForSeconds(waitTimer);
+
+        playerBody.GetComponent<Platformer2DUserControl>().enabled = true;
     }
 
 #endregion
