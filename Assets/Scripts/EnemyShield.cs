@@ -13,6 +13,8 @@ public class EnemyShield : MonoBehaviour {
 
     private bool m_IsQuitting; //is application closing
 
+    private bool m_IsActive;
+
     // Use this for initialization
     private void Start () {
 
@@ -20,14 +22,18 @@ public class EnemyShield : MonoBehaviour {
 
         SubscribeToEvents();
 
-        Destroy(gameObject, m_ShieldDuration);
+        Destroy(gameObject, m_ShieldDuration + .5f);
     }
 
     private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //is player return to the start screen
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
+    }
 
+    public void ActiveShield()
+    {
+        m_IsActive = true;
     }
 
     private void OnApplicationQuit()
@@ -70,7 +76,7 @@ public class EnemyShield : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttackRange"))
+        if (collision.CompareTag("PlayerAttackRange") & m_IsActive)
         {
             collision.transform.parent.GetComponent<Player>()
                 .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
