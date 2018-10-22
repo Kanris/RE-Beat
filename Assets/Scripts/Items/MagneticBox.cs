@@ -150,7 +150,7 @@ public class MagneticBox : MonoBehaviour {
                     }
                     else
                     {
-                        m_CheckPositionTime = Time.time + 0.1f; //next check timer
+                        m_CheckPositionTime = Time.time + 0.05f; //next check timer
                         m_PreviousYPosition = transform.parent.position.y; //save previous air position
                     }
                 }
