@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityStandardAssets._2D;
 
-[RequireComponent(typeof(TilemapCollider2D), typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class MetalicGround : MonoBehaviour {
 
     #region private fields
@@ -11,7 +11,7 @@ public class MetalicGround : MonoBehaviour {
     [Header("Item")]
     [SerializeField] private Item NeededItem; //required item to move on the metalic ground
 
-    private TilemapCollider2D m_Ground; //metalic ground
+    private BoxCollider2D m_Ground; //metalic ground
     private Animator m_Animator; //metalic ground animator
 
     #endregion
@@ -20,7 +20,7 @@ public class MetalicGround : MonoBehaviour {
 
     private void Start()
     {
-        m_Ground = GetComponent<TilemapCollider2D>(); //initialize ground
+        m_Ground = GetComponent<BoxCollider2D>(); //initialize ground
 
         m_Animator = GetComponent<Animator>(); //initialize animator
     }
@@ -57,7 +57,7 @@ public class MetalicGround : MonoBehaviour {
     {
         m_Ground.enabled = false; //disable ground collider
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         m_Ground.enabled = true; //enable ground collider
     }

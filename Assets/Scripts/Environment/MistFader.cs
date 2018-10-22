@@ -18,7 +18,7 @@ public class MistFader : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("MistFader.AnimationComplete: m_DisableBackground is not initialized");
+            Debug.LogError("MistFader.AnimationComplete (" + transform.name + "): m_DisableBackground is not initialized");
         }
     }
 
