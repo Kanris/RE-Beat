@@ -112,6 +112,7 @@ public class Stairs : MonoBehaviour {
             PlayerOnStairs(false, collision.gameObject);
 
             isJumping = false;
+            m_Player.GetComponent<Platformer2DUserControl>().enabled = true; //disable or enable standart player movement script
             m_Player = null;
         }
     }

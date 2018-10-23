@@ -102,7 +102,7 @@ public class DroneShooter : MonoBehaviour {
     private Path m_Path;
     private Transform Target; //player
     private bool m_PathIsEnded = false; //path is reached
-    private float m_NextWaypointDistance = 0.5f; 
+    private float m_NextWaypointDistance = 0.4f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 
@@ -149,21 +149,25 @@ public class DroneShooter : MonoBehaviour {
 
     private void FixedUpdate()
     {
-            if (m_IsPlayerInShootingRange & !m_IsDestroying)
+        if (!m_IsPlayerInShootingRange & !m_IsDestroying & m_Path != null)
+        {
+            MoveInDirection();
+        }
+    }
+
+    private void Update()
+    {
+        if (m_IsPlayerInShootingRange & !m_IsDestroying)
+        {
+            if (m_IsAttacking) //player in range and drone is not destroying
             {
-                if (m_IsAttacking) //player in range and drone is not destroying
+                if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
-                    if (m_AttackCooldownTimer < Time.time) //drone can attack
-                    {
-                        m_AttackCooldownTimer = Time.time + AttackSpeed; //next available attack time
-                        StartCoroutine(Shoot()); //shoot at player
-                    }
+                    m_AttackCooldownTimer = Time.time + AttackSpeed; //next available attack time
+                    StartCoroutine(Shoot()); //shoot at player
                 }
             }
-            else if (m_Path != null)
-            {
-                MoveInDirection();
-            }
+        }
     }
 
     #region collision/trigger detections
@@ -260,7 +264,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 FindPlayer(); //find targe
                 //InitializeChasing();
-                StopAllCoroutines(); //start shooting
+                StopAllCoroutines();
                 m_IsAttacking = true;
                 m_AttackCooldownTimer = 1f + Time.time;
             }
