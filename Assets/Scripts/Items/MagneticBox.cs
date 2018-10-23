@@ -68,7 +68,6 @@ public class MagneticBox : MonoBehaviour {
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //is player return to the start screen
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
-
     }
     
     #endregion

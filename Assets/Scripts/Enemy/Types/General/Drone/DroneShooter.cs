@@ -346,7 +346,7 @@ public class DroneShooter : MonoBehaviour {
             m_CurrentPatrolPoint = 0; //start over
 
         yield return new WaitForSeconds(4f); //wait before moving to the next point
-        
+
         m_Seeker.StartPath(transform.position, m_PatrolPoints[m_CurrentPatrolPoint].position, OnPathComplete); //path to the next patrol point
 
         m_CurrentPatrolPoint++; //next patrol point

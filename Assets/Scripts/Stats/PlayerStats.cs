@@ -36,6 +36,7 @@ public class PlayerStats : Stats
 
     private static float DefaultMeleeAttackSpeed = 0.3f;
     private static float DefaultSpeed = 4f;
+
     #endregion
 
     #region properties

@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 95883086424202952}
   - component: {fileID: 114189616276374168}
   - component: {fileID: 114280960268024750}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Body
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033265420063238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.79, y: 8.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4793299507887500}
@@ -343,6 +343,7 @@ MonoBehaviour:
   TrailMaterial: {fileID: 2100000, guid: caa4eea9855fb9a439c3d9018e5052f9, type: 2}
   ChasingRange: {fileID: 114331611186953348}
   ShootingRange: {fileID: 114973094009244786}
+  m_Animator: {fileID: 0}
   m_PatrolPoints:
   - {fileID: 4284218238293116}
   - {fileID: 4481481314149496}
