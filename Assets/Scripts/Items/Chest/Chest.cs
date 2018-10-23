@@ -126,11 +126,6 @@ public class Chest : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
 
         m_Animator.SetBool("IsTakeDamage", false); //stop playing take damage animation
-
-        if (Health <= 0) //if health is less or equal zero
-        {
-            OpenChest(); //open chest
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
