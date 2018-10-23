@@ -41,6 +41,8 @@ public class MoveToNextScene : MonoBehaviour {
 
             if (!string.IsNullOrEmpty(NextScene)) //if there is next scene name
             {
+                GameMaster.Instance.SceneName = NextScenename;
+
                 if (IsMoveToNextScene != null)
                 {
                     IsMoveToNextScene(true); //notify that player teleport to the next scene
