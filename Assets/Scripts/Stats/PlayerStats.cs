@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityStandardAssets._2D;
 using UnityEngine.PostProcessing;
@@ -9,6 +7,7 @@ using UnityEngine.PostProcessing;
 public class PlayerStats : Stats
 {
     #region delegates
+    private delegate IEnumerator IEnumeratorFloatDelegate(float duration);
 
     public delegate void VoidDelegate (int value);
     public static event VoidDelegate OnScrapAmountChange;
@@ -22,6 +21,9 @@ public class PlayerStats : Stats
 
     private ChromaticAberrationModel.Settings m_ChromaticAbberationModel;
     private PostProcessingProfile m_Profile;
+    private int m_CriticalHealthAmount = 3;
+
+    private int m_OverHealScrapAmount = 10;
 
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
@@ -72,7 +74,7 @@ public class PlayerStats : Stats
     {
         if (CurrentHealth == MaxHealth) //if player is already full health
         {
-            Scrap = 10; //add scrap
+            Scrap = m_OverHealScrapAmount; //add scrap
         }
         else //heal player
         {
@@ -88,7 +90,7 @@ public class PlayerStats : Stats
 
             UIManager.Instance.AddHealth(amount); //add health in player's ui
 
-            if (CurrentHealth > 3)
+            if (CurrentHealth > m_CriticalHealthAmount)
                 AddCameraEffect(0f);
         }
     }
@@ -110,8 +112,6 @@ public class PlayerStats : Stats
     }
 
     #region debuff
-
-    private delegate IEnumerator IEnumeratorFloatDelegate(float duration);
 
     public void DebuffPlayer(DebuffPanel.DebuffTypes debuffType, float duration)
     {
@@ -175,11 +175,14 @@ public class PlayerStats : Stats
     {
         base.Initialize(gameObject, animator);
 
-        m_Profile = Camera.main.GetComponent<PostProcessingBehaviour>().profile;
-        m_ChromaticAbberationModel = m_Profile.chromaticAberration.settings;
+#region initialize inventory
 
         if (PlayerInventory == null) //initialize player's inventory with size of nine
             PlayerInventory = new Inventory(9);
+
+#endregion
+
+#region initialize health ui
 
         UIManager.Instance.Clear(); //clear health ui
 
@@ -193,13 +196,23 @@ public class PlayerStats : Stats
             CurrentPlayerHealth = CurrentHealth;
         }
 
+#endregion
+
+        //is there has to be camera effect
+#region camera effect
+
+        m_Profile = Camera.main.GetComponent<PostProcessingBehaviour>().profile;
+        m_ChromaticAbberationModel = m_Profile.chromaticAberration.settings;
+
         var cammeraEffectValue = 0f;
-        if (CurrentPlayerHealth < 4)
+        if (CurrentPlayerHealth < m_CriticalHealthAmount)
         {
             cammeraEffectValue = 0.5f;
         }
 
         AddCameraEffect(cammeraEffectValue);
+
+#endregion
     }
 
     public override void TakeDamage(int amount, int divider = 1)
@@ -246,9 +259,10 @@ public class PlayerStats : Stats
             delta *= -1;
         }
 
+        //effect has to stay on screen?
         var intensityValue = 0f;
 
-        if (CurrentPlayerHealth < 4)
+        if (CurrentPlayerHealth < m_CriticalHealthAmount)
             intensityValue = value;
 
         ChangeEffectValue(intensityValue);

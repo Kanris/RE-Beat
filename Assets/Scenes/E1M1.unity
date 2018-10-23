@@ -934,7 +934,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 77665800}
+      objectReference: {fileID: 1420229268}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -20987,6 +20987,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1239742839842892, guid: aabadcd3ca6285f4091a563e27298206, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aabadcd3ca6285f4091a563e27298206, type: 2}
   m_IsPrefabParent: 0
@@ -21061,11 +21065,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4601317235320672, guid: 0cbeb5acb68690a4cbf7cf91d3af28c7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.602
+      value: 2.023
       objectReference: {fileID: 0}
     - target: {fileID: 4601317235320672, guid: 0cbeb5acb68690a4cbf7cf91d3af28c7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.075
+      value: 1.101
       objectReference: {fileID: 0}
     - target: {fileID: 4601317235320672, guid: 0cbeb5acb68690a4cbf7cf91d3af28c7, type: 2}
       propertyPath: m_LocalPosition.z
