@@ -133,6 +133,8 @@ public class Stairs : MonoBehaviour {
         {
             m_Player.gravityScale = 3f; //return gravity back to normal
 
+            m_Animator.SetBool("IsMovingOnStairs", false); //stop player's movement
+
             if (isJumping) //if jumped from staris
             {
                 var jumpVector = new Vector2(5f, 10f); //jump right
