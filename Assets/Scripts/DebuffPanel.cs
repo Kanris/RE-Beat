@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class DebuffPanel : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class DebuffPanel : MonoBehaviour {
 
     private bool m_IsDebuffOnPanel;
     private PlayerStats m_PlayerStats;
+
+    private bool m_IsPlayerDie; //is application closing
 
     #region singleton
 
@@ -43,6 +46,12 @@ public class DebuffPanel : MonoBehaviour {
 
     #endregion
 
+    private void OnDestroy()
+    {
+        foreach (var item in Enum.GetValues(typeof(DebuffTypes)))
+            m_PlayerStats.RemoveDebuff((DebuffTypes)item);
+    }
+
     public void SetDebuffUI(DebuffTypes debuffType, float displayTime)
     {
         var item = m_DebuffsOnPanel.SingleOrDefault(x => x.DebuffType == debuffType);
@@ -72,7 +81,7 @@ public class DebuffPanel : MonoBehaviour {
 
         var image = debufUI.gameObject.transform.GetChild(0).GetComponent<Image>();
 
-        while (timeAmount <= debufUI.appearTimer)
+        while (timeAmount <= debufUI.appearTimer & !m_IsPlayerDie)
         {
             image.fillAmount -= ratio;
 
@@ -80,7 +89,7 @@ public class DebuffPanel : MonoBehaviour {
 
             timeAmount += debufUI.appearTimer * ratio;
         }
-
+        
         m_PlayerStats.RemoveDebuff(debufUI.DebuffType);
         image.gameObject.transform.parent.gameObject.SetActive(false);
         debufUI.appearTimer = 0f;
