@@ -55,7 +55,8 @@ public class MagneticBox : MonoBehaviour {
 
         SubscribeToEvents();
 
-        GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
+        /*GameMaster.Instance.SaveState(transform.name, 
+            new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position*/
     }
 
     private void InitializeInteractionButton()
