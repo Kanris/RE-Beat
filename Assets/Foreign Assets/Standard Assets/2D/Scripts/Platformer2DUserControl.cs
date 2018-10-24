@@ -11,7 +11,7 @@ namespace UnityStandardAssets._2D
         private bool m_Jump;
         private bool m_Dash;
         private float m_UpdateDashTime;
-       
+
         public bool IsCanJump;
 
         private void Awake()

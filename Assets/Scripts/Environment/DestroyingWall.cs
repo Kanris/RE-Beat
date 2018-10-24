@@ -8,6 +8,8 @@ public class DestroyingWall : MonoBehaviour {
 
     [SerializeField, Range(1, 5)] private int Health = 3; //wall health
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_HitEffect;
     private Animator m_Animator; //destroying wall animator
 
     #endregion
@@ -40,8 +42,7 @@ public class DestroyingWall : MonoBehaviour {
 
     private void SpawnParticles(float playerLook)
     {
-        var hitParticle = Resources.Load("Effects/ChestHit") as GameObject; //get hit particles
-        var hitParticlesInstantiate = Instantiate(hitParticle);
+        var hitParticlesInstantiate = Instantiate(m_HitEffect);
         hitParticlesInstantiate.transform.position = transform.position;
 
         if (playerLook == 1)
