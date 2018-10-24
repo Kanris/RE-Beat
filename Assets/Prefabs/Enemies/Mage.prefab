@@ -42,6 +42,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1189594033413016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4935187974186868}
+  - component: {fileID: 114281856218426456}
+  - component: {fileID: 61936084969967524}
+  m_Layer: 13
+  m_Name: BehindCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1440988950164736
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +123,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4935187974186868}
   - {fileID: 4925935692882630}
   - {fileID: 4846380334338922}
   - {fileID: 4557952511160702}
@@ -124,7 +142,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4191418293414282}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4743678716356924
 Transform:
@@ -137,7 +155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4191418293414282}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4846380334338922
 Transform:
@@ -150,7 +168,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4191418293414282}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4925935692882630
 Transform:
@@ -159,6 +177,19 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1079459973777228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4191418293414282}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4935187974186868
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189594033413016}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -210,6 +241,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.2096577, y: 0.74410176}
   m_EdgeRadius: 0
+--- !u!61 &61936084969967524
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189594033413016}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.8982506, y: -0.1296444}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.7223053, y: 0.6295891}
+  m_EdgeRadius: 0
 --- !u!70 &70494095002269910
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -259,7 +315,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   IdleTime: 2
-  isPlayerNear: 0
+--- !u!114 &114281856218426456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189594033413016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae3b25e0995d5b478afd3822b099fd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyMovement: {fileID: 114152002762517770}
 --- !u!114 &114425864084102134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,8 +383,8 @@ MonoBehaviour:
   m_AlarmImage: {fileID: 212483226420415968}
   m_FirePoint: {fileID: 4743678716356924}
   ThrowObjects:
-  - {fileID: 1052902559322968, guid: f2dec8f507fb83e4db114f069c8f84e5, type: 2}
   - {fileID: 1931802493666614, guid: 99d49189405f3df42aa3f249f90b233a, type: 2}
+  - {fileID: 1052902559322968, guid: f2dec8f507fb83e4db114f069c8f84e5, type: 2}
 --- !u!212 &212483226420415968
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -40,7 +40,7 @@ public class PatrolEnemy : MonoBehaviour {
             if (m_EnemyStats.IsPlayerNear)
             {
                 m_EnemyStats.ChangeIsPlayerNear(false);
-                StartCoroutine(PlayerSpot(false));
+                PlayerSpot(false);
             }
         }
 
@@ -56,33 +56,37 @@ public class PatrolEnemy : MonoBehaviour {
         }
     }
 
-    private IEnumerator OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            StopAllCoroutines();
+
             m_EnemyStats.ChangeIsPlayerNear(true);
 
-            yield return PlayerSpot(m_EnemyStats.IsPlayerNear);
+            PlayerSpot(m_EnemyStats.IsPlayerNear);
         }
     }
 
-    private IEnumerator OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") & m_EnemyStats.IsPlayerNear)
         {
-            m_EnemyStats.ChangeIsPlayerNear(false);
-
-            yield return new WaitForSeconds(WaitTimeAfterSpot);
-
-            if (!m_EnemyStats.IsPlayerNear)
-                yield return PlayerSpot(false);
+            StartCoroutine(ResetState());
         }
     }
 
-    private IEnumerator PlayerSpot(bool isSpot)
+    private IEnumerator ResetState()
     {
-        yield return null;
+        yield return new WaitForSeconds(WaitTimeAfterSpot);
 
+        m_EnemyStats.ChangeIsPlayerNear(false);
+
+        PlayerSpot(false);
+    }
+
+    private void PlayerSpot(bool isSpot)
+    {
         m_AlarmImage.gameObject.SetActive(isSpot);
 
         if (OnPlayerSpot != null)

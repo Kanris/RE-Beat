@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyStatsGO))]
+[RequireComponent(typeof(EnemyStatsGO), typeof(Animator))]
 public class RangeEnemy : MonoBehaviour {
 
     public delegate void VoidDelegate(bool value);
@@ -11,7 +11,7 @@ public class RangeEnemy : MonoBehaviour {
     private Enemy m_EnemyStats;
     private Animator m_Animator;
     private TextMeshProUGUI m_Text;
-    private bool m_CanCreateNewFireball = true;
+    private float m_NextFireballTime;
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
     [SerializeField] private Transform m_FirePoint;
@@ -23,28 +23,13 @@ public class RangeEnemy : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        InitializeStats();
-        
-        InitializeAnimator();
+        m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
+
+        m_Animator = GetComponent<Animator>();
 
         m_AlarmImage.gameObject.SetActive(false);
     }
-
-    private void InitializeStats()
-    {
-        m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
-    }
-
-    private void InitializeAnimator()
-    {
-        m_Animator = GetComponent<Animator>();
-
-        if (m_Animator == null)
-            Debug.LogError("RangeEnemy.InitializeAnimator: Can't find animator on GameObject");
-    }
     #endregion
-
-    #region Collision
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -54,29 +39,25 @@ public class RangeEnemy : MonoBehaviour {
         }
     }
 
-    #endregion
-
-    #region Trigger
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_EnemyStats.IsPlayerNear)
+        if (collision.CompareTag("Player"))
         {
+            StopAllCoroutines();
+
             m_EnemyStats.ChangeIsPlayerNear(true);
+
+            ChangeAlertStatus(true);
         }
     }
 
-    private IEnumerator OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & m_EnemyStats.IsPlayerNear)
         {
-            m_EnemyStats.ChangeIsPlayerNear(false);
-
-            yield return ResetState();
+            StartCoroutine( ResetState() );
         }
     }
-
-    #endregion
 
     private void Update()
     {
@@ -91,12 +72,12 @@ public class RangeEnemy : MonoBehaviour {
 
         if (m_EnemyStats.IsPlayerNear)
         {
-            ChangeAlertStatus(true);
-
-            if (m_CanCreateNewFireball)
+            if (m_NextFireballTime < Time.time)
             {
-                StartCoroutine(StartCast());
+                m_NextFireballTime = Time.time + m_EnemyStats.AttackSpeed;
+                CastFireball();
             }
+
         }
     }
 
@@ -105,35 +86,21 @@ public class RangeEnemy : MonoBehaviour {
         if (OnPlayerSpot != null)
             OnPlayerSpot(value); //stop moving 
 
-        EnableWarningSign(value);
+        m_AlarmImage.gameObject.SetActive(value);
     }
 
-    private IEnumerator StartCast()
+    private void CastFireball()
     {
-        if(m_EnemyStats.IsPlayerNear)
-        {
-            if (m_CanCreateNewFireball)
-            {
-                AudioManager.Instance.Play("Cast");
+        AudioManager.Instance.Play("Cast");
 
-                Animate(true);
-
-                m_CanCreateNewFireball = false;
-
-                yield return new WaitForSeconds(0.6f);
-
-                Animate(false);
-
-                CreateFireball();
-
-                yield return CastCooldown();
-            }
-        }
+        Animate(true);
     }
 
     private void CreateFireball()
     {
-        var throwObject = ThrowObjects[GetRandomIndex()];
+        Animate(false);
+
+        var throwObject = ThrowObjects[Random.Range(0, ThrowObjects.Length)];
 
         var instantiateFireball = Instantiate(throwObject, m_FirePoint.position, Quaternion.identity) as GameObject;
 
@@ -145,27 +112,14 @@ public class RangeEnemy : MonoBehaviour {
             instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
     }
 
-    private int GetRandomIndex()
-    {
-        return Random.Range(0, ThrowObjects.Length);
-    }
-
-    private IEnumerator CastCooldown()
-    {
-        yield return new WaitForSeconds(m_EnemyStats.AttackSpeed);
-
-        m_CanCreateNewFireball = true;
-    }
-
 
     private IEnumerator ResetState()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
-        if (!m_EnemyStats.IsPlayerNear)
-        {
-            ChangeAlertStatus(false);
-        }
+        m_EnemyStats.ChangeIsPlayerNear(false);
+
+        ChangeAlertStatus(false);
     }
 
     private void Animate(bool isAttacking)
@@ -173,14 +127,6 @@ public class RangeEnemy : MonoBehaviour {
         if (m_Animator != null)
         {
             m_Animator.SetBool("isAttacking", isAttacking);
-        }
-    }
-
-    private void EnableWarningSign(bool isAttacking)
-    {
-        if (m_AlarmImage != null)
-        {
-            m_AlarmImage.gameObject.SetActive(isAttacking);
         }
     }
 
