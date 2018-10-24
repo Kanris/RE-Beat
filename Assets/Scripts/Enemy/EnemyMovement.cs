@@ -11,7 +11,7 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private LayerMask m_WhatIsGround; // A mask determining what is ground to the character
 
-    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .01f; // Radius of the overlap circle to determine if grounded
 
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
@@ -28,7 +28,6 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MoveUpdateTime;
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
-
     #endregion
 
     #region inspector fields
@@ -76,7 +75,7 @@ public class EnemyMovement : MonoBehaviour {
                     TurnAround();
             };
 
-            enemy.EnemyStats.OnEnemyTakeDamage += ThrowBack;
+            enemy.EnemyStats.OnEnemyTakeDamage += StartThrowBack;
         }
 
         if (GetComponent<PatrolEnemy>() != null)
@@ -98,7 +97,11 @@ public class EnemyMovement : MonoBehaviour {
                 m_Grounded = true;
         }
 
-        if (!m_Grounded | m_CantMoveFurther)
+        if (!m_Grounded)
+        {
+            TurnAround();
+        }
+        else if (m_CantMoveFurther)
         {
             m_CantMoveFurther = false;
             TurnAround();
@@ -109,7 +112,7 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (!m_IsWaiting & !m_IsThrowBack) //if enemey is not waiting or is not throwing back
         {
-            if (m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear)
+            if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear))
             {
                 m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
 
@@ -129,20 +132,23 @@ public class EnemyMovement : MonoBehaviour {
 
         if (m_IsThrowBack)
         {
-            ThrowBackEnemy();
+            if (m_ThrowUpdateTime > Time.time)
+            {
+                var multiplier = GetMultiplier();
+                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, 0f);
+            }
+            else
+                m_IsThrowBack = false;
         }
     }
 
-    private void ThrowBackEnemy()
+    private void StartThrowBack(bool value)
     {
-        if (m_ThrowUpdateTime > Time.time)
+        if (!m_EnemyStats.m_IsBigMonster)
         {
-            var multiplier = GetMultiplier();
-            m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, 0f);
+            m_IsThrowBack = true;
+            m_ThrowUpdateTime = Time.time + 0.07f;
         }
-        else
-            m_IsThrowBack = false;
-
     }
 
     private void CheckStackPosition()
@@ -163,15 +169,6 @@ public class EnemyMovement : MonoBehaviour {
             multiplier *= -1;
 
         return multiplier;
-    }
-
-    private void ThrowBack(bool value)
-    {
-        if (!m_EnemyStats.m_IsBigMonster)
-        {
-            m_IsThrowBack = true;
-            m_ThrowUpdateTime = Time.time + 0.07f;
-        }
     }
 
     private void SpeedChange(float speed)
