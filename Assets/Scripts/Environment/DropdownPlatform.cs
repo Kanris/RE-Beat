@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using UnityStandardAssets._2D;
 using UnityStandardAssets.CrossPlatformInput;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class DropdownPlatform : MonoBehaviour {
 
     #region private fields
 
     private BoxCollider2D m_BoxCollider; //dropdown platform collider
     private Platformer2DUserControl player; //player user controll
-
+    private bool m_IsDropDown = false;
     #endregion
 
     #region initialize
@@ -34,13 +32,30 @@ public class DropdownPlatform : MonoBehaviour {
             if (CrossPlatformInputManager.GetAxis("Vertical") < 0f 
                 & CrossPlatformInputManager.GetButton("Jump")) //if player pressed s and space 
             {
-                player.IsCanJump = false; //dont allow player to jump
-                CollisionActive(false); //allow to drop down from platform
+                m_IsDropDown = true;
+            }
+
+            if (m_IsDropDown)
+            {
+                m_IsDropDown = false;
+                StartCoroutine(DropDownPlayer());
             }
         }
+
     }
 
     #region collision methods
+
+    private IEnumerator DropDownPlayer()
+    {
+        player.IsCanJump = false;
+
+        GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
+
+        yield return new WaitForEndOfFrame();
+
+        player.IsCanJump = true;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -50,22 +65,11 @@ public class DropdownPlatform : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is in the platform trigger (bellow the platform)
+        if (collision.transform.CompareTag("Player")) //if player is above or leave platform trigger
         {
-            player = collision.gameObject.GetComponent<Platformer2DUserControl>(); //get player control
-            CollisionActive(false); //hide platform collision
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & player != null) //if player is above or leave platform trigger
-        {
-            player.IsCanJump = true; //allow player to jump
-            player = null; //remove reference to the player control
-            CollisionActive(true); //enable platform collision
+            GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
         }
     }
 
