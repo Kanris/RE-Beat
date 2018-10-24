@@ -11,6 +11,7 @@ public class Teleport : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
+    [SerializeField] private GameObject m_InteractionUI;
 
     private Animator m_Animator; //teleport animator
     private GameObject m_InteractionButton; //teleport ui
@@ -33,9 +34,7 @@ public class Teleport : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionUI = Resources.Load("UI/InteractionUI") as GameObject;
-        m_InteractionButton = Instantiate(interactionUI, transform);
-
+        m_InteractionButton = Instantiate(m_InteractionUI, transform);
     }
 
     #endregion

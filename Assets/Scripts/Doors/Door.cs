@@ -25,6 +25,7 @@ public class Door : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private Audio DoorOpenAudio;
+    [SerializeField] private GameObject m_InteractionUI;
 
     #endregion
 
@@ -47,8 +48,7 @@ public class Door : MonoBehaviour {
     {
         if (Type == DoorType.Key) //if door type is Key
         {
-            var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-            m_UI = Instantiate(interactionButton, transform);
+            m_UI = Instantiate(m_InteractionUI, transform);
 
             m_UI.SetActive(false); //hide door ui
         }

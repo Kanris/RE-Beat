@@ -8,6 +8,8 @@ public class DialogueTrigger : MonoBehaviour {
 
     public Dialogue dialogue; //npc dialogue
 
+    [SerializeField] private GameObject m_NPCUI;
+
     #endregion
 
     #region private fields
@@ -31,8 +33,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var ui = Resources.Load("UI/NPCUI") as GameObject;
-        m_UI = Instantiate(ui, transform);
+        m_UI = Instantiate(m_NPCUI, transform);
     }
 
     #endregion

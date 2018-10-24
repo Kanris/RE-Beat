@@ -13,6 +13,9 @@ public class Sign : MonoBehaviour {
     [SerializeField] private string SignName; //sign name
     [SerializeField, TextArea(2, 10)] private string SignText; //sign text to display
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_InteractionUI;
+
     #endregion
 
     private GameObject m_InteractionButton; //sign ui
@@ -36,8 +39,7 @@ public class Sign : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButtonInResources = Resources.Load("UI/InteractionUI");
-        m_InteractionButton = Instantiate(interactionButtonInResources, transform) as GameObject;
+        m_InteractionButton = Instantiate(m_InteractionUI, transform) as GameObject;
     }
 
     #endregion

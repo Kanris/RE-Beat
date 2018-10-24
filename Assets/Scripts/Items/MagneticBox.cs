@@ -21,6 +21,7 @@ public class MagneticBox : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticles; //destroying particles
     [SerializeField] private Audio DestroySound; //destroying sound
+    [SerializeField] private GameObject m_InteractionUI;
 
     #endregion
 
@@ -61,8 +62,7 @@ public class MagneticBox : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-        m_InteractionButton = Instantiate(interactionButton, transform);
+        m_InteractionButton = Instantiate(m_InteractionUI, transform);
     }
 
     private void SubscribeToEvents()

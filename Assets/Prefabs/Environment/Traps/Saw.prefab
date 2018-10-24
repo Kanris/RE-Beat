@@ -111,8 +111,10 @@ MonoBehaviour:
   direction: 0
   whereToMove: 0
   SawMoveTime: 2
-  DamageAmount: 2
   MoveVelocity: 2
+  DamageAmount: 2
+  m_ThrowX: 5
+  m_ThrowY: 3
   WithTrigger: 0
 --- !u!212 &212167749179609724
 SpriteRenderer:

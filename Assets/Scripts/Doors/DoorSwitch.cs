@@ -18,6 +18,9 @@ public class DoorSwitch : MonoBehaviour {
 
     [SerializeField] private Door DoorToOpen; //door to open when switch is pressed
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_InteractionUI;
+
     #endregion
 
     private GameObject m_UI; //switch ui
@@ -44,8 +47,7 @@ public class DoorSwitch : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-        m_UI = Instantiate(interactionButton, transform);
+        m_UI = Instantiate(m_InteractionUI, transform);
 
         m_UI.SetActive(false); //hide ui
     }

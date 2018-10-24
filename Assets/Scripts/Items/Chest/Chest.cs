@@ -24,6 +24,8 @@ public class Chest : MonoBehaviour {
     [SerializeField] private Sprite m_OpenChestSprite;
     [SerializeField] private Audio ChestOpenAudio;
 
+    [SerializeField] private GameObject m_InteractionUI;
+
     private GameObject m_InteractionButton; //chest ui
     private Player m_Player; //player
     private Animator m_Animator; //chest animator
@@ -52,8 +54,7 @@ public class Chest : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI");
-        m_InteractionButton = Instantiate(interactionButton, transform) as GameObject;
+        m_InteractionButton = Instantiate(m_InteractionUI, transform) as GameObject;
     }
 
     #endregion

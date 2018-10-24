@@ -8,6 +8,9 @@ public class PickUpItem : MonoBehaviour {
 
     [SerializeField] private Item item; //item description
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_InteractionUI;
+
     private GameObject m_InteractionButton; //item ui
     private PlayerStats m_PlayerStats; //player stats (for heal item type)
     private bool m_IsPlayerNearDoor = false; //is player near item
@@ -27,8 +30,7 @@ public class PickUpItem : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-        m_InteractionButton = Instantiate(interactionButton, transform);
+        m_InteractionButton = Instantiate(m_InteractionUI, transform);
 
     }
 

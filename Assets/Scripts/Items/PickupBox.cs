@@ -10,6 +10,7 @@ public class PickupBox : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticle; //box destroying particles
     [SerializeField] private Audio DestroySound; //box destroying sound
+    [SerializeField] private GameObject m_InteractionUI;
 
     #endregion
 
@@ -55,8 +56,7 @@ public class PickupBox : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        var interactionButton = Resources.Load("UI/InteractionUI") as GameObject;
-        m_InteractionButton = Instantiate(interactionButton, transform);
+        m_InteractionButton = Instantiate(m_InteractionUI, transform);
     }
 
     private void SubscribeToEvents()

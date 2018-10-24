@@ -132,6 +132,8 @@ MonoBehaviour:
   DeathParticles: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
     type: 2}
   DestroySound: {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
+  m_InteractionUI: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
+    type: 2}
 --- !u!114 &114574506071127314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,7 +163,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

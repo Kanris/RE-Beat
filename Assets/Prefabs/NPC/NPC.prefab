@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990950036120288}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.95, y: 1.893, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -139,6 +139,7 @@ MonoBehaviour:
       firstSentence: []
       secondSentence: []
     IsDialogueFinished: 0
+  m_NPCUI: {fileID: 1224415610681330, guid: 027009091b3d0254e9b7d11cd360d4eb, type: 2}
 --- !u!114 &114808322752333964
 MonoBehaviour:
   m_ObjectHideFlags: 1
