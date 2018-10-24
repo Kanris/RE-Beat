@@ -10,6 +10,8 @@ public class MoveGrass : MonoBehaviour {
     private Animator m_Animator;
     private int m_Health = 1;
 
+    [SerializeField] private GameObject m_GrassParticles;
+
     #endregion
 
     #region private methods
@@ -48,9 +50,7 @@ public class MoveGrass : MonoBehaviour {
 
     private void ShowDestroyParticles()
     {
-        var resourceDestroyParticles = Resources.Load("Effects/Destroy grass") as GameObject;
-
-        var resourceDestroyParticlesInstantiate = Instantiate(resourceDestroyParticles);
+        var resourceDestroyParticlesInstantiate = Instantiate(m_GrassParticles);
         resourceDestroyParticlesInstantiate.transform.position = transform.position;
 
         Destroy(resourceDestroyParticlesInstantiate, 5f);

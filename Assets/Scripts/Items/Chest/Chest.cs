@@ -25,6 +25,7 @@ public class Chest : MonoBehaviour {
     [SerializeField] private Audio ChestOpenAudio;
 
     [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_HitEffect;
 
     private GameObject m_InteractionButton; //chest ui
     private Player m_Player; //player
@@ -107,8 +108,7 @@ public class Chest : MonoBehaviour {
 
     private void ShowHitParticles(float playerLook)
     {
-        var hitParticles = Resources.Load("Effects/ChestHit") as GameObject;
-        var hitParticlesInstantiate = Instantiate(hitParticles);
+        var hitParticlesInstantiate = Instantiate(m_HitEffect);
         hitParticlesInstantiate.transform.position = transform.position;
 
         if (playerLook == 1) //where player look

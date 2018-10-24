@@ -15,6 +15,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
         [SerializeField] private GameObject JumpPlatformPrefab;
+        [SerializeField] private GameObject m_LandEffect;
+        [SerializeField] private GameObject m_DashEffect;
 
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
@@ -175,8 +177,7 @@ namespace UnityStandardAssets._2D
 
         private void ShowDustEffect()
         {
-            var dustEffect = Resources.Load("Effects/Dust") as GameObject;
-            var dustGO = Instantiate(dustEffect);
+            var dustGO = Instantiate(m_LandEffect);
             dustGO.transform.position = m_GroundCheck.position;
 
             Destroy(dustGO, 1.5f);
@@ -189,8 +190,7 @@ namespace UnityStandardAssets._2D
             if (!m_FacingRight)
                 multiplier = 1;
 
-            var dashEffect = Resources.Load("Effects/DashEffect") as GameObject;
-            var instantiateDashEffect = Instantiate(dashEffect);
+            var instantiateDashEffect = Instantiate(m_DashEffect);
 
             instantiateDashEffect.transform.position = transform.position;
             instantiateDashEffect.transform.rotation = 
