@@ -22,10 +22,6 @@ public class Saw : MonoBehaviour {
     [SerializeField, Range(1f, 5f)] private float MoveVelocity = 2f; //saw move speed
     [SerializeField, Range(1, 10)] private int DamageAmount = 2; //saw damage amount
 
-    [Header("Player throw")]
-    [SerializeField, Range(1f, 10f)] private float m_ThrowX = 5f; //saw throws value
-    [SerializeField, Range(1f, 10f)] private float m_ThrowY = 3f;
-
     [Header("Is Saw bound with trigger")]
     [SerializeField] private bool WithTrigger = false; //is saw have to move with trigger
 
@@ -85,26 +81,7 @@ public class Saw : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            var playerStats = collision.gameObject.GetComponent<Player>().playerStats;
-
-            m_PrevThrowX = playerStats.m_ThrowX;
-            m_PrevThrowY = playerStats.m_ThrowY;
-
-            playerStats.m_ThrowX = m_ThrowX;
-            playerStats.m_ThrowY = m_ThrowY;
-
-            playerStats.TakeDamage(DamageAmount);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            var playerStats = collision.gameObject.GetComponent<Player>().playerStats;
-
-            playerStats.m_ThrowX = m_PrevThrowX;
-            playerStats.m_ThrowY = m_PrevThrowY;
+            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
         }
     }
     #endregion

@@ -271,14 +271,11 @@ public class PlayerStats : Stats
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {
-        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = false; //take control from the player
         PlayHitAnimation(true); 
 
         m_IsInvincible = true; //player is invincible
-
-        yield return new WaitForSeconds(0.2f); //time to return player's control
-
-        m_GameObject.GetComponent<Platformer2DUserControl>().enabled = true; //return control to the player
+        
+        yield return new WaitForSeconds(0.1f); //time to return player's control
 
         PlayHitAnimation(false);
 

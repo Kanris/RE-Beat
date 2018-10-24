@@ -13,8 +13,6 @@ public class Player : MonoBehaviour {
 
     public PlayerStats playerStats; //player stats
 
-    [HideInInspector] public bool IsDamageFromFace; //is player take damage from face
-
     #endregion
 
     #region private fields
@@ -36,12 +34,13 @@ public class Player : MonoBehaviour {
     #endregion
 
     private Animator m_Animator; //player animator
+    private Rigidbody2D m_Rigidbody2D;
     private float m_YPositionBeforeJump; //player y position before jump
     private bool isPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
     private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown;
-    private Vector2 m_ThrowBackVector; //throw back values
+    private int m_EnemyHitDirection = 1;
 
     #endregion
 
@@ -54,6 +53,7 @@ public class Player : MonoBehaviour {
         Camera.main.GetComponent<CinemachineFollow>().SetCameraTarget(transform); //set new camera target
 
         m_Animator = GetComponent<Animator>(); //reference to the player animator
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         playerStats.Initialize(gameObject); //initialize player stats
 
@@ -101,19 +101,6 @@ public class Player : MonoBehaviour {
                 }
             }
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (m_Animator.GetBool("Hit")) //if someone hit player
-        {
-            if (m_ThrowBackVector == Vector2.zero) //if there is not throw back values
-                m_ThrowBackVector = GetThrowBackVector();
-            else
-                GetComponent<Rigidbody2D>().velocity = m_ThrowBackVector;
-        }
-        else if (m_ThrowBackVector != Vector2.zero)
-            m_ThrowBackVector = Vector2.zero;
     }
 
     private void RangeAttack()
@@ -169,21 +156,22 @@ public class Player : MonoBehaviour {
         Gizmos.DrawWireCube(m_AttackPosition.position, new Vector3(m_AttackRangeX, m_AttackRangeY, 1));
     }
 
-    private Vector2 GetThrowBackVector()
+    private void FixedUpdate()
     {
-        var xThrowValue = -playerStats.m_ThrowX;
-
-        if (transform.localScale.x.CompareTo(1f) != 0)
+        if (m_Animator.GetBool("Hit"))
         {
-            xThrowValue *= -1;
+            m_Rigidbody2D.velocity = new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
         }
+    }
 
-        if (!IsDamageFromFace)
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Enemy"))
         {
-            xThrowValue *= -1;
-        }
+            var dir = (new Vector2(transform.position.x, transform.position.y) - collision.contacts[0].point).normalized;
 
-        return new Vector2(xThrowValue, playerStats.m_ThrowY);
+            m_EnemyHitDirection = dir.x > 0 ? 1 : -1;
+        }
     }
 
     private void JumpHeightControl()

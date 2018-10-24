@@ -40,9 +40,12 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
             InitializeJumpPlatform();
+        }
 
-            OnLandEvent += ShowDustEffect;
+        private void Start()
+        {
             InfoManager.Instance.OnJournalOpen += OnInfoManagerOpen;
+            OnLandEvent += ShowDustEffect;
         }
 
         private void InitializeJumpPlatform()
