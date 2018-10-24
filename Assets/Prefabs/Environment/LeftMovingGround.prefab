@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61720858754678480}
   - component: {fileID: 249475451987384320}
   m_Layer: 14
-  m_Name: MovingGround
+  m_Name: LeftMovingGround
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3d8675433a508ec47b8f895201eacf20, type: 3}
-  m_Color: {r: 0.2216981, g: 0.3443718, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.28773582, b: 0.97454375, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -126,7 +126,7 @@ AreaEffector2D:
     m_Bits: 256
   m_UseGlobalAngle: 0
   m_ForceAngle: 0
-  m_ForceMagnitude: 120
+  m_ForceMagnitude: -120
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 0

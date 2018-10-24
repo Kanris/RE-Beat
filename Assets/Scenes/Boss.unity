@@ -265,6 +265,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2ed4969e684141aa855ff1aab45d128, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &27752418
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -10.105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.971
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459055974343392, guid: b4ec6d22969154843967c67587441833, type: 2}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b4ec6d22969154843967c67587441833, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &62968546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,6 +1246,10 @@ Prefab:
         type: 2}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883692647989392, guid: 4b58646c28633714aac4510e80ec520c, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b58646c28633714aac4510e80ec520c, type: 2}
@@ -8917,7 +8963,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1207373864}
+      objectReference: {fileID: 1160207096}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
