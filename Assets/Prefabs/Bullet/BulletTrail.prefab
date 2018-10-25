@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61341823050419798}
   - component: {fileID: 114302364497105584}
   - component: {fileID: 50762520998604902}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: BulletTrail
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.5, y: 0}

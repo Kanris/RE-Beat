@@ -18,11 +18,11 @@ public class MoveBullet : MonoBehaviour {
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
             Destroy(gameObject);
         }
     }
