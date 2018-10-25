@@ -270,7 +270,6 @@ public class GameMaster : MonoBehaviour {
 
                 if (!state.IsExistInBool(name))
                     state.ObjectsState.Add(name);
-                Debug.LogError(state.SceneName + " " + name);
                 break;
 
             case RecreateType.Dialogue:
