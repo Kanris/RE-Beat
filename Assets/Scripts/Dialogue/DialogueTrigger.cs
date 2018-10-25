@@ -24,16 +24,9 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void Start()
     {
-        InitializeInteractionButton(); //initialize npc ui (name and interaction button)
-
         DisplayUI(false); //hide npc ui
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeDialogueInProcess; //watch if dialogue is started or finished
-    }
-
-    private void InitializeInteractionButton()
-    {
-        m_UI = Instantiate(m_NPCUI, transform);
     }
 
     #endregion

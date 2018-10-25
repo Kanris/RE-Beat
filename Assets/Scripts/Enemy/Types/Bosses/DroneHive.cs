@@ -194,7 +194,7 @@ public class DroneHive : MonoBehaviour
         ShowParticles(DeathParticle, 10f);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
-        GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
+        GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "Forest");
         GameMaster.Instance.SaveState(m_BlockDoor.name, 0, GameMaster.RecreateType.Object);
 
         Destroy(m_BlockDoor);

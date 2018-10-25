@@ -252,7 +252,7 @@ public class GameMaster : MonoBehaviour {
 
         if (searchResult == null)
         {
-            searchResult = new State(SceneName);
+            searchResult = new State(string.IsNullOrEmpty(sceneName) ? SceneName : sceneName);
 
             State.ScenesState.Add(searchResult);
         }
@@ -270,6 +270,7 @@ public class GameMaster : MonoBehaviour {
 
                 if (!state.IsExistInBool(name))
                     state.ObjectsState.Add(name);
+                Debug.LogError(state.SceneName + " " + name);
                 break;
 
             case RecreateType.Dialogue:
