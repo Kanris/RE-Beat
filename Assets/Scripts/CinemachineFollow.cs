@@ -16,7 +16,7 @@ public class CinemachineFollow : MonoBehaviour {
     public void Start()
     {
 #if MOBILE_INPUT
-        m_VirtualCamera.m_Lens.OrthographicSize = 4f;
+        m_VirtualCamera.m_Lens.OrthographicSize = 5f;
 #endif
 
         m_VirtualCameraNoise = m_VirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
