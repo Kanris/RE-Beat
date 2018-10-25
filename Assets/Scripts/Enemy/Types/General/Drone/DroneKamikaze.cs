@@ -43,7 +43,7 @@ public class DroneKamikaze : MonoBehaviour
                         new Vector2(Mathf.Clamp(m_Rigidbody.velocity.x, -5f, 5f), 
                         Mathf.Clamp(m_Rigidbody.velocity.y, -5f, 5f));
 
-        if (m_UpdateTimer < Time.time)
+        if (m_UpdateTimer < Time.time & !m_IsDestroying)
         {
             if (m_PreviousPosition == m_Rigidbody.position)
             {
