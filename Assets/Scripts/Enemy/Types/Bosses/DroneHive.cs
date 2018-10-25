@@ -20,7 +20,6 @@ public class DroneHive : MonoBehaviour
     [SerializeField] private float TeleportSpeed = 5f;
 
     [Header("Items activate after drone death")]
-    [SerializeField] private GameObject FlyingPlatform;
     [SerializeField] private GameObject Key;
 
     [Header("Boss stage hp")]
@@ -32,6 +31,10 @@ public class DroneHive : MonoBehaviour
     [SerializeField] private Audio AttackAudio;
     [SerializeField] private GameObject DeathParticle;
     [SerializeField] private GameObject HitParticle;
+
+    [Header("Trigger")]
+    [SerializeField] private ObjectAppearOnTrigger m_BossTrigger;
+    [SerializeField] private GameObject m_BlockDoor;
 
     #endregion
 
@@ -61,6 +64,8 @@ public class DroneHive : MonoBehaviour
         m_NextDestination = GetDestination();
 
         m_TeleportTimer = 0f;
+
+        Key.SetActive(false);
     }
 
     #region Initialize
@@ -154,9 +159,9 @@ public class DroneHive : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         ResetArchlightPosition();
-
+        m_BlockDoor.SetActive(false);
         m_Health.fillAmount = 1f;
-
+        
         ChangeLightState(true);
         gameObject.SetActive(false);
     }
@@ -184,13 +189,16 @@ public class DroneHive : MonoBehaviour
     private void ArchlightDead()
     {
         ChangeLightState(true);
-        FlyingPlatform.SetActive(true);
         Key.SetActive(true);
 
         ShowParticles(DeathParticle, 10f);
 
         GameMaster.Instance.SaveState("BossTrigger", 0, GameMaster.RecreateType.Object);
         GameMaster.Instance.SaveState("Junk", 0, GameMaster.RecreateType.Object, "E1M1");
+        GameMaster.Instance.SaveState(m_BlockDoor.name, 0, GameMaster.RecreateType.Object);
+
+        Destroy(m_BlockDoor);
+        Destroy(m_BossTrigger.gameObject);
     }
 
     private void ShowParticles(GameObject particle, float time = 1.5f)

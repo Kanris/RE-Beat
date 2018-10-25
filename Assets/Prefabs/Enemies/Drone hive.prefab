@@ -121,7 +121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859725932341948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.57, y: 1.44, z: 0}
+  m_LocalPosition: {x: 9.8, y: 5.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4308504711946834}
@@ -272,7 +272,6 @@ MonoBehaviour:
   RightTeleport: {fileID: 0}
   FireballGO: {fileID: 1931802493666614, guid: eed2c44fac63847bbac225c857bfea96, type: 2}
   TeleportSpeed: 5
-  FlyingPlatform: {fileID: 0}
   Key: {fileID: 0}
   Stage2Health: 200
   Stage3Health: 100
@@ -282,6 +281,8 @@ MonoBehaviour:
     type: 2}
   HitParticle: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
     type: 2}
+  m_BossTrigger: {fileID: 0}
+  m_BlockDoor: {fileID: 0}
 --- !u!114 &114727188107457268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,7 +342,7 @@ MonoBehaviour:
     DeathParticle: {fileID: 0}
     HitSound: {fileID: 0}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
-    MaxHealth: 300
+    MaxHealth: 10
     m_ThrowX: 2
     m_ThrowY: 0.5
     DamageAmount: 1

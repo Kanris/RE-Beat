@@ -71,12 +71,11 @@ public class PickUpItem : MonoBehaviour {
             case ItemDescription.ItemType.Heal: //if it is heal
                 if (m_PlayerStats != null)
                     m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
-
-                Destroy(gameObject);
                 break;
         }
         
         GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,8 +113,6 @@ public class PickUpItem : MonoBehaviour {
 
         AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(itemName + " " + 
             itemAddMessage, AnnouncerManager.Message.MessageType.Item)); //show announcer message about new item in the bag
-
-        Destroy(gameObject); //destroy this item
     }
 
     private void ReadNote()

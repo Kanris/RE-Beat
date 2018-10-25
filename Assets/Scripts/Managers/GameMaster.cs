@@ -270,7 +270,6 @@ public class GameMaster : MonoBehaviour {
 
                 if (!state.IsExistInBool(name))
                     state.ObjectsState.Add(name);
-
                 break;
 
             case RecreateType.Dialogue:

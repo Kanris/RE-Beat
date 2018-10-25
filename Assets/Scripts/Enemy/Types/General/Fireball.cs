@@ -21,7 +21,7 @@ public class Fireball : MonoBehaviour {
 
         InitializeAnimator();
 
-        DestroyTime = Time.time + 10f;
+        DestroyTime = Time.time + 5f;
     }
 
     private void InitializeDirection()

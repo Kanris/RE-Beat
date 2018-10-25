@@ -32553,7 +32553,7 @@ GameObject:
   - component: {fileID: 1311252432}
   - component: {fileID: 1311252431}
   m_Layer: 0
-  m_Name: BridgeSwitch (1)
+  m_Name: LowerBridgeSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33965,7 +33965,7 @@ GameObject:
   - component: {fileID: 1477527901}
   - component: {fileID: 1477527900}
   m_Layer: 0
-  m_Name: logic
+  m_Name: LowerBridgeSwitchLogic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33996,12 +33996,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_React: 1
-  m_AppearObject: {fileID: 2136709750}
-  m_ShowOnDestroy: {fileID: 0}
+  m_AppearObject:
+  - {fileID: 2136709750}
+  m_ShowOnDestroy: {fileID: 2136709750}
   m_AppearObjectAnimator: {fileID: 1311252431}
   m_AnimationToPlay: Pressed
   m_DestroyOnTrigger: 1
   m_ActiveAfterDestroy: 1
+  m_IsCameraControl: 0
+  m_VirtualCamera: {fileID: 0}
+  m_Center: {fileID: 0}
 --- !u!61 &1477527901
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36310,7 +36314,7 @@ GameObject:
   - component: {fileID: 1895615082}
   - component: {fileID: 1895615081}
   m_Layer: 0
-  m_Name: logic
+  m_Name: UpperBridgeSwitchLogic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36341,12 +36345,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_React: 1
-  m_AppearObject: {fileID: 392561014}
-  m_ShowOnDestroy: {fileID: 0}
+  m_AppearObject:
+  - {fileID: 392561014}
+  m_ShowOnDestroy: {fileID: 392561014}
   m_AppearObjectAnimator: {fileID: 1981741405}
   m_AnimationToPlay: Pressed
   m_DestroyOnTrigger: 1
-  m_ActiveAfterDestroy: 1
+  m_ActiveAfterDestroy: 0
+  m_IsCameraControl: 0
+  m_VirtualCamera: {fileID: 0}
+  m_Center: {fileID: 0}
 --- !u!61 &1895615082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37919,7 +37927,7 @@ GameObject:
   - component: {fileID: 1981741406}
   - component: {fileID: 1981741405}
   m_Layer: 0
-  m_Name: BridgeSwitch (2)
+  m_Name: UpperBridgeSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
