@@ -13,8 +13,7 @@ public class DialogueTrigger : MonoBehaviour {
     #endregion
 
     #region private fields
-
-    private GameObject m_UI; //dialogue ui
+    
     private Platformer2DUserControl m_Player; //player's control
     private bool m_IsDialogueInProgress; //is dialogue in progress
 
@@ -91,7 +90,7 @@ public class DialogueTrigger : MonoBehaviour {
     //show or hide npc ui
     private void DisplayUI(bool isActive)
     {
-        m_UI.SetActive(isActive); //show or hide npc ui
+        m_NPCUI.SetActive(isActive); //show or hide npc ui
     }
 
     //change state of the m_IsDialogueInProgress value
