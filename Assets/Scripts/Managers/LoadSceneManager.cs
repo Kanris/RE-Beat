@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class LoadSceneManager : MonoBehaviour {
 
@@ -29,6 +31,8 @@ public class LoadSceneManager : MonoBehaviour {
 
     [SerializeField] private GameObject m_LoadSceneUI;
     [SerializeField] private Slider m_LoadSlider;
+    [SerializeField] private PlayVideo m_PlayVideo;
+    [SerializeField] private GameObject[] m_VideoPlayers;
 
     #endregion
 
@@ -44,7 +48,7 @@ public class LoadSceneManager : MonoBehaviour {
     {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        SetActiveLoadScene(true);
+        SetActiveLoadScene(true, sceneName);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
 
@@ -54,7 +58,7 @@ public class LoadSceneManager : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        SetActiveLoadScene(false);
+        SetActiveLoadScene(false, sceneName);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
@@ -73,11 +77,18 @@ public class LoadSceneManager : MonoBehaviour {
         }
     }
 
-    private void SetActiveLoadScene(bool active)
+    private void SetActiveLoadScene(bool active, string sceneName)
     {
+        m_LoadSlider.value = 0f;
+
         m_LoadSceneUI.SetActive(active);
 
-        m_LoadSlider.value = 0f;
+        if (m_VideoPlayers.Length > 0 & active)
+        {
+            var videoToPlay = m_VideoPlayers.FirstOrDefault(x => x.name == sceneName);
+
+            StartCoroutine ( m_PlayVideo.PlayBackgroundVideo(videoToPlay) );
+        }
     }
 
     #endregion
