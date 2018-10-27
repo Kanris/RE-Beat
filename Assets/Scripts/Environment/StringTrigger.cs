@@ -39,7 +39,7 @@ public class StringTrigger : MonoBehaviour {
                 m_Box.constraints = RigidbodyConstraints2D.FreezeAll; //dont allow box to move
             }
         }
-        else if (collision.CompareTag("PlayerAttackRange")) //if player hit string
+        else if (collision.CompareTag("PlayerAttackRange") | collision.CompareTag("PlayerBullet")) //if player hit string
         {
             GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save string state
             Destroy(gameObject); //remove string
