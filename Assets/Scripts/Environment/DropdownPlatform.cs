@@ -51,20 +51,18 @@ public class DropdownPlatform : MonoBehaviour {
         player.IsCanJump = false;
 
         GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
-
-        gameObject.layer = 0;
-
+        
         yield return new WaitForEndOfFrame();
 
         player.IsCanJump = true;
 
-        gameObject.layer = 14;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player")) //if player is on the platform
         {
+            gameObject.layer = 14;
             player = collision.gameObject.GetComponent<Platformer2DUserControl>(); //get player control
         }
     }
@@ -74,7 +72,11 @@ public class DropdownPlatform : MonoBehaviour {
         if (collision.transform.CompareTag("Player")) //if player is above or leave platform trigger
         {
             player = null;
+
+            gameObject.layer = 0;
+
             GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
+
         }
     }
 
