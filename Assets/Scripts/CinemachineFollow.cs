@@ -25,6 +25,7 @@ public class CinemachineFollow : MonoBehaviour {
     public void SetCameraTarget(Transform target)
     {
         m_VirtualCamera.Follow = target;
+        m_VirtualCamera.m_Lens.OrthographicSize = 5f;
     }
 
     public void ShakeCam()

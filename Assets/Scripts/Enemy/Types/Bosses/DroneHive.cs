@@ -48,11 +48,15 @@ public class DroneHive : MonoBehaviour
     private bool m_Stage3;
     private float m_TeleportTimer;
     private Vector3 m_NextDestination;
+
+    private Vector2 m_StartPosition;
     #endregion
 
     // Use this for initialization
     void Start()
     {
+        m_StartPosition = transform.position;
+
         InitializeTeleportsTransform();
 
         InitializeAnimator();
@@ -150,7 +154,7 @@ public class DroneHive : MonoBehaviour
     private IEnumerator ResetState()
     {
         GetComponent<EnemyStatsGO>().InitializeStats();
-
+        
         m_Stage2 = false;
         m_Stage3 = false;
 
@@ -163,6 +167,8 @@ public class DroneHive : MonoBehaviour
         m_Health.fillAmount = 1f;
         
         ChangeLightState(true);
+        Key.SetActive(true);
+        transform.position = m_StartPosition;
         gameObject.SetActive(false);
     }
 

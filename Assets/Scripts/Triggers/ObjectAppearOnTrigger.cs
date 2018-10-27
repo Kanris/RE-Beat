@@ -24,9 +24,11 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     [SerializeField] private bool m_IsCameraControl;
     [SerializeField] private Cinemachine.CinemachineVirtualCamera m_VirtualCamera;
     [SerializeField] private Transform m_Center;
+    [SerializeField, Range(1f, 20f)] private float m_CamSize = 5f;
     
     private bool m_IsQuitting; //is application is closing
     private Transform m_ObjectToFollow;
+    private float m_DefaultCamSize;
 
     #endregion
 
@@ -56,8 +58,11 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
                 if (m_VirtualCamera.Follow != null)
                 {
                     m_ObjectToFollow = m_VirtualCamera.Follow;
+                    m_DefaultCamSize = m_VirtualCamera.m_Lens.OrthographicSize;
+
                     m_VirtualCamera.Follow = null;
                     m_VirtualCamera.gameObject.transform.position = m_Center.position;
+                    m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
                 }
             }
         }
@@ -100,6 +105,7 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
             if (m_IsCameraControl & m_ObjectToFollow != null)
             {
                 m_VirtualCamera.Follow = m_ObjectToFollow;
+                m_VirtualCamera.m_Lens.OrthographicSize = m_DefaultCamSize;
             }
         }
     }
