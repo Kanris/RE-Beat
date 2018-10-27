@@ -31986,6 +31986,7 @@ GameObject:
   - component: {fileID: 1286075718}
   - component: {fileID: 1286075717}
   - component: {fileID: 1286075716}
+  - component: {fileID: 1286075721}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -32109,6 +32110,22 @@ Transform:
   m_Father: {fileID: 164822051}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286075721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1286075715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15734c532e236bd43b66600d77e0b4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightToControl: {fileID: 0}
+  ControlWithoutAnimator: 0
+  BlinkAfter: 3
+  IntensivityIteration: 20
+  Iterations: 4
 --- !u!1 &1295053536
 GameObject:
   m_ObjectHideFlags: 0
@@ -33215,6 +33232,11 @@ Prefab:
         type: 2}
       propertyPath: isLight
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108021953574116386, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
@@ -35611,6 +35633,7 @@ MonoBehaviour:
   m_IsCameraControl: 0
   m_VirtualCamera: {fileID: 0}
   m_Center: {fileID: 0}
+  m_CamSize: 5
 --- !u!61 &1895615082
 BoxCollider2D:
   m_ObjectHideFlags: 0
