@@ -11,15 +11,15 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1500544934284040}
   m_IsPrefabParent: 1
---- !u!1 &1079069206566416
+--- !u!1 &1435317025375520
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4758932755716148}
-  - component: {fileID: 108382549664989188}
+  - component: {fileID: 4528982424492820}
+  - component: {fileID: 108021953574116386}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500544934284040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 48.69, y: 4.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4455417591592536}
@@ -116,16 +116,16 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4758932755716148}
+  - {fileID: 4528982424492820}
   m_Father: {fileID: 4400141620228988}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4758932755716148
+--- !u!4 &4528982424492820
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1079069206566416}
+  m_GameObject: {fileID: 1435317025375520}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -176,12 +176,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!108 &108382549664989188
+--- !u!108 &108021953574116386
 Light:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1079069206566416}
+  m_GameObject: {fileID: 1435317025375520}
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
@@ -223,8 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38232fc1eb2ec48a484bf3dd8a28fff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLight: 0
-  m_ObjectLight: {fileID: 1079069206566416}
+  isLight: 1
+  m_ObjectLight: {fileID: 1435317025375520}
   audioSave: {fileID: 11400000, guid: de2cd2bbe93ed451da9883d19f93094d, type: 2}
 --- !u!212 &212070963723626528
 SpriteRenderer:
