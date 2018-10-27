@@ -9,8 +9,11 @@ public class Enemy : Stats
     public event VoidFloatDelegate OnSpeedChange;
     public event VoidFloatDelegate OnEnemyTakeDamageValue;
 
+
+    public delegate void VoidBoolIntDelegate(bool value, int divider);
+    public event VoidBoolIntDelegate OnEnemyTakeDamage;
+
     public delegate void VoidBoolDelegate(bool value);
-    public event VoidBoolDelegate OnEnemyTakeDamage;
     public event VoidBoolDelegate OnPlayerHit;
 
     #endregion
@@ -68,7 +71,7 @@ public class Enemy : Stats
         {
             if (OnEnemyTakeDamage != null)
             {
-                OnEnemyTakeDamage(m_IsPlayerNear);
+                OnEnemyTakeDamage(m_IsPlayerNear, divider);
             }
 
             if (OnEnemyTakeDamageValue != null)

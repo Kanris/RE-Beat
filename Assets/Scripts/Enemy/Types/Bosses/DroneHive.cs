@@ -213,7 +213,7 @@ public class DroneHive : MonoBehaviour
 
     #region Teleport
 
-    private void OnPlayerHitTeleport(bool value)
+    private void OnPlayerHitTeleport(bool value, int divider)
     {
         WeirdAttack();
 

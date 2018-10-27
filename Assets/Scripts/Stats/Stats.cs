@@ -99,23 +99,35 @@ public class Stats {
 
     protected virtual IEnumerator ObjectTakeDamage(int divider)
     {
-        PlayHitAnimation(true); //play hit animation
+        if (divider > 0)
+        {
+            PlayHitAnimation(true); //play hit animation
 
-        //save default throw values
-        var m_prevThrowX = m_ThrowX;
-        var m_prevThrowY = m_ThrowY;
+            //save default throw values
+            var m_prevThrowX = m_ThrowX;
+            var m_prevThrowY = m_ThrowY;
 
-        //get new throw values base on divider
-        m_ThrowX /= divider;
-        m_ThrowY /= divider;
+            //get new throw values base on divider
+            m_ThrowX /= divider;
+            m_ThrowY /= divider;
 
-        yield return new WaitForSeconds(0.1f); //thorw time
+            yield return new WaitForSeconds(0.1f); //thorw time
 
-        //return default throw values
-        m_ThrowX = m_prevThrowX;
-        m_ThrowY = m_prevThrowY;
+            //return default throw values
+            m_ThrowX = m_prevThrowX;
+            m_ThrowY = m_prevThrowY;
 
-        PlayHitAnimation(false); //stop hit animation
+            PlayHitAnimation(false); //stop hit animation
+        }
+        else
+        {
+            PlayHitAnimation(true); //play hit animation
+
+            yield return new WaitForSeconds(0.1f); //thorw time
+
+            PlayHitAnimation(false); //stop hit animation
+        }
+
     }
 
     protected virtual void KillObject()

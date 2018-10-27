@@ -129,12 +129,15 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    private void StartThrowBack(bool value)
+    private void StartThrowBack(bool value, int divider)
     {
         if (!m_EnemyStats.m_IsBigMonster)
         {
-            m_IsThrowBack = true;
-            m_ThrowUpdateTime = Time.time + 0.07f;
+            if (divider > 0)
+            {
+                m_IsThrowBack = true;
+                m_ThrowUpdateTime = Time.time + 0.07f;
+            }
         }
     }
 
