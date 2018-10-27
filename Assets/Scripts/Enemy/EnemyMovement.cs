@@ -61,19 +61,6 @@ public class EnemyMovement : MonoBehaviour {
             var enemy = GetComponent<EnemyStatsGO>();
 
             enemy.EnemyStats.OnSpeedChange += SpeedChange;
-            enemy.EnemyStats.OnEnemyTakeDamage += isPlayerNear =>
-            {
-                if (!isPlayerNear)
-                {
-                    TurnAround();
-                }
-            };
-
-            enemy.EnemyStats.OnPlayerHit += isPlayerNear =>
-            {
-                if (!isPlayerNear)
-                    TurnAround();
-            };
 
             enemy.EnemyStats.OnEnemyTakeDamage += StartThrowBack;
         }

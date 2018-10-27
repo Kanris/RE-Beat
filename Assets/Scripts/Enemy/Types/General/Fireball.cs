@@ -85,7 +85,10 @@ public class Fireball : MonoBehaviour {
             else
                 if (collision.transform.CompareTag("Enemy"))
             {
-                statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
+                if (collision.gameObject.GetComponent<EnemyStatsGO>() != null)
+                    statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
+                else
+                    DestroyFireball();
             }
 
             Damage(statsToTakeDamage);
