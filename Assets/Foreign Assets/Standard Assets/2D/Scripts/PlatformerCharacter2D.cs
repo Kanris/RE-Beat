@@ -21,6 +21,7 @@ namespace UnityStandardAssets._2D
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
         public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
+        public bool m_IsHaveDoubleJump;
 
         const float k_GroundedRadius = .05f; // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
@@ -28,7 +29,6 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_Grounded;            // Whether or not the player is grounded.
         private Animator m_Anim;            // Reference to the player's animator component.
-        private bool m_IsHaveDoubleJump;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private bool m_IsDashing;                 // A mask determining what is ground to the character
         private GameObject m_JumpPlatform;

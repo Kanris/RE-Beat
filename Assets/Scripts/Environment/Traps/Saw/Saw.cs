@@ -20,7 +20,7 @@ public class Saw : MonoBehaviour {
     #endregion
     [SerializeField, Range(0.5f, 20f)] private float SawMoveTime = 2.5f; //saw move time
     [SerializeField, Range(1f, 5f)] private float MoveVelocity = 2f; //saw move speed
-    [SerializeField, Range(1, 10)] private int DamageAmount = 2; //saw damage amount
+    [SerializeField, Range(0, 10)] private int DamageAmount = 2; //saw damage amount
 
     [Header("Is Saw bound with trigger")]
     [SerializeField] private bool WithTrigger = false; //is saw have to move with trigger

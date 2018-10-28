@@ -160,7 +160,7 @@ public class Player : MonoBehaviour {
     {
         if (m_Animator.GetBool("Hit"))
         {
-            m_Rigidbody2D.velocity = new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
         }
     }
 

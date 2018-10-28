@@ -8,6 +8,7 @@ namespace UnityStandardAssets._2D
     public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
+        private Animator m_CharacterAnimator;
         private bool m_Jump;
         private bool m_Dash;
         private float m_UpdateDashTime;
@@ -17,6 +18,7 @@ namespace UnityStandardAssets._2D
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
+            m_CharacterAnimator = GetComponent<Animator>();
 
             IsCanJump = true;
 
@@ -25,33 +27,39 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (IsCanJump)
+            if (!m_CharacterAnimator.GetBool("OnStairs"))
             {
-                if (!m_Jump)
+                if (IsCanJump)
                 {
-                    // Read the jump input in Update so button presses aren't missed.
-                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    if (!m_Jump)
+                    {
+                        // Read the jump input in Update so button presses aren't missed.
+                        m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    }
                 }
-            }
 
-            if (!m_Dash & m_UpdateDashTime < Time.time)
-            {
-                m_Dash = CrossPlatformInputManager.GetButtonDown("Shift"); //TODO: replace with CrossPlatformInput
+                if (!m_Dash & m_UpdateDashTime < Time.time)
+                {
+                    m_Dash = CrossPlatformInputManager.GetButtonDown("Shift"); //TODO: replace with CrossPlatformInput
 
-                if (m_Dash) m_UpdateDashTime = Time.time + 1f;
+                    if (m_Dash) m_UpdateDashTime = Time.time + 1f;
+                }
             }
         }
 
         private void FixedUpdate()
         {
-            // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            // Pass all parameters to the character control script.
-            m_Character.Move(h, crouch, m_Jump, m_Dash);
+            if (!m_CharacterAnimator.GetBool("OnStairs"))
+            {
+                // Read the inputs.
+                bool crouch = Input.GetKey(KeyCode.LeftControl);
+                float h = CrossPlatformInputManager.GetAxis("Horizontal");
+                // Pass all parameters to the character control script.
+                m_Character.Move(h, crouch, m_Jump, m_Dash);
 
-            m_Jump = false;
-            m_Dash = false;
+                m_Jump = false;
+                m_Dash = false;
+            }
         }
     }
 }

@@ -6,11 +6,12 @@ public class Stairs : MonoBehaviour {
 
     #region private fields
 
-    private Transform m_StairsTop; //stairs top transform
-    private Animator m_Animator; //player's animator
-    private Rigidbody2D m_Player; //player's rigidbody
-    private bool m_VerticalMove; //is player move verticaly
-    private bool isJumping; //is player press jump button
+    public Transform m_StairsTop; //stairs top transform
+
+    public Animator m_Animator; //player's animator
+    public Rigidbody2D m_Player; //player's rigidbody
+    public bool m_VerticalMove; //is player move verticaly
+    public bool isJumping; //is player press jump button
 
     #endregion
 
@@ -65,7 +66,16 @@ public class Stairs : MonoBehaviour {
             }
             else if (isJumping) //if player want to jump from stairs
             {
-                PlayerOnStairs(false, m_Player.gameObject); //move player from stairs
+                isJumping = false;
+
+                var jumpVector = new Vector2(5f, 10f); //jump right
+
+                if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
+                {
+                    jumpVector = new Vector2(-5f, 10f); //jump left
+                }
+
+                m_Player.velocity = jumpVector; //move player from the stairs
             }
             else if (m_Animator.GetBool("IsMovingOnStairs")) //if player animation show player movement on stairs
             {
@@ -101,7 +111,8 @@ public class Stairs : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player on stairs
         {
-            PlayerOnStairs(true, collision.gameObject);
+            GetComponentsOnPlayer(collision.gameObject); //get animator and controler from player gameobject
+            PlayerOnStairs(true);
         }
     }
 
@@ -109,27 +120,20 @@ public class Stairs : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leave stairs
         {
-            PlayerOnStairs(false, collision.gameObject);
-
-            isJumping = false;
-            m_Player.GetComponent<Platformer2DUserControl>().enabled = true; //disable or enable standart player movement script
-            m_Player = null;
+            PlayerOnStairs(false);
         }
     }
 
-    private void PlayerOnStairs(bool isOnstairs, GameObject collision)
+    private void PlayerOnStairs(bool isOnstairs)
     {
-        GetComponentsOnPlayer(collision); //get animator and controler from player gameobject
-
         m_Animator.SetBool("OnStairs", isOnstairs); //play onstairs animation
-        m_Player.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs; //disable or enable standart player movement script
+        //m_Player.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs; //disable or enable standart player movement script
 
         if (isOnstairs) //if player is on stairs
         {
-            m_Player.GetComponent<PlatformerCharacter2D>().m_IsHaveDoubleJump = true; //reset double jump state
             m_Player.gravityScale = 0f; //disable gravity
             m_Player.position = new Vector2(m_StairsTop.position.x + 0.1f, m_Player.position.y); //place player in the center of the stairs
-            m_Player.velocity = Vector3.zero; //disable player velocity
+            m_Player.velocity = Vector2.zero; //disable player velocity
         }
         else //if player leave stairs
         {
@@ -137,17 +141,10 @@ public class Stairs : MonoBehaviour {
 
             m_Animator.SetBool("IsMovingOnStairs", false); //stop player's movement
 
-            if (isJumping) //if jumped from staris
-            {
-                var jumpVector = new Vector2(5f, 10f); //jump right
+            m_Player.GetComponent<PlatformerCharacter2D>().m_IsHaveDoubleJump = true; //reset double jump state
 
-                if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
-                {
-                    jumpVector = new Vector2(-5f, 10f); //jump left
-                }
-
-                m_Player.velocity = jumpVector; //move player from the stairs
-            }
+            m_Animator = null;
+            m_Player = null;
         }
     }
 
