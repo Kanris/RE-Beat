@@ -31,7 +31,7 @@ public class PlayerStats : Stats
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
-    private static int m_Coins = 0;
+    private static int m_Scrap = 0;
     private static int DamageMultiplier = 1;
 
     private static float DefaultMeleeAttackSpeed = 0.3f;
@@ -45,16 +45,19 @@ public class PlayerStats : Stats
     {
         set
         {
-            m_Coins += value;
-
-            if (OnScrapAmountChange != null) //notify that coins amount changed
+            if ((m_Scrap + value) > 0)
             {
-                OnScrapAmountChange(value);
+                m_Scrap += value;
+
+                if (OnScrapAmountChange != null) //notify that coins amount changed
+                {
+                    OnScrapAmountChange(value);
+                }
             }
         }
         get
         {
-            return m_Coins;
+            return m_Scrap;
         }
     }
 
@@ -181,9 +184,9 @@ public class PlayerStats : Stats
         if (PlayerInventory == null) //initialize player's inventory with size of nine
             PlayerInventory = new Inventory(9);
 
-#endregion
+        #endregion
 
-#region initialize health ui
+        #region initialize health ui
 
         UIManager.Instance.Clear(); //clear health ui
 
@@ -214,6 +217,8 @@ public class PlayerStats : Stats
         AddCameraEffect(cammeraEffectValue);
 
 #endregion
+
+        Scrap = 1000;
     }
 
     public override void TakeDamage(int amount, int divider = 1)

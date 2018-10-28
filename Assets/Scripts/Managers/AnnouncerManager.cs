@@ -198,37 +198,60 @@ public class AnnouncerManager : MonoBehaviour {
 
     public void ChangeScrapAmount(int value)
     {
-        if (AmountText != null & AddScrapText != null)
+        Debug.LogError(value);
+
+        if (value > 0)
         {
-            StartCoroutine(DisplayChangeScrapAmount(value));
+            StartCoroutine(DisplayChangeAmount(value, '+', 1));
+        }
+        else
+        {
+            StartCoroutine(DisplayChangeAmount(value, '-', -1, true));
         }
     }
 
-    private IEnumerator DisplayChangeScrapAmount(int value)
+    private IEnumerator DisplayChangeAmount(int value, char sign, int val, bool displayAmount = false)
     {
+        var currentCoinsCount = PlayerStats.Scrap - value;
+
+        if (value < 0)
+        {
+            value *= -1;
+            currentCoinsCount = PlayerStats.Scrap + value;
+        }
+
+        var addAmount = value;
+
         SetAciveScrapUI(true);
-       
-        AddScrapText.text = "+" + value.ToString();
+
+        AddScrapText.gameObject.SetActive(true);
+        AddScrapText.text = sign + value.ToString();
+        AmountText.text = currentCoinsCount.ToString();
 
         yield return new WaitForSeconds(1f);
 
-        var currentCoinsCount = int.Parse(AmountText.text);
-        var addAmount = value;
-
         for (int index = 0; index < value; index++)
         {
-            currentCoinsCount += 1;
+            currentCoinsCount += val;
             AmountText.text = currentCoinsCount.ToString();
 
             addAmount -= 1;
-            AddScrapText.text = "+" + addAmount.ToString();
+            AddScrapText.text = sign + addAmount.ToString();
 
             yield return new WaitForSeconds(0.01f);
         }
 
         yield return new WaitForSeconds(1f);
 
-        SetAciveScrapUI(false);
+        AddScrapText.gameObject.SetActive(false);
+
+        if (!displayAmount) SetAciveScrapUI(false);
+    }
+
+    public void ShowScrapAmount(bool value)
+    {
+        SetAciveScrapUI(value);
+        AddScrapText.gameObject.SetActive(false);
     }
 
     private void SetAciveScrapUI(bool value)
