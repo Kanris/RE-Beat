@@ -368,11 +368,11 @@ public class GameMaster : MonoBehaviour {
         //restrict player movement
         var playerBody = respawnPlayer.transform.GetChild(0).gameObject;
 
-        playerBody.GetComponent<Platformer2DUserControl>().enabled = false;
+        playerBody.GetComponent<PlatformerCharacter2D>().enabled = false;
 
         yield return new WaitForSeconds(waitTimer);
 
-        playerBody.GetComponent<Platformer2DUserControl>().enabled = true;
+        playerBody.GetComponent<PlatformerCharacter2D>().enabled = true;
     }
 
 #endregion

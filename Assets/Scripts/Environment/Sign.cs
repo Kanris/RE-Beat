@@ -19,7 +19,7 @@ public class Sign : MonoBehaviour {
     #endregion
 
     private GameObject m_InteractionButton; //sign ui
-    private Platformer2DUserControl m_Player; //player control
+    private PlatformerCharacter2D m_Player; //player control
     private bool m_IsSentenceShowInProgress; //indicates is dialogue still in progress
 
     #endregion
@@ -74,7 +74,7 @@ public class Sign : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_Player == null) //if player enter to the sign trigger
         {
-            var playerControl = collision.GetComponent<Platformer2DUserControl>(); //get reference to the player control
+            var playerControl = collision.GetComponent<PlatformerCharacter2D>(); //get reference to the player control
             SetUpSign(true, playerControl); 
         }
     }
@@ -96,7 +96,7 @@ public class Sign : MonoBehaviour {
             m_Player.enabled = active; //change control state
     }
 
-    private void SetUpSign(bool value, Platformer2DUserControl player)
+    private void SetUpSign(bool value, PlatformerCharacter2D player)
     {
         m_InteractionButton.SetActive(value); //show or hide sign ui
         m_Player = player; //reference to the player's control
