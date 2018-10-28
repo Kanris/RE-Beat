@@ -127,7 +127,7 @@ public class Stairs : MonoBehaviour {
     private void PlayerOnStairs(bool isOnstairs)
     {
         m_Animator.SetBool("OnStairs", isOnstairs); //play onstairs animation
-        //m_Player.GetComponent<Platformer2DUserControl>().enabled = !isOnstairs; //disable or enable standart player movement script
+        m_Player.GetComponent<PlatformerCharacter2D>().enabled = !isOnstairs; //disable or enable standart player movement script
 
         if (isOnstairs) //if player is on stairs
         {

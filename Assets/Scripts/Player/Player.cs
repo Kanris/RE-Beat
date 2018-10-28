@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
         InfoManager.Instance.OnJournalOpen += TriggerPlayerBussy;
 
-        GetComponent<PlatformerCharacter2D>().OnLandEvent += () => AudioManager.Instance.Play("Land"); 
+        //GetComponent<PlatformerCharacter2D>().OnLandEvent += () => AudioManager.Instance.Play("Land"); 
     }
 
     #endregion

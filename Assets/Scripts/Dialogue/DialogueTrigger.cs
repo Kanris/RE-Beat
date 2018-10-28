@@ -14,7 +14,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     #region private fields
     
-    private Platformer2DUserControl m_Player; //player's control
+    private PlatformerCharacter2D m_Player; //player's control
     private bool m_IsDialogueInProgress; //is dialogue in progress
 
     #endregion
@@ -63,7 +63,7 @@ public class DialogueTrigger : MonoBehaviour {
     private void EnableUserControl(bool active)
     {
         if (!active) //if player shouldn't controll character
-            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop any character movement
+            m_Player.Move(0f, false, false, false); //stop any character movement
 
         if (m_Player != null & m_Player.enabled != active) //disable or enable character control
             m_Player.enabled = active;
@@ -73,7 +73,7 @@ public class DialogueTrigger : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player is near npc
         {
-            m_Player = collision.GetComponent<Platformer2DUserControl>(); //get character control script
+            m_Player = collision.GetComponent<PlatformerCharacter2D>(); //get character control script
             DisplayUI(true); //show npc ui
         }
     }
