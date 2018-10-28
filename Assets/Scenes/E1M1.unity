@@ -1385,7 +1385,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1420229268}
+      objectReference: {fileID: 685967043}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -14226,6 +14226,11 @@ Prefab:
       propertyPath: m_Name
       value: Right
       objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
   m_IsPrefabParent: 0
@@ -14288,6 +14293,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4072365137546020, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
       propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -25777,6 +25787,11 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
   m_IsPrefabParent: 0
@@ -31173,6 +31188,11 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
   m_IsPrefabParent: 0
@@ -31840,6 +31860,11 @@ Prefab:
     - target: {fileID: 1500544934284040, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
       propertyPath: m_Name
       value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
@@ -34319,6 +34344,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4072365137546020, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
       propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -37712,6 +37742,11 @@ Prefab:
     - target: {fileID: 1500544934284040, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
       propertyPath: m_Name
       value: Cave Entrance
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862665962563098, guid: c9c72d8bce2eb74429a60237aebbb7d5,
+        type: 2}
+      propertyPath: isLight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c72d8bce2eb74429a60237aebbb7d5, type: 2}
