@@ -126,6 +126,7 @@ public class Stairs : MonoBehaviour {
 
         if (isOnstairs) //if player is on stairs
         {
+            m_Player.GetComponent<PlatformerCharacter2D>().m_IsHaveDoubleJump = true; //reset double jump state
             m_Player.gravityScale = 0f; //disable gravity
             m_Player.position = new Vector2(m_StairsTop.position.x + 0.1f, m_Player.position.y); //place player in the center of the stairs
             m_Player.velocity = Vector3.zero; //disable player velocity

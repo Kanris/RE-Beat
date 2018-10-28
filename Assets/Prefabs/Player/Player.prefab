@@ -1494,7 +1494,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 4294852808
+    m_Bits: 4294459592
   JumpPlatformPrefab: {fileID: 1020155768551936, guid: ed875a334c3b3b846b85839266d5c499,
     type: 2}
   m_LandEffect: {fileID: 1224409648855476, guid: 9716735c25cea984e8c1a5f286af4de8,
@@ -1504,6 +1504,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4464073724450892}
   m_CeilingCheck: {fileID: 4476708197202586}
   m_JumpForce: 700
+  m_IsHaveDoubleJump: 0
 --- !u!114 &114831392562631736
 MonoBehaviour:
   m_ObjectHideFlags: 1
