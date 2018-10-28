@@ -35,7 +35,9 @@ public class MetalicGround : MonoBehaviour {
                 PlayAnimation("Active"); //change ground animation
             }
             else //if player havn't needed item
-                StartCoroutine(DisableGround()); //disable metalic ground collision
+            {
+                StartCoroutine(DisableGround(collision.gameObject.layer));
+            }
         }
     }
 
@@ -53,13 +55,13 @@ public class MetalicGround : MonoBehaviour {
         m_Animator.SetTrigger(name);
     }
 
-    private IEnumerator DisableGround()
+    private IEnumerator DisableGround(int playerLayer)
     {
-        m_Ground.enabled = false; //disable ground collider
+        Physics2D.IgnoreLayerCollision(playerLayer, gameObject.layer);
 
         yield return new WaitForSeconds(2f);
 
-        m_Ground.enabled = true; //enable ground collider
+        Physics2D.IgnoreLayerCollision(playerLayer, gameObject.layer, false);
     }
 
     #endregion
