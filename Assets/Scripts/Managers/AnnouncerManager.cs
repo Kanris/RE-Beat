@@ -119,6 +119,11 @@ public class AnnouncerManager : MonoBehaviour {
         }
     }
 
+    private void OnDestroy()
+    {
+        PlayerStats.OnScrapAmountChange -= ChangeScrapAmount; //subscribe on coins amount change
+    }
+
     private IEnumerator DisplayMessage()
     {
         if (!m_NotificationUI.activeSelf)
