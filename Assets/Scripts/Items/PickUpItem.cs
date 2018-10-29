@@ -69,7 +69,6 @@ public class PickUpItem : MonoBehaviour {
                 break;
 
             case ItemDescription.ItemType.Heal: //if it is heal
-                Debug.LogError((AnnouncerManager.Instance != null).ToString() + " heal");
                 if (m_PlayerStats != null)
                     m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
                 break;
