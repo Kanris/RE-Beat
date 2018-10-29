@@ -64,18 +64,7 @@ public class AnnouncerManager : MonoBehaviour {
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            if (Instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-        }
+        Instance = this;
     }
     #endregion
 
@@ -198,8 +187,6 @@ public class AnnouncerManager : MonoBehaviour {
 
     public void ChangeScrapAmount(int value)
     {
-        Debug.LogError(value);
-
         if (value > 0)
         {
             StartCoroutine(DisplayChangeAmount(value, '+', 1));

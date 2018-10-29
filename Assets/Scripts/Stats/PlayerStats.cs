@@ -23,7 +23,7 @@ public class PlayerStats : Stats
     private PostProcessingProfile m_Profile;
     private int m_CriticalHealthAmount = 3;
 
-    private int m_OverHealScrapAmount = 10;
+    private int m_OverHealScrapAmount = 1000;
 
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
@@ -217,8 +217,6 @@ public class PlayerStats : Stats
         AddCameraEffect(cammeraEffectValue);
 
 #endregion
-
-        Scrap = 1000;
     }
 
     public override void TakeDamage(int amount, int divider = 1)

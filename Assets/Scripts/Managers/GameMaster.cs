@@ -263,7 +263,7 @@ public class GameMaster : MonoBehaviour {
     public void SaveState<T>(string name, T value, RecreateType recreateType, string sceneName = "")
     {
         var state = GetState(sceneName);
-        
+        Debug.LogError(state.SceneName + " " + name);
         switch (recreateType)
         {
             case RecreateType.Object:
