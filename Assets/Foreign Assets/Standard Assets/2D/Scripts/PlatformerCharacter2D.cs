@@ -17,7 +17,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private GameObject JumpPlatformPrefab;
         [SerializeField] private GameObject m_LandEffect;
         [SerializeField] private GameObject m_DashEffect;
-
+        
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
         public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
@@ -131,36 +131,42 @@ namespace UnityStandardAssets._2D
                 
                 m_IsHaveDoubleJump = true;
             }
-            else if (!m_Anim.GetBool("Ground") & m_IsHaveDoubleJump && jump)
+            else if (PlayerStats.m_IsCanDoubleJump)
             {
-                m_Rigidbody2D.velocity = Vector2.zero;
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
+                if (!m_Anim.GetBool("Ground") & m_IsHaveDoubleJump && jump)
+                {
+                    m_Rigidbody2D.velocity = Vector2.zero;
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
 
-                m_IsHaveDoubleJump = false;
-                m_Anim.Play("Jump", -1, 0f);
+                    m_IsHaveDoubleJump = false;
+                    m_Anim.Play("Jump", -1, 0f);
 
-                StartCoroutine(DoubleJumpPlatform());
+                    StartCoroutine(DoubleJumpPlatform());
+                }
             }
 
-            if (dash && m_Anim.GetFloat("Speed") > 0.01f)
+            if (PlayerStats.m_IsCanDash)
             {
-                m_Anim.SetBool("Dash", true);
+                if (dash && m_Anim.GetFloat("Speed") > 0.01f)
+                {
+                    m_Anim.SetBool("Dash", true);
 
-                m_IsDashing = true;
+                    m_IsDashing = true;
 
-                ShowDashEffect();
+                    ShowDashEffect();
 
-                StartCoroutine(StopDash());
-            }
+                    StartCoroutine(StopDash());
+                }
 
-            if (m_IsDashing)
-            {
-                var multiplier = 1;
+                if (m_IsDashing)
+                {
+                    var multiplier = 1;
 
-                if (!m_FacingRight)
-                    multiplier = -1;
+                    if (!m_FacingRight)
+                        multiplier = -1;
 
-                m_Rigidbody2D.AddForce(new Vector2(10f * multiplier, 0f), ForceMode2D.Impulse);
+                    m_Rigidbody2D.AddForce(new Vector2(10f * multiplier, 0f), ForceMode2D.Impulse);
+                }
             }
         }
 

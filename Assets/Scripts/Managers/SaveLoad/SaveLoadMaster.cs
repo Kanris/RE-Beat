@@ -187,7 +187,9 @@ public class PlayerGameData : IGameData
     public float AttackSpeed; //player attack speed
     public Inventory PlayerInventory; //player inventory
     public int CurrentPlayerHealth; //current health
-    public int Coins; //current amount of money
+    public int Scrap; //current amount of money
+    public bool IsCanDash;
+    public bool IsCanDoubleJump;
 
     #endregion
 
@@ -200,7 +202,9 @@ public class PlayerGameData : IGameData
         AttackSpeed = PlayerStats.MeleeAttackSpeed;
         PlayerInventory = PlayerStats.PlayerInventory;
         CurrentPlayerHealth = PlayerStats.CurrentPlayerHealth;
-        Coins = PlayerStats.Scrap;
+        Scrap = PlayerStats.Scrap;
+        IsCanDoubleJump = PlayerStats.m_IsCanDoubleJump;
+        IsCanDash = PlayerStats.m_IsCanDash;
     }
 
     #endregion
@@ -214,7 +218,10 @@ public class PlayerGameData : IGameData
         PlayerStats.MeleeAttackSpeed = AttackSpeed;
         PlayerStats.PlayerInventory = PlayerInventory;
         PlayerStats.CurrentPlayerHealth = CurrentPlayerHealth;
-        PlayerStats.Scrap = Coins;
+        PlayerStats.Scrap = 0;
+        PlayerStats.Scrap = Scrap;
+        PlayerStats.m_IsCanDoubleJump = IsCanDoubleJump;
+        PlayerStats.m_IsCanDash = IsCanDash;
     }
 
     #endregion

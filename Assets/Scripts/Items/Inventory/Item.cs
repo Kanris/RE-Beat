@@ -22,7 +22,11 @@ public class ItemDescription
     public ItemType itemType; //current item type
     #endregion
 
+    [Header("Heal")]
     [Range(1, 8)] public int HealAmount = 3; //item heal amount (only from Heal item type)
+
+    [Header("Cost")]
+    [Range(0, 1000)] public int ScrapAmount = 10;
 
     #endregion
 }

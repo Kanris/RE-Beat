@@ -220,7 +220,7 @@ public class AnnouncerManager : MonoBehaviour {
         AddScrapText.text = sign + value.ToString();
         AmountText.text = currentCoinsCount.ToString();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         for (int index = 0; index < value; index++)
         {
@@ -230,7 +230,7 @@ public class AnnouncerManager : MonoBehaviour {
             addAmount -= 1;
             AddScrapText.text = sign + addAmount.ToString();
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.001f);
         }
 
         yield return new WaitForSeconds(1f);
@@ -243,6 +243,7 @@ public class AnnouncerManager : MonoBehaviour {
     public void ShowScrapAmount(bool value)
     {
         SetAciveScrapUI(value);
+        AmountText.text = PlayerStats.Scrap.ToString();
         AddScrapText.gameObject.SetActive(false);
     }
 

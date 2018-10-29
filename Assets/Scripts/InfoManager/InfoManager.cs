@@ -75,7 +75,6 @@ public class InfoManager : MonoBehaviour {
     private void Start () {
 
         PauseMenuManager.Instance.OnGamePause += SetIsCantOpenJournal;
-        PlayerStats.OnScrapAmountChange += ChangeScrapAmount;
 
         m_JournalUI.SetActive(false); //hide journal ui
 
@@ -135,6 +134,7 @@ public class InfoManager : MonoBehaviour {
 
             m_JournalUI.SetActive(true);
             m_Page.ClearText();
+            m_ScrapText.text = PlayerStats.Scrap.ToString();
 
             OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
         }
@@ -142,6 +142,7 @@ public class InfoManager : MonoBehaviour {
         {
             m_JournalUI.SetActive(true);
             m_Page.ClearText();
+            m_ScrapText.text = PlayerStats.Scrap.ToString();
 
             OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
         }
@@ -149,11 +150,6 @@ public class InfoManager : MonoBehaviour {
         {
             CloseJournal();
         }
-    }
-
-    private void ChangeScrapAmount(int value)
-    {
-        m_ScrapText.text = PlayerStats.Scrap.ToString();
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)

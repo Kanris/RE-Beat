@@ -23,7 +23,7 @@ public class PlayerStats : Stats
     private PostProcessingProfile m_Profile;
     private int m_CriticalHealthAmount = 3;
 
-    private int m_OverHealScrapAmount = 1000;
+    private int m_OverHealScrapAmount = 100;
 
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
@@ -31,6 +31,9 @@ public class PlayerStats : Stats
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
+    public static bool m_IsCanDoubleJump = false;
+    public static bool m_IsCanDash = false;
+
     private static int m_Scrap = 0;
     private static int DamageMultiplier = 1;
 
@@ -45,9 +48,12 @@ public class PlayerStats : Stats
     {
         set
         {
-            if ((m_Scrap + value) > 0)
+            if ((m_Scrap + value) >= 0)
             {
-                m_Scrap += value;
+                if (value == 0)
+                    m_Scrap = 0;
+                else
+                    m_Scrap += value;
 
                 if (OnScrapAmountChange != null) //notify that coins amount changed
                 {
