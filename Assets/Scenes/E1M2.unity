@@ -18994,11 +18994,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1984102642}
   m_Script: {fileID: 11500000, guid: 15592c2aa5341ae4e975775da21f903e, type: 3}
---- !u!60 &994602587 stripped
-PolygonCollider2D:
-  m_CorrespondingSourceObject: {fileID: 60046886263315962, guid: 53c400cd10ad36047b98011fe1519fbd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1720472987}
 --- !u!1 &1036507655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1827372243095868, guid: d9c5ed0891162e0429c181754239c86b,
@@ -19403,10 +19398,16 @@ Prefab:
         type: 2}
       propertyPath: m_BoundingShape2D
       value: 
-      objectReference: {fileID: 994602587}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e503cfe3db0df42a1c93443b5d4933, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1104244075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+    type: 2}
+  m_PrefabInternal: {fileID: 1104244074}
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
 --- !u!4 &1108463917
 Transform:
   m_ObjectHideFlags: 0
@@ -24579,12 +24580,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1294688877 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114533377695886154, guid: 22e503cfe3db0df42a1c93443b5d4933,
-    type: 2}
-  m_PrefabInternal: {fileID: 1104244074}
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
 --- !u!1001 &1316984219
 Prefab:
   m_ObjectHideFlags: 0
@@ -24906,7 +24901,7 @@ Prefab:
         type: 2}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 1294688877}
+      objectReference: {fileID: 1104244075}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabAsset: 0
@@ -36003,6 +35998,10 @@ Prefab:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 4811256691915926, guid: 53c400cd10ad36047b98011fe1519fbd, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53c400cd10ad36047b98011fe1519fbd, type: 2}
   m_IsPrefabAsset: 0
@@ -36525,7 +36524,20 @@ Prefab:
         type: 2}
       propertyPath: m_VirtualCamera
       value: 
-      objectReference: {fileID: 1294688877}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4068405245355004, guid: c18c27e8304dd2f43b6df7a0256ef165, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4068405245355004, guid: c18c27e8304dd2f43b6df7a0256ef165, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114545981082333756, guid: c18c27e8304dd2f43b6df7a0256ef165,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c18c27e8304dd2f43b6df7a0256ef165, type: 2}
   m_IsPrefabAsset: 0
