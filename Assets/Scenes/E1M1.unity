@@ -33479,65 +33479,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 212379104448853678, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 2.0776649
-      objectReference: {fileID: 0}
-    - target: {fileID: 212379104448853678, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.9988331
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 0.051647186
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 2.0776649
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 1.9988331
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 1.9794998
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.067977905
-      objectReference: {fileID: 0}
-    - target: {fileID: 61003678733400862, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.851284
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955424734128458, guid: a89d3da86d8d88c4b9f99e6c052effb8, type: 2}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 212927990375079700, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.2235294
-      objectReference: {fileID: 0}
-    - target: {fileID: 212927990375079700, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.9032492
-      objectReference: {fileID: 0}
-    - target: {fileID: 249932032259196250, guid: a89d3da86d8d88c4b9f99e6c052effb8,
-        type: 2}
-      propertyPath: m_ForceMagnitude
-      value: -120
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89d3da86d8d88c4b9f99e6c052effb8, type: 2}
   m_IsPrefabAsset: 0
@@ -38148,7 +38089,6 @@ GameObject:
   - component: {fileID: 2127879053}
   - component: {fileID: 2127879052}
   - component: {fileID: 2127879054}
-  - component: {fileID: 2127879057}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -38267,18 +38207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2127879057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2127879051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 5c9e74aa6b03ae94a886428315806502, type: 2}
 --- !u!1 &2138953905
 GameObject:
   m_ObjectHideFlags: 0

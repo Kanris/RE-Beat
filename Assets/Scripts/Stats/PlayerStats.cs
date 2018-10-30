@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityStandardAssets._2D;
-using UnityEngine.PostProcessing;
 
 [System.Serializable]
 public class PlayerStats : Stats
@@ -19,8 +18,6 @@ public class PlayerStats : Stats
     [Header("Additional")]
     public PlatformerCharacter2D platformerCharacter2D;
 
-    private ChromaticAberrationModel.Settings m_ChromaticAbberationModel;
-    private PostProcessingProfile m_Profile;
     private int m_CriticalHealthAmount = 3;
 
     private int m_OverHealScrapAmount = 100;
@@ -99,9 +96,6 @@ public class PlayerStats : Stats
             CurrentHealth += amount;
 
             UIManager.Instance.AddHealth(amount); //add health in player's ui
-
-            if (CurrentHealth > m_CriticalHealthAmount)
-                AddCameraEffect(0f);
         }
     }
 
@@ -208,22 +202,6 @@ public class PlayerStats : Stats
         }
 
 #endregion
-
-        //is there has to be camera effect
-#region camera effect
-
-        m_Profile = Camera.main.GetComponent<PostProcessingBehaviour>().profile;
-        m_ChromaticAbberationModel = m_Profile.chromaticAberration.settings;
-
-        var cammeraEffectValue = 0f;
-        if (CurrentPlayerHealth < m_CriticalHealthAmount)
-        {
-            cammeraEffectValue = 0.5f;
-        }
-
-        AddCameraEffect(cammeraEffectValue);
-
-#endregion
     }
 
     public override void TakeDamage(int amount, int divider = 1)
@@ -232,9 +210,6 @@ public class PlayerStats : Stats
         {
             amount *= DamageMultiplier;
 
-            Camera.main.GetComponent<CinemachineFollow>().ShakeCam();
-            AddCameraEffect(0.5f);
-
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
             
@@ -242,42 +217,6 @@ public class PlayerStats : Stats
         }
     }
 
-    public void AddCameraEffect(float cameraEffectValue)
-    {
-        if (cameraEffectValue > 0)
-            GameMaster.Instance.StartCoroutine(AnimateCameraEffect(cameraEffectValue));
-        else
-        {
-            ChangeEffectValue(cameraEffectValue);
-        }
-    }
-
-    private void ChangeEffectValue(float value)
-    {
-        m_ChromaticAbberationModel.intensity = value;
-        m_Profile.chromaticAberration.settings = m_ChromaticAbberationModel;
-    }
-
-    private IEnumerator AnimateCameraEffect(float value)
-    {
-        var delta = 0.1f;
-
-        for (int index = 0; index < 10; index++)
-        {
-            yield return new WaitForSeconds(0.1f);
-
-            ChangeEffectValue(value - delta);
-            delta *= -1;
-        }
-
-        //effect has to stay on screen?
-        var intensityValue = 0f;
-
-        if (CurrentPlayerHealth < m_CriticalHealthAmount)
-            intensityValue = value;
-
-        ChangeEffectValue(intensityValue);
-    }
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {
