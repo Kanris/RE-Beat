@@ -264,7 +264,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 FindPlayer(); //find targe
                 //InitializeChasing();
-                StopAllCoroutines();
+                //StopAllCoroutines();
                 m_IsAttacking = true;
                 m_AttackCooldownTimer = 1f + Time.time;
             }
@@ -338,7 +338,7 @@ public class DroneShooter : MonoBehaviour {
     {
         //start a new path to the target
         m_Seeker.StartPath(transform.position, Target.position, OnPathComplete);
-        StopAllCoroutines();
+        //StopAllCoroutines();
         StartCoroutine(UpdatePath());
     }
 
