@@ -5,22 +5,23 @@ using TMPro;
 
 public class Trader : MonoBehaviour {
 
-    [SerializeField] private GameObject m_InteractionUI;
-    [SerializeField] private GameObject m_StoreUI;
+    [SerializeField] private GameObject m_InteractionUI; //ui that npc show to player when he get closer
+    [SerializeField] private GameObject m_StoreUI; //items that this vendor sells
 
     [Header("Description UI")]
-    [SerializeField] private GameObject m_DescriptionUI;
-    [SerializeField] private TextMeshProUGUI m_DescriptionNameText;
-    [SerializeField] private TextMeshProUGUI m_DescriptionText;
-    [SerializeField] private TextMeshProUGUI m_ScrapAmountText;
+    [SerializeField] private GameObject m_DescriptionUI; //item description ui
+    [SerializeField] private TextMeshProUGUI m_DescriptionNameText; //item name
+    [SerializeField] private TextMeshProUGUI m_DescriptionText; //item description
+    [SerializeField] private TextMeshProUGUI m_ScrapAmountText; //item cost
 
     [Header("Notification")]
-    [SerializeField] private GameObject m_Notification;
+    [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
 
-    private Item m_CurrentSelectedItem;
+    //current selected item info
+    private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
-    private bool m_IsPlayerNear;
+    private PlayerStats m_Player; //notify is player near the vendor
 
     private void Start()
     {
@@ -37,47 +38,47 @@ public class Trader : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
-        if (m_IsPlayerNear)
+        if (m_Player != null) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf)
+            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
             {
-                m_StoreUI.SetActive(true);
-                m_InteractionUI.SetActive(false);
+                m_StoreUI.SetActive(true); //show store ui
+                m_InteractionUI.SetActive(false); //hide interaction elements
             }
         }
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) //if player is near
         {
-            if (CheckInventoryAmount())
+            if (CheckInventoryAmount()) //if there are items to sell
             {
-                m_IsPlayerNear = true;
+                m_Player = collision.GetComponent<Player>().playerStats; //indicate that player is near
 
-                collision.GetComponent<Player>().TriggerPlayerBussy(true);
-                AnnouncerManager.Instance.ShowScrapAmount(true);
-                m_InteractionUI.SetActive(true);
+                collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
+                AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
+                m_InteractionUI.SetActive(true); //show interaction elements
             }
-            else
+            else //if there is nothing to sell
             {
-                collision.GetComponent<Player>().TriggerPlayerBussy(true);
-                AnnouncerManager.Instance.ShowScrapAmount(true);
-                m_Notification.SetActive(true);
+                collision.GetComponent<Player>().TriggerPlayerBussy(true); //don't allow player to attack
+                AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
+                m_Notification.SetActive(true); //show npc message
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) //if player leave trader trigger
         {
-            m_IsPlayerNear = false;
+            m_Player = null; //indicate that player is not near trader
 
-            HideUI();
+            HideUI(); //hide npc ui
 
-            collision.GetComponent<Player>().TriggerPlayerBussy(false);
-            AnnouncerManager.Instance.ShowScrapAmount(false);
+            collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
+            AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
         }
     }
 
@@ -91,11 +92,12 @@ public class Trader : MonoBehaviour {
 
     public void ShowItemDescription(GameObject itemToDisplayGO)
     {
-        m_CurrentSelectedItem = itemToDisplayGO.GetComponent<TraderItem>().m_TraderItem;
-        m_CurrentSelectedItemGO = itemToDisplayGO;
+        m_CurrentSelectedItem = itemToDisplayGO.GetComponent<TraderItem>().m_TraderItem; //get selected item description
+        m_CurrentSelectedItemGO = itemToDisplayGO; //store item gameobject
+         
+        m_DescriptionUI.SetActive(true); //show descripiton ui
 
-        m_DescriptionUI.SetActive(true);
-
+        //set text to display on description ui
         m_DescriptionNameText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
 
         m_DescriptionText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Description);
@@ -105,35 +107,42 @@ public class Trader : MonoBehaviour {
 
     public void BuyItem()
     {
-        if (m_CurrentSelectedItem != null)
+        if (m_CurrentSelectedItem != null) //if item were selected
         {
-            if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0)
+            if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
             {
-                PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount;
+                PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
 
+                //get item info
                 var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
                 var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
+                //display that item was added to inventory
                 AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(
                     itemName + " " + inventoryMessage, AnnouncerManager.Message.MessageType.Item
                 ));
 
+                //add item to inventory
                 PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
 
-                m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade();
+                //apply item upgrade to the player
+                m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
 
+                //move item from store ui (so childCount works properly)
                 m_CurrentSelectedItemGO.transform.SetParent(null);
                 Destroy(m_CurrentSelectedItemGO);
 
+                //hide desciption ui
                 m_DescriptionUI.SetActive(false);
 
+                //if there is nothing to sell
                 if (!CheckInventoryAmount())
                 {
-                    m_StoreUI.SetActive(false);
-                    m_Notification.SetActive(true);
+                    m_StoreUI.SetActive(false); //hide store ui
+                    m_Notification.SetActive(true); //show trader message
                 }
             }
-            else
+            else //if player does not have enought scrap
             {
                 AnnouncerManager.Instance.DisplayAnnouncerMessage(
                     new AnnouncerManager.Message("I haven't enough money to buy this",
@@ -144,7 +153,7 @@ public class Trader : MonoBehaviour {
 
     private bool CheckInventoryAmount()
     {
-        return m_StoreUI.transform.GetChild(0).transform.childCount > 0;
+        return m_StoreUI.transform.GetChild(0).transform.childCount > 0; //if there are items to sell
     }
 
 }

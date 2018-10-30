@@ -199,6 +199,7 @@ public class PlayerStats : Stats
         if (CurrentPlayerHealth > 0) //save current player's health
         {
             UIManager.Instance.AddHealth(CurrentPlayerHealth);
+            CurrentHealth = CurrentPlayerHealth;
         }
         else //player was dead initialize full hp
         {

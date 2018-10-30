@@ -4938,7 +4938,7 @@ Transform:
   m_LocalScale: {x: 1.7928993, y: 0.3375857, z: 1}
   m_Children: []
   m_Father: {fileID: 1210120272}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &461527505
 BoxCollider2D:
@@ -31307,98 +31307,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224299611180327768, guid: 027009091b3d0254e9b7d11cd360d4eb,
     type: 2}
   m_PrefabInternal: {fileID: 471573109}
---- !u!1 &1178771266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1178771267}
-  - component: {fileID: 1178771270}
-  - component: {fileID: 1178771269}
-  - component: {fileID: 1178771268}
-  m_Layer: 0
-  m_Name: Rainbackground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178771267
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1178771266}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -56.29, y: 1.61, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1210120272}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1178771268
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1178771266}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -3.8129787, y: -4.269575}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 38.54286, y: 15.469334}
-  m_EdgeRadius: 0
---- !u!114 &1178771269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1178771266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac6e4e18dbfa84af5887102aef975f36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Background: {fileID: 1803359821}
-  Mist: {fileID: 0}
-  ChangeMaterialTilemap:
-  - {fileID: 1115813204}
-  - {fileID: 0}
-  ChangeObjectsMaterial:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 2083963026}
-  - {fileID: 0}
-  - {fileID: 1803359820}
-  m_DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightMaterial: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
---- !u!114 &1178771270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1178771266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a2858be727af43bdbdaaeaf2d6353f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Sound: {fileID: 11400000, guid: 214514dec3fff4919b2c158d6541a601, type: 2}
 --- !u!4 &1191494688 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4829383332974000, guid: 4089f7beacff47d41ae5b6b5c212eca8,
@@ -31517,7 +31425,6 @@ Transform:
   - {fileID: 1935556945}
   - {fileID: 1311252430}
   - {fileID: 1981741404}
-  - {fileID: 1178771267}
   - {fileID: 461527504}
   - {fileID: 1951196022}
   m_Father: {fileID: 0}
@@ -37061,7 +36968,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1210120272}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1951196023
 BoxCollider2D:
@@ -38223,11 +38130,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!212 &2083963026 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 212281152426236110, guid: c6fc85782dc1dfe41813ca879a8e5a2d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1411934861}
 --- !u!1001 &2104051378
 Prefab:
   m_ObjectHideFlags: 0

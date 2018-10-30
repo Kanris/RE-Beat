@@ -29,6 +29,21 @@ public class DisableBackground : MonoBehaviour {
 
     #region private methods
 
+    private void Update()
+    {
+        if (m_PlayerInCave)
+        {
+            if (GameMaster.Instance.IsPlayerDead)
+            {
+                m_PlayerInCave = false;
+
+                StartCoroutine(PlayerLeaveCave(true)); //fade in mist
+            
+                //ChangeMaterial(collision, false);
+            }
+        }
+    }
+
     #region trigger
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,12 +60,7 @@ public class DisableBackground : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_PlayerInCave) //if player leave cave
         {
-            var isNeedWaiting = false;
-
-            if (GameMaster.Instance.IsPlayerDead)
-                isNeedWaiting = true;
-
-            StartCoroutine(PlayerLeaveCave(isNeedWaiting)); //fade in mist
+            StartCoroutine(PlayerLeaveCave(false)); //fade in mist
         }
 
         ChangeMaterial(collision, false);
@@ -72,7 +82,7 @@ public class DisableBackground : MonoBehaviour {
         m_PlayerInCave = false; //player leave cave
          
         if (isNeedWaiting) //if need delay before fade in mist
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.7f);
 
         if (!m_PlayerInCave) //if player is not in cave
         {
