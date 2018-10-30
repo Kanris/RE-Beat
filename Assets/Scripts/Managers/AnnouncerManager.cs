@@ -82,6 +82,9 @@ public class AnnouncerManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI AmountText; //current coins amount
     [SerializeField] private TextMeshProUGUI AddScrapText; //coins to add
 
+    [Header("Danger")]
+    [SerializeField] private GameObject m_CriticalDamage;
+
     #endregion
 
     private List<Message> m_MessagePipeline; //display message pipeline
@@ -122,6 +125,24 @@ public class AnnouncerManager : MonoBehaviour {
     private void OnDestroy()
     {
         PlayerStats.OnScrapAmountChange -= ChangeScrapAmount; //subscribe on coins amount change
+    }
+
+    public void ShowCriticalDamageSign()
+    {
+        StartCoroutine(DangerSign());
+    }
+
+    private IEnumerator DangerSign()
+    {
+        m_CriticalDamage.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        m_CriticalDamage.GetComponent<Animator>().SetTrigger("Disappear");
+
+        yield return new WaitForSeconds(0.1f);
+
+        m_CriticalDamage.SetActive(false);
     }
 
     private IEnumerator DisplayMessage()

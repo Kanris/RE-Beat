@@ -28,8 +28,8 @@ public class PlayerStats : Stats
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
-    public static bool m_IsCanDoubleJump = true;
-    public static bool m_IsCanDash = true;
+    public static bool m_IsCanDoubleJump = false;
+    public static bool m_IsCanDash = false;
 
     private static int m_Scrap = 0;
     private static int DamageMultiplier = 1;
@@ -96,6 +96,11 @@ public class PlayerStats : Stats
             CurrentHealth += amount;
 
             UIManager.Instance.AddHealth(amount); //add health in player's ui
+
+            if (CurrentHealth > 2)
+            {
+                Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
+            }
         }
     }
 
@@ -194,11 +199,19 @@ public class PlayerStats : Stats
         {
             UIManager.Instance.AddHealth(CurrentPlayerHealth);
             CurrentHealth = CurrentPlayerHealth;
+
+            if (CurrentHealth < 3)
+                Camera.main.GetComponent<CinemachineFollow>().PlayLowHealthEffect();
+            else
+                Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
+
         }
         else //player was dead initialize full hp
         {
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
+
+            Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
         }
 
 #endregion
@@ -208,6 +221,9 @@ public class PlayerStats : Stats
     {
         if (!m_IsInvincible) //player is not invincible
         {
+
+            m_IsInvincible = true; //player is invincible
+
             amount *= DamageMultiplier;
 
             Camera.main.GetComponent<CinemachineFollow>().PlayHitEffect();
@@ -220,6 +236,7 @@ public class PlayerStats : Stats
             if (CurrentHealth < 3)
             {
                 Camera.main.GetComponent<CinemachineFollow>().PlayLowHealthEffect();
+                AnnouncerManager.Instance.ShowCriticalDamageSign();
             }
         }
     }
@@ -233,8 +250,6 @@ public class PlayerStats : Stats
         yield return new WaitForSeconds(0.1f); //time to return player's control
 
         PlayHitAnimation(false);
-
-        m_IsInvincible = true; //player is invincible
 
         yield return InvincibleAnimation(); //play invincible animation
 
