@@ -210,24 +210,21 @@ public class PlayerStats : Stats
         {
             amount *= DamageMultiplier;
 
-            GameMaster.Instance.StartCoroutine(PlayCameraHitAnimation());
+            Camera.main.GetComponent<CinemachineFollow>().PlayHitEffect();
 
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
             
             UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
+
+            if (CurrentHealth < 3)
+            {
+                Camera.main.GetComponent<CinemachineFollow>().PlayLowHealthEffect();
+            }
         }
     }
 
-    private IEnumerator PlayCameraHitAnimation()
-    {
 
-        Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
-
-        yield return new WaitForSeconds(0.5f);
-
-        Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = false;
-    }
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {
@@ -236,6 +233,8 @@ public class PlayerStats : Stats
         yield return new WaitForSeconds(0.1f); //time to return player's control
 
         PlayHitAnimation(false);
+
+        m_IsInvincible = true; //player is invincible
 
         yield return InvincibleAnimation(); //play invincible animation
 
