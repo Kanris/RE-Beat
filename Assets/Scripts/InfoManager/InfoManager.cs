@@ -134,7 +134,7 @@ public class InfoManager : MonoBehaviour {
 
             m_JournalUI.SetActive(true);
             m_Page.ClearText();
-            m_ScrapText.text = PlayerStats.Scrap.ToString();
+            m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
 
             OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
         }
@@ -142,7 +142,7 @@ public class InfoManager : MonoBehaviour {
         {
             m_JournalUI.SetActive(true);
             m_Page.ClearText();
-            m_ScrapText.text = PlayerStats.Scrap.ToString();
+            m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
 
             OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
         }
@@ -197,16 +197,16 @@ public class InfoManager : MonoBehaviour {
         switch (id)
         {
             case 0:
-                name = "CURRENT";
+                name = "CURRENT TASKS";
                 break;
             case 1:
-                name = "COMPLETED";
+                name = "COMPLETED TASKS";
                 break;
             case 2:
                 name = "INVENTORY";
                 break;
             case 3:
-                name = GameMaster.Instance.SceneName;
+                name = "LOCATION - <color=#45f442>" + GameMaster.Instance.SceneName + "</color>";
                 break;
         }
 

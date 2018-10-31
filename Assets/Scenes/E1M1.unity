@@ -4923,6 +4923,21 @@ Prefab:
       value: 
       objectReference: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
         type: 2}
+    - target: {fileID: 114436222466261328, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436222466261328, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: m_FillMethod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114857141081281380, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+        type: 2}
+      propertyPath: m_CellSize.x
+      value: 0.55
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3c115df6dde7342b4c49385ad1e4f9, type: 2}
   m_IsPrefabAsset: 0
@@ -5001,6 +5016,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &453760328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1446748719635076, guid: 9a3c115df6dde7342b4c49385ad1e4f9,
+    type: 2}
+  m_PrefabInternal: {fileID: 433374080}
+--- !u!95 &453760329
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453760328}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2e79e185d09d4659a101373c71ad815, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &461527503
 GameObject:
   m_ObjectHideFlags: 0
@@ -36893,6 +36931,7 @@ GameObject:
   - component: {fileID: 2006752281}
   - component: {fileID: 2006752280}
   - component: {fileID: 2006752279}
+  - component: {fileID: 2006752282}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -36940,7 +36979,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 0.66, y: 0.5}
+  m_CellSize: {x: 0.55, y: 0.5}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -36965,10 +37004,10 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: f8e18c6c23815934cba598f099920549, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -36980,6 +37019,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2006752277}
   m_CullTransparentMesh: 0
+--- !u!95 &2006752282
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2006752277}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2e79e185d09d4659a101373c71ad815, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2008535164 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1653171582189972, guid: 135e0815c9cbbdc47800e671662d33d4,
