@@ -130,12 +130,16 @@ public class StartScreenManager : MonoBehaviour {
         foreach (var item in resolutions)
         {
             string option = item.width + " x " + item.height;
-            resolutionsList.Add(option);
 
-            if (item.width == Screen.currentResolution.width && 
-                item.height == Screen.currentResolution.height)
+            if (!resolutionsList.Contains(option))
             {
-                currentResolutionItem = option;
+                resolutionsList.Add(option);
+
+                if (item.width == Screen.currentResolution.width &&
+                    item.height == Screen.currentResolution.height)
+                {
+                    currentResolutionItem = option;
+                }
             }
         }
 
