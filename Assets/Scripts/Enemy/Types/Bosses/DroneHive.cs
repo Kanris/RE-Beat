@@ -68,8 +68,6 @@ public class DroneHive : MonoBehaviour
         m_NextDestination = GetDestination();
 
         m_TeleportTimer = 0f;
-
-        Key.SetActive(false);
     }
 
     #region Initialize
@@ -133,6 +131,11 @@ public class DroneHive : MonoBehaviour
 
             m_NextDestination = GetDestination();
         }
+
+        if (Key.activeSelf)
+        {
+            Key.SetActive(false);
+        }
     }
 
     #region State
@@ -195,7 +198,6 @@ public class DroneHive : MonoBehaviour
     private void ArchlightDead()
     {
         ChangeLightState(true);
-        Key.SetActive(true);
 
         ShowParticles(DeathParticle, 10f);
 
