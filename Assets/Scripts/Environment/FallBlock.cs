@@ -11,13 +11,13 @@ public class FallBlock : MonoBehaviour {
 
     [SerializeField] private float IdleTime = 4f; //block idle time
     [SerializeField] private float FallTime = 2f; //block fall time
+    [SerializeField, Range(-40f, 40f)] private float m_YPosition = -10f;
 
     #endregion
 
     private Rigidbody2D m_Rigidbody; //block rigidbody
     private float m_UpdateTime; //change state time
     private bool m_IsIdle; //is block idling
-    private float m_YPosition;
 
     #endregion
 
@@ -28,7 +28,6 @@ public class FallBlock : MonoBehaviour {
     private void Start()
     {
         InitializeRigidbody();
-        m_YPosition = -5f;
     }
 
     private void InitializeRigidbody()
@@ -61,7 +60,7 @@ public class FallBlock : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player in block's trigger
+        if (collision.CompareTag("Player") & !m_IsIdle) //if player in block's trigger
         {
             collision.GetComponent<Player>().playerStats.KillPlayer(); //kill player
         }
@@ -75,9 +74,6 @@ public class FallBlock : MonoBehaviour {
         {
             moveVector = new Vector2(0f, m_YPosition); //get move vector
             m_YPosition *= -1; //get next y value
-
-            if (m_YPosition > 0) //idle on top
-                m_IsIdle = true;
         }
 
         m_Rigidbody.velocity = moveVector; //move block
