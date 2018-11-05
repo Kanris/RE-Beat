@@ -21,10 +21,9 @@ public class StartScreenManager : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private string BackgroundMusic; //background music
+    [SerializeField] private Audio BackgroundMusic; //background music
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
     [SerializeField] private GameObject OptionsMenuGrid; //option ui
-    [SerializeField] private AudioMixer audioMixer; //main game mixer
     [SerializeField] private Audio UIClickAudio;
     //options items
     [SerializeField] private TMP_Dropdown resoulutionsDropDown;
@@ -156,6 +155,7 @@ public class StartScreenManager : MonoBehaviour {
 
     private void ChangeGridsVisibility() //change visible menus
     {
+        PlayClickSound();
         MainMenuGrid.SetActive(!MainMenuGrid.activeSelf);
         OptionsMenuGrid.SetActive(!OptionsMenuGrid.activeSelf);
 
@@ -212,6 +212,7 @@ public class StartScreenManager : MonoBehaviour {
 
     public void Options()
     {
+        PlayClickSound();
         ChangeGridsVisibility();
     }
 
@@ -231,18 +232,21 @@ public class StartScreenManager : MonoBehaviour {
 
     public void SetFullScreen(bool value)
     {
+        PlayClickSound();
         Screen.fullScreen = value;
         IsFullscreen = value;
     }
 
     public void SetResolution(int resolutionIndex)
     {
+        PlayClickSound();
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
         ResolutionIndex = resolutionIndex;
     }
 
     public void SetLocalization(string fileName)
     {
+        PlayClickSound();
         LocalizationManager.Instance.LoadGeneralLocalizationData(fileName);
         LocalizationToLoad = fileName;
         StartCoroutine( LoadLocalizationData() );

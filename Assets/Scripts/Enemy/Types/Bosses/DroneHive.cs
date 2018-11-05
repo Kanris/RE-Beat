@@ -36,6 +36,10 @@ public class DroneHive : MonoBehaviour
     [SerializeField] private ObjectAppearOnTrigger m_BossTrigger;
     [SerializeField] private GameObject m_BlockDoor;
 
+    [Header("Audio")]
+    [SerializeField] private Audio m_BossBattleAudio;
+    [SerializeField] private Audio m_SceneBackgroundMusic;
+
     #endregion
 
     #region private
@@ -135,6 +139,7 @@ public class DroneHive : MonoBehaviour
         if (Key.activeSelf)
         {
             Key.SetActive(false);
+            AudioManager.Instance.SetBackgroundMusic(m_BossBattleAudio);
         }
     }
 
@@ -171,6 +176,10 @@ public class DroneHive : MonoBehaviour
         
         ChangeLightState(true);
         Key.SetActive(true);
+
+
+        AudioManager.Instance.SetBackgroundMusic(m_SceneBackgroundMusic);
+
         transform.position = m_StartPosition;
         gameObject.SetActive(false);
     }

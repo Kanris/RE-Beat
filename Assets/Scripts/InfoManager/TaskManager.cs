@@ -129,7 +129,6 @@ public class TaskManager : MonoBehaviour {
 
             if (isSuccess) //if task give/update/finish was success
             {
-                AudioManager.Instance.Play(m_TaskAudio); //play task update sound
                 GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Task); //save task state
                 DestroyObject(); //destroy if needed
             }

@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Name: Rain
   m_EditorClassIdentifier: 
   Clip: {fileID: 8300000, guid: 1cda64e0a172f884aa256fc77b3c89d8, type: 3}
-  Volume: 1
-  Pitch: 1
-  VolumeOffset: 0.1
-  PitchOffset: 0.1
+  Volume: 0.5
   m_AudioType: 0
-  Loop: 0
+  Loop: 1

@@ -8,7 +8,10 @@ public class DialogueManager : MonoBehaviour {
 
     #region Singleton
     public static DialogueManager Instance; //singleton instance
+
+    [Header("Audio")]
     [SerializeField] private Audio UIClickAudio;
+    [SerializeField] private Audio PrintTextAudio;
 
     private void Awake()
     {
@@ -46,11 +49,14 @@ public class DialogueManager : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("UI")]
     [SerializeField] private GameObject m_DialogueUI; //dialogue ui
     [SerializeField] private Animator m_DialogueBackgroundAnimator;
+    [Header("Buttons")]
     [SerializeField] private GameObject m_Buttons; //answer buttons
     [SerializeField] private GameObject m_FirstButtonGO;
     [SerializeField] private GameObject m_SecondButtonGO;
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI m_FirstButton; //first answer ui text 
     [SerializeField] private TextMeshProUGUI m_SecondButton; //second answer ui text
     [SerializeField] private TextMeshProUGUI m_Text; //text to display sentences
@@ -110,6 +116,8 @@ public class DialogueManager : MonoBehaviour {
 
         var isTagFound = false;
 
+        AudioManager.Instance.Play(PrintTextAudio);
+
         //start type sentence
         foreach (var letter in typeSentence)
         {
@@ -126,6 +134,8 @@ public class DialogueManager : MonoBehaviour {
 
             m_Text.text += letter; //type letter
         }
+
+        AudioManager.Instance.Stop(PrintTextAudio);
 
         m_IsSentenceTyping = false; //notify that sentence typing is over
         m_NextImage.SetActive(true); //show next image

@@ -496,7 +496,7 @@ MonoBehaviour:
   taskType: 1
   Name: Find_out
   key: find_out_red_door
-  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
+  m_TaskAudio: {fileID: 0}
   DestroyEntireObject: 0
 --- !u!4 &27296122 stripped
 Transform:
@@ -890,84 +890,8 @@ Transform:
   m_Children:
   - {fileID: 1706921800}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &183751477
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 757199632}
-    m_Modifications:
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 13.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -3.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_Name
-      value: Waterfalls_Cave_Entrance
-      objectReference: {fileID: 0}
-    - target: {fileID: 61329916390758002, guid: 731a30767888eba43bf8dd6757f7de6d,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 8.911976
-      objectReference: {fileID: 0}
-    - target: {fileID: 61329916390758002, guid: 731a30767888eba43bf8dd6757f7de6d,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 17
-      objectReference: {fileID: 0}
-    - target: {fileID: 61329916390758002, guid: 731a30767888eba43bf8dd6757f7de6d,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: -2.0167618
-      objectReference: {fileID: 0}
-    - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
-        type: 2}
-      propertyPath: Sound
-      value: 
-      objectReference: {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617,
-        type: 2}
-    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-  m_IsPrefabAsset: 0
---- !u!4 &183751478 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d,
-    type: 2}
-  m_PrefabInternal: {fileID: 183751477}
 --- !u!1001 &195666398
 Prefab:
   m_ObjectHideFlags: 0
@@ -5631,7 +5555,7 @@ Transform:
   - {fileID: 1008434378}
   - {fileID: 650079811}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &516648249
 GameObject:
@@ -24039,36 +23963,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a,
     type: 2}
   m_PrefabInternal: {fileID: 899996257}
---- !u!1 &757199631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 757199632}
-  m_Layer: 0
-  m_Name: AudioTriggers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &757199632
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 757199631}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.799018, y: 3.777841, z: -0.29296875}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2104051379}
-  - {fileID: 183751478}
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &757954465
 GameObject:
   m_ObjectHideFlags: 0
@@ -24098,7 +23992,7 @@ Transform:
   - {fileID: 1077229228}
   - {fileID: 1425765200}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &759092874
 GameObject:
@@ -25585,7 +25479,7 @@ MonoBehaviour:
   taskType: 2
   Name: Find_out
   key: find_out_read_note
-  m_TaskAudio: {fileID: 11400000, guid: 044371d5b2469cd48854b7d3b480a16a, type: 2}
+  m_TaskAudio: {fileID: 0}
   DestroyEntireObject: 1
 --- !u!1001 &1101457257
 Prefab:
@@ -32683,7 +32577,7 @@ Transform:
   - {fileID: 1165418026}
   - {fileID: 680976358}
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1387431268
 GameObject:
@@ -33363,7 +33257,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1435097927
 Prefab:
@@ -33644,7 +33538,7 @@ Transform:
   - {fileID: 755761580}
   - {fileID: 1315511182}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1548713258
 Prefab:
@@ -34712,7 +34606,7 @@ Transform:
   - {fileID: 1863019848}
   - {fileID: 2060853086}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1790738709
 GameObject:
@@ -37655,67 +37549,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &2104051378
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 757199632}
-    m_Modifications:
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -15.86
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_Name
-      value: Waterfalls_Main
-      objectReference: {fileID: 0}
-    - target: {fileID: 114316812324221942, guid: 731a30767888eba43bf8dd6757f7de6d,
-        type: 2}
-      propertyPath: Sound
-      value: 
-      objectReference: {fileID: 11400000, guid: dc7e0d432493b41418989aa8cdd7b617,
-        type: 2}
-    - target: {fileID: 1779154518683692, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 731a30767888eba43bf8dd6757f7de6d, type: 2}
-  m_IsPrefabAsset: 0
---- !u!4 &2104051379 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4876909903381912, guid: 731a30767888eba43bf8dd6757f7de6d,
-    type: 2}
-  m_PrefabInternal: {fileID: 2104051378}
 --- !u!1 &2127879051
 GameObject:
   m_ObjectHideFlags: 0

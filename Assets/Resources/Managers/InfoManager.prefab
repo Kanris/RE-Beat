@@ -1117,7 +1117,8 @@ MonoBehaviour:
   m_Page: {fileID: 114052439112253228}
   m_HeaderText: {fileID: 114977970154672882}
   m_ScrapText: {fileID: 114308599008101760}
-  m_OpenJournalAudio: {fileID: 11400000, guid: a5c69a87260aa544ead8e645b077009b, type: 2}
+  m_OpenAudio: {fileID: 11400000, guid: 4a1cd320bdc8d431490ef26922df43bc, type: 2}
+  m_CloseAudio: {fileID: 11400000, guid: dcb000ca5d8d74dbea5086ffc6c6ddc5, type: 2}
 --- !u!114 &114588751321240708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1926,7 +1927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224184483690679946

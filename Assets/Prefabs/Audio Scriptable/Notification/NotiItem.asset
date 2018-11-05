@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -11,10 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0d6a46e13934416a30dd2c3952c2c3, type: 3}
   m_Name: NotiItem
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: b41829952dd3e5940bc6fc3366e5f0c0, type: 3}
+  Clip: {fileID: 8300000, guid: 2af2be9db02b14076b9868252d047b30, type: 3}
   Volume: 1
-  Pitch: 1
-  VolumeOffset: 0.1
-  PitchOffset: 0.1
   m_AudioType: 0
   Loop: 0

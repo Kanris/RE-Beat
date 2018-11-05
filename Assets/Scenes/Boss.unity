@@ -550,7 +550,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4871038370839308, guid: 21e04b2f9c497ad4599c12ffb8ad3ccb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.8
+      value: 1.16
       objectReference: {fileID: 0}
     - target: {fileID: 4871038370839308, guid: 21e04b2f9c497ad4599c12ffb8ad3ccb, type: 2}
       propertyPath: m_LocalPosition.y
@@ -11990,60 +11990,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1390136679
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1400129689}
-    m_Modifications:
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -16.93
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 7.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 1.302808
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1445423864606158, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_Name
-      value: Lantern (10)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1445423864606158, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_TagString
-      value: CaveObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 1377437551375790, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1001 &1390240784
 Prefab:
   m_ObjectHideFlags: 0
@@ -12118,6 +12064,18 @@ Prefab:
       propertyPath: EnemyStats.MaxHealth
       value: 220
       objectReference: {fileID: 0}
+    - target: {fileID: 114645961574704884, guid: 724559b7004e140408cb6d3a90c85200,
+        type: 2}
+      propertyPath: m_BossBattleAudio
+      value: 
+      objectReference: {fileID: 11400000, guid: c7d117acabbe645a8972982728e1a0d2,
+        type: 2}
+    - target: {fileID: 114645961574704884, guid: 724559b7004e140408cb6d3a90c85200,
+        type: 2}
+      propertyPath: m_SceneBackgroundMusic
+      value: 
+      objectReference: {fileID: 11400000, guid: 46079873bf39b4b9e85ddfe9b665a738,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
   m_IsPrefabAsset: 0
@@ -12148,7 +12106,6 @@ Transform:
   m_Children:
   - {fileID: 67143187}
   - {fileID: 233896336}
-  - {fileID: 1891293266}
   m_Father: {fileID: 1987242454}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12937,11 +12894,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1891293266 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1390136679}
 --- !u!1001 &1902476666
 Prefab:
   m_ObjectHideFlags: 0

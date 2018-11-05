@@ -13,9 +13,6 @@ public class Audio : ScriptableObject
 
     public AudioClip Clip;
     [Range(0f, 1f)] public float Volume = 1f;
-    [Range(0.5f, 1.5f)] public float Pitch = 1f;
-    [Range(0f, 0.5f)] public float VolumeOffset = 0.1f;
-    [Range(0f, 0.5f)] public float PitchOffset = 0.1f;
     public AudioType m_AudioType;
     public bool Loop = false;
 
@@ -121,7 +118,6 @@ public class Audio : ScriptableObject
     private void ChangeMusicSettings()
     {
         m_AudioSource.volume = Volume;
-        m_AudioSource.pitch = Pitch;
         m_AudioSource.loop = Loop;
     }
 
