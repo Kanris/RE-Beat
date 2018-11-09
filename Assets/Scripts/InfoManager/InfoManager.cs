@@ -132,28 +132,27 @@ public class InfoManager : MonoBehaviour {
         {
             OpenBookmark(id);
 
-            AudioManager.Instance.Play(m_OpenAudio);
-            m_JournalUI.SetActive(true);
-
-            m_Page.ClearText();
-            m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
-
-            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+            OpenJournal();
         }
         else if (m_CurrentOpenBookmark == id & !m_JournalUI.activeSelf)
         {
-            AudioManager.Instance.Play(m_OpenAudio);
-            m_JournalUI.SetActive(true);
-
-            m_Page.ClearText();
-            m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
-
-            OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
+            OpenJournal();
         }
         else if (m_JournalUI.activeSelf)
         {
             CloseJournal();
         }
+    }
+
+    private void OpenJournal()
+    {
+        AudioManager.Instance.Play(m_OpenAudio);
+        m_JournalUI.SetActive(true);
+
+        m_Page.ClearText();
+        m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
+
+        OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
     }
 
     private void ChangeButtonsVisibility(bool value, IEnumerable<Button> buttons)
