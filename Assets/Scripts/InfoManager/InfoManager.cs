@@ -130,10 +130,11 @@ public class InfoManager : MonoBehaviour {
     {
         if (m_CurrentOpenBookmark != id) //if need to open another bookmark
         {
-            AudioManager.Instance.Play(m_OpenAudio);
             OpenBookmark(id);
 
+            AudioManager.Instance.Play(m_OpenAudio);
             m_JournalUI.SetActive(true);
+
             m_Page.ClearText();
             m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
 
@@ -143,6 +144,7 @@ public class InfoManager : MonoBehaviour {
         {
             AudioManager.Instance.Play(m_OpenAudio);
             m_JournalUI.SetActive(true);
+
             m_Page.ClearText();
             m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
 
