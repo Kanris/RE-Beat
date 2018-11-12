@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerInTrigger : MonoBehaviour {
 
-    public delegate void VoidDelegate(bool value);
+    public delegate void VoidDelegate(bool value, Transform target);
     public event VoidDelegate OnPlayerInTrigger;
 
     [SerializeField, Range(0f, 10f)] private float m_WaitBeforeStopChasing = 2f; //timer before drone stop chasing
@@ -22,7 +22,7 @@ public class PlayerInTrigger : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             if (OnPlayerInTrigger != null) //notify that player is near
-                OnPlayerInTrigger(true);
+                OnPlayerInTrigger(true, collision.transform);
 
             m_IsPlayerNear = true;
 
@@ -53,7 +53,7 @@ public class PlayerInTrigger : MonoBehaviour {
         {
             if (OnPlayerInTrigger != null)
             {
-                OnPlayerInTrigger(false);
+                OnPlayerInTrigger(false, null);
             }
         }
 
