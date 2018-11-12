@@ -93,6 +93,8 @@ public class DroneShooter : MonoBehaviour {
     [SerializeField, Range(1, 5)] private int Health = 1; //drone health
     [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
 
+    [SerializeField, Range(0, 100)] private int ScrapAmount = 50;
+
     [Header("Effects")]
     [SerializeField] private GameObject BulletTrailPrefab;
     [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
@@ -100,14 +102,14 @@ public class DroneShooter : MonoBehaviour {
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
     private Path m_Path;
-    public Transform Target; //player
+    private Transform Target; //player
     private bool m_PathIsEnded = false; //path is reached
     private float m_NextWaypointDistance = 0.4f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 
     private bool m_IsDestroying = false; //is drone going to blow up
-    public bool m_IsPlayerInShootingRange = false; //is drone chasing player
+    private bool m_IsPlayerInShootingRange = false; //is drone chasing player
     private float m_AttackCooldownTimer;
 
     #region initialize
@@ -240,6 +242,8 @@ public class DroneShooter : MonoBehaviour {
             playerStats.TakeDamage(DamageAmount);
             playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
         }
+
+        PlayerStats.Scrap = ScrapAmount;
 
         Destroy(gameObject.transform.parent.gameObject);
     }

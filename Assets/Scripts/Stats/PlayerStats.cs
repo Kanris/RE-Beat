@@ -20,7 +20,7 @@ public class PlayerStats : Stats
 
     private int m_CriticalHealthAmount = 3;
 
-    private int m_OverHealScrapAmount = 100;
+    private int m_OverHealScrapAmount = 5;
 
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.3f;
