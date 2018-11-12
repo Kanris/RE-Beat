@@ -80,6 +80,8 @@ public class DroneShooter : MonoBehaviour {
     [SerializeField] private Material TrailMaterial;
     [SerializeField] private Animator m_Animator;
 
+    [SerializeField] private PlayerInTrigger m_ChaseRange;
+
     [Header("Movement points")]
     [SerializeField] private Transform[] m_PatrolPoints;
 
@@ -98,16 +100,14 @@ public class DroneShooter : MonoBehaviour {
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
     private Path m_Path;
-    private Transform Target; //player
+    public Transform Target; //player
     private bool m_PathIsEnded = false; //path is reached
     private float m_NextWaypointDistance = 0.4f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 
     private bool m_IsDestroying = false; //is drone going to blow up
-    private bool m_IsPlayerInChasingRange = false;
-    private bool m_IsPlayerInShootingRange = false; //is drone chasing player
-    private bool m_IsAttacking = false;
+    public bool m_IsPlayerInShootingRange = false; //is drone chasing player
     private float m_AttackCooldownTimer;
 
     #region initialize
@@ -116,7 +116,10 @@ public class DroneShooter : MonoBehaviour {
     private void Start () {
 
         InitializeComponents(); //initialize rigidbody and seeker
-        
+
+        m_ChaseRange.OnPlayerInTrigger += StartChase;
+
+        StartCoroutine(PatrolBetweenPoints());
     }
 
     private void InitializeKamikaze()
@@ -139,17 +142,28 @@ public class DroneShooter : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        //if player is not in shooting range, drone is not destroying and there is a path
         if (!m_IsPlayerInShootingRange & !m_IsDestroying & m_Path != null)
         {
-            MoveInDirection();
+            MoveInDirection(); //move drone
         }
     }
 
     private void Update()
     {
-        if (m_IsPlayerInShootingRange & !m_IsDestroying)
+        if (Target != null) //if player in chase range
         {
-            if (m_IsAttacking) //player in range and drone is not destroying
+            if (Vector2.Distance(transform.position, Target.position) < 4f) //if player in attack range
+            {
+                m_IsPlayerInShootingRange = true;
+            }
+            else //if player is not in attack range
+            {
+                m_IsPlayerInShootingRange = false;
+            }
+
+            //if player in attack range and drone is not destroying
+            if (m_IsPlayerInShootingRange & !m_IsDestroying)
             {
                 if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
@@ -157,14 +171,12 @@ public class DroneShooter : MonoBehaviour {
                     StartCoroutine(Shoot()); //shoot at player
                 }
             }
+        }
+        else if (!m_IsDestroying & m_IsPlayerInShootingRange) //if player is dead but drone still want to attack him
+        {
+            m_IsPlayerInShootingRange = false; //player is not in attack range
 
-            if (GameMaster.Instance.IsPlayerDead)
-            {
-                m_IsPlayerInChasingRange = false;
-                m_IsPlayerInShootingRange = false;
-
-                StartCoroutine(PatrolBetweenPoints());
-            }
+            StartCoroutine(PatrolBetweenPoints()); //continue patrolling
         }
     }
 
@@ -199,7 +211,15 @@ public class DroneShooter : MonoBehaviour {
             }
             else
                 PlayTriggerAnimation("Hit");
-        }
+        }        
+    }
+
+    private void StartChase(bool value, Transform target)
+    {      
+        Target = target;
+
+        if (target != null)
+            InitializeChasing();
     }
 
     #endregion
@@ -222,44 +242,6 @@ public class DroneShooter : MonoBehaviour {
         }
 
         Destroy(gameObject.transform.parent.gameObject);
-    }
-
-    private void PlayerInChasingRange(bool value, Transform target)
-    {
-        m_IsPlayerInChasingRange = value;
-
-        if (!m_IsDestroying) //is drone not going to destroy
-        {
-            if (m_IsPlayerInChasingRange & !m_IsPlayerInShootingRange)
-            {
-                this.Target = target;
-                InitializeChasing();
-            }
-            else if (!m_IsPlayerInChasingRange)
-            {
-                Target = null;
-                m_IsAttacking = false;
-                StartCoroutine(PatrolBetweenPoints());
-            }
-        }
-    }
-
-    private void PlayerInShootingRange(bool value, Transform target)
-    {
-        m_IsPlayerInShootingRange = value; //is player in attack range
-
-        if (!m_IsDestroying) //is drone not going to destroy
-        {
-            if (m_IsPlayerInShootingRange) //if player in attack range
-            {
-                m_IsAttacking = true;
-                m_AttackCooldownTimer = 1f + Time.time;
-            }
-            else if (m_IsPlayerInChasingRange) //player is not in attack range but drone can still see him
-            {
-                InitializeChasing();
-            }
-        }
     }
 
     #region shooting
@@ -337,7 +319,6 @@ public class DroneShooter : MonoBehaviour {
         if (m_CurrentPatrolPoint == m_PatrolPoints.Length) //end of the list
             m_CurrentPatrolPoint = 0; //start over
 
-        Debug.LogError(m_CurrentPatrolPoint);
         m_Seeker.StartPath(transform.position, m_PatrolPoints[m_CurrentPatrolPoint].position, OnPathComplete); //path to the next patrol point
 
         m_CurrentPatrolPoint++; //next patrol point
@@ -376,7 +357,7 @@ public class DroneShooter : MonoBehaviour {
 
                 m_PathIsEnded = true;
 
-                if (!m_IsPlayerInChasingRange)
+                if (Target == null)
                     StartCoroutine ( PatrolBetweenPoints() );
             }
             else

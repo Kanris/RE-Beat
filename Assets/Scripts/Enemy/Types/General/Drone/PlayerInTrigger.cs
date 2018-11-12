@@ -26,7 +26,7 @@ public class PlayerInTrigger : MonoBehaviour {
 
             m_IsPlayerNear = true;
 
-            StopAllCoroutines(); //stop - StopChasing - courutine
+            StopAllCoroutines(); //stop - StopChasing - coroutine
             m_IsGoingToStop = false;
         }
     }
