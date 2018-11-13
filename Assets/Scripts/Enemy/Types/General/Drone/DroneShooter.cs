@@ -210,6 +210,8 @@ public class DroneShooter : MonoBehaviour {
                 m_IsDestroying = true;
                 m_Rigidbody.sharedMaterial = null;
                 m_Rigidbody.gravityScale = 3f;
+
+                Destroy(GetComponent<TrailRenderer>());
             }
             else
                 PlayTriggerAnimation("Hit");
