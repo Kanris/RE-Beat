@@ -86,6 +86,7 @@ public class DroneShooter : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private GameObject BulletTrailPrefab;
+    [SerializeField] private Animator m_RadarAnimator;
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
@@ -238,6 +239,8 @@ public class DroneShooter : MonoBehaviour {
     private void InitializeChasing()
     {
         //start a new path to the target
+        m_RadarAnimator.SetBool("Threat", true);
+
         m_Seeker.StartPath(transform.position, m_Target.position, OnPathComplete);
         StartCoroutine(UpdatePath());
     }
@@ -290,7 +293,10 @@ public class DroneShooter : MonoBehaviour {
                 m_PathIsEnded = true;
 
                 if (m_Target == null)
-                    StartCoroutine ( PatrolBetweenPoints() );
+                {
+                    m_RadarAnimator.SetBool("Threat", false);
+                    StartCoroutine(PatrolBetweenPoints());
+                }
             }
             else
             {
@@ -312,6 +318,7 @@ public class DroneShooter : MonoBehaviour {
     private void SetOnDestroy(bool value)
     {
         m_IsDestroying = value;
+        Destroy(m_RadarAnimator.gameObject);
     }
 
     #endregion
