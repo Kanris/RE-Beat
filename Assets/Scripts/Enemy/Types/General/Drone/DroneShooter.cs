@@ -78,7 +78,7 @@ public class DroneShooter : MonoBehaviour {
 
     [SerializeField] private Material TrailMaterial;
     [SerializeField] private PlayerInTrigger m_ChaseRange;
-    [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
+    [SerializeField, Range(1f, 10f)] private float UpdateRate = 2f; //next point update rate
     [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
     [Header("Movement points")]
@@ -95,7 +95,7 @@ public class DroneShooter : MonoBehaviour {
     private DroneStats m_Stats;
 
     private bool m_PathIsEnded = false; //path is reached
-    private readonly float m_NextWaypointDistance = 0.4f; 
+    private readonly float m_NextWaypointDistance = 3f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 
@@ -113,15 +113,6 @@ public class DroneShooter : MonoBehaviour {
         m_ChaseRange.OnPlayerInTrigger += StartChase;
 
         StartCoroutine(PatrolBetweenPoints());
-    }
-
-    private void InitializeKamikaze()
-    {
-        //initialize random direction
-        var randX = Random.Range(0, 2);
-        var randY = Random.Range(0, 2);
-
-        m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
     }
 
     private void InitializeComponents()
@@ -148,7 +139,7 @@ public class DroneShooter : MonoBehaviour {
     {
         if (m_Target != null) //if player in chase range
         {
-            if (Vector2.Distance(transform.position, m_Target.position) < 4f) //if player in attack range
+            if (Vector2.Distance(transform.position, m_Target.position) < 3f) //if player in attack range
             {
                 m_IsPlayerInShootingRange = true;
             }
@@ -298,7 +289,7 @@ public class DroneShooter : MonoBehaviour {
                     StartCoroutine(PatrolBetweenPoints());
                 }
             }
-            else
+             else
             {
                 m_PathIsEnded = false;
 
