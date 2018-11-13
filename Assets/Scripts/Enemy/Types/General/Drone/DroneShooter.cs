@@ -164,6 +164,10 @@ public class DroneShooter : MonoBehaviour {
 
             StartCoroutine(PatrolBetweenPoints()); //continue patrolling
         }
+        else if (m_RadarAnimator.GetBool("Threat"))
+        {
+            m_RadarAnimator.SetBool("Threat", false);
+        }
     }
 
     private void StartChase(bool value, Transform target)
