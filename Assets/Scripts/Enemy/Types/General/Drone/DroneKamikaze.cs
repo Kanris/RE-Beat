@@ -2,38 +2,25 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
-public class DroneKamikaze : MonoBehaviour
-{
-    [SerializeField] private LayerMask WhatIsEnemy;
-
-    [Header("Stats")]
-    [SerializeField, Range(1, 5)] private int Health = 1; //drone health
-    [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
-    [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
-    [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
+public class DroneKamikaze : MonoBehaviour {
 
     [Header("Effects")]
-    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
     [SerializeField] private GameObject GroundHitParticles;
 
     private Rigidbody2D m_Rigidbody;
-    private Animator m_Animator;
-
-    private bool m_IsDestroying = false; //is drone going to blow up
-    private float m_UpdateTimer;
     private Vector2 m_PreviousPosition;
+    private bool m_IsDestroying = false; //is drone going to blow up
+    private float m_UpdateTimer = 0f;
 
     #region initialize
 
     // Use this for initialization
     private void Start()
     {
-
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        m_Animator = GetComponent<Animator>();
+        GetComponent<DroneStats>().OnDroneDestroy += SetOnDestroy;
 
         MoveInRandomDirection();
-
     }
 
     #endregion
@@ -66,73 +53,17 @@ public class DroneKamikaze : MonoBehaviour
         m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
     }
 
-    #region collision/trigger detections
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") & !m_IsDestroying)
-        {
-            collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
-
-            StartCoroutine(DestroyDrone());
-        }
-
-        if (collision.gameObject.layer == 14 & m_IsDestroying) //object layer - ground
-        {
-            StartCoroutine(DestroyDrone(DeathDetonationTimer));
-        }
-        else if (collision.gameObject.layer == 14)
+        if (collision.gameObject.layer == 14)
         {
             var instHitParticles = Instantiate(GroundHitParticles, collision.contacts[0].point, Quaternion.identity);
             Destroy(instHitParticles, 2f);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void SetOnDestroy(bool value)
     {
-        if (collision.CompareTag("PlayerAttackRange") & !m_IsDestroying)
-        {
-            Health--;
-
-            if (Health <= 0)
-            {
-                PlayTriggerAnimation("Destroy");
-
-                m_IsDestroying = true;
-                m_Rigidbody.sharedMaterial = null;
-                m_Rigidbody.gravityScale = 3f;
-
-                Destroy(GetComponent<TrailRenderer>());
-            }
-            else
-                PlayTriggerAnimation("Hit");
-        }
-    }
-
-    #endregion
-
-    private IEnumerator DestroyDrone(float waitTimeBeforeDestroy = 0f)
-    {
-        yield return new WaitForSeconds(waitTimeBeforeDestroy);
-
-        var destroyParticles = Instantiate(DeathParticles, transform.position, Quaternion.identity);
-        Destroy(destroyParticles, 1f);
-
-        var hit2D = Physics2D.OverlapCircle(transform.position, 2, WhatIsEnemy);
-
-        if (hit2D != null)
-        {
-            var playerStats = hit2D.GetComponent<Player>().playerStats;
-
-            playerStats.TakeDamage(DamageAmount);
-            playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
-        }
-
-        Destroy(gameObject);
-    }
-
-    private void PlayTriggerAnimation(string name)
-    {
-        m_Animator.SetTrigger(name);
+        m_IsDestroying = value;
     }
 }

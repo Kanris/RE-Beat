@@ -76,41 +76,31 @@ public class DroneScriptEditor : Editor
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(Seeker))]
 public class DroneShooter : MonoBehaviour {
 
-    [SerializeField] private LayerMask WhatIsEnemy;
     [SerializeField] private Material TrailMaterial;
-    [SerializeField] private Animator m_Animator;
-
     [SerializeField] private PlayerInTrigger m_ChaseRange;
+    [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
+    [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
     [Header("Movement points")]
     [SerializeField] private Transform[] m_PatrolPoints;
 
-    [Header("Drone stats")]
-    [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
-    [SerializeField, Range(0, 10)] private int DamageAmount = 1; //damage to the player
-    [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
-    [SerializeField, Range(1f, 10f)] private float UpdateRate = 3f; //next point update rate
-    [SerializeField, Range(1, 5)] private int Health = 1; //drone health
-    [SerializeField, Range(1f, 5f)] private float AttackSpeed = 0.5f;
-
-    [SerializeField, Range(0, 100)] private int ScrapAmount = 50;
-
     [Header("Effects")]
     [SerializeField] private GameObject BulletTrailPrefab;
-    [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
     private Path m_Path;
-    private Transform Target; //player
+    private Transform m_Target; //player
+    private DroneStats m_Stats;
+
     private bool m_PathIsEnded = false; //path is reached
-    private float m_NextWaypointDistance = 0.4f; 
+    private readonly float m_NextWaypointDistance = 0.4f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 
-    private bool m_IsDestroying = false; //is drone going to blow up
     private bool m_IsPlayerInShootingRange = false; //is drone chasing player
-    private float m_AttackCooldownTimer;
+    private bool m_IsDestroying = false;
+    private float m_AttackCooldownTimer = 0f;
 
     #region initialize
 
@@ -137,7 +127,9 @@ public class DroneShooter : MonoBehaviour {
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Seeker = GetComponent<Seeker>();
-        m_Animator = GetComponent<Animator>();
+        m_Stats = GetComponent<DroneStats>();
+
+        m_Stats.OnDroneDestroy += SetOnDestroy;
     }
 
     #endregion
@@ -153,9 +145,9 @@ public class DroneShooter : MonoBehaviour {
 
     private void Update()
     {
-        if (Target != null) //if player in chase range
+        if (m_Target != null) //if player in chase range
         {
-            if (Vector2.Distance(transform.position, Target.position) < 4f) //if player in attack range
+            if (Vector2.Distance(transform.position, m_Target.position) < 4f) //if player in attack range
             {
                 m_IsPlayerInShootingRange = true;
             }
@@ -169,7 +161,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
-                    m_AttackCooldownTimer = Time.time + AttackSpeed; //next available attack time
+                    m_AttackCooldownTimer = Time.time + m_Stats.AttackSpeed; //next available attack time
                     StartCoroutine(Shoot()); //shoot at player
                 }
             }
@@ -182,81 +174,21 @@ public class DroneShooter : MonoBehaviour {
         }
     }
 
-    #region collision/trigger detections
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Player") & !m_IsDestroying)
-        {
-            collision.transform.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
-        }
-
-        if (collision.gameObject.layer == 14 & m_IsDestroying) //object layer - ground
-        {
-            StartCoroutine( DestroyDrone(DeathDetonationTimer) );
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("PlayerAttackRange") & !m_IsDestroying)
-        {
-            Health--;
-            
-            if (Health <= 0)
-            {
-                PlayTriggerAnimation("Destroy");
-
-                m_IsDestroying = true;
-                m_Rigidbody.sharedMaterial = null;
-                m_Rigidbody.gravityScale = 3f;
-
-                Destroy(GetComponent<TrailRenderer>());
-            }
-            else
-                PlayTriggerAnimation("Hit");
-        }        
-    }
-
     private void StartChase(bool value, Transform target)
     {      
-        Target = target;
+        m_Target = target;
 
         if (target != null)
             InitializeChasing();
-    }
-
-    #endregion
-
-    private IEnumerator DestroyDrone(float waitTimeBeforeDestroy = 0f)
-    {
-        yield return new WaitForSeconds(waitTimeBeforeDestroy);
-
-        var destroyParticles = Instantiate(DeathParticles, transform.position, Quaternion.identity);
-        Destroy(destroyParticles, 1f);
-
-        var hit2D = Physics2D.OverlapCircle(transform.position, 2, WhatIsEnemy);
-
-        if (hit2D != null)
-        {
-            var playerStats = hit2D.GetComponent<Player>().playerStats;
-
-            playerStats.TakeDamage(DamageAmount);
-            playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
-        }
-
-        PlayerStats.Scrap = ScrapAmount;
-
-        Destroy(gameObject.transform.parent.gameObject);
     }
 
     #region shooting
 
     private IEnumerator Shoot()
     {
-        if (Target != null)
+        if (m_Target != null)
         {
-            var whereToShoot = new Vector3(Target.position.x, Target.position.y + 0.5f);
+            var whereToShoot = new Vector3(m_Target.position.x, m_Target.position.y + 0.5f);
 
             var m_firePointPosition = transform.position;
 
@@ -277,7 +209,7 @@ public class DroneShooter : MonoBehaviour {
         var bullet = Instantiate(BulletTrailPrefab, transform.position,
                     Quaternion.Euler(0f, 0f, rotationZ));
 
-        bullet.GetComponent<MoveBullet>().DamageAmount = DamageAmount;
+        bullet.GetComponent<MoveBullet>().DamageAmount = m_Stats.DamageAmount;
     }
 
     private void DrawShootingLine(Vector3 startPoint, Vector3 endPoint, Color color, float duration = 0.2f)
@@ -301,18 +233,12 @@ public class DroneShooter : MonoBehaviour {
         Destroy(myLine, duration);
     }
 
-    private void PlayTriggerAnimation(string name)
-    {
-        m_Animator.SetTrigger(name);
-    }
-
     #endregion
 
     private void InitializeChasing()
     {
         //start a new path to the target
-        m_Seeker.StartPath(transform.position, Target.position, OnPathComplete);
-        //StopAllCoroutines();
+        m_Seeker.StartPath(transform.position, m_Target.position, OnPathComplete);
         StartCoroutine(UpdatePath());
     }
 
@@ -332,10 +258,10 @@ public class DroneShooter : MonoBehaviour {
 
     private IEnumerator UpdatePath()
     {
-        if (Target != null)
+        if (m_Target != null)
         {
             //start a new path to the target
-            m_Seeker.StartPath(transform.position, Target.position, OnPathComplete);
+            m_Seeker.StartPath(transform.position, m_Target.position, OnPathComplete);
 
             yield return new WaitForSeconds(1f / UpdateRate);
 
@@ -363,7 +289,7 @@ public class DroneShooter : MonoBehaviour {
 
                 m_PathIsEnded = true;
 
-                if (Target == null)
+                if (m_Target == null)
                     StartCoroutine ( PatrolBetweenPoints() );
             }
             else
@@ -381,6 +307,11 @@ public class DroneShooter : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void SetOnDestroy(bool value)
+    {
+        m_IsDestroying = value;
     }
 
     #endregion

@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 50955518601525096}
   - component: {fileID: 95299877394854830}
   - component: {fileID: 114722889433512224}
-  - component: {fileID: 114296084938817840}
   - component: {fileID: 96729625418354592}
+  - component: {fileID: 114939972354043520}
   m_Layer: 0
   m_Name: DroneKamikaze
   m_TagString: Enemy
@@ -200,32 +200,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.001
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114296084938817840
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1923985286607912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 0
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask: -1
 --- !u!114 &114722889433512224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -237,15 +211,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29692c04fe240574792e99a7aff90447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
+    type: 2}
+--- !u!114 &114939972354043520
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1923985286607912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7acf3d23b12144fda4a60e0f87589da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathDetonationTimer: 2
+  Health: 1
+  ScrapAmount: 1
   WhatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
-  Health: 1
   DamageAmount: 1
   AttackSpeed: 0.5
-  DeathDetonationTimer: 2
+  m_DestroyOnCollision: 1
   DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
     type: 2}
+  m_IsDestroying: 0
 --- !u!212 &212564528863896062
 SpriteRenderer:
   m_ObjectHideFlags: 1
