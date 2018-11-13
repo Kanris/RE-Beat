@@ -49,7 +49,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4825697920505006}
-  - component: {fileID: 61935980328712684}
+  - component: {fileID: 58822161966917194}
   - component: {fileID: 114907073482014258}
   m_Layer: 0
   m_Name: ChaseRange
@@ -229,8 +229,8 @@ CircleCollider2D:
   m_Offset: {x: 0.0065790415, y: 0.02412343}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!61 &61935980328712684
-BoxCollider2D:
+--- !u!58 &58822161966917194
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -242,18 +242,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
-    newSize: {x: 0.32, y: 0.38}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.100983, y: 6.4184628}
-  m_EdgeRadius: 0
+  m_Radius: 4
 --- !u!95 &95883086424202952
 Animator:
   serializedVersion: 3
