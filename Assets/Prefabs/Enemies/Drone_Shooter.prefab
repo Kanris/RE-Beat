@@ -159,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033265420063238}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.64, y: 9.6, z: 0}
+  m_LocalPosition: {x: -8.57, y: 10.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4793299507887500}
@@ -241,7 +241,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.058940887, y: -0.19351673}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -438,6 +438,7 @@ MonoBehaviour:
     m_Bits: 256
   DamageAmount: 1
   AttackSpeed: 0.5
+  m_DestroyOnCollision: 0
   DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
     type: 2}
   m_IsDestroying: 0

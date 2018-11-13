@@ -12887,11 +12887,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4604250972662428, guid: 935505709d81e5a43bb9a486a7ffd383, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.64
+      value: -8.57
       objectReference: {fileID: 0}
     - target: {fileID: 4604250972662428, guid: 935505709d81e5a43bb9a486a7ffd383, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 9.6
+      value: 10.05
       objectReference: {fileID: 0}
     - target: {fileID: 4604250972662428, guid: 935505709d81e5a43bb9a486a7ffd383, type: 2}
       propertyPath: m_LocalPosition.z
@@ -13421,6 +13421,35 @@ Prefab:
     - target: {fileID: 4523367042852976, guid: 9c5ace54e80135c4b840e80bdafe55a5, type: 2}
       propertyPath: m_RootOrder
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 331952143255140520, guid: 9c5ace54e80135c4b840e80bdafe55a5,
+        type: 2}
+      propertyPath: m_IsCustomRangeActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 331952143255140520, guid: 9c5ace54e80135c4b840e80bdafe55a5,
+        type: 2}
+      propertyPath: m_FrontSortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 331952143255140520, guid: 9c5ace54e80135c4b840e80bdafe55a5,
+        type: 2}
+      propertyPath: m_BackSortingLayerID
+      value: 124002747
+      objectReference: {fileID: 0}
+    - target: {fileID: 331952143255140520, guid: 9c5ace54e80135c4b840e80bdafe55a5,
+        type: 2}
+      propertyPath: m_FrontSortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 331952143255140520, guid: 9c5ace54e80135c4b840e80bdafe55a5,
+        type: 2}
+      propertyPath: m_BackSortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371500287498214, guid: 9c5ace54e80135c4b840e80bdafe55a5, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c5ace54e80135c4b840e80bdafe55a5, type: 2}
