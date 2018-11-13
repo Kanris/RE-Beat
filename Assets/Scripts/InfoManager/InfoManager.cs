@@ -193,6 +193,7 @@ public class InfoManager : MonoBehaviour {
         return instantiateItemButton.GetComponent<Button>();
     }
 
+    //TODO: Localize text
     private string GetBookmarkname(int id)
     {
         var name = "NO NAME";
@@ -225,7 +226,7 @@ public class InfoManager : MonoBehaviour {
         if (m_CurrentOpenBookmark != id)
         {
             //change bookmarks positions too show player what bookmark is currently open
-            m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(162, 162, 162, 255);
+            m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(92, 92, 92, 255);
             m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255, 255, 225, 255);
 
             ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
