@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using System;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class InfoManager : MonoBehaviour {
@@ -27,8 +28,11 @@ public class InfoManager : MonoBehaviour {
     [SerializeField] private GameObject m_Map;
     [SerializeField] private Transform m_Content; //buttons grid
     [SerializeField] private TextPage m_Page; //main page text
+
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI m_HeaderText;
     [SerializeField] private TextMeshProUGUI m_ScrapText;
+    [SerializeField] private TextMeshProUGUI m_DateText;
 
     [Header("Effects")]
     [SerializeField] private Audio m_OpenAudio;
@@ -86,6 +90,8 @@ public class InfoManager : MonoBehaviour {
             CompletedTasks = new Dictionary<string, Task>(); //initialize completed tasks
 
         itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1"); //initialize items atlas
+
+        m_DateText.text = GetDate();
     }
 
     private void InitializeButtonsDictionary()
@@ -398,4 +404,11 @@ public class InfoManager : MonoBehaviour {
     }
 
 #endregion
+
+    private string GetDate()
+    {
+        var currentDate = DateTime.Today;
+
+        return currentDate.Day + " <color=yellow>" + currentDate.ToString("MMM") + "</color> " + (currentDate.Year + 400); 
+    }
 }
