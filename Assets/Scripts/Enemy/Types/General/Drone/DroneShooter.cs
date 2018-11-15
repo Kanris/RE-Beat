@@ -95,7 +95,7 @@ public class DroneShooter : MonoBehaviour {
     private DroneStats m_Stats;
 
     private bool m_PathIsEnded = false; //path is reached
-    private readonly float m_NextWaypointDistance = 3f; 
+    private readonly float m_NextWaypointDistance = 0.2f; 
     private int m_CurrentWaypoint = 0;
     private int m_CurrentPatrolPoint = 0;
 

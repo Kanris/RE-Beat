@@ -113,17 +113,21 @@ public class Trader : MonoBehaviour {
             {
                 PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
 
-                //get item info
-                var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
-                var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+                //add item to the inventory if it's not heal potion
+                if (m_CurrentSelectedItem.itemDescription.itemType != ItemDescription.ItemType.Heal)
+                {
+                    //get item info
+                    var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
+                    var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
-                //display that item was added to inventory
-                AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(
-                    itemName + " " + inventoryMessage, AnnouncerManager.Message.MessageType.Item
-                ));
+                    //display that item was added to inventory
+                    AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(
+                        itemName + " " + inventoryMessage, AnnouncerManager.Message.MessageType.Item
+                    ));
 
-                //add item to inventory
-                PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
+                    //add item to inventory
+                    PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
+                }
 
                 //apply item upgrade to the player
                 m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
