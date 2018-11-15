@@ -7,9 +7,10 @@ using TMPro;
 using System;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class InfoManager : MonoBehaviour {
+public class InfoManager : MonoBehaviour
+{
 
-#region public fields
+    #region public fields
 
     public delegate void VoidDelegate(bool value);
     public event VoidDelegate OnJournalOpen; //event on journal open
@@ -17,39 +18,41 @@ public class InfoManager : MonoBehaviour {
     public Dictionary<string, Task> CurrentTasks; //current tasks list
     public Dictionary<string, Task> CompletedTasks; //complete task list
 
-#endregion
+    #endregion
 
-#region private fields
+    #region private fields
 
-#region serialize fields
+    #region serialize fields
 
     [SerializeField] private GameObject m_JournalUI; //journal ui
     [SerializeField] private GameObject m_Bookmarks; //bookmark list
     [SerializeField] private GameObject m_Map;
     [SerializeField] private Transform m_Content; //buttons grid
     [SerializeField] private TextPage m_Page; //main page text
+    [SerializeField] private Image m_BatteryImage;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI m_HeaderText;
     [SerializeField] private TextMeshProUGUI m_ScrapText;
     [SerializeField] private TextMeshProUGUI m_DateText;
+    [SerializeField] private TextMeshProUGUI m_BatteryText;
 
     [Header("Effects")]
     [SerializeField] private Audio m_OpenAudio;
     [SerializeField] private Audio m_CloseAudio;
 
-#endregion
+    #endregion
 
     private int m_CurrentOpenBookmark = 0; //current open tab
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
     private static Sprite[] itemsSpriteAtlas; //atals for items
     private bool m_IsCantOpenJournal;
 
-#endregion
+    #endregion
 
-#region private methods
+    #region private methods
 
-#region Singleton
+    #region Singleton
 
     public static InfoManager Instance;
 
@@ -72,12 +75,13 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-#endregion
+    #endregion
 
-#region Initialize
+    #region Initialize
 
     // Use this for initialization
-    private void Start () {
+    private void Start()
+    {
 
         PauseMenuManager.Instance.OnGamePause += SetIsCantOpenJournal;
 
@@ -92,20 +96,23 @@ public class InfoManager : MonoBehaviour {
         itemsSpriteAtlas = Resources.LoadAll<Sprite>("Items/items1"); //initialize items atlas
 
         m_DateText.text = GetDate();
+
+        SetBatteryStatus();
     }
 
     private void InitializeButtonsDictionary()
     {
-        for(int index = 0; index < m_Bookmarks.transform.childCount; index++)  //initialize buttons list for each bookmark
+        for (int index = 0; index < m_Bookmarks.transform.childCount; index++)  //initialize buttons list for each bookmark
         {
             m_ButtonsList.Add(index, new List<Button>());
         }
     }
 
-#endregion
+    #endregion
 
     // Update is called once per frame
-    private void Update () {
+    private void Update()
+    {
 
         if (!m_IsCantOpenJournal)
         {
@@ -175,7 +182,7 @@ public class InfoManager : MonoBehaviour {
         var instantiateTaskButton = Instantiate(buttonFromResources, m_Content);
 
         instantiateTaskButton.name = name; //set button name to task
-        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text = 
+        instantiateTaskButton.GetComponentInChildren<TextMeshProUGUI>().text =
             LocalizationManager.Instance.GetJournalLocalizedValue(name); //change button caption to the task name
 
         return instantiateTaskButton.GetComponent<Button>();
@@ -187,9 +194,9 @@ public class InfoManager : MonoBehaviour {
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
         instantiateItemButton.name = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button name to the item name
-        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = 
-            LocalizationManager.Instance.GetItemsLocalizedValue( item.Name ); //change button caption to the item name
-        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite = 
+        instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+            LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button caption to the item name
+        instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite =
             itemsSpriteAtlas.SingleOrDefault(x => x.name == item.ImageInAtlas); //add item image from atlas
 
         instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_Page); //initialize item button info
@@ -223,9 +230,9 @@ public class InfoManager : MonoBehaviour {
         return name;
     }
 
-#endregion
+    #endregion
 
-#region public methods
+    #region public methods
 
     public void OpenBookmark(int id)
     {
@@ -280,9 +287,9 @@ public class InfoManager : MonoBehaviour {
         m_IsCantOpenJournal = value;
     }
 
-#endregion
+    #endregion
 
-#region task methods
+    #region task methods
 
     public void DisplayTaskText(string taskName)
     {
@@ -296,7 +303,7 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-    public bool AddTask(string taskName, string taskNameKey,  string key)
+    public bool AddTask(string taskName, string taskNameKey, string key)
     {
         if (!CurrentTasks.ContainsKey(taskName)) //add new task if it is not already added
         {
@@ -318,7 +325,7 @@ public class InfoManager : MonoBehaviour {
             {
                 foreach (var item in CurrentTasks) //add all current tasks from the saved state
                 {
-                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.NameKey)); 
+                    m_ButtonsList[0].Add(CreateTaskButton(item.Value.NameKey));
                 }
             }
         }
@@ -381,9 +388,9 @@ public class InfoManager : MonoBehaviour {
         return false; //can't updated task
     }
 
-#endregion
+    #endregion
 
-#region inventory methods
+    #region inventory methods
 
     public void AddItem(ItemDescription item)
     {
@@ -403,12 +410,68 @@ public class InfoManager : MonoBehaviour {
         }
     }
 
-#endregion
+    #endregion
+
+    #region decoration methods
 
     private string GetDate()
     {
         var currentDate = DateTime.Today;
 
-        return currentDate.Day + " <color=yellow>" + currentDate.ToString("MMM") + "</color> " + (currentDate.Year + 400); 
+        return currentDate.Day + " <color=yellow>" + currentDate.ToString("MMM") + "</color> " + (currentDate.Year + 400);
     }
+
+    private void SetBatteryStatus()
+    {
+        var batteryValue = UnityEngine.Random.Range(0.1f, 0.9f);
+
+        m_BatteryImage.fillAmount = batteryValue;
+        m_BatteryImage.color = ChangeBatteryColor(batteryValue);
+
+        m_BatteryText.text = (batteryValue * 100).ToString("0") + "%";
+    }
+
+    private Color ChangeBatteryColor(float value)
+    {
+        var color = Color.green;
+
+        if (value < .5f & value > .3f)
+        {
+            color = Color.yellow;
+        }
+        else if (value < .3f)
+        {
+            color = Color.red;
+        }
+
+        return color;
+    }
+
+    #region test battery methods
+
+    [ContextMenu("SetLowBattery")]
+    public void LowBattery()
+    {
+        var batteryValue = 0.2f;
+
+        m_BatteryImage.fillAmount = batteryValue;
+        m_BatteryImage.color = ChangeBatteryColor(batteryValue);
+
+        m_BatteryText.text = (batteryValue * 100).ToString("0") + "%";
+    }
+
+    [ContextMenu("SetMiddleBattery")]
+    public void MiddleBattery()
+    {
+        var batteryValue = 0.4f;
+
+        m_BatteryImage.fillAmount = batteryValue;
+        m_BatteryImage.color = ChangeBatteryColor(batteryValue);
+
+        m_BatteryText.text = (batteryValue * 100).ToString("0") + "%";
+    }
+
+    #endregion
+
+    #endregion
 }
