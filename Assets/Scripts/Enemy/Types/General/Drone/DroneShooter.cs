@@ -189,7 +189,7 @@ public class DroneShooter : MonoBehaviour {
 
             var m_firePointPosition = transform.position;
 
-            m_TargetLine.gameObject.SetActive(true);
+            //m_TargetLine.gameObject.SetActive(true);
 
             m_TargetLine.SetTarget(whereToShoot);
 

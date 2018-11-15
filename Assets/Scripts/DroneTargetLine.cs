@@ -6,12 +6,7 @@ using UnityEngine;
 public class DroneTargetLine : MonoBehaviour {
 
     [SerializeField] private Transform m_BasePoint;
-    private LineRenderer m_TargetLine;
-
-    private void Awake()
-    {
-        m_TargetLine = GetComponent<LineRenderer>();
-    }
+    [SerializeField] private LineRenderer m_TargetLine;
 
     // Update is called once per frame
     void Update () {
@@ -23,5 +18,6 @@ public class DroneTargetLine : MonoBehaviour {
     public void SetTarget(Vector3 targetPosition)
     {
         m_TargetLine.SetPosition(1, targetPosition);
+        m_TargetLine.gameObject.SetActive(true);
     }
 }
