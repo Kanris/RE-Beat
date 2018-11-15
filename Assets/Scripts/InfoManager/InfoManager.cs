@@ -30,12 +30,14 @@ public class InfoManager : MonoBehaviour
     [SerializeField] private Transform m_Content; //buttons grid
     [SerializeField] private TextPage m_Page; //main page text
     [SerializeField] private Image m_BatteryImage;
+    [SerializeField] private GameObject m_Seperator;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI m_HeaderText;
     [SerializeField] private TextMeshProUGUI m_ScrapText;
     [SerializeField] private TextMeshProUGUI m_DateText;
     [SerializeField] private TextMeshProUGUI m_BatteryText;
+    [SerializeField] private GameObject m_NoItemsText;
 
     [Header("Effects")]
     [SerializeField] private Audio m_OpenAudio;
@@ -141,19 +143,15 @@ public class InfoManager : MonoBehaviour
 
     private void InfoManagement(int id)
     {
-        if (m_CurrentOpenBookmark != id) //if need to open another bookmark
+        if (m_JournalUI.activeSelf & id == m_CurrentOpenBookmark)
+        {
+            CloseJournal();
+        }
+        else //if need to open another bookmark
         {
             OpenBookmark(id);
 
             OpenJournal();
-        }
-        else if (m_CurrentOpenBookmark == id & !m_JournalUI.activeSelf)
-        {
-            OpenJournal();
-        }
-        else if (m_JournalUI.activeSelf)
-        {
-            CloseJournal();
         }
     }
 
@@ -236,30 +234,38 @@ public class InfoManager : MonoBehaviour
 
     public void OpenBookmark(int id)
     {
-        if (m_CurrentOpenBookmark != id)
+        //change bookmarks positions too show player what bookmark is currently open
+        m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(92, 92, 92, 255);
+        m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255, 255, 225, 255);
+
+        ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
+
+        //disable decoration 
+        m_NoItemsText.SetActive(false);
+        m_Seperator.SetActive(false);
+
+        if (id != 3)
         {
-            //change bookmarks positions too show player what bookmark is currently open
-            m_Bookmarks.transform.GetChild(m_CurrentOpenBookmark).GetComponent<Image>().color = new Color32(92, 92, 92, 255);
-            m_Bookmarks.transform.GetChild(id).GetComponent<Image>().color = new Color32(255, 255, 225, 255);
+            m_Map.SetActive(false);
 
-            ChangeButtonsVisibility(false, m_ButtonsList[m_CurrentOpenBookmark]); //hide current bookmark buttons
-
-            if (id != 3)
+            if (m_ButtonsList[id].Count > 0)
             {
-                m_Map.SetActive(false);
+                m_Seperator.SetActive(true);
                 ChangeButtonsVisibility(true, m_ButtonsList[id]); //show new bookmark buttons
             }
             else
-            {
-                m_Map.SetActive(true);
-            }
-
-            m_CurrentOpenBookmark = id; //change current book mark id
-            m_Page.ClearText(); //clear main text 
-            m_HeaderText.text = GetBookmarkname(id);
-
-            AudioManager.Instance.Play(m_OpenAudio); //play open journal sound
+                m_NoItemsText.SetActive(true);
         }
+        else
+        {
+            m_Map.SetActive(true);
+        }
+
+        m_CurrentOpenBookmark = id; //change current book mark id
+        m_Page.ClearText(); //clear main text 
+        m_HeaderText.text = GetBookmarkname(id);
+
+        AudioManager.Instance.Play(m_OpenAudio); //play open journal sound
     }
 
     public IEnumerator CloseJournalWithDelay()
