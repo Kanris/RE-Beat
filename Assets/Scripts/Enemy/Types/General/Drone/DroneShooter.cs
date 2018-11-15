@@ -87,6 +87,7 @@ public class DroneShooter : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject BulletTrailPrefab;
     [SerializeField] private Animator m_RadarAnimator;
+    [SerializeField] private DroneTargetLine m_TargetLine;
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
@@ -153,7 +154,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
-                    m_AttackCooldownTimer = Time.time + m_Stats.AttackSpeed; //next available attack time
+                    m_AttackCooldownTimer = Time.time + m_Stats.AttackSpeed + .3f; //next available attack time
                     StartCoroutine(Shoot()); //shoot at player
                 }
             }
@@ -188,9 +189,13 @@ public class DroneShooter : MonoBehaviour {
 
             var m_firePointPosition = transform.position;
 
-            DrawShootingLine(m_firePointPosition, whereToShoot, Color.red, 0.5f);
+            m_TargetLine.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(0.6f); //wait before shoot
+            m_TargetLine.SetTarget(whereToShoot);
+
+            yield return new WaitForSeconds(.3f); //wait before shoot
+
+            m_TargetLine.gameObject.SetActive(false);
 
             DrawBulletTrailEffect(whereToShoot);
         }
@@ -206,27 +211,6 @@ public class DroneShooter : MonoBehaviour {
                     Quaternion.Euler(0f, 0f, rotationZ));
 
         bullet.GetComponent<MoveBullet>().DamageAmount = m_Stats.DamageAmount;
-    }
-
-    private void DrawShootingLine(Vector3 startPoint, Vector3 endPoint, Color color, float duration = 0.2f)
-    {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = startPoint;
-        myLine.AddComponent<LineRenderer>();
-
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        lr.material = TrailMaterial;
-
-        lr.startColor = color;
-        lr.endColor = color;
-
-        lr.startWidth = 0.03f;
-        lr.endWidth = 0.03f;
-
-        lr.SetPosition(0, startPoint);
-        lr.SetPosition(1, endPoint);
-
-        Destroy(myLine, duration);
     }
 
     #endregion
