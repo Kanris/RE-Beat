@@ -218,7 +218,8 @@ public class DroneShooter : MonoBehaviour {
     private void InitializeChasing()
     {
         //start a new path to the target
-        m_RadarAnimator.SetBool("Threat", true);
+        if (m_RadarAnimator != null)
+            m_RadarAnimator.SetBool("Threat", true);
 
         m_Seeker.StartPath(transform.position, m_Target.position, OnPathComplete);
         StartCoroutine(UpdatePath());
