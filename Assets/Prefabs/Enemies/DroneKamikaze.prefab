@@ -211,8 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29692c04fe240574792e99a7aff90447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
-    type: 2}
 --- !u!114 &114939972354043520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,6 +232,8 @@ MonoBehaviour:
   AttackSpeed: 0.5
   m_DestroyOnCollision: 1
   DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+    type: 2}
+  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
     type: 2}
   m_IsDestroying: 0
 --- !u!212 &212564528863896062

@@ -20,6 +20,7 @@ public class DroneStats : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticles; //particles that shows after drone destroy
+    [SerializeField] private GameObject GroundHitParticles;
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
@@ -53,6 +54,12 @@ public class DroneStats : MonoBehaviour
         if (collision.gameObject.layer == 14 & m_IsDestroying) //object layer - ground
         {
             StartCoroutine(DestroyDrone(DeathDetonationTimer));
+        }
+        else if (collision.gameObject.layer == 14)
+        {
+            Destroy(
+                Instantiate(GroundHitParticles, collision.contacts[0].point, Quaternion.identity),
+                1f);
         }
     }
 

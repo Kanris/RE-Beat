@@ -4,9 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class DroneKamikaze : MonoBehaviour {
 
-    [Header("Effects")]
-    [SerializeField] private GameObject GroundHitParticles;
-
     private Rigidbody2D m_Rigidbody;
     private Vector2 m_PreviousPosition;
     private bool m_IsDestroying = false; //is drone going to blow up
@@ -51,15 +48,6 @@ public class DroneKamikaze : MonoBehaviour {
         var randY = Random.Range(0, 2);
 
         m_Rigidbody.velocity = new Vector2(randX == 0 ? -2f : 2f, randY == 0 ? -2f : 2f);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 14)
-        {
-            var instHitParticles = Instantiate(GroundHitParticles, collision.contacts[0].point, Quaternion.identity);
-            Destroy(instHitParticles, 2f);
-        }
     }
 
     private void SetOnDestroy(bool value)

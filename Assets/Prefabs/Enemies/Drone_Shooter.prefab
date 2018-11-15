@@ -332,7 +332,7 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -525,6 +525,8 @@ MonoBehaviour:
   m_DestroyOnCollision: 0
   DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
     type: 2}
+  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
+    type: 2}
   m_IsDestroying: 0
 --- !u!114 &114907073482014258
 MonoBehaviour:
@@ -554,7 +556,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
