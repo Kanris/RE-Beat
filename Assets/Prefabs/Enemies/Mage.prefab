@@ -338,6 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EnemyType: 0
+  m_GameObjectToDestroy: {fileID: 1642957300447368}
   EnemyStats:
     DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
       type: 2}
@@ -349,12 +351,19 @@ MonoBehaviour:
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2
-    DropCoins: 2
+    DropScrap: 1
     m_IsBigMonster: 0
     DontResurect: 0
     m_ShieldInfo:
       IsHasShield: 1
       ShieldType: 3
+  DeathDetonationTimer: 2
+  m_DestroyOnCollision: 0
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  GroundHitParticles: {fileID: 0}
+  m_IsDestroying: 0
 --- !u!114 &114826362762346134
 MonoBehaviour:
   m_ObjectHideFlags: 1

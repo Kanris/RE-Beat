@@ -25,8 +25,8 @@ GameObject:
   - component: {fileID: 95299877394854830}
   - component: {fileID: 114722889433512224}
   - component: {fileID: 96729625418354592}
-  - component: {fileID: 114939972354043520}
-  m_Layer: 0
+  - component: {fileID: 114325087413338784}
+  m_Layer: 13
   m_Name: DroneKamikaze
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -200,6 +200,44 @@ TrailRenderer:
   m_MinVertexDistance: 0.001
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114325087413338784
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1923985286607912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyType: 1
+  m_GameObjectToDestroy: {fileID: 1923985286607912}
+  EnemyStats:
+    DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+      type: 2}
+    HitSound: {fileID: 0}
+    DeathSound: {fileID: 0}
+    MaxHealth: 1
+    m_ThrowX: 0
+    m_ThrowY: 0
+    DamageAmount: 1
+    Speed: 0.1
+    AttackSpeed: 0.1
+    DropScrap: 2
+    m_IsBigMonster: 1
+    DontResurect: 0
+    m_ShieldInfo:
+      IsHasShield: 0
+      ShieldType: 4
+  DeathDetonationTimer: 2
+  m_DestroyOnCollision: 1
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
+    type: 2}
+  m_IsDestroying: 0
 --- !u!114 &114722889433512224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,31 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29692c04fe240574792e99a7aff90447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114939972354043520
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1923985286607912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7acf3d23b12144fda4a60e0f87589da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DeathDetonationTimer: 2
-  Health: 1
-  ScrapAmount: 1
-  WhatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 256
-  DamageAmount: 1
-  AttackSpeed: 0.5
-  m_DestroyOnCollision: 1
-  DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
-    type: 2}
-  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
-    type: 2}
-  m_IsDestroying: 0
 --- !u!212 &212564528863896062
 SpriteRenderer:
   m_ObjectHideFlags: 1

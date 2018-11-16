@@ -23,37 +23,27 @@ public class MoveBullet : MonoBehaviour {
     {
         if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
         {
-            Stats statsToTakeDamage = null;
             var divider = 1;
 
             if (collision.transform.CompareTag("Player"))
             {
-                statsToTakeDamage = collision.gameObject.GetComponent<Player>().playerStats;
+                collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount, divider);
             }
             else if (collision.transform.CompareTag("Enemy"))
             {
                 if (collision.gameObject.GetComponent<EnemyStatsGO>() != null)
                 {
-                    statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
-                    divider = 0;
+                    collision.gameObject.GetComponent<EnemyStatsGO>().TakeDamage(null, 0, DamageAmount);
                 }
                 else
                     Destroy(gameObject);
             }
 
-            Damage(statsToTakeDamage, divider);
+            Destroy(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Damage(Stats statsToTakeDamage, int divider)
-    {
-        if (statsToTakeDamage != null)
-            statsToTakeDamage.TakeDamage(DamageAmount, divider);
-
-        Destroy(gameObject);
     }
 }

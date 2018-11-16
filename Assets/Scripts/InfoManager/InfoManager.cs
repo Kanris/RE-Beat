@@ -409,7 +409,9 @@ public class InfoManager : MonoBehaviour
 
     public void RemoveItem(string name)
     {
-        var itemToRemove = m_ButtonsList[2].FirstOrDefault(x => x.name == name); //search item to delete
+        var localizedItem = LocalizationManager.Instance.GetItemsLocalizedValue(name);
+
+        var itemToRemove = m_ButtonsList[2].FirstOrDefault(x => x.name == localizedItem); //search item to delete
 
         if (itemToRemove != null) //if item was successfuly found
         {

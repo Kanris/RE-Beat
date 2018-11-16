@@ -127,9 +127,9 @@ public class Player : MonoBehaviour {
         foreach (var enemy in enemiesToDamage)
         {
             float distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
-            
+
             if (enemy.GetComponent<EnemyStatsGO>() != null)
-                playerStats.HitEnemy(enemy.GetComponent<EnemyStatsGO>().EnemyStats, GetHitZone(distance));
+                enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, GetHitZone(distance));
         }
 
         yield return new WaitForSeconds(m_AttackAnimation.length); //wait until animation play

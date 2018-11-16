@@ -15,7 +15,7 @@ public class DroneKamikaze : MonoBehaviour {
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
-        GetComponent<DroneStats>().OnDroneDestroy += SetOnDestroy;
+        GetComponent<EnemyStatsGO>().OnDroneDestroy += SetOnDestroy;
 
         MoveInRandomDirection();
     }

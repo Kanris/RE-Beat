@@ -93,7 +93,7 @@ public class DroneShooter : MonoBehaviour {
     private Seeker m_Seeker;
     private Path m_Path;
     private Transform m_Target; //player
-    private DroneStats m_Stats;
+    private EnemyStatsGO m_Stats;
 
     private bool m_PathIsEnded = false; //path is reached
     private readonly float m_NextWaypointDistance = 0.2f; 
@@ -120,7 +120,7 @@ public class DroneShooter : MonoBehaviour {
     {
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Seeker = GetComponent<Seeker>();
-        m_Stats = GetComponent<DroneStats>();
+        m_Stats = GetComponent<EnemyStatsGO>();
 
         m_Stats.OnDroneDestroy += SetOnDestroy;
     }
@@ -154,7 +154,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
-                    m_AttackCooldownTimer = Time.time + m_Stats.AttackSpeed + .3f; //next available attack time
+                    m_AttackCooldownTimer = Time.time + m_Stats.EnemyStats.AttackSpeed + .3f; //next available attack time
                     StartCoroutine(Shoot()); //shoot at player
                 }
             }
@@ -165,9 +165,10 @@ public class DroneShooter : MonoBehaviour {
 
             StartCoroutine(PatrolBetweenPoints()); //continue patrolling
         }
-        else if (m_RadarAnimator.GetBool("Threat") & !m_IsDestroying)
+        else if (m_RadarAnimator != null & !m_IsDestroying)
         {
-            m_RadarAnimator.SetBool("Threat", false);
+            if (m_RadarAnimator.GetBool("Threat"))
+                m_RadarAnimator.SetBool("Threat", false);
         }
     }
 
@@ -210,7 +211,7 @@ public class DroneShooter : MonoBehaviour {
         var bullet = Instantiate(BulletTrailPrefab, transform.position,
                     Quaternion.Euler(0f, 0f, rotationZ));
 
-        bullet.GetComponent<MoveBullet>().DamageAmount = m_Stats.DamageAmount;
+        bullet.GetComponent<MoveBullet>().DamageAmount = m_Stats.EnemyStats.DamageAmount;
     }
 
     #endregion

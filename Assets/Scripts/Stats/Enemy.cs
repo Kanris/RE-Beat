@@ -22,9 +22,9 @@ public class Enemy : Stats
 
     [Header("Enemy main stats")]
     [Range(1, 10)]public int DamageAmount = 1;
-    [Range(0.1f, 10f)] public float Speed = 1f;
+    [Range(0.1f, 600f)] public float Speed = 1f;
     [Range(0.1f, 10f)] public float AttackSpeed = 2f;
-    [SerializeField, Range(1, 100)] private int DropCoins = 1;
+    [SerializeField, Range(1, 100)] public int DropScrap = 1;
 
     [Header("Special stats")]
     public bool m_IsBigMonster;
@@ -129,15 +129,18 @@ public class Enemy : Stats
     
     public void CreateShield()
     {
-        var shieldGO = Resources.Load("Effects/Shields/" + m_ShieldInfo.ShieldType) as GameObject;
-        var shieldInstantiate = GameMaster.Instantiate(shieldGO, m_GameObject.transform);
+        if (m_ShieldInfo.ShieldType != DebuffPanel.DebuffTypes.None)
+        {
+            var shieldGO = Resources.Load("Effects/Shields/" + m_ShieldInfo.ShieldType) as GameObject;
+            var shieldInstantiate = GameMaster.Instantiate(shieldGO, m_GameObject.transform);
 
-        shieldInstantiate.GetComponent<EnemyShield>().OnShieldDestroy += SetInvincible;
+            shieldInstantiate.GetComponent<EnemyShield>().OnShieldDestroy += SetInvincible;
+        }
     }
 
     private void GiveCoinsToPlayer()
     {
-        PlayerStats.Scrap = DropCoins;
+        PlayerStats.Scrap = DropScrap;
     }
 
     private void SetInvincible(bool value)

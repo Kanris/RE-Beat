@@ -6,7 +6,7 @@ using System;
 
 public class DebuffPanel : MonoBehaviour {
 
-    public enum DebuffTypes { AttackSpeed, Defense, Fire, Cold }
+    public enum DebuffTypes { AttackSpeed, Defense, Fire, Cold, None }
 
     [SerializeField] private Player m_Player;
     [SerializeField] private DebufUI[] m_DebuffsOnPanel;

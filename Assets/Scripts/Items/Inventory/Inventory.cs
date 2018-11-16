@@ -51,6 +51,7 @@ public class Inventory {
         {
             var searchResult = m_Bag.First(x => x.Name == item.itemDescription.Name); //find need item
             m_Bag.RemoveAt(m_Bag.IndexOf(searchResult)); //remove item from the bag
+
             InfoManager.Instance.RemoveItem(item.itemDescription.Name); //remove item from the book
 
             return true; //item was removed

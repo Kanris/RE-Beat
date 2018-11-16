@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 50477204696496924}
   - component: {fileID: 95883086424202952}
   - component: {fileID: 114189616276374168}
-  - component: {fileID: 114809151961151040}
+  - component: {fileID: 114788152566824716}
   - component: {fileID: 114280960268024750}
   - component: {fileID: 96596040315506504}
   m_Layer: 13
@@ -183,7 +183,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1698862497891808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.57, y: -2.8, z: 0}
+  m_LocalPosition: {x: 5.04, y: -3.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4535833773463552}
@@ -196,7 +196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1864623828878042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.14, y: -1.28, z: 0}
+  m_LocalPosition: {x: -4.73, y: -2.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4535833773463552}
@@ -363,7 +363,7 @@ TrailRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -548,7 +548,7 @@ MonoBehaviour:
   m_FillAmount: 0.1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114809151961151040
+--- !u!114 &114788152566824716
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -556,20 +556,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1379439555636136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7acf3d23b12144fda4a60e0f87589da, type: 3}
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EnemyType: 1
+  m_GameObjectToDestroy: {fileID: 1033265420063238}
+  EnemyStats:
+    DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+      type: 2}
+    HitSound: {fileID: 0}
+    DeathSound: {fileID: 0}
+    MaxHealth: 3
+    m_ThrowX: 0
+    m_ThrowY: 0
+    DamageAmount: 1
+    Speed: 350
+    AttackSpeed: 0.5
+    DropScrap: 50
+    m_IsBigMonster: 1
+    DontResurect: 0
+    m_ShieldInfo:
+      IsHasShield: 0
+      ShieldType: 4
   DeathDetonationTimer: 2
-  Health: 3
-  ScrapAmount: 50
-  WhatIsEnemy:
+  m_DestroyOnCollision: 0
+  m_LayerMask:
     serializedVersion: 2
     m_Bits: 256
-  DamageAmount: 1
-  AttackSpeed: 0.5
-  m_DestroyOnCollision: 0
-  DeathParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
-    type: 2}
   GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
     type: 2}
   m_IsDestroying: 0
@@ -693,7 +706,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
