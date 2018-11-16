@@ -65,7 +65,12 @@ public class DroneStats : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttackRange") & !m_IsDestroying)
+        TakeDamage(collision.tag);
+    }
+
+    private void TakeDamage(string tag)
+    {
+        if (tag == "PlayerAttackRange" & !m_IsDestroying)
         {
             Health--;
 

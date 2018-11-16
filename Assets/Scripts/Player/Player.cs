@@ -85,8 +85,19 @@ public class Player : MonoBehaviour {
         Attack(m_RangeAttackCooldown, "Fire2", () =>
         {
             m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
-            RangeAttack();
+            DrawBullet();
         });
+    }
+
+    private void DrawBullet()
+    {
+        float whereToShoot = 0f;
+
+        if (transform.localScale.x == -1)
+            whereToShoot = 180f;
+
+        Instantiate(m_ShootEffect, m_FirePosition.position,
+                    Quaternion.Euler(0f, 0f, whereToShoot));
     }
 
     private void Attack(float timeToCheck, string buttonToCheck, VoidDelegate action)
@@ -101,18 +112,6 @@ public class Player : MonoBehaviour {
                 }
             }
         }
-    }
-
-    private void RangeAttack()
-    {
-        var instantiateFireball = Instantiate(m_ShootEffect, m_FirePosition.position, Quaternion.identity);
-
-        if (transform.localScale.x < 0)
-        {
-            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.left;
-        }
-        else
-            instantiateFireball.GetComponent<Fireball>().Direction = Vector3.right;
     }
 
     private IEnumerator MeleeAttack()

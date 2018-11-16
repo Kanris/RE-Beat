@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 61341823050419798}
   - component: {fileID: 114302364497105584}
   - component: {fileID: 50762520998604902}
-  m_Layer: 17
-  m_Name: BulletTrail
-  m_TagString: Enemy
+  m_Layer: 18
+  m_Name: PlayerBulletTrail
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,8 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 256
-  DamageAmount: 1
+    m_Bits: 8192
+  DamageAmount: 10
 --- !u!120 &120379231415812410
 LineRenderer:
   m_ObjectHideFlags: 1

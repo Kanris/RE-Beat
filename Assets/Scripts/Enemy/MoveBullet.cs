@@ -2,6 +2,7 @@
 
 public class MoveBullet : MonoBehaviour {
 
+    [SerializeField] private LayerMask m_LayerMask;
     [Range(1, 10)] public int DamageAmount = 1;
 
 	// Use this for initialization
@@ -20,10 +21,39 @@ public class MoveBullet : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
         {
-            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+            Stats statsToTakeDamage = null;
+            var divider = 1;
+
+            if (collision.transform.CompareTag("Player"))
+            {
+                statsToTakeDamage = collision.gameObject.GetComponent<Player>().playerStats;
+            }
+            else if (collision.transform.CompareTag("Enemy"))
+            {
+                if (collision.gameObject.GetComponent<EnemyStatsGO>() != null)
+                {
+                    statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
+                    divider = 0;
+                }
+                else
+                    Destroy(gameObject);
+            }
+
+            Damage(statsToTakeDamage, divider);
+        }
+        else
+        {
             Destroy(gameObject);
         }
+    }
+
+    private void Damage(Stats statsToTakeDamage, int divider)
+    {
+        if (statsToTakeDamage != null)
+            statsToTakeDamage.TakeDamage(DamageAmount, divider);
+
+        Destroy(gameObject);
     }
 }
