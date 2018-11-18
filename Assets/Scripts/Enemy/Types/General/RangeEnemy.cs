@@ -31,14 +31,6 @@ public class RangeEnemy : MonoBehaviour {
     }
     #endregion
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            m_EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
