@@ -85,6 +85,7 @@ public class Player : MonoBehaviour {
         Attack(m_RangeAttackCooldown, "Fire2", () =>
         {
             m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
+            UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed);
             DrawBullet();
         });
     }

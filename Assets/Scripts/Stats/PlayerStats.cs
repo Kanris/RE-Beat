@@ -193,7 +193,7 @@ public class PlayerStats : Stats
 
         #region initialize health ui
 
-        UIManager.Instance.Clear(); //clear health ui
+        UIManager.Instance.ClearHealth(); //clear health ui
 
         if (CurrentPlayerHealth > 0) //save current player's health
         {

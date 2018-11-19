@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject m_UI;
     [SerializeField] private GameObject m_LifePanel;
     [SerializeField] private GameObject m_LifeImage;
+    [SerializeField] private Image m_BulletImage;
 
     #endregion
 
@@ -66,7 +67,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void Clear()
+    public void ClearHealth()
     {
         foreach (var health in m_HealthInPanel)
         {
@@ -74,6 +75,24 @@ public class UIManager : MonoBehaviour {
         }
 
         m_HealthInPanel.Clear();
+    }
+
+    public void BulletCooldown(float cooldown)
+    {
+        StartCoroutine(DisplayBulletCooldown(cooldown));
+    }
+
+    private IEnumerator DisplayBulletCooldown(float time)
+    {
+        m_BulletImage.fillAmount = 0f;
+
+        var tickTime = time * .1f;
+
+        while (m_BulletImage.fillAmount < 1)
+        {
+            yield return new WaitForSeconds(tickTime);
+            m_BulletImage.fillAmount += .1f;
+        }
     }
 
     #endregion
