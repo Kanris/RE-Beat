@@ -8,9 +8,17 @@ public class ChestItem : MonoBehaviour {
 
     [SerializeField] private Item item; //item description
 
+    private Image m_SelectImage;
+
     #endregion
 
     #region public methods
+
+    private void Awake()
+    {
+        m_SelectImage = transform.GetChild(0).GetComponent<Image>();
+        m_SelectImage.gameObject.SetActive(false);
+    }
 
     public void AddToTheInventory()
     {
@@ -36,5 +44,15 @@ public class ChestItem : MonoBehaviour {
             GetComponent<Image>().sprite = item.Image;
             transform.name = item.name;
         }
+    }
+
+    public void MouseHoverEnter()
+    {
+        m_SelectImage.gameObject.SetActive(true);
+    }
+
+    public void MouseHoverExit()
+    {
+        m_SelectImage.gameObject.SetActive(false);
     }
 }
