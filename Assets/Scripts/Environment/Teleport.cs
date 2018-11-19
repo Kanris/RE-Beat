@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-[RequireComponent(typeof(Animator))]
 public class Teleport : MonoBehaviour {
 
     #region private fields
@@ -12,8 +11,7 @@ public class Teleport : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
     [SerializeField] private GameObject m_InteractionUI;
-
-    private Animator m_Animator; //teleport animator
+    
     private GameObject m_InteractionButton; //teleport ui
     private GameObject m_Player; //player reference
 
@@ -25,8 +23,6 @@ public class Teleport : MonoBehaviour {
 
     private void Start()
     {
-        m_Animator = GetComponent<Animator>(); //reference to the teleport animator
-
         InitializeInteractionButton(); //initialize teleport ui
 
         SetActiveInteractionButton(false); //hide teleport ui
@@ -54,7 +50,6 @@ public class Teleport : MonoBehaviour {
     {
         if (target != null) //if there is destination
         {
-            m_Animator.SetBool("Teleport", true); //show teleport animation
             AudioManager.Instance.Play(TeleportAudio); //play teleport sound
             m_Player.SetActive(false); //hide player
 
@@ -67,7 +62,6 @@ public class Teleport : MonoBehaviour {
             yield return new WaitForSeconds(0.8f); //wait before clear screen
 
             m_Player.SetActive(true); //show player
-            m_Animator.SetBool("Teleport", false); //stop teleprt animation
 
             StartCoroutine(ScreenFaderManager.Instance.FadeToClear()); //show sceen to the player
 
@@ -84,7 +78,6 @@ public class Teleport : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player is near teleport
         {
             m_Player = collision.gameObject; //get reference to the player gameobject
-            SetAnimationTrigger("PlayerNear"); //show teleport animation
             SetActiveInteractionButton(true); //show teleport ui
         }
     }
@@ -95,11 +88,6 @@ public class Teleport : MonoBehaviour {
         {
             ResetToDefaultState();
         }
-    }
-
-    private void SetAnimationTrigger(string trigger)
-    {
-        m_Animator.SetTrigger(trigger);
     }
 
     private void SetActiveInteractionButton(bool isActive)
@@ -113,7 +101,6 @@ public class Teleport : MonoBehaviour {
     private void ResetToDefaultState()
     {
         m_Player = null; //remove player reference
-        SetAnimationTrigger("Idle"); //return to the idle animation
         SetActiveInteractionButton(false); //hide ui buttons
     }
 
