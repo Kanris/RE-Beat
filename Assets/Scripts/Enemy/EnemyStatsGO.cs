@@ -23,6 +23,7 @@ public class EnemyStatsGO : MonoBehaviour {
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
+    private float m_DestroyTimer;
     [HideInInspector] public bool m_IsDestroying = false; //is drone going to blow up
 
     // Use this for initialization
@@ -36,6 +37,18 @@ public class EnemyStatsGO : MonoBehaviour {
     public void InitializeStats()
     {
         EnemyStats.Initialize(m_GameObjectToDestroy, GetComponent<Animator>());
+    }
+
+    private void Update()
+    {
+        if (m_IsDestroying)
+        {
+            if (m_DestroyTimer < Time.time)
+            {
+                m_IsDestroying = false;
+                StartCoroutine(DestroyDrone());
+            }
+        }
     }
 
     public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0)
@@ -121,6 +134,8 @@ public class EnemyStatsGO : MonoBehaviour {
         m_Rigidbody.gravityScale = 3f;
 
         Destroy(GetComponent<TrailRenderer>());
+
+        m_DestroyTimer = 3f + Time.time;
 
         OnDroneDestroy(true);
     }
