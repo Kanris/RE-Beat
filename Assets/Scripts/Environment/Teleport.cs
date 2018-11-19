@@ -6,7 +6,7 @@ public class Teleport : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private Transform target; //where to teleport player
+    [SerializeField] private Transform m_TeleportTo; //where to teleport player
 
     [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
@@ -48,7 +48,7 @@ public class Teleport : MonoBehaviour {
 
     private IEnumerator TeleportPlayer()
     {
-        if (target != null) //if there is destination
+        if (m_TeleportTo != null) //if there is destination
         {
             AudioManager.Instance.Play(TeleportAudio); //play teleport sound
             m_Player.SetActive(false); //hide player
@@ -57,7 +57,7 @@ public class Teleport : MonoBehaviour {
 
             yield return new WaitForSeconds(0.8f); //wait before teleport
 
-            m_Player.transform.position = target.position; //teleport player
+            m_Player.transform.position = m_TeleportTo.position; //teleport player
 
             yield return new WaitForSeconds(0.8f); //wait before clear screen
 

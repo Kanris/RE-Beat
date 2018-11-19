@@ -6,12 +6,12 @@ public class Stairs : MonoBehaviour {
 
     #region private fields
 
-    public Transform m_StairsTop; //stairs top transform
+    private Transform m_StairsTop; //stairs top transform
 
-    public Animator m_Animator; //player's animator
-    public Rigidbody2D m_Player; //player's rigidbody
-    public bool m_VerticalMove; //is player move verticaly
-    public bool isJumping; //is player press jump button
+    private Animator m_Animator; //player's animator
+    private Rigidbody2D m_Player; //player's rigidbody
+    private bool m_VerticalMove; //is player move verticaly
+    private bool isJumping; //is player press jump button
 
     #endregion
 
