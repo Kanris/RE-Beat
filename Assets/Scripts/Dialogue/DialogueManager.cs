@@ -249,7 +249,7 @@ public class DialogueManager : MonoBehaviour {
 
             ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
             m_Dialogue = dialogue; //save dialogue reference
-            m_NameText.text = npcName; //display npc name
+            m_NameText.text = "C:\\Users\\<color=yellow>" + npcName + "</color>:"; //display npc name
 
             m_Sentences.Clear(); //clear sentences queue
 
@@ -285,7 +285,7 @@ public class DialogueManager : MonoBehaviour {
         m_DialogueUI.SetActive(true); //show dialogue ui
         ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
         m_DisplayingSingleSentence = true; //notify update that single sentence is displaying
-        m_NameText.text = name; //show sign text
+        m_NameText.text = "C:\\Users\\<color=yellow>" + name + "</color>:"; //show sign text
 
         yield return TypeSentence(sentence); //start typing sentece
     }
