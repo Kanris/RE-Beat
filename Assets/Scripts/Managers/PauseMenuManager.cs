@@ -60,9 +60,6 @@ public class PauseMenuManager : MonoBehaviour {
         if (m_UI.activeSelf == true) //if pause manager show ui
         {
             Time.timeScale = 0f; //stop game time
-
-            if (m_FirstSelectedGameobject != null)
-                EventSystem.current.SetSelectedGameObject(m_FirstSelectedGameobject); //choose first item in menu
         }
         else
             Time.timeScale = 1f; //resume game time
