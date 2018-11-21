@@ -50,6 +50,7 @@ public class DroneHive : MonoBehaviour
     private Enemy m_Stats;
     private bool m_Stage2;
     private bool m_Stage3;
+    private bool m_IsTeleporting;
     private float m_TeleportTimer;
     private Vector3 m_NextDestination;
 
@@ -232,11 +233,16 @@ public class DroneHive : MonoBehaviour
 
     private void OnPlayerHitTeleport(bool value, int divider)
     {
-        WeirdAttack();
+        if (!m_IsTeleporting)
+        {
+            GetComponent<EnemyStatsGO>().enabled = false;
 
-        m_TeleportTimer = Time.time;
+            WeirdAttack();
 
-        ShowParticles(HitParticle, 5f);
+            m_TeleportTimer = Time.time;
+
+            ShowParticles(HitParticle, 5f);
+        }
     }
 
     private void ChangeUIHealth(float value)
@@ -252,7 +258,11 @@ public class DroneHive : MonoBehaviour
 
         TeleportSound();
 
+        GetComponent<EnemyStatsGO>().enabled = false;
+
         yield return new WaitForSeconds(0.5f);
+
+        GetComponent<EnemyStatsGO>().enabled = true;
 
         transform.position = destination;
         ChangeLookPosition();
@@ -306,6 +316,7 @@ public class DroneHive : MonoBehaviour
 
     private void TeleportAnimation(bool isTeleport)
     {
+        m_IsTeleporting = isTeleport;
         m_Animator.SetBool("Teleport", isTeleport);
     }
 

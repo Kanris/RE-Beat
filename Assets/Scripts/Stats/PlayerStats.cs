@@ -99,8 +99,7 @@ public class PlayerStats : Stats
             UIManager.Instance.AddHealth(amount); //add health in player's ui
 
             //create healEffect
-            var healEffect = GameMaster.Instantiate(m_HealEffect);
-            healEffect.transform.position = m_GameObject.transform.position;
+            var healEffect = GameMaster.Instantiate(m_HealEffect, m_GameObject.transform);
             GameMaster.Destroy(healEffect, 2.1f);
 
             if (CurrentHealth > 2)
