@@ -245,7 +245,7 @@ public class DialogueManager : MonoBehaviour {
             m_Text.gameObject.SetActive(true);
 
             transform.position = parentTransform.position.Add(y: 2.2f);
-            m_Buttons.transform.position = playerTransform.position.Add(x: 1.8f, y: 0.5f);
+            m_Buttons.transform.position = playerTransform.position.Add(x: 1.8f, y: 0f);
 
             ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
             m_Dialogue = dialogue; //save dialogue reference

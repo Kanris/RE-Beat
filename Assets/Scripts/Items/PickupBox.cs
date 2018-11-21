@@ -159,7 +159,7 @@ public class PickupBox : MonoBehaviour {
         if (parrent != null) //if parent there is parent
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
-            transform.localPosition = transform.localPosition.With(x: 0.5f, y: 0.5f);
+            transform.localPosition = transform.localPosition.With(x: 0.5f, y: 0f);
             ChangeBoxProperty(true, 0);   
         }
         else

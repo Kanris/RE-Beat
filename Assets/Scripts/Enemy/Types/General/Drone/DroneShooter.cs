@@ -187,7 +187,7 @@ public class DroneShooter : MonoBehaviour {
     {
         if (m_Target != null)
         {
-            var whereToShoot = new Vector3(m_Target.position.x, m_Target.position.y + 0.5f);
+            var whereToShoot = new Vector3(m_Target.position.x, m_Target.position.y);
 
             var m_firePointPosition = transform.position;
 

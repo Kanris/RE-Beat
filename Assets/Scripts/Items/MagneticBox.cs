@@ -166,7 +166,7 @@ public class MagneticBox : MonoBehaviour {
         if (value) //if box is picked up
         {
             transform.SetParent(m_Player); //attach box to the player
-            transform.localPosition = new Vector2(0.5f, 0.5f); //put box in fron of the player
+            transform.localPosition = new Vector2(0.5f, 0f); //put box in fron of the player
             transform.gameObject.layer = 0; //change layer so player animation will play correctly
             m_Animator.SetTrigger("Active"); //play active animation
 

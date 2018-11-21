@@ -75,7 +75,7 @@ public class LanternPickUp : MonoBehaviour {
         if (value)
         {
             transform.SetParent(m_Player);
-            transform.localPosition = new Vector2(0.3f, 0.5f);
+            transform.localPosition = new Vector2(0.3f, 0f);
         }
         else
         {
