@@ -21,15 +21,21 @@ public class StartScreenManager : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private Audio BackgroundMusic; //background music
+
+    [Header("General UI")]
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
     [SerializeField] private GameObject OptionsMenuGrid; //option ui
-    [SerializeField] private Audio UIClickAudio;
+
     //options items
+    [Header("Options UI")]
     [SerializeField] private TMP_Dropdown resoulutionsDropDown;
     [SerializeField] private Slider volumeMasterSlider;
     [SerializeField] private Slider volumeEnvironmentSlider;
     [SerializeField] private Toggle fullscreenToggle;
+
+    [Header("Effects")]
+    [SerializeField] private Audio BackgroundMusic; //background music
+    [SerializeField] private Audio UIClickAudio;
 
     #endregion
 
@@ -232,21 +238,19 @@ public class StartScreenManager : MonoBehaviour {
 
     public void SetFullScreen(bool value)
     {
-        PlayClickSound();
         Screen.fullScreen = value;
         IsFullscreen = value;
     }
 
     public void SetResolution(int resolutionIndex)
     {
-        PlayClickSound();
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
         ResolutionIndex = resolutionIndex;
     }
 
     public void SetLocalization(string fileName)
     {
-        PlayClickSound();
+        //PlayClickSound();
         LocalizationManager.Instance.LoadGeneralLocalizationData(fileName);
         LocalizationToLoad = fileName;
         StartCoroutine( LoadLocalizationData() );
