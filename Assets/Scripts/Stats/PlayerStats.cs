@@ -17,6 +17,7 @@ public class PlayerStats : Stats
 
     [Header("Additional")]
     public PlatformerCharacter2D platformerCharacter2D;
+    [SerializeField] private GameObject m_HealEffect;
 
     private int m_CriticalHealthAmount = 3;
 
@@ -96,6 +97,10 @@ public class PlayerStats : Stats
             CurrentHealth += amount;
 
             UIManager.Instance.AddHealth(amount); //add health in player's ui
+
+            var healEffect = GameMaster.Instantiate(m_HealEffect);
+            healEffect.transform.position = m_GameObject.transform.position;
+            GameMaster.Destroy(healEffect, 2.1f);
 
             if (CurrentHealth > 2)
             {
