@@ -10,18 +10,22 @@ namespace UnityStandardAssets._2D
         public delegate void VoidDelegate();
         public event VoidDelegate OnLandEvent;
 
+        [Header("Movement stats")]
         public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
-        [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField] private LayerMask m_WhatIsGround; // A mask determining what is ground to the character    
+
+        [Header("Effects")]
         [SerializeField] private GameObject JumpPlatformPrefab;
         [SerializeField] private GameObject m_LandEffect;
         [SerializeField] private GameObject m_DashEffect;
-        
+        [SerializeField] private Audio m_LandAudio;
+
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
         public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
-        public bool m_IsHaveDoubleJump;
+        [HideInInspector] public bool m_IsHaveDoubleJump;
 
         const float k_GroundedRadius = .05f; // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
@@ -187,6 +191,8 @@ namespace UnityStandardAssets._2D
         {
             var dustGO = Instantiate(m_LandEffect);
             dustGO.transform.position = m_GroundCheck.position;
+
+            AudioManager.Instance.Play(m_LandAudio);
 
             Destroy(dustGO, 1.5f);
         }
