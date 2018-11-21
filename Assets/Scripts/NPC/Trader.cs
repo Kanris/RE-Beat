@@ -16,6 +16,7 @@ public class Trader : MonoBehaviour {
 
     [Header("Notification")]
     [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
+    [SerializeField] private Audio m_ClickAudio;
 
     //current selected item info
     private Item m_CurrentSelectedItem; 
@@ -111,6 +112,8 @@ public class Trader : MonoBehaviour {
         {
             if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
             {
+                AudioManager.Instance.Play(m_ClickAudio);
+
                 PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
 
                 //add item to the inventory if it's not heal potion

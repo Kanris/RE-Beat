@@ -11,6 +11,9 @@ public class TraderItem : MonoBehaviour {
     public enum UpgradeType { Dash, DoubleJump }
     [SerializeField] private UpgradeType m_UpgradeType;
 
+    [Header("Effects")]
+    [SerializeField] private Audio m_ClickAudio;
+
     private GameObject m_SelectImage;
     [HideInInspector] public bool m_IsSelected;
 
@@ -76,6 +79,8 @@ public class TraderItem : MonoBehaviour {
         m_SelectImage.SetActive(true);
 
         m_IsSelected = true;
+
+        AudioManager.Instance.Play(m_ClickAudio);
     }
 
     public void OnDisable()
