@@ -54,6 +54,7 @@ public class Stats {
         }
         set
         {
+            PlayHitSound();
             m_CurrentHealth = Mathf.Clamp(value, 0, MaxHealth); //current health value can't be higher than max health and less than zero
         }
     }
@@ -93,7 +94,6 @@ public class Stats {
         else if (CurrentHealth > 0) //object still alive
         {
             GameMaster.Instance.StartCoroutine(ObjectTakeDamage(divider)); //play hit animation and throw back object
-            PlayHitSound();
         }
     }
 

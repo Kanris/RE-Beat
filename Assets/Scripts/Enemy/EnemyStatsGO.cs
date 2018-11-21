@@ -157,9 +157,7 @@ public class EnemyStatsGO : MonoBehaviour {
             playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
         }
 
-        PlayerStats.Scrap = EnemyStats.DropScrap;
-
-        Destroy(m_GameObjectToDestroy);
+        EnemyStats.TakeDamage(1);
     }
     #endregion
 

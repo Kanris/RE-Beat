@@ -88,6 +88,7 @@ public class DroneShooter : MonoBehaviour {
     [SerializeField] private GameObject BulletTrailPrefab;
     [SerializeField] private Animator m_RadarAnimator;
     [SerializeField] private DroneTargetLine m_TargetLine;
+    [SerializeField] private Audio m_ShootSound;
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
@@ -212,6 +213,8 @@ public class DroneShooter : MonoBehaviour {
                     Quaternion.Euler(0f, 0f, rotationZ));
 
         bullet.GetComponent<MoveBullet>().DamageAmount = m_Stats.EnemyStats.DamageAmount;
+
+        AudioManager.Instance.Play(m_ShootSound);
     }
 
     #endregion

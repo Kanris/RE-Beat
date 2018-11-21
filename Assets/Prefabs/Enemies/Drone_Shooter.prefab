@@ -495,6 +495,7 @@ MonoBehaviour:
     type: 2}
   m_RadarAnimator: {fileID: 95732509446776244}
   m_TargetLine: {fileID: 114066438003458324}
+  m_ShootSound: {fileID: 11400000, guid: 7572b8d2a34fb984bb6d2cabffa2c367, type: 2}
 --- !u!114 &114280960268024750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -564,8 +565,8 @@ MonoBehaviour:
   EnemyStats:
     DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
       type: 2}
-    HitSound: {fileID: 0}
-    DeathSound: {fileID: 0}
+    HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
+    DeathSound: {fileID: 11400000, guid: fca0dfe2b0c743f4f8da27a09a9fbd64, type: 2}
     MaxHealth: 3
     m_ThrowX: 0
     m_ThrowY: 0
