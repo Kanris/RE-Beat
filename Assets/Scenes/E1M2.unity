@@ -252,7 +252,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: fd77c8e1c32514282942d6b7b9926d9b, type: 2}
   m_TraderItemType: 1
   m_UpgradeType: 0
-  m_ClickAudio: {fileID: 0}
+  m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsSelected: 0
 --- !u!114 &68891169
 MonoBehaviour:
@@ -24307,7 +24307,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: 63948d3ea8619473286503df3dd98985, type: 2}
   m_TraderItemType: 0
   m_UpgradeType: 1
-  m_ClickAudio: {fileID: 0}
+  m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsSelected: 0
 --- !u!224 &1037822996 stripped
 RectTransform:
@@ -46319,72 +46319,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53c400cd10ad36047b98011fe1519fbd, type: 2}
   m_IsPrefabAsset: 0
---- !u!1001 &1722579544
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4608881832447200, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_RootOrder
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344181862669414, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344181862669414, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114624125829521844, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114624125829521844, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1711713834508778, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1722655450
 GameObject:
   m_ObjectHideFlags: 0
@@ -51643,7 +51577,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: 3e60840d1d2804270bccd2d01035ffa5, type: 2}
   m_TraderItemType: 0
   m_UpgradeType: 0
-  m_ClickAudio: {fileID: 0}
+  m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsSelected: 0
 --- !u!114 &1833266811
 MonoBehaviour:
@@ -57004,6 +56938,12 @@ Prefab:
       value: 
       objectReference: {fileID: 21300252, guid: 42717c02b1655be44809142aceb42b35,
         type: 3}
+    - target: {fileID: 114316307258952364, guid: d9c5ed0891162e0429c181754239c86b,
+        type: 2}
+      propertyPath: m_ClickAudio
+      value: 
+      objectReference: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9c5ed0891162e0429c181754239c86b, type: 2}
   m_IsPrefabAsset: 0

@@ -10,8 +10,8 @@ public class Stats {
 
     [Header("Effects")]
     [SerializeField] public GameObject DeathParticle; //particles that will be spawn after object death
-    [SerializeField] private Audio HitSound; //sound that will be played when object gets hit
-    [SerializeField] private Audio DeathSound; //sound that will be played when object died
+    [SerializeField] public Audio HitSound; //sound that will be played when object gets hit
+    [SerializeField] public Audio DeathSound; //sound that will be played when object died
 
     #endregion
 

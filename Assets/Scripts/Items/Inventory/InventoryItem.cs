@@ -9,6 +9,7 @@ public class InventoryItem : MonoBehaviour {
 
     #region private fields
 
+    [SerializeField] private Audio m_ClickAudio;
     private TextPage m_ItemDescriptionText;
     private string m_ItemDescription = "Some item description of the template on over";
 
@@ -25,6 +26,7 @@ public class InventoryItem : MonoBehaviour {
 
     public void ShowItemInfo()
     {
+        AudioManager.Instance.Play(m_ClickAudio);
         m_ItemDescriptionText.ShowText(LocalizationManager.Instance.GetItemsLocalizedValue(m_ItemDescription));
     }
 

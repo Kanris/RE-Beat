@@ -157,7 +157,14 @@ public class EnemyStatsGO : MonoBehaviour {
             playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
         }
 
-        EnemyStats.TakeDamage(1);
+        PlayerStats.Scrap = EnemyStats.DropScrap;
+
+        Destroy(
+            Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
+
+        AudioManager.Instance.Play(EnemyStats.DeathSound);
+
+        Destroy(m_GameObjectToDestroy);
     }
     #endregion
 
