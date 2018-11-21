@@ -21,14 +21,18 @@ public class Player : MonoBehaviour {
 
     [SerializeField, Range(-3, -20)] private float YFallDeath = -3f; //max y fall 
 
-    [SerializeField] private GameObject m_AttackRangeAnimation; //player attack range
-    [SerializeField] private AnimationClip m_AttackAnimation; //attack animation
+
     [SerializeField] private Transform m_AttackPosition; //attack position
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX; //attack range x
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY; //attack range y
     [SerializeField] private Transform m_FirePosition;
     [SerializeField] private LayerMask m_WhatIsEnemy; //defines what is enemy
+
+    [Header("Effects")]
+    [SerializeField] private Audio m_ShootSound; //player attack sound
     [SerializeField] private Audio m_AttackSound; //player attack sound
+    [SerializeField] private GameObject m_AttackRangeAnimation; //player attack range
+    [SerializeField] private AnimationClip m_AttackAnimation; //attack animation
     [SerializeField] private GameObject m_ShootEffect;
 
     #endregion
@@ -99,6 +103,8 @@ public class Player : MonoBehaviour {
 
         Instantiate(m_ShootEffect, m_FirePosition.position,
                     Quaternion.Euler(0f, 0f, whereToShoot));
+
+        AudioManager.Instance.Play(m_ShootSound);
     }
 
     private void Attack(float timeToCheck, string buttonToCheck, VoidDelegate action)

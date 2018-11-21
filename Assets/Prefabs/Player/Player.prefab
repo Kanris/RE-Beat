@@ -1878,8 +1878,6 @@ MonoBehaviour:
     m_ThrowY: 6
     platformerCharacter2D: {fileID: 114819696113986082}
   YFallDeath: -10
-  m_AttackRangeAnimation: {fileID: 1478559991754246}
-  m_AttackAnimation: {fileID: 7400000, guid: d34aa8dbb8e68fb41bf59dd85cb4b9d0, type: 2}
   m_AttackPosition: {fileID: 4012858144039836}
   m_AttackRangeX: 1
   m_AttackRangeY: 0.5
@@ -1887,7 +1885,10 @@ MonoBehaviour:
   m_WhatIsEnemy:
     serializedVersion: 2
     m_Bits: 8192
+  m_ShootSound: {fileID: 11400000, guid: 7572b8d2a34fb984bb6d2cabffa2c367, type: 2}
   m_AttackSound: {fileID: 11400000, guid: f859384afb79445c6b412abb02be2b81, type: 2}
+  m_AttackRangeAnimation: {fileID: 1478559991754246}
+  m_AttackAnimation: {fileID: 7400000, guid: d34aa8dbb8e68fb41bf59dd85cb4b9d0, type: 2}
   m_ShootEffect: {fileID: 1012339724157260, guid: 3e0a6d3f07c6e5041af8713c7ab0d005,
     type: 2}
 --- !u!114 &114894955703643986
