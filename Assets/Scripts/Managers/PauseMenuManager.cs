@@ -53,6 +53,11 @@ public class PauseMenuManager : MonoBehaviour {
         SetActiveUI();
     }
 
+    //private bool IsGamePadConnected()
+    //{
+    //    GamePadState
+    //}
+
     private void SetActiveUI()
     {
         m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
