@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using UnityStandardAssets._2D;
-using System;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
@@ -34,6 +32,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject m_AttackRangeAnimation; //player attack range
     [SerializeField] private AnimationClip m_AttackAnimation; //attack animation
     [SerializeField] private GameObject m_ShootEffect;
+    [SerializeField] private GameObject m_LowHealthEffect;
 
     #endregion
 
@@ -45,6 +44,8 @@ public class Player : MonoBehaviour {
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown;
     private int m_EnemyHitDirection = 1;
+
+    private bool m_IsCreateCriticalHealthEffect;
 
     #endregion
 
@@ -92,6 +93,31 @@ public class Player : MonoBehaviour {
             UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed);
             DrawBullet();
         });
+
+        if (playerStats.CurrentHealth < 3 & !m_IsCreateCriticalHealthEffect)
+        {
+            m_IsCreateCriticalHealthEffect = true;
+            StartCoroutine(CreateLowHealthEffect());
+        }
+    }
+
+    private IEnumerator CreateLowHealthEffect()
+    {
+        if (playerStats.CurrentHealth < 3)
+        {
+            var instLowHealthEffect = Instantiate(m_LowHealthEffect);
+            instLowHealthEffect.transform.position = transform.position;
+
+            Destroy(instLowHealthEffect, 3f);
+
+            yield return new WaitForSeconds(Random.Range(.5f, 2f));
+
+            StartCoroutine(CreateLowHealthEffect());
+        }
+        else
+        {
+            m_IsCreateCriticalHealthEffect = false;
+        }
     }
 
     private void DrawBullet()

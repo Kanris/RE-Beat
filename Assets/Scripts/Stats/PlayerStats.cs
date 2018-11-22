@@ -18,13 +18,14 @@ public class PlayerStats : Stats
     [Header("Additional")]
     public PlatformerCharacter2D platformerCharacter2D;
     [SerializeField] private GameObject m_HealEffect;
+    public GameObject m_LowHealthEffect;
 
     private int m_CriticalHealthAmount = 3;
 
     private int m_OverHealScrapAmount = 5;
 
     public static int DamageAmount = 50;
-    public static float MeleeAttackSpeed = 0.3f;
+    public static float MeleeAttackSpeed = 0.2f;
     public static float RangeAttackSpeed = 2f;
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
@@ -101,11 +102,6 @@ public class PlayerStats : Stats
             //create healEffect
             var healEffect = GameMaster.Instantiate(m_HealEffect, m_GameObject.transform);
             GameMaster.Destroy(healEffect, 2.1f);
-
-            if (CurrentHealth > 2)
-            {
-                Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
-            }
         }
     }
 
@@ -204,19 +200,13 @@ public class PlayerStats : Stats
         {
             UIManager.Instance.AddHealth(CurrentPlayerHealth);
             CurrentHealth = CurrentPlayerHealth;
-
-            if (CurrentHealth < 3)
-                Camera.main.GetComponent<CinemachineFollow>().PlayLowHealthEffect();
-            else
-                Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
-
         }
         else //player was dead initialize full hp
         {
             UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
 
-            Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
+            //Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
         }
 
 #endregion
@@ -237,12 +227,6 @@ public class PlayerStats : Stats
             CurrentPlayerHealth -= amount;
             
             UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
-
-            if (CurrentHealth < 3)
-            {
-                Camera.main.GetComponent<CinemachineFollow>().PlayLowHealthEffect();
-                AnnouncerManager.Instance.ShowCriticalDamageSign();
-            }
         }
     }
 

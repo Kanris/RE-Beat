@@ -1879,6 +1879,8 @@ MonoBehaviour:
     platformerCharacter2D: {fileID: 114819696113986082}
     m_HealEffect: {fileID: 1610558710650812, guid: d83ee6f9415fe024eb86fe137e928552,
       type: 2}
+    m_LowHealthEffect: {fileID: 1563965879945054, guid: bd202ecf0bb5058469745a19ee934290,
+      type: 2}
   YFallDeath: -10
   m_AttackPosition: {fileID: 4012858144039836}
   m_AttackRangeX: 1
@@ -1892,6 +1894,8 @@ MonoBehaviour:
   m_AttackRangeAnimation: {fileID: 1478559991754246}
   m_AttackAnimation: {fileID: 7400000, guid: d34aa8dbb8e68fb41bf59dd85cb4b9d0, type: 2}
   m_ShootEffect: {fileID: 1012339724157260, guid: 3e0a6d3f07c6e5041af8713c7ab0d005,
+    type: 2}
+  m_LowHealthEffect: {fileID: 1563965879945054, guid: bd202ecf0bb5058469745a19ee934290,
     type: 2}
 --- !u!114 &114894955703643986
 MonoBehaviour:
