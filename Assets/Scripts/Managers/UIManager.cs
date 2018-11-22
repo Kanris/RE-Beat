@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     private List<GameObject> m_HealthInPanel = new List<GameObject>();
+    private int m_CurrentActiveHPIndex = 0;
 
     #endregion
 
@@ -49,21 +50,33 @@ public class UIManager : MonoBehaviour {
 
     public void AddHealth(int amount)
     {
-        for (int index = 0; index < amount; index++)
+        if (m_HealthInPanel.Count == 0)
         {
-            m_HealthInPanel.Add(Instantiate(m_LifeImage, m_LifePanel.transform));
+            for (int index = 0; index < amount; index++)
+            {
+                m_HealthInPanel.Add(Instantiate(m_LifeImage, m_LifePanel.transform));
+            }
+
+            m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
+        }
+        else
+        {
+            var border = m_CurrentActiveHPIndex + amount;
+
+            for (; m_CurrentActiveHPIndex <= border; m_CurrentActiveHPIndex++)
+            {
+                m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetTrigger("Idle");
+            }
         }
     }
 
     public void RemoveHealth(int amount)
     {
-        for (int index = m_HealthInPanel.Count - 1; index >= 0 & m_HealthInPanel.Count > 0 & amount > 0; index--, amount--)
+        if (m_CurrentActiveHPIndex >= 0)
         {
-            var objectToDestroy = m_HealthInPanel[index];
-            m_HealthInPanel.RemoveAt(index);
+            m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetTrigger("Remove");
 
-            objectToDestroy.GetComponent<Animator>().SetTrigger("Prepare");
-            Destroy(objectToDestroy, 1.6f);
+            m_CurrentActiveHPIndex--;
         }
     }
 
@@ -76,6 +89,8 @@ public class UIManager : MonoBehaviour {
 
         m_HealthInPanel.Clear();
     }
+
+    #region bullet
 
     public void BulletCooldown(float cooldown)
     {
@@ -94,6 +109,8 @@ public class UIManager : MonoBehaviour {
             m_BulletImage.fillAmount += .1f;
         }
     }
+
+    #endregion
 
     #endregion
 }

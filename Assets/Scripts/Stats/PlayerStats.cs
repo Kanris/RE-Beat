@@ -18,7 +18,6 @@ public class PlayerStats : Stats
     [Header("Additional")]
     public PlatformerCharacter2D platformerCharacter2D;
     [SerializeField] private GameObject m_HealEffect;
-    public GameObject m_LowHealthEffect;
 
     private int m_CriticalHealthAmount = 3;
 
@@ -113,12 +112,15 @@ public class PlayerStats : Stats
 
     public void KillPlayer() //kill player even if he invincible
     {
+        for (int index = CurrentHealth - 1; index >= 0; index--)
+        {
+            UIManager.Instance.RemoveHealth(1);
+        }
+
         var damageAmount = 999;
 
         base.TakeDamage(damageAmount);
         CurrentPlayerHealth -= damageAmount;
-
-        UIManager.Instance.RemoveHealth(damageAmount);
     }
 
     #region debuff
@@ -226,7 +228,8 @@ public class PlayerStats : Stats
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
             
-            UIManager.Instance.RemoveHealth(amount); //remove some health from health ui
+            for (int index = amount; index > 0; index--)
+                UIManager.Instance.RemoveHealth(1); //remove some health from health ui
         }
     }
 
