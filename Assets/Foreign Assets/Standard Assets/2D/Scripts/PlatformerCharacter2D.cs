@@ -156,7 +156,7 @@ namespace UnityStandardAssets._2D
 
                     m_IsDashing = true;
 
-                    ShowDashEffect();
+                    StartCoroutine( ShowDashEffect() );
 
                     StartCoroutine(StopDash());
                 }
@@ -197,20 +197,19 @@ namespace UnityStandardAssets._2D
             Destroy(dustGO, 1.5f);
         }
 
-        private void ShowDashEffect()
+        private IEnumerator ShowDashEffect()
         {
-            var multiplier = -1;
+            for (var count = 0; count < 6; count++)
+            {
+                var instantiateDashEffect = Instantiate(m_DashEffect);
 
-            if (!m_FacingRight)
-                multiplier = 1;
+                instantiateDashEffect.transform.position = transform.position;
+                instantiateDashEffect.transform.localScale = transform.localScale;
 
-            var instantiateDashEffect = Instantiate(m_DashEffect);
+                Destroy(instantiateDashEffect, .32f);
 
-            instantiateDashEffect.transform.position = transform.position;
-            instantiateDashEffect.transform.rotation = 
-                instantiateDashEffect.transform.rotation * Quaternion.Euler(0, 90 * multiplier, 0);
-
-            Destroy(instantiateDashEffect, 1f);
+                yield return new WaitForSeconds(.05f);
+            }
         }
 
         private IEnumerator StopDash()
