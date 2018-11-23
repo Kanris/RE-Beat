@@ -97,6 +97,7 @@ public class Player : MonoBehaviour {
         if (playerStats.CurrentHealth < 3 & !m_IsCreateCriticalHealthEffect)
         {
             m_IsCreateCriticalHealthEffect = true;
+            AnnouncerManager.Instance.ShowCriticalDamageSign();
             StartCoroutine(CreateLowHealthEffect());
         }
     }
