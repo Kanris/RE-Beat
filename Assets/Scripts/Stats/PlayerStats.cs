@@ -100,7 +100,8 @@ public class PlayerStats : Stats
                 UIManager.Instance.AddHealth(); //add health in player's ui
 
             //create healEffect
-            var healEffect = GameMaster.Instantiate(m_HealEffect, m_GameObject.transform);
+            var healEffect = GameMaster.Instantiate(m_HealEffect);
+            healEffect.transform.position = m_GameObject.transform.position;
             GameMaster.Destroy(healEffect, 2.1f);
         }
     }
