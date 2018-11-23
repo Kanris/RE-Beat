@@ -39,6 +39,12 @@ public class EnemyStatsGO : MonoBehaviour {
         EnemyStats.Initialize(m_GameObjectToDestroy, GetComponent<Animator>());
     }
 
+    private void InitializeComponents()
+    {
+        m_Animator = GetComponent<Animator>();
+        m_Rigidbody = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
         if (m_IsDestroying)
@@ -75,12 +81,6 @@ public class EnemyStatsGO : MonoBehaviour {
             }
         }
 
-    }
-
-    private void InitializeComponents()
-    {
-        m_Animator = GetComponent<Animator>();
-        m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -157,13 +157,11 @@ public class EnemyStatsGO : MonoBehaviour {
             playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
         }
 
-        PlayerStats.Scrap = EnemyStats.DropScrap;
-
         Destroy(
             Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
+        EnemyStats.DeathParticle = null;
 
-        AudioManager.Instance.Play(EnemyStats.DeathSound);
-
+        EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);
     }
     #endregion

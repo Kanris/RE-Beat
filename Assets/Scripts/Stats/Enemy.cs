@@ -119,7 +119,7 @@ public class Enemy : Stats
     }
 
     public void SaveState()
-    {    
+    {
         GameMaster.Instance.SaveState(m_GameObject.transform.name, 0, GameMaster.RecreateType.Object);
     }
 

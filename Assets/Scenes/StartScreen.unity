@@ -262,7 +262,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 381002769}
-        m_MethodName: LoadScene
+        m_MethodName: StartNewGame
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -999,14 +999,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343132009298ffc409d0b4d702559a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundMusic: {fileID: 11400000, guid: d957715454b844b418a9d444a3ee7554, type: 2}
   MainMenuGrid: {fileID: 989499992}
   OptionsMenuGrid: {fileID: 1438906909}
-  UIClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   resoulutionsDropDown: {fileID: 1399917238}
   volumeMasterSlider: {fileID: 1988528075}
   volumeEnvironmentSlider: {fileID: 2118680791}
   fullscreenToggle: {fileID: 1610560243}
+  BackgroundMusic: {fileID: 11400000, guid: d957715454b844b418a9d444a3ee7554, type: 2}
+  UIClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
 --- !u!4 &381002770
 Transform:
   m_ObjectHideFlags: 0

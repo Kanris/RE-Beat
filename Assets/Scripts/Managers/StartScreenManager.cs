@@ -189,7 +189,7 @@ public class StartScreenManager : MonoBehaviour {
 
     #region public methods 
 
-    public void LoadScene(string name)
+    public void StartNewGame(string name)
     {
         IsLoadPressed = false;
         PlayClickSound();
