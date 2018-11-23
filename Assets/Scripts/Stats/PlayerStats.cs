@@ -96,7 +96,8 @@ public class PlayerStats : Stats
             CurrentPlayerHealth += amount;
             CurrentHealth += amount;
 
-            UIManager.Instance.AddHealth(amount); //add health in player's ui
+            for (var index = 0; index <= amount; index++)
+                UIManager.Instance.AddHealth(); //add health in player's ui
 
             //create healEffect
             var healEffect = GameMaster.Instantiate(m_HealEffect, m_GameObject.transform);
@@ -112,10 +113,8 @@ public class PlayerStats : Stats
 
     public void KillPlayer() //kill player even if he invincible
     {
-        for (int index = CurrentHealth - 1; index >= 0; index--)
-        {
-            UIManager.Instance.RemoveHealth(1);
-        }
+        for (var index = 0; index < MaxHealth; index++)
+            UIManager.Instance.RemoveHealth();
 
         var damageAmount = 999;
 
@@ -196,19 +195,20 @@ public class PlayerStats : Stats
 
         #region initialize health ui
 
-        UIManager.Instance.ClearHealth(); //clear health ui
+        UIManager.Instance.ResetState(); //clear health ui
 
         if (CurrentPlayerHealth > 0) //save current player's health
         {
-            UIManager.Instance.AddHealth(CurrentPlayerHealth);
+            var amount = MaxHealth - CurrentPlayerHealth;
+
+            for (var index = 0; index < amount; index++)
+                UIManager.Instance.RemoveHealth();
+
             CurrentHealth = CurrentPlayerHealth;
         }
-        else //player was dead initialize full hp
+        else
         {
-            UIManager.Instance.AddHealth(CurrentHealth);
             CurrentPlayerHealth = CurrentHealth;
-
-            //Camera.main.GetComponent<CinemachineFollow>().StopLowHealthEffect();
         }
 
 #endregion
@@ -227,9 +227,9 @@ public class PlayerStats : Stats
 
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
-            
-            for (int index = amount; index > 0; index--)
-                UIManager.Instance.RemoveHealth(1); //remove some health from health ui
+
+            for (var index = 0; index < amount; index++)
+                UIManager.Instance.RemoveHealth(); //remove some health from health ui
         }
     }
 

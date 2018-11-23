@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(this);
+
+            InitializeList();
         }
     }
 
@@ -32,7 +34,6 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField] private GameObject m_UI;
     [SerializeField] private GameObject m_LifePanel;
-    [SerializeField] private GameObject m_LifeImage;
     [SerializeField] private Image m_BulletImage;
 
     #endregion
@@ -42,52 +43,49 @@ public class UIManager : MonoBehaviour {
 
     #endregion
 
-    #region private methods
+    private void InitializeList()
+    {
+        for (var index = 0; index < m_LifePanel.transform.childCount; index++)
+        {
+            m_HealthInPanel.Add(m_LifePanel.transform.GetChild(index).gameObject);
+        }
 
-    #endregion
+        m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
+    }
 
     #region public methods
 
-    public void AddHealth(int amount)
+    public void AddHealth()
     {
-        if (m_HealthInPanel.Count == 0)
+        if (m_CurrentActiveHPIndex <= 5)
         {
-            for (int index = 0; index < amount; index++)
-            {
-                m_HealthInPanel.Add(Instantiate(m_LifeImage, m_LifePanel.transform));
-            }
+            m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetBool("Disable", false);
 
-            m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
-        }
-        else
-        {
-            var border = m_CurrentActiveHPIndex + amount;
+            if (m_CurrentActiveHPIndex < 5)
+                m_CurrentActiveHPIndex++;
 
-            for (; m_CurrentActiveHPIndex <= border; m_CurrentActiveHPIndex++)
-            {
-                m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetTrigger("Idle");
-            }
         }
     }
 
-    public void RemoveHealth(int amount)
+    public void RemoveHealth()
     {
         if (m_CurrentActiveHPIndex >= 0)
         {
-            m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetTrigger("Remove");
+            m_HealthInPanel[m_CurrentActiveHPIndex].GetComponent<Animator>().SetBool("Disable", true);
 
-            m_CurrentActiveHPIndex--;
+            if (m_CurrentActiveHPIndex > 0)
+                m_CurrentActiveHPIndex--;
         }
     }
 
-    public void ClearHealth()
+    public void ResetState()
     {
-        foreach (var health in m_HealthInPanel)
+        for (var index = 0; index < m_HealthInPanel.Count; index++)
         {
-            Destroy(health);
+            m_HealthInPanel[index].GetComponent<Animator>().SetBool("Disable", false);
         }
 
-        m_HealthInPanel.Clear();
+        m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
     }
 
     #region bullet
