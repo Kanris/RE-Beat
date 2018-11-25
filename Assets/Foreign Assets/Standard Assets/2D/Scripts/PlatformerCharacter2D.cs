@@ -199,12 +199,15 @@ namespace UnityStandardAssets._2D
 
         private IEnumerator ShowDashEffect()
         {
+            var dashMaterial = GetComponent<SpriteRenderer>().material;
+
             for (var count = 0; count < 6; count++)
             {
                 var instantiateDashEffect = Instantiate(m_DashEffect);
 
                 instantiateDashEffect.transform.position = transform.position;
                 instantiateDashEffect.transform.localScale = transform.localScale;
+                instantiateDashEffect.GetComponent<SpriteRenderer>().material = dashMaterial;
 
                 Destroy(instantiateDashEffect, .32f);
 
