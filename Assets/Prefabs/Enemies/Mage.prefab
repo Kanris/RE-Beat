@@ -345,7 +345,7 @@ MonoBehaviour:
       type: 2}
     HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
-    MaxHealth: 200
+    MaxHealth: 100
     m_ThrowX: 2
     m_ThrowY: 0.5
     DamageAmount: 1
@@ -363,6 +363,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   GroundHitParticles: {fileID: 0}
+  m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
+    type: 2}
   m_IsDestroying: 0
 --- !u!114 &114826362762346134
 MonoBehaviour:

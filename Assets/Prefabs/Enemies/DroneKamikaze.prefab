@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1923985286607912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.77, y: -2.24, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -236,6 +236,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
+    type: 2}
+  m_HitParticles: {fileID: 1033265420063238, guid: 935505709d81e5a43bb9a486a7ffd383,
     type: 2}
   m_IsDestroying: 0
 --- !u!114 &114722889433512224

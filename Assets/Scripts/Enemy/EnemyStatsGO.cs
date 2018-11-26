@@ -20,6 +20,7 @@ public class EnemyStatsGO : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private GameObject GroundHitParticles;
+    [SerializeField] private GameObject m_HitParticles;
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
@@ -65,6 +66,8 @@ public class EnemyStatsGO : MonoBehaviour {
                 playerStats.HitEnemy(EnemyStats, zone);
             else
                 EnemyStats.TakeDamage(damageAmount, zone);
+
+            CreateHitParticles();
         }
         else
         {
@@ -77,10 +80,23 @@ public class EnemyStatsGO : MonoBehaviour {
                     DetroySequence();
                 }
                 else
+                {
+                    CreateHitParticles();
                     m_Animator.SetTrigger("Hit");
+                }
             }
         }
+    }
 
+    private void CreateHitParticles()
+    {
+        if (m_HitParticles != null)
+        {
+            var hitParticles = Instantiate(m_HitParticles);
+            hitParticles.transform.position = transform.position;
+
+            Destroy(hitParticles, 2f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
