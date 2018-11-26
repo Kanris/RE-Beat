@@ -21,6 +21,7 @@ public class EnemyStatsGO : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject GroundHitParticles;
     [SerializeField] private GameObject m_HitParticles;
+    [SerializeField] private GameObject m_Scraps;
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
@@ -67,7 +68,10 @@ public class EnemyStatsGO : MonoBehaviour {
             else
                 EnemyStats.TakeDamage(damageAmount, zone);
 
-            CreateHitParticles();
+            if (EnemyStats.CurrentHealth > 0)
+                CreateHitParticles();
+            else
+                CreateScraps();
         }
         else
         {
@@ -85,6 +89,17 @@ public class EnemyStatsGO : MonoBehaviour {
                     m_Animator.SetTrigger("Hit");
                 }
             }
+        }
+    }
+
+    private void CreateScraps()
+    {
+        if (m_Scraps != null)
+        {
+            var target = GameObject.FindGameObjectWithTag("Player").transform;
+
+            GameMaster.Instantiate(m_Scraps, transform.position, Quaternion.identity)
+                .GetComponent<ScrapObject>().SetTarget(target, EnemyStats.DropScrap);
         }
     }
 
@@ -174,6 +189,8 @@ public class EnemyStatsGO : MonoBehaviour {
         Destroy(
             Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
         EnemyStats.DeathParticle = null;
+
+        CreateScraps();
 
         EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);

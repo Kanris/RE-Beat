@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [System.Serializable]
 public class Enemy : Stats
@@ -24,7 +25,7 @@ public class Enemy : Stats
     [Range(1, 10)]public int DamageAmount = 1;
     [Range(0.1f, 600f)] public float Speed = 1f;
     [Range(0.1f, 10f)] public float AttackSpeed = 2f;
-    [SerializeField, Range(1, 100)] public int DropScrap = 1;
+    [Range(1, 100)] public int DropScrap = 1;
 
     [Header("Special stats")]
     public bool m_IsBigMonster;
@@ -57,8 +58,6 @@ public class Enemy : Stats
 
     public override void Initialize(GameObject gameObject, Animator animator = null)
     {
-        OnObjectDeath += GiveCoinsToPlayer; //give player conins on death
-
         if (DontResurect)
             OnObjectDeath += SaveState;
 
@@ -136,11 +135,6 @@ public class Enemy : Stats
 
             shieldInstantiate.GetComponent<EnemyShield>().OnShieldDestroy += SetInvincible;
         }
-    }
-
-    private void GiveCoinsToPlayer()
-    {
-        PlayerStats.Scrap = DropScrap;
     }
 
     private void SetInvincible(bool value)
