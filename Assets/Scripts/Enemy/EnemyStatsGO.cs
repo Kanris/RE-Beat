@@ -108,6 +108,7 @@ public class EnemyStatsGO : MonoBehaviour {
             if (m_DestroyOnCollision)
             {
                 m_IsDestroying = true;
+                m_DestroyTimer = 3f + Time.time;
                 StartCoroutine(DestroyDrone());
             }
         }
@@ -144,9 +145,6 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitTimeBeforeDestroy);
 
-        var destroyParticles = Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity);
-        Destroy(destroyParticles, 1f);
-
         var hit2D = Physics2D.OverlapCircle(transform.position, 2, m_LayerMask); // player in range
 
         if (hit2D != null)
@@ -161,7 +159,7 @@ public class EnemyStatsGO : MonoBehaviour {
             Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
         EnemyStats.DeathParticle = null;
 
-        EnemyStats.TakeDamage(1);
+        //EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);
     }
     #endregion
