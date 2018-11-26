@@ -145,7 +145,7 @@ public class Stats {
                 var gameObjectToDestroy =
                     GameMaster.Instantiate(DeathParticle, m_GameObject.transform.position, m_GameObject.transform.rotation);
 
-                GameMaster.Destroy(gameObjectToDestroy, 1f);
+                GameMaster.Destroy(gameObjectToDestroy, 3f);
             }
         }
     }
