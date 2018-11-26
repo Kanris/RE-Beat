@@ -101,7 +101,7 @@ public class PlayerStats : Stats
 
             //create healEffect
             var healEffect = GameMaster.Instantiate(m_HealEffect);
-            healEffect.transform.position = m_GameObject.transform.position;
+            healEffect.transform.position = m_GameObject.transform.position.Subtract(y: 0.8f);
             GameMaster.Destroy(healEffect, 2.1f);
         }
     }
