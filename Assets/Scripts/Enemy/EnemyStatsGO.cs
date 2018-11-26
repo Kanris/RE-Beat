@@ -159,7 +159,7 @@ public class EnemyStatsGO : MonoBehaviour {
             Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
         EnemyStats.DeathParticle = null;
 
-        //EnemyStats.TakeDamage(1);
+        EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);
     }
     #endregion

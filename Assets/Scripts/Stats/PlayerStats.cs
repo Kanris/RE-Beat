@@ -198,7 +198,8 @@ public class PlayerStats : Stats
 
         UIManager.Instance.ResetState(); //clear health ui
 
-        if (CurrentPlayerHealth > 0 & StartScreenManager.IsLoadPressed) //save current player's health
+        Debug.LogError(LoadSceneManager.loadedFromScene);
+        if (CurrentPlayerHealth > 0 & (StartScreenManager.IsLoadPressed | LoadSceneManager.loadedFromScene)) //save current player's health
         {
             var amount = MaxHealth - CurrentPlayerHealth;
 

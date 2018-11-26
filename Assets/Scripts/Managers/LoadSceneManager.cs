@@ -36,6 +36,12 @@ public class LoadSceneManager : MonoBehaviour {
 
     #endregion
 
+    #region public fields
+    
+    public static bool loadedFromScene;
+
+    #endregion
+
     #region private methods
 
     // Use this for initialization
@@ -97,16 +103,22 @@ public class LoadSceneManager : MonoBehaviour {
 
     public void Load(string sceneName)
     {
+        loadedFromScene = false;
+
         StartCoroutine(LoadSceneAsyncWithUI(sceneName));
     }
 
     public void LoadWithFade(string sceneName)
     {
+        loadedFromScene = true;
+
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
     public IEnumerator LoadWithFade(string sceneName, string locationName, Vector2 spawnPosition)
     {
+        loadedFromScene = true;
+
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         yield return LoadSceneAsync(sceneName);
