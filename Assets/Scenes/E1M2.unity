@@ -34846,7 +34846,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 836543101}
+      objectReference: {fileID: 485899660}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -64799,6 +64799,11 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114711217269349042, guid: 17cb9ad14508e504f9030a8bc492db8b,
+        type: 2}
+      propertyPath: m_IsLookingRight
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17cb9ad14508e504f9030a8bc492db8b, type: 2}

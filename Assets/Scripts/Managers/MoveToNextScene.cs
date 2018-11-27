@@ -23,6 +23,9 @@ public class MoveToNextScene : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio BackgroundMusic; //play new background music
 
+    [Header("Player")]
+    [SerializeField] private bool m_IsLookingRight = true;
+
     #endregion
 
     private bool m_IsPlayerNear; //is player near to the teleport
@@ -49,7 +52,7 @@ public class MoveToNextScene : MonoBehaviour {
                 }
 
                 LoadSceneManager.Instance.StartCoroutine(
-                    LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition)); //start teleport with fade
+                    LoadSceneManager.Instance.LoadWithFade(NextScene, NextScenename, SpawnPosition, m_IsLookingRight)); //start teleport with fade
 
                 if (!string.IsNullOrEmpty(BackgroundMusic))
                     AudioManager.Instance.SetBackgroundMusic(BackgroundMusic); //change background music

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using UnityStandardAssets._2D;
 
 public class LoadSceneManager : MonoBehaviour {
 
@@ -115,7 +116,7 @@ public class LoadSceneManager : MonoBehaviour {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    public IEnumerator LoadWithFade(string sceneName, string locationName, Vector2 spawnPosition)
+    public IEnumerator LoadWithFade(string sceneName, string locationName, Vector2 spawnPosition, bool lookRight)
     {
         loadedFromScene = true;
 
@@ -130,6 +131,11 @@ public class LoadSceneManager : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(1.5f);
+
+        if (!lookRight)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlatformerCharacter2D>().Flip();
+        }
 
         yield return ScreenFaderManager.Instance.FadeToClear();
 
