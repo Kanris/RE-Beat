@@ -152,6 +152,8 @@ public class Player : MonoBehaviour {
     {
         m_AttackRangeAnimation.SetActive(true); //play attack animation
 
+        m_AttackRangeAnimation.GetComponent<Animator>().speed = PlayerStats.MeleeAttackSpeed;
+
         AudioManager.Instance.Play(m_AttackSound); //attack sound
 
         var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position, 
