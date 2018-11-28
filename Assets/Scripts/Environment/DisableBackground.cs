@@ -22,84 +22,58 @@ public class DisableBackground : MonoBehaviour {
 
     #endregion
 
-    private bool m_PlayerInCave; //is player in cave
+    public bool m_IsPlayerInCave; //is player in cave
     private bool m_IsFading; //is mist is fading
 
     #endregion
 
     #region private methods
 
-    private void Update()
-    {
-        if (m_PlayerInCave)
-        {
-            if (GameMaster.Instance.IsPlayerDead)
-            {
-                m_PlayerInCave = false;
-
-                StartCoroutine(PlayerLeaveCave(true)); //fade in mist
-            
-                //ChangeMaterial(collision, false);
-            }
-        }
-    }
-
     #region trigger
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private IEnumerator OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_PlayerInCave) //if player enter the cave
-        {
-            PlayerEnterCave(); //fade out mist
-        }
-
         ChangeMaterial(collision, true); //change object material
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & m_PlayerInCave) //if player leave cave
+        if (collision.CompareTag("Player") & !m_IsPlayerInCave) //if player enter the cave
         {
-            StartCoroutine(PlayerLeaveCave(false)); //fade in mist
+            m_IsPlayerInCave = true; //player in cave
+
+            StartCoroutine(FadeToBlack());
+
+            yield return new WaitForSeconds(0.01f);
+
+            ChangeCaveObjectsMaterial(true); //change object in cave material
         }
+    }
 
+    private IEnumerator OnTriggerExit2D(Collider2D collision)
+    {
         ChangeMaterial(collision, false);
-    }
 
-    #endregion
-
-    private void PlayerEnterCave()
-    {
-        m_PlayerInCave = true; //player in cave
-
-        StartCoroutine(FadeToClear()); //remove mist
-
-        ChangeCaveObjectsMaterial(true); //change object in cave material
-    }
-
-    private IEnumerator PlayerLeaveCave(bool isNeedWaiting)
-    {
-        m_PlayerInCave = false; //player leave cave
-         
-        if (isNeedWaiting) //if need delay before fade in mist
-            yield return new WaitForSeconds(1.7f);
-
-        if (!m_PlayerInCave) //if player is not in cave
+        if (collision.CompareTag("Player") & m_IsPlayerInCave) //if player leave cave
         {
-            StartCoroutine(FadeToBlack()); //fade in mist
+            m_IsPlayerInCave = false;
+
+            StartCoroutine(FadeToClear());
+
+            yield return new WaitForSeconds(0.01f);
+
             ChangeCaveObjectsMaterial(false); //change cave objects material
         }
     }
 
     private IEnumerator FadeToClear()
     {
-        yield return FadeTo("FadeOut"); //fade mist and background to clear
+        yield return FadeTo("FadeIn"); //fade in mist
     }
 
     private IEnumerator FadeToBlack()
     {
-        yield return FadeTo("FadeIn"); //fade mist and background to black
+        yield return FadeTo("FadeOut"); //remove mist
     }
+
+    #endregion
 
     private IEnumerator FadeTo(string trigger)
     {
