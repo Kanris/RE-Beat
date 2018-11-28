@@ -81,7 +81,7 @@ public class Saw : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount);
+            collision.gameObject.GetComponent<Player>().playerStats.ReturnPlayerOnReturnPoint();
         }
     }
     #endregion
