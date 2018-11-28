@@ -12261,11 +12261,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.58
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 10.63
+      value: 10.49
       objectReference: {fileID: 0}
     - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
       propertyPath: m_LocalPosition.z
@@ -12321,6 +12321,10 @@ Prefab:
       propertyPath: m_BlockDoor
       value: 
       objectReference: {fileID: 2024394480}
+    - target: {fileID: 1859725932341948, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
   m_IsPrefabAsset: 0
@@ -12784,6 +12788,7 @@ MonoBehaviour:
   ChangeObjectsMaterial: []
   m_DefaultMaterial: {fileID: 0}
   m_LightMaterial: {fileID: 0}
+  m_IsPlayerInCave: 0
 --- !u!19719996 &1139524896
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -16900,7 +16905,7 @@ Prefab:
         type: 2}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1160207096}
+      objectReference: {fileID: 1207373864}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 2}
       propertyPath: m_PlayerToRespawn
@@ -22021,6 +22026,21 @@ Prefab:
     - target: {fileID: 4013169082054956, guid: 9735b3b4019bb4cf3972bfb00e86427f, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198034934608830602, guid: 9735b3b4019bb4cf3972bfb00e86427f,
+        type: 2}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198034934608830602, guid: 9735b3b4019bb4cf3972bfb00e86427f,
+        type: 2}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198034934608830602, guid: 9735b3b4019bb4cf3972bfb00e86427f,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9735b3b4019bb4cf3972bfb00e86427f, type: 2}
