@@ -8,7 +8,7 @@ public class KillingGround : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().playerStats.KillPlayer();
+            collision.GetComponent<Player>().playerStats.ReturnPlayerOnReturnPoint();
         }
         else if (collision.CompareTag("Item"))
         {

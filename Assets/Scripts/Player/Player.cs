@@ -121,6 +121,16 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void OnEnable()
+    {
+        if (playerStats.CurrentHealth < 3 & GameMaster.Instance.m_IsPlayerReturning)
+        {
+            m_IsCreateCriticalHealthEffect = true;
+            AnnouncerManager.Instance.ShowCriticalDamageSign();
+            StartCoroutine(CreateLowHealthEffect());
+        }
+    }
+
     private void DrawBullet()
     {
         float whereToShoot = 0f;
@@ -215,9 +225,10 @@ public class Player : MonoBehaviour {
         if (!m_Animator.GetBool("Ground")) 
         {
             //check is player move from y restrictions
-            if (m_YPositionBeforeJump + YFallDeath > transform.position.y & !GameMaster.Instance.IsPlayerDead)
+            if (m_YPositionBeforeJump + YFallDeath > transform.position.y 
+                & !GameMaster.Instance.IsPlayerDead & !GameMaster.Instance.m_IsPlayerReturning)
             {
-                playerStats.KillPlayer();
+                playerStats.ReturnPlayerOnReturnPoint();
             }
         }
         else //save current position before jump

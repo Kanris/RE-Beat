@@ -62,7 +62,7 @@ public class FallBlock : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !m_IsIdle) //if player in block's trigger
         {
-            collision.GetComponent<Player>().playerStats.KillPlayer(); //kill player
+            collision.GetComponent<Player>().playerStats.ReturnPlayerOnReturnPoint(); //kill player
         }
     }
 

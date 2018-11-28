@@ -112,15 +112,17 @@ public class PlayerStats : Stats
         enemy.TakeDamage(damageToEnemy, zone);
     }
 
-    public void KillPlayer() //kill player even if he invincible
+    public void ReturnPlayerOnReturnPoint() //kill player even if he invincible
     {
-        for (var index = 0; index < MaxHealth; index++)
-            UIManager.Instance.RemoveHealth();
+        //player take's 1 damage
+        TakeDamage(1);
 
-        var damageAmount = 999;
-
-        base.TakeDamage(damageAmount);
-        CurrentPlayerHealth -= damageAmount;
+        //if player still alive
+        if (CurrentPlayerHealth > 0)
+        {
+            //return him on return point
+            GameMaster.Instance.RespawnPlayerOnReturnPoint(m_GameObject);
+        }
     }
 
     #region debuff
@@ -219,7 +221,6 @@ public class PlayerStats : Stats
     {
         if (!m_IsInvincible) //player is not invincible
         {
-
             m_IsInvincible = true; //player is invincible
 
             amount *= DamageMultiplier;

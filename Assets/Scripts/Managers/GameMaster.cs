@@ -20,11 +20,15 @@ public class GameMaster : MonoBehaviour {
 
 #region private fields
 
+    [Header("Respawn")]
     [SerializeField] private GameObject m_PlayerToRespawn;
+    [SerializeField] private Transform m_ReturnPoint;
+
     [SerializeField] private Audio BackgroundMusic;
     [SerializeField] private CinemachineVirtualCamera m_Camera;
 
     private bool m_IsPlayerRespawning; //is player respawning
+    public bool m_IsPlayerReturning;
 
 #endregion
 
@@ -318,6 +322,41 @@ public class GameMaster : MonoBehaviour {
 #endregion
 
 #region Respawn
+
+    public void SetReturnPoint(Transform returnPoint)
+    {
+        if (returnPoint != m_ReturnPoint)
+        {
+            m_ReturnPoint = returnPoint;
+        }
+    }
+
+    public void RespawnPlayerOnReturnPoint(GameObject player)
+    {
+        if (m_ReturnPoint != null & !m_IsPlayerReturning)
+        {
+            m_IsPlayerReturning = true;
+
+            StartCoroutine(PlayerOnReturnPoint(player));
+        }
+    }
+
+    private IEnumerator PlayerOnReturnPoint(GameObject player)
+    {
+        player.SetActive(false);
+
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        player.transform.position = m_ReturnPoint.transform.position;
+
+        yield return new WaitForSeconds(0.5f);
+
+        player.SetActive(true);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
+
+        m_IsPlayerReturning = false;
+    }
 
     public void RespawnWithSpawnPosition(Vector2 spawnPosition)
     {
