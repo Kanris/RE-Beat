@@ -1853,6 +1853,8 @@ MonoBehaviour:
   m_DashEffect: {fileID: 1383360701287154, guid: fa1ac64fb596fc04b9d178d19b6c94f7,
     type: 2}
   m_LandAudio: {fileID: 11400000, guid: 6085203cf7fd0418a9b66d3f4b752e59, type: 2}
+  m_DashAudio: {fileID: 11400000, guid: e7b922399b7d2ea41a36508342541d61, type: 2}
+  m_DoubleJumpAudio: {fileID: 11400000, guid: 59044c21dbdd7ad40b8479d6ee2bb349, type: 2}
   m_GroundCheck: {fileID: 4464073724450892}
   m_CeilingCheck: {fileID: 4476708197202586}
   m_JumpForce: 700
@@ -1878,6 +1880,8 @@ MonoBehaviour:
     m_ThrowY: 6
     platformerCharacter2D: {fileID: 114819696113986082}
     m_HealEffect: {fileID: 1610558710650812, guid: d83ee6f9415fe024eb86fe137e928552,
+      type: 2}
+    m_HealEffectAudio: {fileID: 11400000, guid: c07fc8f19d9f9404dba06ba14724e8b7,
       type: 2}
   YFallDeath: -10
   m_AttackPosition: {fileID: 4012858144039836}

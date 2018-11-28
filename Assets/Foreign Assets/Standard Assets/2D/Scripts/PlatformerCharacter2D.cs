@@ -21,6 +21,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private GameObject m_LandEffect;
         [SerializeField] private GameObject m_DashEffect;
         [SerializeField] private Audio m_LandAudio;
+        [SerializeField] private Audio m_DashAudio;
+        [SerializeField] private Audio m_DoubleJumpAudio;
 
         public Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         public Transform m_CeilingCheck;   // A position marking where to check for ceilings
@@ -175,6 +177,8 @@ namespace UnityStandardAssets._2D
 
         private IEnumerator DoubleJumpPlatform()
         {
+            AudioManager.Instance.Play(m_DoubleJumpAudio);
+
             m_JumpPlatform.transform.position = m_GroundCheck.transform.position;
             m_JumpPlatform.SetActive(true);
             yield return new WaitForSeconds(0.8f);
@@ -199,6 +203,8 @@ namespace UnityStandardAssets._2D
 
         private IEnumerator ShowDashEffect()
         {
+            AudioManager.Instance.Play(m_DashAudio);
+
             var dashMaterial = GetComponent<SpriteRenderer>().material;
 
             for (var count = 0; count < 6; count++)
