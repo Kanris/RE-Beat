@@ -185,6 +185,7 @@ public class Chest : MonoBehaviour {
                 if (grid.childCount == 0) //if there is no child left
                 {
                     ChangeChestSprite(); //chest is empty
+                    Health = 0;
                     Destroy(m_InstantChestContainItems);
                 }
 
