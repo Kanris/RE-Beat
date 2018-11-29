@@ -20,42 +20,52 @@ public class Chest : MonoBehaviour {
     [Header("Stats for destroyable")]
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
 
+    [Header("UI")]
+    [SerializeField] private GameObject m_InteractionUI;
+
     [Header("Effects")]
+    [SerializeField] private GameObject m_HitEffect;
+    [SerializeField] private GameObject m_ChestContainItems;
     [SerializeField] private Sprite m_OpenChestSprite;
     [SerializeField] private Audio ChestOpenAudio;
 
-    [SerializeField] private GameObject m_InteractionUI;
-    [SerializeField] private GameObject m_HitEffect;
-
-    private GameObject m_InteractionButton; //chest ui
+    private GameObject m_InstantInteractionButton; //chest ui
+    private GameObject m_InstantChestContainItems;
     private Player m_Player; //player
     private Animator m_Animator; //chest animator
-    private bool isChestEmpty; //indicate is chest empty
 
     #endregion
 
     #region private methods
 
-    private void Awake()
-    {
-        m_Animator = GetComponent<Animator>();
-    }
-
     // Use this for initialization
     void Start () {
 
-        InitializeInteractionButton();
+        m_Animator = GetComponent<Animator>();
 
-        ActiveInteractionButton(false);
+        m_InstantInteractionButton = Instantiate(m_InteractionUI, transform);
 
-        ActiveInventory(false);
+        m_InstantChestContainItems = Instantiate(m_ChestContainItems, transform);
+
+        SetActiveInteractionButton(false);
+
+        SetActiveInventory(false);
     }
 
-    #region Initialize
+    #region SetActive
 
-    private void InitializeInteractionButton()
+    private void SetActiveInteractionButton(bool value)
     {
-        m_InteractionButton = Instantiate(m_InteractionUI, transform) as GameObject;
+        m_InstantInteractionButton.SetActive(value);
+    }
+
+    private void SetActiveInventory(bool value)
+    {
+        if (m_Player != null) m_Player.TriggerPlayerBussy(value); //allow or dont allow player to attack when chest inventory is open
+
+        AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
+
+        m_Inventory.SetActive(value); //show or hide chest inventory
     }
 
     #endregion
@@ -67,6 +77,14 @@ public class Chest : MonoBehaviour {
             if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
                 OpenChest(); //try to open the chest
+            }
+
+            if (m_Inventory.activeSelf)
+            {
+                if (m_Inventory.transform.GetChild(0).childCount == 0) //if there is no child left
+                {
+                    Destroy(m_InstantChestContainItems);
+                }
             }
         }
     }
@@ -80,10 +98,7 @@ public class Chest : MonoBehaviour {
         }
         else //if chest can be open
         {
-            ActiveInventory(!m_Inventory.activeSelf); //show or hide chest inventory
-
-            if (!isChestEmpty) //is chest is empty
-                IsChestEmpty(); //change chest sprite
+            SetActiveInventory(!m_Inventory.activeSelf); //show or hide chest inventory
         }
     }
 
@@ -92,17 +107,27 @@ public class Chest : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player is near chest
         {
             m_Player = collision.GetComponent<Player>(); //get player reference
-            ActiveInteractionButton(true); //show chest ui
+            SetActiveInteractionButton(true); //show chest ui
         }
 
         if (chestType == ChestType.Destroyable) //if chest is destroyable
         {
             if (collision.CompareTag("PlayerAttackRange") & Health > 0) //if player is attacking chest and it health is greater than zero
             {
-                StopAllCoroutines();
                 ShowHitParticles(collision.transform.parent.transform.localScale.x); //show hit particles
-                StartCoroutine(DamageChest()); //damage chest
+                DamageChest(); //damage chest
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player")) //if player is leave chest
+        {
+            SetActiveInteractionButton(false); //disable chest ui
+            if (m_Inventory.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
+
+            m_Player = null; //remove player reference
         }
     }
 
@@ -118,69 +143,30 @@ public class Chest : MonoBehaviour {
         Destroy(hitParticlesInstantiate, 1.5f); //destroy particles after 1.5s
     }
 
-    private IEnumerator DamageChest()
+    private void DamageChest()
     {
         Health -= 1; //remove 1 health from the chest hp
 
-        m_Animator.SetBool("IsTakeDamage", true); //play take damage animation
-
-        yield return new WaitForSeconds(0.2f);
-
-        m_Animator.SetBool("IsTakeDamage", false); //stop playing take damage animation
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player")) //if player is leave chest
+        if (Health == 0)
         {
-            ActiveInteractionButton(false); //disable chest ui
-            if (m_Inventory.activeSelf) ActiveInventory(false); //if chest inventory is open - close it
-
-            m_Player = null; //remove player reference
-
-            if (!isChestEmpty) //if chest is empty
-                IsChestEmpty(); //change chest sprite
+            ChangeChestSprite();
+        }
+        else
+        {
+            m_Animator.SetTrigger("TakeDamage"); //play take damage animation
         }
     }
 
     private void ChangeChestSprite()
     {
-        isChestEmpty = true; //chest is empty
-
         GetComponent<SpriteRenderer>().sprite = m_OpenChestSprite;
 
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f); //change chest position
     }
 
-    #region Active
-
-    private void ActiveInteractionButton(bool active)
-    {
-        m_InteractionButton.SetActive(active);
-    }
-
-    private void ActiveInventory(bool active)
-    {
-        if (m_Player != null) m_Player.TriggerPlayerBussy(active); //allow or dont allow player to attack when chest inventory is open
-
-        AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
-
-        m_Inventory.SetActive(active); //show or hide chest inventory
-    }
-
-    #endregion
-
     #endregion
 
     #region public methods
-
-    public void IsChestEmpty() //check is chest empty
-    {
-        if (m_Inventory.transform.GetChild(0).childCount == 0 & !isChestEmpty) //if chest inventory doesn't have childs
-        {
-            ChangeChestSprite(); //chest have to be empty
-        }
-    }
 
     public void RemoveFromChest(string name) //remove item from chest inventory
     {
@@ -197,7 +183,10 @@ public class Chest : MonoBehaviour {
                 Destroy(gridChildren.gameObject); //remove object from the scene
 
                 if (grid.childCount == 0) //if there is no child left
+                {
                     ChangeChestSprite(); //chest is empty
+                    Destroy(m_InstantChestContainItems);
+                }
 
                 break;
             }

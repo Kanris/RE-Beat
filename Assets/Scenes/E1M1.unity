@@ -13254,12 +13254,14 @@ MonoBehaviour:
   m_Inventory: {fileID: 874666459}
   chestType: 1
   Health: 3
-  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
-  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
   m_InteractionUI: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
     type: 2}
   m_HitEffect: {fileID: 1440646692464668, guid: 8366ff709b66e7045b166bcde7d20f4d,
     type: 2}
+  m_ChestContainItems: {fileID: 1944519983703744, guid: ba9bdf23c0b0445029492e7131269bc3,
+    type: 2}
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &525592074
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32396,12 +32398,14 @@ MonoBehaviour:
   m_Inventory: {fileID: 2053566476}
   chestType: 1
   Health: 3
-  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
-  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
   m_InteractionUI: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
     type: 2}
   m_HitEffect: {fileID: 1440646692464668, guid: 8366ff709b66e7045b166bcde7d20f4d,
     type: 2}
+  m_ChestContainItems: {fileID: 1944519983703744, guid: ba9bdf23c0b0445029492e7131269bc3,
+    type: 2}
+  m_OpenChestSprite: {fileID: 21300018, guid: 34cf08bae343aa7498d7be1f61fcb8da, type: 3}
+  ChestOpenAudio: {fileID: 11400000, guid: 66ea023e78d154d14ac5782a447c1c9c, type: 2}
 --- !u!61 &1243147778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38629,8 +38633,8 @@ Transform:
   - {fileID: 800558353}
   - {fileID: 1000486827}
   - {fileID: 27296122}
-  - {fileID: 636715311}
   - {fileID: 1457003733}
+  - {fileID: 636715311}
   - {fileID: 1797104574}
   - {fileID: 1646725365}
   m_Father: {fileID: 1763203241}
