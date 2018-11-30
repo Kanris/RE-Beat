@@ -36,7 +36,6 @@ public class CinemachineFollow : MonoBehaviour {
 
     private IEnumerator PlayCameraHitAnimation()
     {
-
         Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
 
         yield return new WaitForSeconds(0.5f);

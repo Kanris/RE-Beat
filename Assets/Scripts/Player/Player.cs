@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
     private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown;
-    private int m_EnemyHitDirection = 1;
+    [HideInInspector] public int m_EnemyHitDirection = 1;
 
     private bool m_IsCreateCriticalHealthEffect;
 

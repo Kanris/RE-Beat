@@ -14,7 +14,8 @@ public class PlayerInTrigger : MonoBehaviour {
 
     private void Update()
     {
-        transform.position = m_Follow.position; //folow the drone body
+        if (m_Follow != null)
+            transform.position = m_Follow.position; //folow the drone body
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

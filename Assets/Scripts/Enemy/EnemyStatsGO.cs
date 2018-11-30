@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class EnemyStatsGO : MonoBehaviour {
 
     public enum EnemyType { Regular, Drone }
@@ -180,6 +180,12 @@ public class EnemyStatsGO : MonoBehaviour {
 
         if (hit2D != null)
         {
+            //set hit direction
+            var fromWhereHit = hit2D.transform.position - transform.position;
+            fromWhereHit.Normalize();
+            hit2D.GetComponent<Player>().m_EnemyHitDirection = fromWhereHit.x > 0f ? 1 : -1;
+
+            //player takes damage
             var playerStats = hit2D.GetComponent<Player>().playerStats;
 
             playerStats.TakeDamage(EnemyStats.DamageAmount);
