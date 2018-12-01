@@ -22,6 +22,8 @@ public class Turret : MonoBehaviour {
 
     private Transform m_PlayerTransform;
     private float m_NextAttackTime;
+
+    private bool m_IsPlayerNearTurret = false;
     
 	// Use this for initialization
 	void Start () {
@@ -47,7 +49,7 @@ public class Turret : MonoBehaviour {
                 if (m_NextAttackTime < Time.time)
                 {
                     m_NextAttackTime = Time.time + m_EnemyStats.AttackSpeed;
-                    StartCoroutine(Shoot());
+                    DrawBulletTrailEffect(m_PlayerTransform.position);
                 }
             }
         }
@@ -59,15 +61,6 @@ public class Turret : MonoBehaviour {
 	}
 
     #region shoot
-
-    private IEnumerator Shoot()
-    {
-        var whereToShoot = m_PlayerTransform.position;
-
-        yield return new WaitForSeconds(0.2f);
-
-        DrawBulletTrailEffect(whereToShoot);
-    }
 
     private void DrawBulletTrailEffect(Vector3 whereToShoot)
     {
@@ -93,12 +86,30 @@ public class Turret : MonoBehaviour {
 
     private void SetPlayerIsNear(bool value, Transform player)
     {
-        m_Animator.SetBool("IsPlayerNear", value);
+        m_IsPlayerNearTurret = value;
 
         if (!value)
-            GetComponent<BoxCollider2D>().enabled = true;
+        {
+            StopAllCoroutines();
+            StartCoroutine(WaitBeforeAppear());
+        }
         else
+        {
+            m_Animator.SetBool("IsPlayerNear", true);
+
             GetComponent<BoxCollider2D>().enabled = false;
+        }
+    }
+
+    private IEnumerator WaitBeforeAppear()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        if (!m_IsPlayerNearTurret)
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
+            m_Animator.SetBool("IsPlayerNear", false);
+        }
     }
 
     private void SetPlayerInAttackRange(bool value, Transform player)
