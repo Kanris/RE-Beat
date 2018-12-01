@@ -25,6 +25,7 @@ public class StartScreenManager : MonoBehaviour {
     [Header("General UI")]
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
     [SerializeField] private GameObject OptionsMenuGrid; //option ui
+    [SerializeField] private GameObject LoadButton; //load button ui
 
     //options items
     [Header("Options UI")]
@@ -74,6 +75,14 @@ public class StartScreenManager : MonoBehaviour {
         MainMenuGrid.transform.localPosition = MainMenuGrid.transform.localPosition.With(y: 60f);
         MainMenuGrid.transform.GetChild(2).gameObject.SetActive(false);
 #endif
+    }
+
+    private void Start()
+    {
+        if (!SaveLoadManager.Instance.IsLoadGameDataAvailable())
+        {
+            LoadButton.SetActive(false);
+        }
     }
 
     private void InitializeOptionsOnStart()

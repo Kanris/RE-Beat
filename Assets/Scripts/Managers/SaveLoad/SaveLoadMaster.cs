@@ -62,6 +62,21 @@ public static class SaveLoadMaster {
         return string.Empty;
     }
 
+    public static bool IsSaveDataAvailable()
+    {
+        bool result = true;
+
+        if (IsSaveFileExists(SAVE_GENERAL_FILE_NAME))
+        {
+            if (IsSaveFileExists(SAVE_PLAYER_FILE_NAME))
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     #endregion
 
     #region private methods

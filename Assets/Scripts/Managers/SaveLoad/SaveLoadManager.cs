@@ -59,6 +59,11 @@ public class SaveLoadManager : MonoBehaviour {
 
     #region public methods
 
+    public bool IsLoadGameDataAvailable()
+    {
+        return SaveLoadMaster.IsSaveDataAvailable();
+    }
+
     public void LoadGameData()
     {
         SaveLoadMaster.LoadPlayerData(); //load player data
