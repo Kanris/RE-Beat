@@ -109,6 +109,8 @@ public class Turret : MonoBehaviour {
         {
             GetComponent<BoxCollider2D>().enabled = true;
             m_Animator.SetBool("IsPlayerNear", false);
+
+            m_NextAttackTime = Time.time + m_AppearAnimation.length;
         }
     }
 
