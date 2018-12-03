@@ -1899,6 +1899,7 @@ MonoBehaviour:
     type: 2}
   m_LowHealthEffect: {fileID: 1563965879945054, guid: bd202ecf0bb5058469745a19ee934290,
     type: 2}
+  m_EnemyHitDirection: 1
 --- !u!114 &114894955703643986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2086,7 +2087,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300162, guid: d5ad79e7c42163f41aa5ff2466d025f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
