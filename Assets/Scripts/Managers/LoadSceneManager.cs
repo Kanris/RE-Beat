@@ -32,8 +32,6 @@ public class LoadSceneManager : MonoBehaviour {
 
     [SerializeField] private GameObject m_LoadSceneUI;
     [SerializeField] private Slider m_LoadSlider;
-    [SerializeField] private PlayVideo m_PlayVideo;
-    [SerializeField] private GameObject[] m_VideoPlayers;
 
     #endregion
 
@@ -89,13 +87,6 @@ public class LoadSceneManager : MonoBehaviour {
         m_LoadSlider.value = 0f;
 
         m_LoadSceneUI.SetActive(active);
-
-        if (m_VideoPlayers.Length > 0 & active)
-        {
-            var videoToPlay = m_VideoPlayers.FirstOrDefault(x => x.name == sceneName);
-
-            StartCoroutine ( m_PlayVideo.PlayBackgroundVideo(videoToPlay) );
-        }
     }
 
     #endregion
