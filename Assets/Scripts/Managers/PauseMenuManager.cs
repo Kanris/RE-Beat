@@ -102,7 +102,7 @@ public class PauseMenuManager : MonoBehaviour {
 
 #endregion
 
-    private void SetIsCantOpenPauseMenu(bool value)
+    public void SetIsCantOpenPauseMenu(bool value)
     {
         m_IsCantOpenPauseMenu = value;
     }

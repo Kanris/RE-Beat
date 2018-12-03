@@ -115,7 +115,6 @@ public class InfoManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         if (!m_IsCantOpenJournal)
         {
             if (m_JournalUI.activeSelf)

@@ -85,8 +85,23 @@ public class Chest : MonoBehaviour {
                 {
                     Destroy(m_InstantChestContainItems);
                 }
+
+                if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+                {
+                    StartCoroutine(CloseChest());
+                }
             }
         }
+    }
+
+    private IEnumerator CloseChest()
+    {
+        yield return null;
+
+        SetActiveInteractionButton(true); //disable chest ui
+        if (m_Inventory.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
+
+        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false); //can open pause menu
     }
 
     private void OpenChest()
@@ -99,6 +114,11 @@ public class Chest : MonoBehaviour {
         else //if chest can be open
         {
             SetActiveInventory(!m_Inventory.activeSelf); //show or hide chest inventory
+
+            if (m_Inventory.activeSelf)
+            {
+                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+            }
         }
     }
 

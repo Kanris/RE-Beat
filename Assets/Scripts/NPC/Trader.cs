@@ -41,8 +41,23 @@ public class Trader : MonoBehaviour {
 		
         if (m_Player != null) //if player is near
         {
+            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            {
+                if (m_DescriptionUI.activeSelf)
+                {
+                    m_DescriptionUI.SetActive(false);
+                }
+                else if (m_StoreUI.activeSelf)
+                {
+                    HideUI();
+                    m_InteractionUI.SetActive(true);
+                }
+            }
+
             if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
             {
+                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
                 m_StoreUI.SetActive(true); //show store ui
                 m_InteractionUI.SetActive(false); //hide interaction elements
             }
@@ -89,6 +104,9 @@ public class Trader : MonoBehaviour {
         m_DescriptionUI.SetActive(false);
         m_StoreUI.SetActive(false);
         m_Notification.SetActive(false);
+
+
+        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false);
     }
 
     public void ShowItemDescription(GameObject itemToDisplayGO)
