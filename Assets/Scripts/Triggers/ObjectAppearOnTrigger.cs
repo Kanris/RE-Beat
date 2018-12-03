@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 //using Cinemachine.Editor;
 
 public class ObjectAppearOnTrigger : MonoBehaviour {
@@ -30,6 +31,8 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     private Transform m_ObjectToFollow;
     private float m_DefaultCamSize;
 
+    public bool m_IsPlayerTrigger;
+
     #endregion
 
     #region private methods
@@ -42,6 +45,18 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
+    }
+
+    private void Update()
+    {
+        if (m_IsPlayerTrigger)
+        {
+            if (Vector3.Distance(m_VirtualCamera.gameObject.transform.position, m_Center.position) != 0)
+                m_VirtualCamera.gameObject.transform.position =
+                    Vector3.MoveTowards(m_VirtualCamera.gameObject.transform.position, m_Center.position, 20f * Time.deltaTime);
+            else
+                m_IsPlayerTrigger = false;
+        }
     }
 
     #endregion
@@ -57,14 +72,29 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
             {
                 if (m_VirtualCamera.Follow != null)
                 {
+                    m_IsPlayerTrigger = true;
+
                     m_ObjectToFollow = m_VirtualCamera.Follow;
                     m_DefaultCamSize = m_VirtualCamera.m_Lens.OrthographicSize;
 
                     m_VirtualCamera.Follow = null;
-                    m_VirtualCamera.gameObject.transform.position = m_Center.position;
-                    m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
+                    //m_VirtualCamera.gameObject.transform.position = m_Center.position;
+                    //m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
+
+                    StartCoroutine(SmoothChangeCameraSize());   
                 }
             }
+        }
+    }
+
+    private IEnumerator SmoothChangeCameraSize()
+    {
+        var value = m_CamSize / 10;
+
+        while (m_VirtualCamera.m_Lens.OrthographicSize < m_CamSize)
+        {
+            m_VirtualCamera.m_Lens.OrthographicSize += value;
+            yield return new WaitForSeconds(.1f);
         }
     }
 

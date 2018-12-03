@@ -24680,6 +24680,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+        type: 2}
+      propertyPath: m_Transitions.m_OnCameraLive.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4615189048549542, guid: 22e503cfe3db0df42a1c93443b5d4933, type: 2}
       propertyPath: m_LocalPosition.x
       value: -5.83
@@ -24717,6 +24722,26 @@ Prefab:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 1720472988}
+    - target: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+        type: 2}
+      propertyPath: m_Transitions.m_OnCameraLive.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+        type: 2}
+      propertyPath: m_Transitions.m_OnCameraLive.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+        type: 2}
+      propertyPath: m_Transitions.m_OnCameraLive.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114098763801202552, guid: 22e503cfe3db0df42a1c93443b5d4933,
+        type: 2}
+      propertyPath: m_Transitions.m_OnCameraLive.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e503cfe3db0df42a1c93443b5d4933, type: 2}
   m_IsPrefabAsset: 0
@@ -51556,6 +51581,11 @@ Prefab:
     - target: {fileID: 4068405245355004, guid: c18c27e8304dd2f43b6df7a0256ef165, type: 2}
       propertyPath: m_LocalPosition.z
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 20591812363252526, guid: c18c27e8304dd2f43b6df7a0256ef165,
+        type: 2}
+      propertyPath: field of view
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c18c27e8304dd2f43b6df7a0256ef165, type: 2}
