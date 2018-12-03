@@ -11,7 +11,10 @@ public class EnemyMovement : MonoBehaviour {
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private LayerMask m_WhatIsGround; // A mask determining what is ground to the character
 
-    const float k_GroundedRadius = .01f; // Radius of the overlap circle to determine if grounded
+    [Header("Walking type")]
+    [SerializeField] private bool m_IsSimpleMovement; //from collider to collider
+
+    const float k_GroundedRadius = .05f; // Radius of the overlap circle to determine if grounded
 
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
@@ -67,7 +70,7 @@ public class EnemyMovement : MonoBehaviour {
 
         if (GetComponent<PatrolEnemy>() != null)
             GetComponent<PatrolEnemy>().OnPlayerSpot += ChangeWaitingState;
-        else
+        else if (GetComponent<PatrolEnemy>() != null)
             GetComponent<RangeEnemy>().OnPlayerSpot += ChangeWaitingState;
     }
 
@@ -99,7 +102,7 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (!m_IsWaiting & !m_IsThrowBack) //if enemey is not waiting or is not throwing back
         {
-            if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear))
+            if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear) | m_IsSimpleMovement)
             {
                 m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
 
