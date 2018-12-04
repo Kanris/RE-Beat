@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using System.Collections;
 
 namespace UnityStandardAssets._2D
 {
@@ -11,31 +11,27 @@ namespace UnityStandardAssets._2D
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
 
+        [Header("Camera bounds")]
+        public BoxCollider2D m_CameraBounds;
+
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
         private Vector3 m_LookAheadPos;
-        
-        private float m_DownRestrictions = -1f;
-        private float m_UpRestrictions = 3f;
-        private float m_RightRestrictions = 3f;
-        private float m_LeftRestrictions = -60f;
 
-        private void InitializeCameraRestrictions()
+        private float leftBound, rightBound, bottomBound, topBound;
+
+        private void Start()
         {
-            var restrictions = GameObject.Find("CameraRestrictions");
+            float camExtentV = Camera.main.orthographicSize;
+            float camExtentH = (camExtentV * Screen.width) / Screen.height;
 
-            if (restrictions != null)
-            {
-                if (restrictions.transform.childCount == 4)
-                {
-                    m_RightRestrictions = restrictions.transform.GetChild(0).transform.position.x - 8.52f;
-                    m_LeftRestrictions = restrictions.transform.GetChild(1).transform.position.x + 8.52f;
-                    m_UpRestrictions = restrictions.transform.GetChild(2).transform.position.y - 4.8f;
-                    m_DownRestrictions = restrictions.transform.GetChild(3).transform.position.y + 5f;
-                }
-                //right left up down
-            }
+            var levelBounds = m_CameraBounds.bounds;
+
+            leftBound = levelBounds.min.x + camExtentH;
+            rightBound = levelBounds.max.x - camExtentH;
+            bottomBound = levelBounds.min.y + camExtentV;
+            topBound = levelBounds.max.y - camExtentV;
         }
 
         // Update is called once per frame
@@ -60,8 +56,8 @@ namespace UnityStandardAssets._2D
                 Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
                 Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
-                newPos = new Vector3(Mathf.Clamp(newPos.x, m_LeftRestrictions, m_RightRestrictions), 
-                                     Mathf.Clamp(newPos.y, m_DownRestrictions, m_UpRestrictions), newPos.z);
+                newPos = new Vector3(Mathf.Clamp(newPos.x, leftBound, rightBound), 
+                                        Mathf.Clamp(newPos.y, bottomBound, topBound), newPos.z);
 
                 transform.position = newPos;
 
@@ -69,13 +65,52 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public void SetTarget(Transform player)
+        public IEnumerator SetTarget(Transform player)
         {
             target = player.transform;
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
 
-            InitializeCameraRestrictions();
+            SetCameraSize(5f);
+
+            damping = 0f;
+
+            yield return null;
+
+            damping = .2f;
         }
+
+        public void SetCameraSize(float size)
+        {
+            Camera.main.orthographicSize = size;
+        }
+
+        #region camera effects
+
+        public void PlayHitEffect()
+        {
+            StartCoroutine(PlayCameraHitAnimation());
+        }
+
+        public void PlayLowHealthEffect()
+        {
+            Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = true;
+        }
+
+        public void StopLowHealthEffect()
+        {
+            Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = false;
+        }
+
+        private IEnumerator PlayCameraHitAnimation()
+        {
+            Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
+
+            yield return new WaitForSeconds(0.5f);
+
+            Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = false;
+        }
+
+        #endregion
     }
 }

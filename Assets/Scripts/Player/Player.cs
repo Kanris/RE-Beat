@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour {
@@ -55,7 +56,8 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
-        Camera.main.GetComponent<CinemachineFollow>().SetCameraTarget(transform); //set new camera target
+        StartCoroutine( 
+            Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform) ); //set new camera target
 
         m_Animator = GetComponent<Animator>(); //reference to the player animator
         m_Rigidbody2D = GetComponent<Rigidbody2D>();

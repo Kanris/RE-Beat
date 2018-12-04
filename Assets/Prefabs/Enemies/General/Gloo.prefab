@@ -66,7 +66,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1825073258671120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EnemyType: 0
   m_GameObjectToDestroy: {fileID: 1825073258671120}
   EnemyStats:
-    DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+    DeathParticle: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
       type: 2}
     HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
     DeathSound: {fileID: 0}
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

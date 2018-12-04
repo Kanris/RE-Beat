@@ -231,7 +231,7 @@ public class PlayerStats : Stats
 
             amount *= DamageMultiplier;
 
-            Camera.main.GetComponent<CinemachineFollow>().PlayHitEffect();
+            Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
 
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;

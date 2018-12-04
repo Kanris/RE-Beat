@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using Cinemachine.Editor;
+using UnityStandardAssets._2D;
 
 public class ObjectAppearOnTrigger : MonoBehaviour {
 
@@ -23,13 +23,13 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
     [Header("Camera")]
     [SerializeField] private bool m_IsCameraControl;
-    [SerializeField] private Cinemachine.CinemachineVirtualCamera m_VirtualCamera;
     [SerializeField] private Transform m_Center;
     [SerializeField, Range(1f, 20f)] private float m_CamSize = 5f;
     
     private bool m_IsQuitting; //is application is closing
     private Transform m_ObjectToFollow;
     private float m_DefaultCamSize;
+    private Camera2DFollow m_Camera;
 
     public bool m_IsPlayerTrigger;
 
@@ -45,20 +45,9 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting;
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting;
-    }
 
-    private void Update()
-    {
-        if (m_IsPlayerTrigger)
-        {
-            if (Vector3.Distance(m_VirtualCamera.gameObject.transform.position, m_Center.position) != 0)
-                m_VirtualCamera.gameObject.transform.position =
-                    Vector3.MoveTowards(m_VirtualCamera.gameObject.transform.position, m_Center.position, 20f * Time.deltaTime);
-            else
-                m_IsPlayerTrigger = false;
-        }
+        m_Camera = Camera.main.GetComponent<Camera2DFollow>();
     }
-
     #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,30 +59,29 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
             if (m_IsCameraControl)
             {
-                if (m_VirtualCamera.Follow != null)
+                if (m_Camera.target != null)
                 {
                     m_IsPlayerTrigger = true;
 
-                    m_ObjectToFollow = m_VirtualCamera.Follow;
-                    m_DefaultCamSize = m_VirtualCamera.m_Lens.OrthographicSize;
+                    m_ObjectToFollow = m_Camera.target;
+                    m_DefaultCamSize = Camera.main.orthographicSize;
 
-                    m_VirtualCamera.Follow = null;
-                    //m_VirtualCamera.gameObject.transform.position = m_Center.position;
+                    m_Camera.target = m_Center;
                     //m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
 
-                    StartCoroutine(SmoothChangeCameraSize());   
+                    StartCoroutine(SmoothChangeCameraSize(m_CamSize));   
                 }
             }
         }
     }
 
-    private IEnumerator SmoothChangeCameraSize()
+    private IEnumerator SmoothChangeCameraSize(float camSize)
     {
         var value = m_CamSize / 10;
 
-        while (m_VirtualCamera.m_Lens.OrthographicSize < m_CamSize)
+        while (Camera.main.orthographicSize < camSize)
         {
-            m_VirtualCamera.m_Lens.OrthographicSize += value;
+            Camera.main.orthographicSize += value;
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -134,8 +122,8 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
             if (m_IsCameraControl & m_ObjectToFollow != null)
             {
-                m_VirtualCamera.Follow = m_ObjectToFollow;
-                m_VirtualCamera.m_Lens.OrthographicSize = m_DefaultCamSize;
+                m_Camera.target = m_ObjectToFollow;
+                Camera.main.orthographicSize = m_DefaultCamSize;
             }
         }
     }
