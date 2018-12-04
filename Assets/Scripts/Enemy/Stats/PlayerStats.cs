@@ -33,7 +33,7 @@ public class PlayerStats : Stats
     public static bool m_IsCanDoubleJump = false;
     public static bool m_IsCanDash = false;
 
-    private static int m_Scrap = 0;
+    private static int m_Scrap = 200;
     private static int DamageMultiplier = 1;
 
     private static float DefaultMeleeAttackSpeed = 0.3f;

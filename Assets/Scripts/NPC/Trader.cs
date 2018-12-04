@@ -18,6 +18,9 @@ public class Trader : MonoBehaviour {
     [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
     [SerializeField] private Audio m_ClickAudio;
 
+    [Header("Additional")]
+    [SerializeField] private bool m_IsGeneralTrader = true;
+
     //current selected item info
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
@@ -39,27 +42,30 @@ public class Trader : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
-        if (m_Player != null) //if player is near
+        if (m_IsGeneralTrader)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            if (m_Player != null) //if player is near
             {
-                if (m_DescriptionUI.activeSelf)
+                if (CrossPlatformInputManager.GetButtonDown("Cancel"))
                 {
-                    m_DescriptionUI.SetActive(false);
+                    if (m_DescriptionUI.activeSelf)
+                    {
+                        m_DescriptionUI.SetActive(false);
+                    }
+                    else if (m_StoreUI.activeSelf)
+                    {
+                        HideUI();
+                        m_InteractionUI.SetActive(true);
+                    }
                 }
-                else if (m_StoreUI.activeSelf)
+
+                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
-                    HideUI();
-                    m_InteractionUI.SetActive(true);
+                    PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+                    m_StoreUI.SetActive(true); //show store ui
+                    m_InteractionUI.SetActive(false); //hide interaction elements
                 }
-            }
-
-            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
-            {
-                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
-
-                m_StoreUI.SetActive(true); //show store ui
-                m_InteractionUI.SetActive(false); //hide interaction elements
             }
         }
 	}
@@ -73,6 +79,7 @@ public class Trader : MonoBehaviour {
                 m_Player = collision.GetComponent<Player>().playerStats; //indicate that player is near
 
                 collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
+
                 AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
                 m_InteractionUI.SetActive(true); //show interaction elements
             }
@@ -91,19 +98,26 @@ public class Trader : MonoBehaviour {
         {
             m_Player = null; //indicate that player is not near trader
 
-            HideUI(); //hide npc ui
-
             collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
-            AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
+
+            HideInventory();
         }
+    }
+
+    public void HideInventory()
+    {
+        HideUI(); //hide npc ui
+
+        AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
     }
 
     private void HideUI()
     {
-        m_InteractionUI.SetActive(false);
-        m_DescriptionUI.SetActive(false);
-        m_StoreUI.SetActive(false);
-        m_Notification.SetActive(false);
+        if (m_InteractionUI != null) m_InteractionUI.SetActive(false);
+
+        if (m_DescriptionUI != null) m_DescriptionUI.SetActive(false);
+        if (m_StoreUI != null) m_StoreUI.SetActive(false);
+        if (m_Notification != null) m_Notification.SetActive(false);
 
 
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false);
@@ -153,18 +167,21 @@ public class Trader : MonoBehaviour {
                 //apply item upgrade to the player
                 m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
 
-                //move item from store ui (so childCount works properly)
-                m_CurrentSelectedItemGO.transform.SetParent(null);
-                Destroy(m_CurrentSelectedItemGO);
-
                 //hide desciption ui
                 m_DescriptionUI.SetActive(false);
 
-                //if there is nothing to sell
-                if (!CheckInventoryAmount())
+                //move item from store ui (so childCount works properly)
+                if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
                 {
-                    m_StoreUI.SetActive(false); //hide store ui
-                    m_Notification.SetActive(true); //show trader message
+                    m_CurrentSelectedItemGO.transform.SetParent(null);
+                    Destroy(m_CurrentSelectedItemGO);
+
+                    //if there is nothing to sell
+                    if (!CheckInventoryAmount())
+                    {
+                        m_StoreUI.SetActive(false); //hide store ui
+                        m_Notification.SetActive(true); //show trader message
+                    }
                 }
             }
             else //if player does not have enought scrap
@@ -174,6 +191,11 @@ public class Trader : MonoBehaviour {
                                                  AnnouncerManager.Message.MessageType.Message));
             }
         }
+    }
+
+    public void SetPlayer(PlayerStats player)
+    {
+        m_Player = player;
     }
 
     private bool CheckInventoryAmount()

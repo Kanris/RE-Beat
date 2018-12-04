@@ -14,6 +14,9 @@ public class TraderItem : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio m_ClickAudio;
 
+    [Header("Additional")]
+    [SerializeField] public bool m_IsInfiniteAmount;
+
     private GameObject m_SelectImage;
     [HideInInspector] public bool m_IsSelected;
 
