@@ -29,7 +29,7 @@ namespace UnityStandardAssets._2D
         public float m_JumpForce = 400f;   // Amount of force added when the player jumps.
         [HideInInspector] public bool m_IsHaveDoubleJump;
 
-        const float k_GroundedRadius = .05f; // Radius of the overlap circle to determine if grounded
+        const float k_GroundedRadius = .09f; // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
 
         private Rigidbody2D m_Rigidbody2D;

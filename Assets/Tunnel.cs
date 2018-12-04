@@ -28,13 +28,30 @@ public class Tunnel : MonoBehaviour {
         {
             if (m_Companion != null)
             {
-                m_Companion.position = m_SpawnOnExit.position;
-                m_Companion.gameObject.SetActive(true);
+                if (IsCanLeaveTunnel(collision.transform))
+                {
+                    m_Companion.position = m_SpawnOnExit.position;
+                    m_Companion.gameObject.SetActive(true);
 
-                m_Companion.GetComponent<Companion>().SetTunnel(transform);
+                    m_Companion.GetComponent<Companion>().SetTunnel(transform);
 
-                m_Companion = null;
+                    m_Companion = null;
+                }
             }
         }
+    }
+
+    private bool IsCanLeaveTunnel(Transform player)
+    {
+        var difference = player.position - transform.position;
+        var result = true;
+
+        if (difference.x < 0 & transform.localScale.x > 0)
+            result = false;
+
+        else if (difference.x > 0 & transform.localScale.x < 0)
+            result = false;
+
+        return result;
     }
 }
