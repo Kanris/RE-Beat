@@ -108,7 +108,8 @@ public class Trader : MonoBehaviour {
     {
         HideUI(); //hide npc ui
 
-        AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
+        if (AnnouncerManager.Instance != null)
+            AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
     }
 
     private void HideUI()

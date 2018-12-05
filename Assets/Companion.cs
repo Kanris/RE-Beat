@@ -33,8 +33,11 @@ public class Companion : MonoBehaviour {
 		
         if (m_Target != null) //if there is something to follow
         {
+            var diffrence = m_Target.position - transform.position;
+
             //if companion is not too close to the target or he is not moving to the tunnel
-            if (Vector2.Distance(m_Target.position, transform.position) > 1f | m_IsMovingToTheTunnel)
+            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 2f)) 
+                | m_IsMovingToTheTunnel)
             {
                 //move towards target
                 transform.position = new Vector2(Vector2.MoveTowards(transform.position, m_Target.position, 2f * Time.deltaTime).x,
@@ -51,12 +54,10 @@ public class Companion : MonoBehaviour {
             }
 
             //if trade interaction button is active
-            if (m_InteractionUI.activeSelf)
+            if (m_InteractionUI.activeSelf &
+                CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player press submit button
-                {
-                    SetActiveInventoryUI(!m_StoreUI.activeSelf); //show/hide inventory
-                }
+                SetActiveInventoryUI(!m_StoreUI.activeSelf); //show/hide inventory
             }
         }
         else if (GameMaster.Instance.IsPlayerDead) //if there is no target and player is dead
@@ -109,7 +110,8 @@ public class Companion : MonoBehaviour {
 
         GetComponent<Trader>().HideInventory(); //hide inventory
 
-        m_Target.GetComponent<Player>().TriggerPlayerBussy(false);
+        if (m_Target != null)
+            m_Target.GetComponent<Player>().TriggerPlayerBussy(false);
     }
 
     #endregion
