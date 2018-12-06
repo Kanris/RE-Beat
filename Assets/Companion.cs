@@ -10,7 +10,6 @@ public class Companion : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private GameObject m_InteractionUI; //interaction button
     [SerializeField] private GameObject m_StoreUI; //store ui
-    [SerializeField] private GameObject m_DescriptionUI; //description ui
 
     [Header("Hideout")]
     [SerializeField] private Transform m_LastTunnel;
@@ -36,8 +35,9 @@ public class Companion : MonoBehaviour {
             var diffrence = m_Target.position - transform.position;
 
             //if companion is not too close to the target or he is not moving to the tunnel
-            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 2f)) 
-                | m_IsMovingToTheTunnel)
+            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 2f)
+                | (Mathf.Abs(diffrence.x) > 4f)
+                | m_IsMovingToTheTunnel))
             {
                 //move towards target
                 transform.position = new Vector2(Vector2.MoveTowards(transform.position, m_Target.position, 2f * Time.deltaTime).x,

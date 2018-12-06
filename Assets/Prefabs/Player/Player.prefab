@@ -1840,12 +1840,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_GroundCheck: {fileID: 4464073724450892}
+  m_CeilingCheck: {fileID: 4476708197202586}
   m_MaxSpeed: 4
   m_CrouchSpeed: 0.4
+  m_JumpForce: 700
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 4294459592
+    m_Bits: 540672
   JumpPlatformPrefab: {fileID: 1020155768551936, guid: ed875a334c3b3b846b85839266d5c499,
     type: 2}
   m_LandEffect: {fileID: 1224409648855476, guid: 9716735c25cea984e8c1a5f286af4de8,
@@ -1855,9 +1858,6 @@ MonoBehaviour:
   m_LandAudio: {fileID: 11400000, guid: 6085203cf7fd0418a9b66d3f4b752e59, type: 2}
   m_DashAudio: {fileID: 11400000, guid: e7b922399b7d2ea41a36508342541d61, type: 2}
   m_DoubleJumpAudio: {fileID: 11400000, guid: 59044c21dbdd7ad40b8479d6ee2bb349, type: 2}
-  m_GroundCheck: {fileID: 4464073724450892}
-  m_CeilingCheck: {fileID: 4476708197202586}
-  m_JumpForce: 700
   m_IsHaveDoubleJump: 0
 --- !u!114 &114831392562631736
 MonoBehaviour:
