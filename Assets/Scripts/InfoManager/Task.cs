@@ -63,9 +63,8 @@ public class Task
 
     private void ShowAnnouncerMessage(string text)
     {
-        UIManager.Instance.DisplayNotificationMessage(
-            new UIManager.Message("<#000000>" + LocalizationManager.Instance.GetJournalLocalizedValue(NameKey) + 
-            "</color> " + text, UIManager.Message.MessageType.Task, 3f));
+        UIManager.Instance.DisplayNotificationMessage("<#000000>" + LocalizationManager.Instance.GetJournalLocalizedValue(NameKey) + "</color> " + text, 
+            UIManager.Message.MessageType.Task);
     }
 
     #endregion

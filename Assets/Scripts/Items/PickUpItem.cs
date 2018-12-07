@@ -111,15 +111,14 @@ public class PickUpItem : MonoBehaviour {
         var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
         var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
-        UIManager.Instance.DisplayNotificationMessage(new UIManager.Message(itemName + " " + 
-            itemAddMessage, UIManager.Message.MessageType.Item)); //show announcer message about new item in the bag
+        UIManager.Instance.DisplayNotificationMessage(itemName + " " + itemAddMessage, 
+            UIManager.Message.MessageType.Item); //show announcer message about new item in the bag
     }
 
     private void ReadNote()
     {
         var noteText = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Description);
-        UIManager.Instance.DisplayNotificationMessage(
-            new UIManager.Message(noteText, UIManager.Message.MessageType.Item, 4f)); //show announcer with message in the note
+        UIManager.Instance.DisplayNotificationMessage(noteText, UIManager.Message.MessageType.Item, 6f); //show announcer with message in the note
     }
 
     #endregion

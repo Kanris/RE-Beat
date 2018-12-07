@@ -355,11 +355,7 @@ public class GameMaster : MonoBehaviour {
 
     public void RespawnWithSpawnPosition(Vector2 spawnPosition)
     {
-        //if there is no player on scene
-        if (!GameObject.FindGameObjectWithTag("Player"))
-        {
-            StartCoroutine( RespawnWithoutFade(spawnPosition, 1.5f) );
-        }
+        StartCoroutine(RespawnWithoutFade(spawnPosition, 1.5f));
     }
 
     private IEnumerator RespawnWithFade()
@@ -379,7 +375,7 @@ public class GameMaster : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
-    private Transform RespawnWithoutFade()
+    private void RespawnWithoutFade()
     {
         IsPlayerDead = true;
 
@@ -388,16 +384,12 @@ public class GameMaster : MonoBehaviour {
 
         m_IsPlayerRespawning = false;
         IsPlayerDead = false;
-
-        return playerGameObject.transform;
     }
 
     private IEnumerator RespawnWithoutFade(Vector2 respawnPosition, float waitTimer)
     {
         var respawnPlayer = Instantiate(m_PlayerToRespawn);
         respawnPlayer.transform.position = respawnPosition;
-
-        //Debug.LogError(respawnPlayer.transform.childCount);
 
         //restrict player movement
         var playerBody = respawnPlayer.transform.GetChild(0).gameObject;

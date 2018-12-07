@@ -135,9 +135,11 @@ public class Trader : MonoBehaviour {
         {
             if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
             {
-                if (m_Player.CurrentHealth == m_Player.MaxHealth & m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
+                if (m_Player.CurrentHealth == m_Player.MaxHealth & 
+                    m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
                 {
-                    UIManager.Instance.DisplayNotificationMessage(new UIManager.Message("Can't buy repair at max health!", UIManager.Message.MessageType.Message));
+                    UIManager.Instance.DisplayNotificationMessage("Can't buy repair at max health!", 
+                        UIManager.Message.MessageType.Message);
                 }
                 else
                 {
@@ -153,9 +155,8 @@ public class Trader : MonoBehaviour {
                         var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
                         //display that item was added to inventory
-                        UIManager.Instance.DisplayNotificationMessage(new UIManager.Message(
-                            itemName + " " + inventoryMessage, UIManager.Message.MessageType.Item
-                        ));
+                        UIManager.Instance.DisplayNotificationMessage(itemName + " " + inventoryMessage, 
+                            UIManager.Message.MessageType.Item);
 
                         //add item to inventory
                         PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
@@ -184,9 +185,8 @@ public class Trader : MonoBehaviour {
             }
             else //if player does not have enought scrap
             {
-                UIManager.Instance.DisplayNotificationMessage(
-                    new UIManager.Message("I haven't enough money to buy this",
-                                                 UIManager.Message.MessageType.Message));
+                UIManager.Instance.DisplayNotificationMessage("Payment rejected <br> \"You don't have enough scraps\"",
+                                                 UIManager.Message.MessageType.Message);
             }
         }
     }

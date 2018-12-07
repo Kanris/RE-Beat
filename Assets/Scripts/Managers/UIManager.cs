@@ -98,6 +98,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI m_Text; //notification text
     [SerializeField] private Animator m_Animator; //notification animator
 
+    [Header("Revive")]
+    [SerializeField] private GameObject m_RevivePanel;
+
     #endregion
 
     private List<GameObject> m_HealthInPanel = new List<GameObject>(); //
@@ -171,8 +174,10 @@ public class UIManager : MonoBehaviour {
     }
 
 
-    public void DisplayNotificationMessage(Message message)
+    public void DisplayNotificationMessage(string messageText, Message.MessageType messageType, float duration = 3f)
     {
+        var message = new Message(messageText, messageType, duration);
+
         m_MessagePipeline.Add(message);
 
         if (!m_isShowingPipeline)
@@ -293,6 +298,54 @@ public class UIManager : MonoBehaviour {
     }
 
     #endregion
+
+    #endregion
+
+    #endregion
+
+    #region revive panel
+
+    public void AddRevive(int index)
+    {
+        if (m_RevivePanel.transform.childCount >= index && index > 0)
+        {
+            m_RevivePanel.transform.GetChild(index - 1).GetComponent<Animator>().SetBool("Disable", false);
+        }
+    }
+
+    public void RemoveRevive(int index)
+    {
+        if (m_RevivePanel.transform.childCount >= index && index > 0)
+        {
+            m_RevivePanel.transform.GetChild(index - 1).GetComponent<Animator>().SetBool("Disable", true);
+        }
+    }
+
+    #region test methods
+
+    [ContextMenu("UserRevive2")]
+    public void UserRevive2()
+    {
+        RemoveRevive(2);
+    }
+
+    [ContextMenu("UserRevive1")]
+    public void UserRevive1()
+    {
+        RemoveRevive(1);
+    }
+
+    [ContextMenu("AddRevive1")]
+    public void AddRevive1()
+    {
+        AddRevive(1);
+    }
+
+    [ContextMenu("AddRevive2")]
+    public void AddRevive2()
+    {
+        AddRevive(2);
+    }
 
     #endregion
 
