@@ -131,25 +131,12 @@ public class GameMaster : MonoBehaviour {
             m_RespawnPointPosition = respawnPointTransform.position;
         }
     }
-
-    public void StartPlayerRespawn(bool respawnWithFade)
-    {
-        if (!m_IsPlayerRespawning) //if player is not respawning now
-        {
-            m_IsPlayerRespawning = true;
-
-            if (respawnWithFade)
-                StartCoroutine(RespawnWithFade());
-            else
-                RespawnWithoutFade();
-        }
-    }
 #endregion
 
     //put player on the scene
     private void Start()
     {
-        StartPlayerRespawn(false); 
+        StartPlayerRespawn(false, true); 
     }
 
 #region SceneRecreation
@@ -353,12 +340,41 @@ public class GameMaster : MonoBehaviour {
         m_IsPlayerReturning = false;
     }
 
+    public void RevivePlayer()
+    {
+        UIManager.Instance.RemoveRevive(PlayerStats.m_ReviveCount);
+
+        StartCoroutine(RespawnWithFade(m_ReturnPoint));
+    }
+
+    #region respawn player
+
+    public void StartPlayerRespawn(bool respawnWithFade, bool respawnWithoutRevive)
+    {
+        if (!m_IsPlayerRespawning) //if player is not respawning now
+        {
+            if (PlayerStats.m_ReviveCount < 0 || respawnWithoutRevive)
+            {
+                m_IsPlayerRespawning = true;
+
+                if (respawnWithFade)
+                    StartCoroutine(RespawnWithFade(m_RespawnPoint));
+                else
+                    RespawnWithoutFade(m_RespawnPoint);
+            }
+            else
+            {
+                RevivePlayer();
+            }
+        }
+    }
+
     public void RespawnWithSpawnPosition(Vector2 spawnPosition)
     {
         StartCoroutine(RespawnWithoutFade(spawnPosition, 1.5f));
     }
 
-    private IEnumerator RespawnWithFade()
+    private IEnumerator RespawnWithFade(Transform transformToPlacePlayer)
     {
         IsPlayerDead = true;
 
@@ -366,7 +382,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        RespawnWithoutFade();
+        RespawnWithoutFade(transformToPlacePlayer);
 
         IsPlayerDead = false;
 
@@ -375,12 +391,12 @@ public class GameMaster : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
-    private void RespawnWithoutFade()
+    private void RespawnWithoutFade(Transform transformToPlacePlayer)
     {
         IsPlayerDead = true;
 
         var playerGameObject = Instantiate(m_PlayerToRespawn);
-        playerGameObject.transform.position = m_RespawnPointPosition;
+        playerGameObject.transform.position = transformToPlacePlayer.position;
 
         m_IsPlayerRespawning = false;
         IsPlayerDead = false;
@@ -401,5 +417,7 @@ public class GameMaster : MonoBehaviour {
         playerBody.GetComponent<PlatformerCharacter2D>().enabled = true;
     }
 
-#endregion
+    #endregion
+
+    #endregion
 }
