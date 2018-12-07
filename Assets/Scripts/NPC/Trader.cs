@@ -135,45 +135,52 @@ public class Trader : MonoBehaviour {
         {
             if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
             {
-                AudioManager.Instance.Play(m_ClickAudio);
-
-                PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
-
-                //add item to the inventory if it's not heal potion
-                if (m_CurrentSelectedItem.itemDescription.itemType != ItemDescription.ItemType.Heal)
+                if (m_Player.CurrentHealth == m_Player.MaxHealth & m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
                 {
-                    //get item info
-                    var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
-                    var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
-
-                    //display that item was added to inventory
-                    UIManager.Instance.DisplayNotificationMessage(new UIManager.Message(
-                        itemName + " " + inventoryMessage, UIManager.Message.MessageType.Item
-                    ));
-
-                    //add item to inventory
-                    PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
+                    UIManager.Instance.DisplayNotificationMessage(new UIManager.Message("Can't buy repair at max health!", UIManager.Message.MessageType.Message));
                 }
-
-                //apply item upgrade to the player
-                m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
-
-                //hide desciption ui
-                m_DescriptionUI.SetActive(false);
-
-                //move item from store ui (so childCount works properly)
-                if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
+                else
                 {
-                    m_CurrentSelectedItemGO.transform.SetParent(null);
-                    Destroy(m_CurrentSelectedItemGO);
+                    AudioManager.Instance.Play(m_ClickAudio);
 
-                    //if there is nothing to sell
-                    if (!CheckInventoryAmount())
+                    PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
+
+                    //add item to the inventory if it's not heal potion
+                    if (m_CurrentSelectedItem.itemDescription.itemType != ItemDescription.ItemType.Heal)
                     {
-                        m_StoreUI.SetActive(false); //hide store ui
-                        m_Notification.SetActive(true); //show trader message
+                        //get item info
+                        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
+                        var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+
+                        //display that item was added to inventory
+                        UIManager.Instance.DisplayNotificationMessage(new UIManager.Message(
+                            itemName + " " + inventoryMessage, UIManager.Message.MessageType.Item
+                        ));
+
+                        //add item to inventory
+                        PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
                     }
-                }
+
+                    //apply item upgrade to the player
+                    m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
+
+                    //hide desciption ui
+                    m_DescriptionUI.SetActive(false);
+
+                    //move item from store ui (so childCount works properly)
+                    if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
+                    {
+                        m_CurrentSelectedItemGO.transform.SetParent(null);
+                        Destroy(m_CurrentSelectedItemGO);
+
+                        //if there is nothing to sell
+                        if (!CheckInventoryAmount())
+                        {
+                            m_StoreUI.SetActive(false); //hide store ui
+                            m_Notification.SetActive(true); //show trader message
+                        }
+                    }
+                }         
             }
             else //if player does not have enought scrap
             {

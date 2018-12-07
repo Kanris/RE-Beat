@@ -195,7 +195,7 @@ namespace UnityStandardAssets._2D
         {
             AudioManager.Instance.Play(m_LandAudio); //play dust effect
 
-            Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 3f); //destroy particle gameobject after 3sec
+            Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 2f); //destroy particle gameobject after 3sec
         }
 
         public void OnLandEffect()
