@@ -128,9 +128,9 @@ public class MagneticBox : MonoBehaviour {
                 }
                 else //if player haven't needed item
                 {
-                    AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                        new AnnouncerManager.Message(LocalizationManager.Instance.GetItemsLocalizedValue (
-                            NeededItem.itemDescription.Name) + " - required to pickup this box.", AnnouncerManager.Message.MessageType.Message)); //display warning message
+                    UIManager.Instance.DisplayNotificationMessage(
+                        new UIManager.Message(LocalizationManager.Instance.GetItemsLocalizedValue (
+                            NeededItem.itemDescription.Name) + " - required to pickup this box.", UIManager.Message.MessageType.Message)); //display warning message
                 }
             }
         }

@@ -99,7 +99,7 @@ public class Player : MonoBehaviour {
         if (playerStats.CurrentHealth < 3 & !m_IsCreateCriticalHealthEffect)
         {
             m_IsCreateCriticalHealthEffect = true;
-            AnnouncerManager.Instance.ShowCriticalDamageSign();
+            DebuffPanel.Instance.ShowCriticalDamageSign();
             StartCoroutine(CreateLowHealthEffect());
         }
     }
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
         if (playerStats.CurrentHealth < 3 & GameMaster.Instance.m_IsPlayerReturning)
         {
             m_IsCreateCriticalHealthEffect = true;
-            AnnouncerManager.Instance.ShowCriticalDamageSign();
+            DebuffPanel.Instance.ShowCriticalDamageSign();
             StartCoroutine(CreateLowHealthEffect());
         }
     }

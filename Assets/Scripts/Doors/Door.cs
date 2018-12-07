@@ -124,8 +124,8 @@ public class Door : MonoBehaviour {
     private void ShowAnnouncerMessage(string messageToDisplay)
     {
         if (!string.IsNullOrEmpty(messageToDisplay))
-            AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                new AnnouncerManager.Message(messageToDisplay, AnnouncerManager.Message.MessageType.Message));
+            UIManager.Instance.DisplayNotificationMessage(
+                new UIManager.Message(messageToDisplay, UIManager.Message.MessageType.Message));
     }
 
     private void PlayAnimation(string name)

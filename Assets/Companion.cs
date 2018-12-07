@@ -99,7 +99,6 @@ public class Companion : MonoBehaviour {
 
         if (m_StoreUI.activeSelf)
         {
-            AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
             m_StoreUI.transform.localScale = new Vector3(transform.localScale.x, 1, 1); //maybe need to change scale (if companion flip)
         }
     }
@@ -108,7 +107,7 @@ public class Companion : MonoBehaviour {
     {
         m_InteractionUI.SetActive(false); //hide interaction button
 
-        GetComponent<Trader>().HideInventory(); //hide inventory
+        GetComponent<Trader>().HideUI(); //hide inventory
 
         if (m_Target != null)
             m_Target.GetComponent<Player>().TriggerPlayerBussy(false);

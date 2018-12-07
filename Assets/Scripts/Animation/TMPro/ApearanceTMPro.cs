@@ -6,8 +6,13 @@ public class ApearanceTMPro : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI m_TextToAnimate;
 
+    [Header("Time")]
+    [SerializeField] private float increment = .05f;
+
     public void TextAppearance()
     {
+        m_TextToAnimate.color = m_TextToAnimate.color.ChangeColor(a: 0f);
+
         if (!m_TextToAnimate.gameObject.activeSelf)
             m_TextToAnimate.gameObject.SetActive(true);
 
@@ -17,8 +22,6 @@ public class ApearanceTMPro : MonoBehaviour {
     private IEnumerator AnimateAppearanceText()
     {
         var value = 0f;
-
-        const float increment = 0.02f;
 
         while (m_TextToAnimate.color.a < 1)
         {

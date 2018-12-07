@@ -11,6 +11,9 @@ public class DebuffPanel : MonoBehaviour {
     [SerializeField] private Player m_Player;
     [SerializeField] private DebufUI[] m_DebuffsOnPanel;
 
+    [Header("Danger")]
+    [SerializeField] private GameObject m_CriticalDamage;
+
     private bool m_IsDebuffOnPanel;
     private PlayerStats m_PlayerStats;
 
@@ -94,6 +97,28 @@ public class DebuffPanel : MonoBehaviour {
         image.gameObject.transform.parent.gameObject.SetActive(false);
         debufUI.appearTimer = 0f;
     }
+
+    #region Danger sign
+
+    public void ShowCriticalDamageSign()
+    {
+        StartCoroutine(DangerSign());
+    }
+
+    private IEnumerator DangerSign()
+    {
+        m_CriticalDamage.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        m_CriticalDamage.GetComponent<Animator>().SetTrigger("Disappear");
+
+        yield return new WaitForSeconds(0.1f);
+
+        m_CriticalDamage.SetActive(false);
+    }
+
+    #endregion
 
     #region test methods
 

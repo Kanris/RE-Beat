@@ -79,14 +79,12 @@ public class Trader : MonoBehaviour {
                 m_Player = collision.GetComponent<Player>().playerStats; //indicate that player is near
 
                 collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
-
-                AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
+                
                 m_InteractionUI.SetActive(true); //show interaction elements
             }
             else //if there is nothing to sell
             {
                 collision.GetComponent<Player>().TriggerPlayerBussy(true); //don't allow player to attack
-                AnnouncerManager.Instance.ShowScrapAmount(true); //show player's current amount of scraps
                 m_Notification.SetActive(true); //show npc message
             }
         }
@@ -100,19 +98,11 @@ public class Trader : MonoBehaviour {
 
             collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
 
-            HideInventory();
+            HideUI(); //hide npc ui
         }
     }
 
-    public void HideInventory()
-    {
-        HideUI(); //hide npc ui
-
-        if (AnnouncerManager.Instance != null)
-            AnnouncerManager.Instance.ShowScrapAmount(false); //hide scrap amount
-    }
-
-    private void HideUI()
+    public void HideUI()
     {
         if (m_InteractionUI != null) m_InteractionUI.SetActive(false);
 
@@ -157,8 +147,8 @@ public class Trader : MonoBehaviour {
                     var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
                     //display that item was added to inventory
-                    AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(
-                        itemName + " " + inventoryMessage, AnnouncerManager.Message.MessageType.Item
+                    UIManager.Instance.DisplayNotificationMessage(new UIManager.Message(
+                        itemName + " " + inventoryMessage, UIManager.Message.MessageType.Item
                     ));
 
                     //add item to inventory
@@ -187,9 +177,9 @@ public class Trader : MonoBehaviour {
             }
             else //if player does not have enought scrap
             {
-                AnnouncerManager.Instance.DisplayAnnouncerMessage(
-                    new AnnouncerManager.Message("I haven't enough money to buy this",
-                                                 AnnouncerManager.Message.MessageType.Message));
+                UIManager.Instance.DisplayNotificationMessage(
+                    new UIManager.Message("I haven't enough money to buy this",
+                                                 UIManager.Message.MessageType.Message));
             }
         }
     }

@@ -130,8 +130,9 @@ public class LoadSceneManager : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToClear();
 
-        if (!string.IsNullOrEmpty(locationName) & AnnouncerManager.Instance != null)
-            AnnouncerManager.Instance.DisplayAnnouncerMessage(new AnnouncerManager.Message(locationName, AnnouncerManager.Message.MessageType.Scene, 3f));
+        if (!string.IsNullOrEmpty(locationName) & UIManager.Instance != null)
+            UIManager.Instance.DisplayNotificationMessage(
+                new UIManager.Message(locationName, UIManager.Message.MessageType.Scene, 3f));
     }
 
     public void CloseGame()

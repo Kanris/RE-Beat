@@ -27,8 +27,8 @@ public class ChestItem : MonoBehaviour {
         var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
         var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
-        AnnouncerManager.Instance.DisplayAnnouncerMessage(
-            new AnnouncerManager.Message(itemName + " " + itemAddMessage, AnnouncerManager.Message.MessageType.Item)); //display add message
+        UIManager.Instance.DisplayNotificationMessage(
+            new UIManager.Message(itemName + " " + itemAddMessage, UIManager.Message.MessageType.Item)); //display add message
 
         GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
 
