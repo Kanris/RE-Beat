@@ -6,31 +6,29 @@ using UnityStandardAssets._2D;
 
 public class GameMaster : MonoBehaviour {
 
-#region public fields
+    #region fields
 
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
 
-    public Transform m_RespawnPoint; //current respawn point
-    [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
-    [HideInInspector] public bool IsPlayerDead; //is player dead
     public string SceneName; //current scene name
 
-#endregion
-
-#region private fields
-
     [Header("Respawn")]
-    [SerializeField] private GameObject m_PlayerToRespawn;
+    public Transform m_RespawnPoint; //current respawn point
     [SerializeField] private Transform m_ReturnPoint;
+    [SerializeField] private GameObject m_PlayerToRespawn;
 
+    [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
+
+    [Header("Effects")]
     [SerializeField] private Audio BackgroundMusic;
 
     private bool m_IsPlayerRespawning; //is player respawning
-    public bool m_IsPlayerReturning;
+    [HideInInspector] public bool m_IsPlayerReturning;
+    [HideInInspector] public bool IsPlayerDead; //is player dead
 
-#endregion
+    #endregion
 
-#region Singleton
+    #region Singleton
     public static GameMaster Instance;
 
     public void Awake()
@@ -344,7 +342,8 @@ public class GameMaster : MonoBehaviour {
     {
         UIManager.Instance.RemoveRevive(PlayerStats.m_ReviveCount);
 
-        StartCoroutine(RespawnWithFade(m_ReturnPoint));
+        //m_returnPoint
+        StartCoroutine(RespawnWithFade(m_RespawnPoint));
     }
 
     #region respawn player

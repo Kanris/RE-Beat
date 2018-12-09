@@ -123,6 +123,7 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //show low health effect
     private void OnEnable()
     {
         if (playerStats.CurrentHealth < 3 & GameMaster.Instance.m_IsPlayerReturning)

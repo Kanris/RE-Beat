@@ -25,7 +25,6 @@ public class DroneChaser : MonoBehaviour {
     // Use this for initialization
     private void Start()
     {
-
         InitializeComponents(); //initialize rigidbody and seeker
 
         m_ChaseRange.OnPlayerInTrigger += StartChase;
@@ -59,6 +58,10 @@ public class DroneChaser : MonoBehaviour {
             yield return new WaitForSeconds(1f / UpdateRate);
 
             StartCoroutine(UpdatePath());
+        }
+        else if (m_Rigidbody.velocity != Vector2.zero)
+        {
+            m_Rigidbody.velocity = Vector2.zero;
         }
     }
 
@@ -119,6 +122,6 @@ public class DroneChaser : MonoBehaviour {
         m_IsDestroying = value;
 
         if (m_IsDestroying)
-            Speed = 40f;
+            Speed /= 2;
     }
 }
