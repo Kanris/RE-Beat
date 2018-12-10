@@ -67,6 +67,11 @@ public class Trader : MonoBehaviour {
                     m_InteractionUI.SetActive(false); //hide interaction elements
                 }
             }
+            else if (m_InteractionUI.activeSelf)
+            {
+                HideUI();
+                m_DescriptionUI.SetActive(false);
+            }
         }
 	}
 

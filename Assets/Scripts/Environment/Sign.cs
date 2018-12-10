@@ -67,6 +67,10 @@ public class Sign : MonoBehaviour {
                 }
             }
         }
+        else if (m_InteractionButton.activeSelf)
+        {
+            m_InteractionButton.SetActive(false);
+        }
 
 	}
 

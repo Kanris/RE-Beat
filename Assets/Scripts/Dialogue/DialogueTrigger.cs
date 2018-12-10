@@ -57,7 +57,11 @@ public class DialogueTrigger : MonoBehaviour {
             else if (m_Player.enabled) //if dialogue in progress and player still have character control
                 EnableUserControl(false); //disable character control
         }
-	}
+        else if (m_NPCUI.activeSelf)
+        {
+            m_NPCUI.SetActive(false);
+        }
+    }
 
     //enable or disable character control
     private void EnableUserControl(bool active)
