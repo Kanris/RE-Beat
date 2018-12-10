@@ -41,7 +41,6 @@ namespace UnityStandardAssets._2D
         private bool m_Grounded;            // Whether or not the player is grounded.
         private Animator m_Anim;            // Reference to the player's animator component.
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-        private bool m_IsDashing;                 // A mask determining what is ground to the character
         private GameObject m_JumpPlatform;
 
         private void Awake()
@@ -71,6 +70,11 @@ namespace UnityStandardAssets._2D
         {
             if (m_JumpPlatform != null)
                 Destroy(m_JumpPlatform.gameObject);
+        }
+
+        private void OnEnable()
+        {
+            m_Rigidbody2D.gravityScale = 3f; //if player while dashed hit "killing ground" return gravity to default value
         }
 
         private void FixedUpdate()
@@ -163,12 +167,10 @@ namespace UnityStandardAssets._2D
                 {
                     m_Anim.SetBool("Dash", true);
 
-                    m_IsDashing = true;
-
                     StartCoroutine( ShowDashEffect() );
                 }
 
-                if (m_IsDashing)
+                if (m_Anim.GetBool("Dash"))
                 {
                     var multiplier = 1;
 
@@ -248,8 +250,6 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D.gravityScale = 3f;
 
             m_Anim.SetBool("Dash", false);
-
-            m_IsDashing = false;
         }
 
         #endregion
