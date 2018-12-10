@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Tunnel : MonoBehaviour {
 
-    [SerializeField] AnimationClip m_InTunnelAnimation;
+    [SerializeField] private AnimationClip m_InTunnelAnimation;
+    [SerializeField] private GameObject m_FollowCompanion;
 
     private Transform m_SpawnOnExit;
-    private static Transform m_Companion;
+    private static bool m_IsSpawning;
+    private static bool m_IsCanSpawn;
 
     private void Start()
     {
@@ -18,39 +20,32 @@ public class Tunnel : MonoBehaviour {
     {
         if (collision.CompareTag("Companion"))
         {
-            m_Companion = collision.transform;
+            m_IsSpawning = false;
 
-            m_Companion.GetComponent<Animator>().SetTrigger("InTunnel");
+            collision.GetComponent<Animator>().SetTrigger("InTunnel");
 
             yield return new WaitForSeconds(m_InTunnelAnimation.length);
 
-            yield return null;
-
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 
     private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") & !m_IsSpawning & m_IsCanSpawn)
         {
-            if (m_Companion != null)
+            if (IsCanLeaveTunnel(collision.transform))
             {
-                if (IsCanLeaveTunnel(collision.transform))
-                {
-                    m_Companion.position = m_SpawnOnExit.position;
-                    m_Companion.gameObject.SetActive(true);
+                m_IsSpawning = true;
 
-                    m_Companion.GetComponent<Animator>().SetTrigger("FromTunnel");
-                    m_Companion.GetComponent<Companion>().enabled = false;
+                var m_Companion = Instantiate(m_FollowCompanion, m_SpawnOnExit.position, Quaternion.identity);
 
-                    yield return new WaitForSeconds(m_InTunnelAnimation.length);
+                m_Companion.GetComponent<Animator>().SetTrigger("FromTunnel");
 
-                    m_Companion.GetComponent<Companion>().enabled = true;
-                    m_Companion.GetComponent<Companion>().SetTunnel(transform);
+                yield return new WaitForSeconds(m_InTunnelAnimation.length);
 
-                    m_Companion = null;
-                }
+                m_Companion.GetComponent<Companion>().SetTarget(collision.transform);
+                m_Companion.GetComponent<Companion>().SetTunnel(transform);
             }
         }
     }
@@ -67,5 +62,10 @@ public class Tunnel : MonoBehaviour {
             result = false;
 
         return result;
+    }
+
+    public static void SetIscanSpawn(bool value)
+    {
+        m_IsCanSpawn = value;
     }
 }

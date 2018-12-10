@@ -15,7 +15,11 @@ public class GameMaster : MonoBehaviour {
     [Header("Respawn")]
     public Transform m_RespawnPoint; //current respawn point
     [SerializeField] private Transform m_ReturnPoint;
+    [SerializeField] private Transform m_ReachableRespawnPoint;
+    [SerializeField] private Transform m_NearestTunnel;
     [SerializeField] private GameObject m_PlayerToRespawn;
+    [SerializeField] private GameObject m_RevivePlayer;
+    [SerializeField] private GameObject m_Companion;
 
     [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
 
@@ -311,6 +315,15 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    public void SetReacheblePoint(Transform reacheblePoint, Transform nearestTunnel)
+    {
+        if (reacheblePoint != m_ReachableRespawnPoint)
+        {
+            m_ReachableRespawnPoint = reacheblePoint;
+            m_NearestTunnel = nearestTunnel;
+        }
+    }
+
     public void RespawnPlayerOnReturnPoint(GameObject player)
     {
         if (m_ReturnPoint != null & !m_IsPlayerReturning)
@@ -338,12 +351,14 @@ public class GameMaster : MonoBehaviour {
         m_IsPlayerReturning = false;
     }
 
-    public void RevivePlayer()
+    public IEnumerator RevivePlayer()
     {
-        UIManager.Instance.RemoveRevive(PlayerStats.m_ReviveCount);
+        yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        //m_returnPoint
-        StartCoroutine(RespawnWithFade(m_RespawnPoint));
+        Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform.position, m_ReachableRespawnPoint.transform.rotation);
+        Instantiate(m_Companion, m_NearestTunnel.position, Quaternion.identity);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     #region respawn player
@@ -352,8 +367,11 @@ public class GameMaster : MonoBehaviour {
     {
         if (!m_IsPlayerRespawning) //if player is not respawning now
         {
-            if (PlayerStats.m_ReviveCount < 0 || respawnWithoutRevive)
+            if (PlayerStats.m_ReviveCount < 1 || respawnWithoutRevive)
             {
+                if (PlayerStats.m_ReviveCount < 1)
+                    PlayerStats.Scrap = -PlayerStats.Scrap;
+
                 m_IsPlayerRespawning = true;
 
                 if (respawnWithFade)
@@ -363,7 +381,7 @@ public class GameMaster : MonoBehaviour {
             }
             else
             {
-                RevivePlayer();
+                StartCoroutine ( RevivePlayer() );
             }
         }
     }

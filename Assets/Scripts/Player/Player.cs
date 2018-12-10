@@ -100,7 +100,9 @@ public class Player : MonoBehaviour {
         {
             m_IsCreateCriticalHealthEffect = true;
             DebuffPanel.Instance.ShowCriticalDamageSign();
-            StartCoroutine(CreateLowHealthEffect());
+
+            if (gameObject.activeSelf)
+                StartCoroutine(CreateLowHealthEffect());
         }
     }
 
@@ -136,15 +138,18 @@ public class Player : MonoBehaviour {
 
     private void DrawBullet()
     {
-        float whereToShoot = 0f;
+        if (m_FirePosition != null)
+        {
+            float whereToShoot = 0f;
 
-        if (transform.localScale.x == -1)
-            whereToShoot = 180f;
+            if (transform.localScale.x == -1)
+                whereToShoot = 180f;
 
-        Instantiate(m_ShootEffect, m_FirePosition.position,
-                    Quaternion.Euler(0f, 0f, whereToShoot));
+            Instantiate(m_ShootEffect, m_FirePosition.position,
+                        Quaternion.Euler(0f, 0f, whereToShoot));
 
-        AudioManager.Instance.Play(m_ShootSound);
+            AudioManager.Instance.Play(m_ShootSound);
+        }
     }
 
     private void Attack(float timeToCheck, string buttonToCheck, VoidDelegate action)
@@ -163,26 +168,29 @@ public class Player : MonoBehaviour {
 
     private IEnumerator MeleeAttack()
     {
-        m_AttackRangeAnimation.SetActive(true); //play attack animation
-
-        m_AttackRangeAnimation.GetComponent<Animator>().speed = PlayerStats.MeleeAttackSpeed;
-
-        AudioManager.Instance.Play(m_AttackSound); //attack sound
-
-        var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position, 
-            new Vector2(m_AttackRangeX, m_AttackRangeY), 0, m_WhatIsEnemy); //check is there enemy in attack range
-
-        //hit every enemy in attack range
-        foreach (var enemy in enemiesToDamage)
+        if (m_AttackRangeAnimation != null)
         {
-            float distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
+            m_AttackRangeAnimation.SetActive(true); //play attack animation
 
-            if (enemy.GetComponent<EnemyStatsGO>() != null)
-                enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, GetHitZone(distance));
+            m_AttackRangeAnimation.GetComponent<Animator>().speed = PlayerStats.MeleeAttackSpeed;
+
+            AudioManager.Instance.Play(m_AttackSound); //attack sound
+
+            var enemiesToDamage = Physics2D.OverlapBoxAll(m_AttackPosition.position,
+                new Vector2(m_AttackRangeX, m_AttackRangeY), 0, m_WhatIsEnemy); //check is there enemy in attack range
+
+            //hit every enemy in attack range
+            foreach (var enemy in enemiesToDamage)
+            {
+                float distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
+
+                if (enemy.GetComponent<EnemyStatsGO>() != null)
+                    enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, GetHitZone(distance));
+            }
+
+            yield return new WaitForSeconds(m_AttackAnimation.length); //wait until animation play
+            m_AttackRangeAnimation.SetActive(false); //stop attack animation
         }
-
-        yield return new WaitForSeconds(m_AttackAnimation.length); //wait until animation play
-        m_AttackRangeAnimation.SetActive(false); //stop attack animation
     }
 
     private int GetHitZone(float distance)
@@ -200,8 +208,11 @@ public class Player : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(m_AttackPosition.position, new Vector3(m_AttackRangeX, m_AttackRangeY, 1));
+        if (m_AttackPosition != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(m_AttackPosition.position, new Vector3(m_AttackRangeX, m_AttackRangeY, 1));
+        }
     }
 
     private void FixedUpdate()

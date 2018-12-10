@@ -34,7 +34,7 @@ public class PlayerStats : Stats
     public static bool m_IsCanDash = true;
     public static int m_ReviveCount = 2;
 
-    private static int m_Scrap;
+    private static int m_Scrap = 200;
     private static int DamageMultiplier = 1;
 
     private static float DefaultMeleeAttackSpeed = 0.3f;

@@ -60,8 +60,11 @@ namespace UnityStandardAssets._2D
 
         private void InitializeJumpPlatform()
         {
-            m_JumpPlatform = Instantiate(JumpPlatformPrefab);
-            m_JumpPlatform.SetActive(false);
+            if (JumpPlatformPrefab != null)
+            {
+                m_JumpPlatform = Instantiate(JumpPlatformPrefab);
+                m_JumpPlatform.SetActive(false);
+            }
         }
 
         private void OnDestroy()
@@ -141,7 +144,7 @@ namespace UnityStandardAssets._2D
                 
                 m_IsHaveDoubleJump = true;
             }
-            else if (PlayerStats.m_IsCanDoubleJump)
+            else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
             {
                 if (!m_Grounded && m_IsHaveDoubleJump && jump)
                 {
@@ -154,7 +157,7 @@ namespace UnityStandardAssets._2D
                 }
             }
 
-            if (PlayerStats.m_IsCanDash)
+            if (PlayerStats.m_IsCanDash & m_DashEffect != null)
             {
                 if (dash && m_Anim.GetFloat("Speed") > 0.01f)
                 {

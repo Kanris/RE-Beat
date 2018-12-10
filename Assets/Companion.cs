@@ -24,7 +24,6 @@ public class Companion : MonoBehaviour {
 
         m_Animator = GetComponent<Animator>();
 
-        StartCoroutine(SearchForPlayer()); //initial search for player
     }
 	
 	// Update is called once per frame
@@ -35,7 +34,7 @@ public class Companion : MonoBehaviour {
             var diffrence = m_Target.position - transform.position;
 
             //if companion is not too close to the target or he is not moving to the tunnel
-            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 2f)
+            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 4f)
                 | (Mathf.Abs(diffrence.x) > 4f)
                 | m_IsMovingToTheTunnel))
             {
@@ -44,11 +43,12 @@ public class Companion : MonoBehaviour {
                                                                             transform.position.y);
                 Flip(); //maybe flip is needed
 
-                m_Animator.SetBool("IsWalking", true);
+                m_Animator.SetBool("Ground", true);
+                m_Animator.SetFloat("Speed", 1.0f);
             }
             else
             {
-                m_Animator.SetBool("IsWalking", false);
+                m_Animator.SetFloat("Speed", 0f);
 
                 SetActiveInteractionUI(); //try to show interaction button
             }
@@ -72,6 +72,18 @@ public class Companion : MonoBehaviour {
                 m_Target = m_LastTunnel; 
                 m_IsMovingToTheTunnel = true;
                 m_LastTunnel = null;
+            }
+        } else if (m_Target == null & m_LastTunnel == null)
+        {
+            var target = GameObject.FindGameObjectWithTag("Player");
+
+            if (target != null)
+            {
+                m_Target = target.transform;
+
+                GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
+
+                HideUI();
             }
         }
 	}

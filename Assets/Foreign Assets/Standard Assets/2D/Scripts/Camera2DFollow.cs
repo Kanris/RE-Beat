@@ -102,6 +102,19 @@ namespace UnityStandardAssets._2D
             Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = false;
         }
 
+        public IEnumerator PlayReviveHealthEffect()
+        {
+            Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
+
+            Camera.main.GetComponent<Kino.AnalogGlitch>().verticalJump = .2f;
+
+            yield return new WaitForSeconds(0.5f);
+
+            Camera.main.GetComponent<Kino.AnalogGlitch>().verticalJump = 0f;
+
+            Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = false;
+        }
+
         private IEnumerator PlayCameraHitAnimation()
         {
             Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;

@@ -85,6 +85,9 @@ public class UIManager : MonoBehaviour {
 
     #region serialize fields
 
+    [Header("Effect")]
+    [SerializeField] private Image m_BackgroundImage;
+
     [Header("Upper")]
     [SerializeField] private GameObject m_LifePanel; //life panel
     [SerializeField] private Image m_BulletImage; //bullet display cooldown
@@ -218,7 +221,7 @@ public class UIManager : MonoBehaviour {
 
             m_AddScrapText.text = sign + value.ToString();
 
-            yield return new WaitForSeconds(.03f);
+            yield return new WaitForSeconds(.005f);
         }
 
         m_AddScrapText.text = sign + value.ToString(); //show zero add value at the end
@@ -348,6 +351,26 @@ public class UIManager : MonoBehaviour {
     }
 
     #endregion
+
+    #endregion
+
+    #region ui controll
+
+    public void EnableRegularUI()
+    {
+        m_BulletImage.transform.parent.gameObject.SetActive(true);
+        m_AmountText.gameObject.SetActive(true);
+        m_AddScrapText.gameObject.SetActive(true);
+        m_BackgroundImage.color = m_BackgroundImage.color.ChangeColor(.377f, .377f, .377f, m_BackgroundImage.color.a);
+    }
+
+    public void EnableCompanionUI()
+    {
+        m_BulletImage.transform.parent.gameObject.SetActive(false);
+        m_AmountText.gameObject.SetActive(false);
+        m_AddScrapText.gameObject.SetActive(false);
+        m_BackgroundImage.color = m_BackgroundImage.color.ChangeColor(.549f, .980f, .984f, m_BackgroundImage.color.a);
+    }
 
     #endregion
 }
