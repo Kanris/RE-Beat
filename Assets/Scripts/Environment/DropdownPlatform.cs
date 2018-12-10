@@ -58,10 +58,12 @@ public class DropdownPlatform : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player")) //if player is on the platform
         {
+            yield return new WaitForEndOfFrame();
+
             gameObject.layer = 14;
             player = collision.gameObject.GetComponent<Platformer2DUserControl>(); //get player control
         }
@@ -81,17 +83,6 @@ public class DropdownPlatform : MonoBehaviour {
     }
 
     #endregion
-
-    private void CollisionActive(bool value)
-    {
-        //change platform layer to play stay or jump player's animation
-        if (value)
-            gameObject.layer = 14;
-        else
-            gameObject.layer = 0;
-
-        m_BoxCollider.enabled = value; //enable or disable platform collider;
-    }
 
     #endregion
 }
