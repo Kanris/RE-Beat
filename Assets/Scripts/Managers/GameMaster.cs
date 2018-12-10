@@ -367,7 +367,10 @@ public class GameMaster : MonoBehaviour {
     {
         if (!m_IsPlayerRespawning) //if player is not respawning now
         {
-            if (PlayerStats.m_ReviveCount < 1 || respawnWithoutRevive)
+            if (m_ReachableRespawnPoint == null)
+                respawnWithoutRevive = true;
+
+            if ((PlayerStats.m_ReviveCount < 1 || respawnWithoutRevive))
             {
                 if (PlayerStats.m_ReviveCount < 1)
                     PlayerStats.Scrap = -PlayerStats.Scrap;
