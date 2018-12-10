@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class LanternPickUp : MonoBehaviour {
-
-    [SerializeField] private GameObject m_InteractionUIPrefab;
-
-    private GameObject m_InteractionUI;
+    
+    [SerializeField] private GameObject m_InteractionUI;
     private Transform m_Player;
 
     private Vector2 m_RespawnPoint;
@@ -15,8 +13,6 @@ public class LanternPickUp : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
-        m_InteractionUI = Instantiate(m_InteractionUIPrefab, transform);
 
         m_RespawnPoint = transform.position;
 
@@ -66,6 +62,10 @@ public class LanternPickUp : MonoBehaviour {
                 SetPlayerCarriesLantern(false);
                 GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
             }
+        }
+        else if (m_InteractionUI.activeSelf)
+        {
+            m_InteractionUI.SetActive(false);
         }
 
 	}

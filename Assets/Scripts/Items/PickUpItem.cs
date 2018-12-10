@@ -9,11 +9,10 @@ public class PickUpItem : MonoBehaviour {
     [SerializeField] private Item item; //item description
 
     [Header("Effects")]
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_InteractionButton; //item ui
 
-    private GameObject m_InteractionButton; //item ui
     private PlayerStats m_PlayerStats; //player stats (for heal item type)
-    private bool m_IsPlayerNearDoor = false; //is player near item
+    private bool m_IsPlayerNearItem = false; //is player near item
 
     #endregion
 
@@ -22,16 +21,8 @@ public class PickUpItem : MonoBehaviour {
     #region initialize
 
     private void Start()
-    {
-        InitializeInteractionButton(); //initialize item ui
-
+    { 
         m_InteractionButton.gameObject.SetActive(false); //hide item ui
-    }
-
-    private void InitializeInteractionButton()
-    {
-        m_InteractionButton = Instantiate(m_InteractionUI, transform);
-
     }
 
     private void OnValidate()
@@ -47,12 +38,16 @@ public class PickUpItem : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearDoor) //if is player near item
+        if (m_IsPlayerNearItem) //if is player near item
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {
                 InteractWithItem(); //add item
             }
+        }
+        else if (m_InteractionButton.activeSelf)
+        {
+            m_InteractionButton.SetActive(false);
         }
     }
 
@@ -82,7 +77,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player is near item
         {
-            m_IsPlayerNearDoor = true; //player is near item
+            m_IsPlayerNearItem = true; //player is near item
 
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
@@ -95,7 +90,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player move away from the item
         {
-            m_IsPlayerNearDoor = false; //player is not near the door
+            m_IsPlayerNearItem = false; //player is not near the door
 
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = null; //remove reference to the player stats

@@ -21,7 +21,7 @@ public class Chest : MonoBehaviour {
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
 
     [Header("UI")]
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_InstantInteractionButton; //chest ui
 
     [Header("Effects")]
     [SerializeField] private GameObject m_HitEffect;
@@ -29,7 +29,6 @@ public class Chest : MonoBehaviour {
     [SerializeField] private Sprite m_OpenChestSprite;
     [SerializeField] private Audio ChestOpenAudio;
 
-    private GameObject m_InstantInteractionButton; //chest ui
     private GameObject m_InstantChestContainItems;
     private Player m_Player; //player
     private Animator m_Animator; //chest animator
@@ -42,8 +41,6 @@ public class Chest : MonoBehaviour {
     void Start () {
 
         m_Animator = GetComponent<Animator>();
-
-        m_InstantInteractionButton = Instantiate(m_InteractionUI, transform);
 
         m_InstantChestContainItems = Instantiate(m_ChestContainItems, transform);
 
@@ -91,6 +88,10 @@ public class Chest : MonoBehaviour {
                     StartCoroutine(CloseChest());
                 }
             }
+        }
+        else if (m_InstantInteractionButton.activeSelf)
+        {
+            m_InstantInteractionButton.SetActive(false);
         }
     }
 

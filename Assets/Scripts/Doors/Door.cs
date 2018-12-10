@@ -25,12 +25,11 @@ public class Door : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private Audio DoorOpenAudio;
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_UI; //interaction button ui (needed only if door type is key)
 
     #endregion
 
     private Animator m_Animator; //reference to the gameobject animator
-    private GameObject m_UI; //interaction button ui (needed only if door type is key)
     private float m_TimeBetweenShowMessage;
 
     #endregion
@@ -48,8 +47,6 @@ public class Door : MonoBehaviour {
     {
         if (Type == DoorType.Key) //if door type is Key
         {
-            m_UI = Instantiate(m_InteractionUI, transform);
-
             m_UI.SetActive(false); //hide door ui
         }
     }
@@ -63,6 +60,11 @@ public class Door : MonoBehaviour {
                 if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
                 {
                     OpenDoorWithKey(); //try to open the door
+                }
+
+                if (GameMaster.Instance.IsPlayerDead)
+                {
+                    m_UI.SetActive(false);
                 }
             }
         }

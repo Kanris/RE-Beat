@@ -5,6 +5,9 @@ public class MoveBullet : MonoBehaviour {
     [SerializeField] private LayerMask m_LayerMask;
     [Range(1, 10)] public int DamageAmount = 1;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_BulletHitPrefab;
+
 	// Use this for initialization
 	void Start () {
 
@@ -35,15 +38,23 @@ public class MoveBullet : MonoBehaviour {
                 {
                     collision.gameObject.GetComponent<EnemyStatsGO>().TakeDamage(null, 0, DamageAmount);
                 }
-                else
-                    Destroy(gameObject);
             }
 
+            CreateBulletHitEffect(collision);
             Destroy(gameObject);
         }
-        else
+        else //hit ground
         {
+            CreateBulletHitEffect(collision);
             Destroy(gameObject);
         }
+    }
+
+    private void CreateBulletHitEffect(Collision2D collision)
+    {
+        var bulletHitEffect = Instantiate(m_BulletHitPrefab);
+        bulletHitEffect.transform.position = collision.contacts[0].point;
+
+        Destroy(bulletHitEffect, 1f);
     }
 }

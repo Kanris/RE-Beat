@@ -21,7 +21,7 @@ public class MagneticBox : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticles; //destroying particles
     [SerializeField] private Audio DestroySound; //destroying sound
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_InteractionButton; //box ui
 
     #endregion
 
@@ -30,7 +30,6 @@ public class MagneticBox : MonoBehaviour {
     private Animator m_Animator; //box animator
     private Transform m_Player; //player reference
     private Vector2 m_RespawnPosition; //box respawn point
-    private GameObject m_InteractionButton; //box ui
 
     private Animator m_PlayerAnimator;
     private float m_PreviousYPosition = 0f;
@@ -44,8 +43,6 @@ public class MagneticBox : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        InitializeInteractionButton(); //initialize box ui
-
         m_RespawnPosition = transform.position; //initialize respawn point
 
         m_Animator = GetComponent<Animator>(); //box animator
@@ -58,11 +55,6 @@ public class MagneticBox : MonoBehaviour {
 
         /*GameMaster.Instance.SaveState(transform.name, 
             new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position*/
-    }
-
-    private void InitializeInteractionButton()
-    {
-        m_InteractionButton = Instantiate(m_InteractionUI, transform);
     }
 
     private void SubscribeToEvents()
