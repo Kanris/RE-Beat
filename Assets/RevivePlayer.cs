@@ -53,6 +53,10 @@ public class RevivePlayer : MonoBehaviour {
         UIManager.Instance.RemoveRevive(PlayerStats.m_ReviveCount);
         PlayerStats.m_ReviveCount -= 1;
 
+        GameMaster.Instance.IsPlayerDead = false;
+
+        Tunnel.SetIscanSpawn(false);
+
         Destroy(gameObject);
     }
 

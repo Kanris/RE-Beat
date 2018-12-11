@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Tunnel : MonoBehaviour {
 
+    [SerializeField] private GameObject m_InteractionUI;
     [SerializeField] private AnimationClip m_InTunnelAnimation;
     [SerializeField] private GameObject m_FollowCompanion;
 
@@ -11,9 +13,29 @@ public class Tunnel : MonoBehaviour {
     private static bool m_IsSpawning;
     private static bool m_IsCanSpawn;
 
+    private bool m_IsPlayerNear;
+
     private void Start()
     {
         m_SpawnOnExit = transform.GetChild(0);
+
+        m_InteractionUI.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (m_IsPlayerNear)
+        {
+            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            {
+                ShowTunnelsMap();
+            }
+        }
+    }
+
+    private void ShowTunnelsMap()
+    {
+        Debug.LogError("Show map");
     }
 
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +48,15 @@ public class Tunnel : MonoBehaviour {
 
             yield return new WaitForSeconds(m_InTunnelAnimation.length);
 
+            SetIscanSpawn(true);
+
             Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
+        {
+            m_InteractionUI.SetActive(true);
+            m_IsPlayerNear = true;
         }
     }
 
@@ -47,6 +77,12 @@ public class Tunnel : MonoBehaviour {
                 m_Companion.GetComponent<Companion>().SetTarget(collision.transform);
                 m_Companion.GetComponent<Companion>().SetTunnel(transform);
             }
+        }
+
+        if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
+        {
+            m_InteractionUI.SetActive(false);
+            m_IsPlayerNear = false;
         }
     }
 

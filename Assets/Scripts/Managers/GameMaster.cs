@@ -353,6 +353,8 @@ public class GameMaster : MonoBehaviour {
 
     public IEnumerator RevivePlayer()
     {
+        IsPlayerDead = true;
+
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform.position, m_ReachableRespawnPoint.transform.rotation);
