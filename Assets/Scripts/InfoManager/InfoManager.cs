@@ -265,7 +265,9 @@ public class InfoManager : MonoBehaviour
         m_HeaderText.text = GetBookmarkname(id);
 
         AudioManager.Instance.Play(m_OpenAudio); //play open journal sound
-        InfoManagerLight.Instance.ChangeLight(id);
+
+        if (InfoManagerLight.Instance != null)
+            InfoManagerLight.Instance.ChangeLight(id);
     }
 
     public IEnumerator CloseJournalWithDelay()
@@ -286,7 +288,9 @@ public class InfoManager : MonoBehaviour
         OnJournalOpen(false); //notify that journal is close
 
         AudioManager.Instance.Play(m_CloseAudio); //play open journal sound 
-        InfoManagerLight.Instance.ChangeLight(-1);
+
+        if (InfoManagerLight.Instance != null)
+            InfoManagerLight.Instance.ChangeLight(-1);
     }
 
     public void SetIsCantOpenJournal(bool value)

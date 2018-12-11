@@ -33,7 +33,7 @@ public class RevivePlayer : MonoBehaviour {
 
         var materialForPlayer = m_PlayerThatInteract.GetComponent<SpriteRenderer>().material;
 
-        yield return Camera.main.GetComponent<Camera2DFollow>().PlayReviveHealthEffect();
+        yield return Camera.main.GetComponent<Camera2DFollow>().PlayReviveEffect();
 
         Destroy(m_PlayerThatInteract);
 

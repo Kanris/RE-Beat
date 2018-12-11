@@ -106,7 +106,7 @@ namespace UnityStandardAssets._2D
             Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = false;
         }
 
-        public IEnumerator PlayReviveHealthEffect()
+        public IEnumerator PlayReviveEffect()
         {
             Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
 

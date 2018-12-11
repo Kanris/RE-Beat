@@ -78,8 +78,9 @@ public class Chest : MonoBehaviour {
 
             if (m_Inventory.activeSelf)
             {
-                if (m_Inventory.transform.GetChild(0).childCount == 0) //if there is no child left
+                if (m_Inventory.transform.GetChild(0).childCount == 0 && m_InstantChestContainItems != null) //if there is no child left
                 {
+                    ChangeChestSprite();
                     Destroy(m_InstantChestContainItems);
                 }
 
