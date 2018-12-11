@@ -12,6 +12,7 @@ public class CompanionCall : MonoBehaviour {
     [SerializeField] private GameObject m_Player; //player's prefab
     [SerializeField] private GameObject m_Companion; //companion's prefab
 
+    private SpriteRenderer m_StationImage;
     private bool m_IsPlayer; //is player triggered
     private GameObject m_WhoTriggered; //gameobject that triggered
     private bool m_IsChanging; //is spawn new character
@@ -21,6 +22,7 @@ public class CompanionCall : MonoBehaviour {
 
         m_InteractionUI.SetActive(false); //hide interaction button
 
+        m_StationImage = GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -48,6 +50,11 @@ public class CompanionCall : MonoBehaviour {
         if (m_IsPlayer) //if player triggered station
         {
             whoToSpawn = m_Companion; //spawn companion
+            m_StationImage.color = Color.magenta;
+        }
+        else
+        {
+            m_StationImage.color = new Color(.549f, .980f, .984f);
         }
 
         Instantiate(whoToSpawn, transform.position, transform.rotation); //instantiate gameobject
