@@ -403,6 +403,11 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!1 &70892552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906498831865562, guid: 2825156a6a3a15841acf05563c8c63e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2092380839}
 --- !u!1 &74025775
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,6 +457,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &107214494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906498831865562, guid: 2825156a6a3a15841acf05563c8c63e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 176239699}
 --- !u!4 &130752509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4697430625192952, guid: 1d035be2feb1da74ca03a23cd7ba8581,
@@ -12753,6 +12763,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_TeleportToTunnel
+      value: 
+      objectReference: {fileID: 599640882}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
   m_IsPrefabAsset: 0
@@ -13359,6 +13374,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_TeleportToTunnel
+      value: 
+      objectReference: {fileID: 107214494}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
   m_IsPrefabAsset: 0
@@ -13766,6 +13786,11 @@ MonoBehaviour:
   Direction: 0
   MovingTime: 3.8
   IdleTime: 1
+--- !u!1 &599640882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906498831865562, guid: 2825156a6a3a15841acf05563c8c63e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 387355626}
 --- !u!1001 &727871903
 Prefab:
   m_ObjectHideFlags: 0
@@ -29662,6 +29687,11 @@ Transform:
   m_Father: {fileID: 2006847307}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &1127139456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906498831865562, guid: 2825156a6a3a15841acf05563c8c63e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1391573413}
 --- !u!1 &1133197492
 GameObject:
   m_ObjectHideFlags: 0
@@ -34882,6 +34912,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_TeleportToTunnel
+      value: 
+      objectReference: {fileID: 70892552}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
   m_IsPrefabAsset: 0
@@ -35035,6 +35070,15 @@ Prefab:
     - target: {fileID: 4055613270432984, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
       propertyPath: m_LocalScale.x
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_InteractionUI
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574759945152102, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
@@ -52236,6 +52280,15 @@ Prefab:
     - target: {fileID: 4055613270432984, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
       propertyPath: m_LocalScale.x
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_InteractionUI
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574759945152102, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
@@ -70622,6 +70675,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114411297805141118, guid: 2825156a6a3a15841acf05563c8c63e6,
+        type: 2}
+      propertyPath: m_TeleportToTunnel
+      value: 
+      objectReference: {fileID: 1127139456}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2825156a6a3a15841acf05563c8c63e6, type: 2}
   m_IsPrefabAsset: 0

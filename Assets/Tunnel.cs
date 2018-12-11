@@ -6,6 +6,8 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Tunnel : MonoBehaviour {
 
     [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_TeleportToTunnel;
+
     [SerializeField] private AnimationClip m_InTunnelAnimation;
     [SerializeField] private GameObject m_FollowCompanion;
 
@@ -13,29 +15,30 @@ public class Tunnel : MonoBehaviour {
     private static bool m_IsSpawning;
     private static bool m_IsCanSpawn;
 
-    private bool m_IsPlayerNear;
+    private Transform m_CompanionToTeleport;
 
     private void Start()
     {
         m_SpawnOnExit = transform.GetChild(0);
 
-        m_InteractionUI.SetActive(false);
+        if (m_InteractionUI != null)
+            m_InteractionUI.SetActive(false);
     }
 
     private void Update()
     {
-        if (m_IsPlayerNear)
+        if (m_CompanionToTeleport != null)
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
-                ShowTunnelsMap();
+                MoveToNextTunnel();
             }
         }
     }
 
-    private void ShowTunnelsMap()
+    private void MoveToNextTunnel()
     {
-        Debug.LogError("Show map");
+        m_CompanionToTeleport.transform.position = m_TeleportToTunnel.transform.position;
     }
 
     private IEnumerator OnTriggerEnter2D(Collider2D collision)
@@ -55,8 +58,11 @@ public class Tunnel : MonoBehaviour {
 
         if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
         {
-            m_InteractionUI.SetActive(true);
-            m_IsPlayerNear = true;
+            if (m_InteractionUI != null)
+            {
+                m_InteractionUI.SetActive(true);
+                m_CompanionToTeleport = collision.transform;
+            }
         }
     }
 
@@ -81,8 +87,11 @@ public class Tunnel : MonoBehaviour {
 
         if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
         {
-            m_InteractionUI.SetActive(false);
-            m_IsPlayerNear = false;
+            if (m_InteractionUI != null)
+            {
+                m_InteractionUI.SetActive(false);
+                m_CompanionToTeleport = null;
+            }
         }
     }
 
