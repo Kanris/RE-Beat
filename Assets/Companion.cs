@@ -34,7 +34,7 @@ public class Companion : MonoBehaviour {
             var diffrence = m_Target.position - transform.position;
 
             //if companion is not too close to the target or he is not moving to the tunnel
-            if ((Mathf.Abs(diffrence.x) > 1f & (Mathf.Abs(diffrence.y) < 4f)
+            if ((Mathf.Abs(diffrence.x) > 1.5f & (Mathf.Abs(diffrence.y) < 4f)
                 | (Mathf.Abs(diffrence.x) > 4f)
                 | m_IsMovingToTheTunnel))
             {

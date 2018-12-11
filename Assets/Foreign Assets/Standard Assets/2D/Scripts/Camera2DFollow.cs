@@ -21,8 +21,12 @@ namespace UnityStandardAssets._2D
 
         private float leftBound, rightBound, bottomBound, topBound;
 
+        private float m_DefaultCamSize;
+
         private void Start()
         {
+            m_DefaultCamSize = Camera.main.orthographicSize;
+
             float camExtentV = Camera.main.orthographicSize;
             float camExtentH = (camExtentV * Screen.width) / Screen.height;
 
@@ -71,7 +75,7 @@ namespace UnityStandardAssets._2D
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
 
-            SetCameraSize(5f);
+            SetCameraSize(m_DefaultCamSize);
 
             damping = 0f;
 

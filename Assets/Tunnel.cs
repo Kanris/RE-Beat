@@ -22,7 +22,10 @@ public class Tunnel : MonoBehaviour {
         m_SpawnOnExit = transform.GetChild(0);
 
         if (m_InteractionUI != null)
+        {
             m_InteractionUI.SetActive(false);
+            GetComponent<SpriteRenderer>().color = Color.magenta;
+        }
     }
 
     private void Update()
