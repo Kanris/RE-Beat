@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212934168798575102}
   - component: {fileID: 61272441809287858}
   - component: {fileID: 114153468619921920}
+  - component: {fileID: 95203458872842750}
   m_Layer: 0
   m_Name: CompanionCallStation
   m_TagString: Untagged
@@ -70,8 +71,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1062801335892586}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -70.06, y: 8.56, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 224845752740836482}
@@ -94,7 +95,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.35, y: 1.35}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.35, y: 1.35}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -103,6 +104,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.2578497, y: 1.6293354}
   m_EdgeRadius: 0
+--- !u!95 &95203458872842750
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1062801335892586}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 992ff1a5ea4c68646803b16b51da0a72, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114046415786017324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,8 +236,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b190c554f9b2b0945bf7229b5e7d9f8b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300008, guid: 9e4094a7e56c9c94ebd948f5b305bb0f, type: 3}
+  m_Color: {r: 0.104396604, g: 0.8958753, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
