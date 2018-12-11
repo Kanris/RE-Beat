@@ -13,7 +13,7 @@ public class Tunnel : MonoBehaviour {
 
     private Transform m_SpawnOnExit;
     private static bool m_IsSpawning;
-    private static bool m_IsCanSpawn;
+    private static bool m_IsCanSpawn = true;
 
     private Transform m_CompanionToTeleport;
 
