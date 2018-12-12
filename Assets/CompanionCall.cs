@@ -22,6 +22,8 @@ public class CompanionCall : MonoBehaviour {
 
         m_InteractionUI.SetActive(false); //hide interaction button
 
+        m_IsPlayer = true;
+
         m_StationImage = GetComponent<SpriteRenderer>();
     }
 	
@@ -60,6 +62,7 @@ public class CompanionCall : MonoBehaviour {
         Instantiate(whoToSpawn, transform.position, transform.rotation); //instantiate gameobject
 
         m_IsChanging = false; //character was change
+        m_IsPlayer = !m_IsPlayer;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,16 +71,7 @@ public class CompanionCall : MonoBehaviour {
         {
             m_InteractionUI.SetActive(true); //show interaction button
 
-            if (collision.name == "Body") //is player near station
-            {
-                m_IsPlayer = true; //player near station
-                m_WhoTriggered = collision.transform.parent.gameObject; //save player gameobject
-            }
-            else //is companion near station
-            {
-                m_IsPlayer = false; //companion near station
-                m_WhoTriggered = collision.gameObject; //save companion gameobject
-            }
+            m_WhoTriggered = collision.transform.parent.gameObject;//save companion gameobject
 
         }
     }

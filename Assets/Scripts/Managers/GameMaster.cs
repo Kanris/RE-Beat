@@ -20,6 +20,7 @@ public class GameMaster : MonoBehaviour {
     [SerializeField] private GameObject m_PlayerToRespawn;
     [SerializeField] private GameObject m_RevivePlayer;
     [SerializeField] private GameObject m_Companion;
+    [SerializeField] private GameObject m_FollowCompanion;
 
     [HideInInspector] public Vector3 m_RespawnPointPosition; //respawn position
 
@@ -357,7 +358,15 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform.position, m_ReachableRespawnPoint.transform.rotation);
+        if (m_ReachableRespawnPoint.transform.childCount > 0)
+        {
+            for (var index = 0; index < m_ReachableRespawnPoint.childCount; index++)
+            {
+                Destroy(m_ReachableRespawnPoint.GetChild(index).gameObject);
+            }
+        }
+
+        Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform);
         Instantiate(m_Companion, m_NearestTunnel.position, Quaternion.identity);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
@@ -383,6 +392,11 @@ public class GameMaster : MonoBehaviour {
                     StartCoroutine(RespawnWithFade(m_RespawnPoint));
                 else
                     RespawnWithoutFade(m_RespawnPoint);
+
+                if (respawnWithoutRevive && m_RespawnPoint.GetComponent<RespawnPoint>().m_IsCanSpawnCompanion)
+                {
+                    Instantiate(m_FollowCompanion, m_RespawnPoint.position, m_RespawnPoint.rotation);
+                }
             }
             else
             {

@@ -12,8 +12,6 @@ public class Tunnel : MonoBehaviour {
     [SerializeField] private GameObject m_FollowCompanion;
 
     private Transform m_SpawnOnExit;
-    private static bool m_IsSpawning;
-    private static bool m_IsCanSpawn = true;
 
     private Transform m_CompanionToTeleport;
 
@@ -48,13 +46,9 @@ public class Tunnel : MonoBehaviour {
     {
         if (collision.CompareTag("Companion"))
         {
-            m_IsSpawning = false;
-
             collision.GetComponent<Animator>().SetTrigger("InTunnel");
 
             yield return new WaitForSeconds(m_InTunnelAnimation.length);
-
-            SetIscanSpawn(true);
 
             Destroy(collision.gameObject);
         }
@@ -71,12 +65,10 @@ public class Tunnel : MonoBehaviour {
 
     private IEnumerator OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsSpawning & m_IsCanSpawn)
+        if (collision.CompareTag("Player") && !Companion.m_IsWithPlayer && !GameMaster.Instance.IsPlayerDead)
         {
             if (IsCanLeaveTunnel(collision.transform))
             {
-                m_IsSpawning = true;
-
                 var m_Companion = Instantiate(m_FollowCompanion, m_SpawnOnExit.position, Quaternion.identity);
 
                 m_Companion.GetComponent<Animator>().SetTrigger("FromTunnel");
@@ -110,10 +102,5 @@ public class Tunnel : MonoBehaviour {
             result = false;
 
         return result;
-    }
-
-    public static void SetIscanSpawn(bool value)
-    {
-        m_IsCanSpawn = value;
     }
 }

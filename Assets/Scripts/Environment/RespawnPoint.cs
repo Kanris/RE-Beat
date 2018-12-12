@@ -11,6 +11,9 @@ public class RespawnPoint : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio audioSave;
 
+    [Header("Companion")]
+    public bool m_IsCanSpawnCompanion;
+
     private Transform m_Flame;
 
     #endregion

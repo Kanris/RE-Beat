@@ -289,7 +289,7 @@ public class DroneShooter : MonoBehaviour {
                 var direction = (m_Path.vectorPath[m_CurrentWaypoint] - transform.position).normalized
                     * Speed * Time.fixedDeltaTime;
 
-                m_Rigidbody.AddForce(direction, ForceMode2D.Force);
+                m_Rigidbody.velocity = direction;
 
                 if (Vector3.Distance(transform.position, m_Path.vectorPath[m_CurrentWaypoint]) < m_NextWaypointDistance)
                 {

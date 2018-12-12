@@ -19,8 +19,6 @@ public class RevivePlayer : MonoBehaviour {
 
     private void Start()
     {
-        Tunnel.SetIscanSpawn(false);
-
         m_ScrapAmount = PlayerStats.Scrap;
         PlayerStats.Scrap = -PlayerStats.Scrap;
 
@@ -35,7 +33,7 @@ public class RevivePlayer : MonoBehaviour {
 
         yield return Camera.main.GetComponent<Camera2DFollow>().PlayReviveEffect();
 
-        Destroy(m_PlayerThatInteract);
+        Destroy(m_PlayerThatInteract.transform.parent.gameObject);
 
         Instantiate(m_PlayerToRevive, transform.position, transform.rotation)
             .transform.GetChild(0).GetComponent<SpriteRenderer>().material = materialForPlayer;
@@ -48,15 +46,12 @@ public class RevivePlayer : MonoBehaviour {
         PlayerStats.Scrap = m_ScrapAmount;
 
         UIManager.Instance.EnableRegularUI();
-        Tunnel.SetIscanSpawn(true);
 
         UIManager.Instance.RemoveRevive(PlayerStats.m_ReviveCount);
         PlayerStats.m_ReviveCount -= 1;
 
         GameMaster.Instance.IsPlayerDead = false;
-
-        Tunnel.SetIscanSpawn(false);
-
+        
         Destroy(gameObject);
     }
 
@@ -65,6 +60,9 @@ public class RevivePlayer : MonoBehaviour {
         if (collision.CompareTag("Player") & !m_IsReviving)
         {
             m_PlayerThatInteract = collision.gameObject;
+
+            m_PlayerThatInteract.GetComponent<Platformer2DUserControl>().enabled = false;
+            m_PlayerThatInteract.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             StartCoroutine(Revive());
         }
     }

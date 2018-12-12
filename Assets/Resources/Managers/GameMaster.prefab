@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1405287595926136}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1405287595926136
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4360737588938392}
   - component: {fileID: 114880720034293954}
@@ -30,7 +30,7 @@ GameObject:
 --- !u!4 &4360737588938392
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405287595926136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -43,7 +43,7 @@ Transform:
 --- !u!114 &114880720034293954
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405287595926136}
   m_Enabled: 1
@@ -51,10 +51,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e978bdc8213ed40d4bfaad6614f915f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneName: Cave
   m_RespawnPoint: {fileID: 0}
+  m_ReturnPoint: {fileID: 0}
+  m_ReachableRespawnPoint: {fileID: 0}
+  m_NearestTunnel: {fileID: 0}
+  m_PlayerToRespawn: {fileID: 1711713834508778, guid: 51b82a4c3535e4c7ba75ebd5b4cad1f1,
+    type: 2}
+  m_RevivePlayer: {fileID: 1634276455676760, guid: d8aae5e899c57004dbde3281c5563ea1,
+    type: 2}
+  m_Companion: {fileID: 1763726396579040, guid: 2900946eb9eb8ba4abe550b5ead762c6,
+    type: 2}
+  m_FollowCompanion: {fileID: 1696087267904816, guid: 95769844d2e1ad54b96f58f8a26d1b1b,
+    type: 2}
   m_RespawnPointPosition: {x: 0, y: 0, z: 0}
+  BackgroundMusic: {fileID: 11400000, guid: 47341f7c802b548c5b1231658295456a, type: 2}
+  m_IsPlayerReturning: 0
   IsPlayerDead: 0
-  SceneName: 
-  m_PlayerToRespawn: {fileID: 0}
-  BackgroundMusic: {fileID: 0}
-  m_Camera: {fileID: 0}

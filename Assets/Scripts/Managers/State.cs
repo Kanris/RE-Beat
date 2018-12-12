@@ -45,6 +45,11 @@ public class State {
     {
         return ObjectsPosition.ContainsKey(name);
     }
+
+    public static void ResetState()
+    {
+        ScenesState = null;
+    }
 }
 
 [System.Serializable]

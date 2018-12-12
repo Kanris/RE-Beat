@@ -266,6 +266,7 @@ public class PlayerStats : Stats
     {
         GameMaster.Instance.StartPlayerRespawn(true, false); //respawn new player on respawn point
         PlayDeathParticles(); //show death particles
+
         GameMaster.Destroy(m_GameObject.transform.parent.gameObject); //destroy gameobject
     }
 
@@ -340,6 +341,27 @@ public class PlayerStats : Stats
         material.color = color;
 
         yield return new WaitForSeconds(time);
+    }
+
+    public static void ResetState()
+    {
+        DamageAmount = 50;
+        MeleeAttackSpeed = 0.2f;
+        RangeAttackSpeed = 2f;
+        Invincible = 2f;
+
+        PlayerInventory = null;
+        m_IsCanDoubleJump = false;
+        m_IsCanDash = false;
+        m_ReviveCount = 2;
+
+        m_Scrap = 0;
+        DamageMultiplier = 1;
+
+        DefaultMeleeAttackSpeed = 0.3f;
+        DefaultSpeed = 4f;
+
+        OnScrapAmountChange = null;
     }
 
     #endregion

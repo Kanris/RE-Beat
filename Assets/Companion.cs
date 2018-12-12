@@ -19,15 +19,22 @@ public class Companion : MonoBehaviour {
     private const float m_DistanceForTrade = .4f; //distance to show/hide interaction button
     private bool m_IsMovingToTheTunnel = false; //is companion moves to the tunnel
 
+    public static bool m_IsWithPlayer;
+
 	// Use this for initialization
 	void Start () {
 
         m_Animator = GetComponent<Animator>();
-
+        m_IsWithPlayer = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDestroy()
+    {
+        m_IsWithPlayer = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
         if (m_Target != null) //if there is something to follow
         {

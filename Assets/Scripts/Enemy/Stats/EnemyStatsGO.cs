@@ -163,6 +163,7 @@ public class EnemyStatsGO : MonoBehaviour {
 
         m_IsDestroying = true;
         m_Rigidbody.sharedMaterial = null;
+        m_Rigidbody.mass = 1f;
         m_Rigidbody.gravityScale = 3f;
 
         Destroy(GetComponent<TrailRenderer>());
@@ -192,9 +193,12 @@ public class EnemyStatsGO : MonoBehaviour {
             playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
         }
 
-        Destroy(
-            Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
-        EnemyStats.DeathParticle = null;
+        if (EnemyStats.DeathParticle != null)
+        {
+            Destroy(
+                Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
+            EnemyStats.DeathParticle = null;
+        }
 
         CreateScraps();
 

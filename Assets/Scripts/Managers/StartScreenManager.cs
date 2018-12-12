@@ -178,6 +178,14 @@ public class StartScreenManager : MonoBehaviour {
             SaveLoadManager.Instance.SaveOptions();
     }
 
+    private void ResetGameState()
+    {
+        PlayerStats.ResetState(); //reset player state
+        State.ResetState();
+
+        Companion.m_IsWithPlayer = false;
+    }
+
     #region Sound
 
     private void PlayClickSound()
@@ -206,6 +214,8 @@ public class StartScreenManager : MonoBehaviour {
 
         LocalizationManager.Instance.LoadJournalLocalizationData(LocalizationToLoad);
         LocalizationManager.Instance.LoadDialogueLocalizationData(LocalizationToLoad);
+
+        ResetGameState();
     }
 
     public void LoadGame()

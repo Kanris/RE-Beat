@@ -127,6 +127,12 @@ public class UIManager : MonoBehaviour {
 
         m_AmountText.text = PlayerStats.Scrap.ToString(); //display current scrap amount
     }
+
+    private void OnDestroy()
+    {
+        PlayerStats.OnScrapAmountChange -= ChangeScrapAmount;
+    }
+
     #endregion
 
     #region notification 

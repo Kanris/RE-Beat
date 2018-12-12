@@ -25,17 +25,7 @@ public class DebuffPanel : MonoBehaviour {
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            if (Instance != this)
-            {
-                Destroy(Instance);
-            }
-        }
-        else
-        {
-            Instance = this;
-        }
+        Instance = this;
     }
 
     #endregion

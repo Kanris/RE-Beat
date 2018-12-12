@@ -241,7 +241,6 @@ public class DialogueManager : MonoBehaviour {
 #if MOBILE_INPUT
             MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
-
             m_Text.gameObject.SetActive(true);
 
             transform.position = parentTransform.position.Add(y: 2.2f);

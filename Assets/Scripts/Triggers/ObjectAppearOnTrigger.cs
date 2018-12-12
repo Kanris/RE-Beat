@@ -59,7 +59,7 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
 
             if (m_IsCameraControl)
             {
-                if (m_Camera.target != null)
+                if (m_Camera.target != null & m_Camera.target != m_Center)
                 {
                     m_IsPlayerTrigger = true;
 
@@ -69,7 +69,7 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
                     m_Camera.target = m_Center;
                     //m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
 
-                    StartCoroutine(SmoothChangeCameraSize(m_CamSize));   
+                    StartCoroutine(SmoothChangeCameraSize(m_CamSize));
                 }
             }
         }
@@ -120,7 +120,8 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
                 AppearObject();
             }
 
-            if (m_IsCameraControl & m_ObjectToFollow != null)
+
+            if (m_IsCameraControl && m_ObjectToFollow != null)
             {
                 m_Camera.target = m_ObjectToFollow;
                 Camera.main.orthographicSize = m_DefaultCamSize;
