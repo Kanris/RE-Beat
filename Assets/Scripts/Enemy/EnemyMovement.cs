@@ -31,6 +31,8 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MoveUpdateTime;
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
+
+    private int m_Direction;
     #endregion
 
     #region inspector fields
@@ -106,6 +108,8 @@ public class EnemyMovement : MonoBehaviour {
             {
                 m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
 
+                //m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * m_Speed, 0f);
+
                 if (!m_Animator.GetBool("isWalking")) //if enemy still not playing move animation
                     SetAnimation(true);
 
@@ -124,11 +128,14 @@ public class EnemyMovement : MonoBehaviour {
         {
             if (m_ThrowUpdateTime > Time.time)
             {
-                var multiplier = GetMultiplier();
-                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * multiplier, 0f);
+                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
+                SetAnimation(false);
             }
             else
+            {
+                m_Rigidbody2D.velocity = Vector2.zero;
                 m_IsThrowBack = false;
+            }
         }
     }
 
@@ -139,8 +146,18 @@ public class EnemyMovement : MonoBehaviour {
             if (divider > 0)
             {
                 m_IsThrowBack = true;
-                m_ThrowUpdateTime = Time.time + 0.07f;
+                m_ThrowUpdateTime = Time.time + 0.2f;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            var distance = collision.transform.position - transform.position;
+
+            m_Direction = distance.x > 0 ? -1 : 1;
         }
     }
 
@@ -152,16 +169,6 @@ public class EnemyMovement : MonoBehaviour {
         }
         else
             m_PreviousPosition = m_Rigidbody2D.position; //remember this position maybe next will be same
-    }
-
-    private int GetMultiplier()
-    {
-        var multiplier = Convert.ToInt32(transform.localScale.x);
-
-        if (!m_EnemyStats.IsPlayerNear)
-            multiplier *= -1;
-
-        return multiplier;
     }
 
     private void SpeedChange(float speed)

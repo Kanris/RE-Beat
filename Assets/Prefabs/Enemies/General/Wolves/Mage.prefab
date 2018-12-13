@@ -207,7 +207,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -347,7 +347,7 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
     MaxHealth: 100
-    m_ThrowX: 2
+    m_ThrowX: 3
     m_ThrowY: 0.5
     DamageAmount: 1
     Speed: 1

@@ -92,12 +92,14 @@ public class Enemy : Stats
         }
     }
 
-    public void HitPlayer(PlayerStats player)
+    public void HitPlayer(PlayerStats player, int damageAmount = -1)
     {
         if (OnPlayerHit != null)
             OnPlayerHit(m_IsPlayerNear);
 
-        player.TakeDamage(DamageAmount);
+        damageAmount = damageAmount > -1 ? damageAmount : DamageAmount;
+
+        player.TakeDamage(damageAmount);
     }
 
     #endregion

@@ -48,14 +48,6 @@ public class PatrolEnemy : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            m_EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

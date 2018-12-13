@@ -272,8 +272,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
-  m_LinearDrag: 3
+  m_Mass: 1
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrailMaterial: {fileID: 2100000, guid: caa4eea9855fb9a439c3d9018e5052f9, type: 2}
   m_ChaseRange: {fileID: 114907073482014258}
-  UpdateRate: 3
+  UpdateRate: 5
   Speed: 100
   m_PatrolPoints:
   - {fileID: 4481481314149496}

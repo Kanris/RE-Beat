@@ -126,7 +126,19 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
+            var damageAmount = EnemyStats.DamageAmount;
+
+            if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            {
+                damageAmount = 0;
+            }
+
+            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, damageAmount);
+
+            if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            {
+                EnemyStats.TakeDamage(PlayerStats.DamageAmount / 3);
+            }
         }
     }
 
@@ -134,7 +146,19 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player") & !m_IsDestroying)
         {
-            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats);
+            var damageAmount = 1;
+
+            if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            {
+                damageAmount = 0;
+            }
+
+            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, damageAmount);
+
+            if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            {
+                EnemyStats.TakeDamage(damageAmount);
+            }
 
             if (m_DestroyOnCollision)
             {

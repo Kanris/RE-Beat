@@ -153,8 +153,6 @@ public class Trader : MonoBehaviour {
 
                         //add item to inventory
                         PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
-
-                        Debug.LogError("item name - " + m_CurrentSelectedItem.name);
                     }
 
                     //apply item upgrade to the player

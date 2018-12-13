@@ -8,7 +8,7 @@ public class TraderItem : MonoBehaviour {
     public enum TraderItemType { Upgrade, Heal }
     [SerializeField] private TraderItemType m_TraderItemType;
 
-    public enum UpgradeType { Dash, DoubleJump, None }
+    public enum UpgradeType { Dash, DoubleJump, DashDamage, DashInvincible, None }
     [SerializeField] private UpgradeType m_UpgradeType;
 
     [Header("Effects")]
@@ -53,6 +53,16 @@ public class TraderItem : MonoBehaviour {
                 if (PlayerStats.m_IsCanDoubleJump)
                     result = true;
                 break;
+
+            case UpgradeType.DashDamage:
+                if (PlayerStats.m_IsDamageEnemyWhileDashing)
+                    result = true;
+                break;
+
+            case UpgradeType.DashInvincible:
+                if (PlayerStats.m_IsInvincibleWhileDashing)
+                    result = true;
+                break;
         }
 
         return result;
@@ -70,6 +80,14 @@ public class TraderItem : MonoBehaviour {
 
                 case UpgradeType.DoubleJump:
                     PlayerStats.m_IsCanDoubleJump = true;
+                    break;
+
+                case UpgradeType.DashDamage:
+                    PlayerStats.m_IsDamageEnemyWhileDashing = true;
+                    break;
+
+                case UpgradeType.DashInvincible:
+                    PlayerStats.m_IsInvincibleWhileDashing = true;
                     break;
             }
         }
