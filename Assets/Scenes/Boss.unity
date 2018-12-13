@@ -1315,7 +1315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &285103706
 Transform:
   m_ObjectHideFlags: 0
@@ -13368,15 +13368,6 @@ Prefab:
       propertyPath: m_BlockDoor
       value: 
       objectReference: {fileID: 2024394480}
-    - target: {fileID: 1859725932341948, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114832504023990750, guid: 724559b7004e140408cb6d3a90c85200,
-        type: 2}
-      propertyPath: EnemyStats.MaxHealth
-      value: 220
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724559b7004e140408cb6d3a90c85200, type: 2}
   m_IsPrefabAsset: 0
@@ -18374,7 +18365,7 @@ AreaEffector2D:
     m_Bits: 256
   m_UseGlobalAngle: 1
   m_ForceAngle: 90
-  m_ForceMagnitude: 100
+  m_ForceMagnitude: 60
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 0
@@ -19096,7 +19087,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.98
+      value: 1.91
       objectReference: {fileID: 0}
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -23771,7 +23762,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.81
+      value: 2.39
       objectReference: {fileID: 0}
     - target: {fileID: 4394982078444010, guid: d145d663c753f6142b976a9cccffb34a, type: 2}
       propertyPath: m_LocalPosition.y
@@ -24410,7 +24401,7 @@ Prefab:
     - target: {fileID: 114190953265143864, guid: 9a2d3f1ca13744cf599b4d12055f560f,
         type: 2}
       propertyPath: m_CamSize
-      value: 5.5
+      value: 5.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a2d3f1ca13744cf599b4d12055f560f, type: 2}
@@ -25223,7 +25214,7 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
