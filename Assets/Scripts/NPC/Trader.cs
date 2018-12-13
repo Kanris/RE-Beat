@@ -27,18 +27,6 @@ public class Trader : MonoBehaviour {
 
     private PlayerStats m_Player; //notify is player near the vendor
 
-    private void Start()
-    {
-        StartCoroutine(HideUIWithDelay()); //hide ui with delay so GameMaster can recreate trader inventory state
-    }
-
-    private IEnumerator HideUIWithDelay()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        HideUI();
-    }
-
     // Update is called once per frame
     void Update () {
 		
@@ -165,6 +153,8 @@ public class Trader : MonoBehaviour {
 
                         //add item to inventory
                         PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
+
+                        Debug.LogError("item name - " + m_CurrentSelectedItem.name);
                     }
 
                     //apply item upgrade to the player

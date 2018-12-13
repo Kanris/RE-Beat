@@ -8,7 +8,7 @@ public class TraderItem : MonoBehaviour {
     public enum TraderItemType { Upgrade, Heal }
     [SerializeField] private TraderItemType m_TraderItemType;
 
-    public enum UpgradeType { Dash, DoubleJump }
+    public enum UpgradeType { Dash, DoubleJump, None }
     [SerializeField] private UpgradeType m_UpgradeType;
 
     [Header("Effects")]
@@ -24,6 +24,9 @@ public class TraderItem : MonoBehaviour {
     {
         m_SelectImage = transform.GetChild(0).gameObject;
         m_SelectImage.SetActive(false);
+
+        if (IsUpgradeAvailable())
+            Destroy(gameObject);
     }
 
     private void OnValidate()
@@ -33,6 +36,26 @@ public class TraderItem : MonoBehaviour {
             GetComponent<Image>().sprite = m_TraderItem.Image;
             gameObject.name = m_TraderItem.name;
         }
+    }
+
+    private bool IsUpgradeAvailable()
+    {
+        var result = false;
+
+        switch (m_UpgradeType)
+        {
+            case UpgradeType.Dash:
+                if (PlayerStats.m_IsCanDash)
+                    result = true;
+                break;
+
+            case UpgradeType.DoubleJump:
+                if (PlayerStats.m_IsCanDoubleJump)
+                    result = true;
+                break;
+        }
+
+        return result;
     }
 
     public void ApplyUpgrade(PlayerStats player)
