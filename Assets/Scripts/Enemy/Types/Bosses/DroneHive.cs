@@ -40,6 +40,11 @@ public class DroneHive : MonoBehaviour
     [SerializeField] private Audio m_BossBattleAudio;
     [SerializeField] private Audio m_SceneBackgroundMusic;
 
+    [Header("Spawn")]
+    [SerializeField] private Transform m_SpawnLocation;
+    [SerializeField] private GameObject m_KamikazeDrone;
+    [SerializeField] private GameObject m_ChaserDrone;
+
     #endregion
 
     #region private
@@ -53,6 +58,10 @@ public class DroneHive : MonoBehaviour
     private bool m_IsTeleporting;
     private float m_TeleportTimer;
     private Vector3 m_NextDestination;
+
+    private GameObject m_EnemyToSpawn;
+    private int m_SpawnDroneCount;
+    private bool m_IsCanSpawn;
 
     private Vector2 m_StartPosition;
     #endregion
@@ -73,6 +82,10 @@ public class DroneHive : MonoBehaviour
         m_NextDestination = GetDestination();
 
         m_TeleportTimer = 0f;
+
+        m_EnemyToSpawn = m_KamikazeDrone;
+
+        m_SpawnDroneCount = 3;
     }
 
     #region Initialize
@@ -130,8 +143,6 @@ public class DroneHive : MonoBehaviour
         {
             m_TeleportTimer = Time.time + TeleportSpeed;
 
-            CrossAttack();
-
             StartCoroutine(TeleportSequence(m_NextDestination));
 
             m_NextDestination = GetDestination();
@@ -149,7 +160,17 @@ public class DroneHive : MonoBehaviour
     private void ChangeState()
     {
         if (m_Stats.CurrentHealth <= Stage2Health & !m_Stage2)
+        {
             m_Stage2 = true;
+
+            for (var index = 0; index < m_SpawnLocation.childCount; index++)
+            {
+                m_SpawnLocation.GetChild(index).GetComponent<EnemyStatsGO>().TakeDamage(null, 0, 1);
+            }
+
+            m_EnemyToSpawn = m_ChaserDrone;
+            m_SpawnDroneCount = 1;
+        }
 
         if (m_Stats.CurrentHealth <= Stage3Health & !m_Stage3)
         {
@@ -169,7 +190,7 @@ public class DroneHive : MonoBehaviour
 
         TeleportSpeed = 5f;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         ResetArchlightPosition();
         m_BlockDoor.SetActive(false);
@@ -178,10 +199,17 @@ public class DroneHive : MonoBehaviour
         ChangeLightState(true);
         Key.SetActive(true);
 
-
         AudioManager.Instance.SetBackgroundMusic(m_SceneBackgroundMusic);
 
         transform.position = m_StartPosition;
+
+        for (var index = 0; index < m_SpawnLocation.childCount; index++)
+        {
+            Destroy(m_SpawnLocation.GetChild(index).gameObject);
+        }
+
+        m_EnemyToSpawn = m_KamikazeDrone;
+
         gameObject.SetActive(false);
     }
 
@@ -241,6 +269,8 @@ public class DroneHive : MonoBehaviour
 
             m_TeleportTimer = Time.time;
 
+            m_IsCanSpawn = false;
+
             ShowParticles(HitParticle, 5f);
         }
     }
@@ -258,6 +288,10 @@ public class DroneHive : MonoBehaviour
 
         TeleportSound();
 
+        WeirdAttack();
+
+        var spawnPosition = transform.position;
+
         GetComponent<EnemyStatsGO>().enabled = false;
 
         yield return new WaitForSeconds(0.5f);
@@ -269,8 +303,13 @@ public class DroneHive : MonoBehaviour
 
         TeleportAnimation(false);
 
-        if (m_Stage2) WeirdAttack();
+        if (!m_Stage3 & m_SpawnLocation.childCount < m_SpawnDroneCount & m_IsCanSpawn)
+        {
+            var drone = Instantiate(m_EnemyToSpawn, m_SpawnLocation);
+            drone.transform.position = spawnPosition;
+        }
 
+        m_IsCanSpawn = true;
     }
 
     private void TeleportSound()
@@ -329,19 +368,6 @@ public class DroneHive : MonoBehaviour
     #endregion
 
     #region Attack
-
-    private void CrossAttack()
-    {
-        PlayAttackSound();
-
-        CreateFireball(Vector3.up);
-
-        CreateFireball(Vector3.down);
-
-        CreateFireball(Vector3.right);
-
-        CreateFireball(Vector3.left);
-    }
 
     private void WeirdAttack()
     {
