@@ -32,12 +32,18 @@ public class PauseMenuManager : MonoBehaviour {
     public event DelegateVoid OnGamePause;
     public event DelegateVoid OnReturnToStartSceen;
 
-#endregion
+    public delegate void ActionDelegate();
+    public ActionDelegate actionDelegate;
 
-#region private fields
+    #endregion
+
+    #region private fields
 
     [SerializeField] private GameObject m_FirstSelectedGameobject;
     [SerializeField] private GameObject m_UI;
+
+    [Header("Confirm dialogue")]
+    [SerializeField] private GameObject m_ConfirmDialogueUI;
 
     private bool m_IsCantOpenPauseMenu;
 
@@ -64,6 +70,7 @@ public class PauseMenuManager : MonoBehaviour {
 
         if (m_UI.activeSelf == true) //if pause manager show ui
         {
+            m_ConfirmDialogueUI.SetActive(false);
             Time.timeScale = 0f; //stop game time
         }
         else
@@ -127,32 +134,55 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void ResumeGame()
     {
-        PlayClickSound();
 
+        PlayClickSound();
         SetActiveUI();
     }
 
     public void ReturnToStartScreen()
     {
-        PlayClickSound();
+        m_ConfirmDialogueUI.SetActive(true);
 
-        SetActiveUI();
+        actionDelegate = () =>
+        {
+            PlayClickSound();
 
-        if (OnReturnToStartSceen != null)
-            OnReturnToStartSceen(true);
+            SetActiveUI();
 
-        LoadSceneManager.Instance.Load("StartScreen");
+            if (OnReturnToStartSceen != null)
+                OnReturnToStartSceen(true);
 
-        DestroyManagers();
-        Destroy(GameMaster.Instance.gameObject);
-        Destroy(gameObject);
+            LoadSceneManager.Instance.Load("StartScreen");
+
+            DestroyManagers();
+            Destroy(GameMaster.Instance.gameObject);
+            Destroy(gameObject);
+        };
     }
 
     public void ExitGame()
     {
-        PlayClickSound();
-        LoadSceneManager.Instance.CloseGame();
+        m_ConfirmDialogueUI.SetActive(true);
+
+        actionDelegate = () =>
+        {
+            PlayClickSound();
+            LoadSceneManager.Instance.CloseGame();
+        };
     }
 
-#endregion
+    public void YesButtonPressed()
+    {
+        if (actionDelegate != null)
+            actionDelegate();
+
+        m_ConfirmDialogueUI.SetActive(false);
+    }
+
+    public void NoButtonPressed()
+    {
+        m_ConfirmDialogueUI.SetActive(false);
+    }
+
+    #endregion
 }
