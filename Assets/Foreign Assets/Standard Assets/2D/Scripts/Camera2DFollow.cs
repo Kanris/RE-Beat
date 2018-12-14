@@ -27,6 +27,7 @@ namespace UnityStandardAssets._2D
         private bool m_Transition;
         private float elapsed = 0.0f;
         private float m_CamSize;
+        private float m_CurrentCameraSize;
 
         private void Start()
         {
@@ -77,12 +78,9 @@ namespace UnityStandardAssets._2D
             {
                 elapsed += Time.fixedDeltaTime / m_DurationTime;
 
-                Camera.main.orthographicSize = Mathf.Lerp(m_DefaultCamSize, m_CamSize, elapsed);
+                Camera.main.orthographicSize = Mathf.Lerp(m_CurrentCameraSize, m_CamSize, elapsed);
 
-                if (elapsed > 1.0f)
-                {
-                    m_Transition = false;
-                }
+                m_Transition &= elapsed <= 1.0f;
             }
         }
 
@@ -106,6 +104,8 @@ namespace UnityStandardAssets._2D
             m_Transition = true;
 
             m_CamSize = size > 0f ? size : m_DefaultCamSize;
+
+            m_CurrentCameraSize = Camera.main.orthographicSize;
         }
 
         #region camera effects
