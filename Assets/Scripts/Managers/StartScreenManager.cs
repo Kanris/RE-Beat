@@ -17,10 +17,14 @@ public class StartScreenManager : MonoBehaviour {
     public static float VolumeEnvironment;
     public static string LocalizationToLoad;
 
+    private static bool FirstLoad;
+
     #endregion
 
     #region serialize fields
 
+    [Header("Warning sign")]
+    [SerializeField] private GameObject m_WarningSign;
 
     [Header("General UI")]
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
@@ -79,10 +83,29 @@ public class StartScreenManager : MonoBehaviour {
 
     private void Start()
     {
+        if (!FirstLoad)
+        {
+            FirstLoad = true;
+            StartCoroutine(ShowWarningTitle());
+        }
+
         if (!SaveLoadManager.Instance.IsLoadGameDataAvailable())
         {
             LoadButton.SetActive(false);
         }
+    }
+
+    private IEnumerator ShowWarningTitle()
+    {
+        m_WarningSign.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        m_WarningSign.SetActive(false);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
     }
 
     private void InitializeOptionsOnStart()

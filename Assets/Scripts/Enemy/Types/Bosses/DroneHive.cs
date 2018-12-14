@@ -306,7 +306,6 @@ public class DroneHive : MonoBehaviour
         if (!m_Stage3 & m_SpawnLocation.childCount < m_SpawnDroneCount & m_IsCanSpawn)
         {
             var drone = Instantiate(m_EnemyToSpawn, m_SpawnLocation);
-            drone.transform.position = spawnPosition;
         }
 
         m_IsCanSpawn = true;
