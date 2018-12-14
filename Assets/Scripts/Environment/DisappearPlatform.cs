@@ -17,6 +17,9 @@ public class DisappearPlatform : MonoBehaviour {
     [SerializeField, Range(0.5f, 10f)] private float m_DisappearTime; //how long platform is "transparent"
     [SerializeField, Range(0.5f, 10f)] private float m_IdleTime; //how long is platform in transparent or in solid state
 
+    [SerializeField] private GameObject m_NextPlatform;
+    [SerializeField] private bool m_IsNextPlatform;
+
     #endregion
 
     #region private fields
@@ -34,7 +37,7 @@ public class DisappearPlatform : MonoBehaviour {
 
     #region Initialize
 
-    private void Start()
+    private void Awake()
     {
         m_Animator = GetComponent<Animator>();
         m_BoxCollider = GetComponent<Collider2D>();
@@ -45,7 +48,7 @@ public class DisappearPlatform : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (PlatformType == DisappearPlatformType.OnTimer | m_IsPlayerNear) //if platform has timer or player is on platform (Trigger platform type)
+        if ((PlatformType == DisappearPlatformType.OnTimer | m_IsPlayerNear) & !m_IsNextPlatform) //if platform has timer or player is on platform (Trigger platform type)
         {
             if (m_UpdateTime <= Time.time) //platform need to change state
             {
@@ -66,6 +69,24 @@ public class DisappearPlatform : MonoBehaviour {
         }
 	}
 
+    private void OnEnable()
+    {
+        if (m_IsNextPlatform)
+        {
+            StartCoroutine(DisableAfterTime());
+
+            SetAnimator("Disappearing"); //play Disappear animation
+        }
+    }
+
+    private IEnumerator DisableAfterTime(float time = 2f)
+    {
+        yield return new WaitForSeconds(time);
+
+        m_IsPlayerNear = false;
+        gameObject.SetActive(false);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (PlatformType == DisappearPlatformType.Trigger) //if platform type is trigger
@@ -73,6 +94,9 @@ public class DisappearPlatform : MonoBehaviour {
             if (collision.transform.CompareTag("Player") & !m_IsPlayerNear) //if player step on the platform
             {
                 m_IsPlayerNear = true; //notify that player is on the platform
+
+                if (m_NextPlatform != null)     
+                    m_NextPlatform.SetActive(true);
             }
         }
     }
