@@ -21,7 +21,12 @@ namespace UnityStandardAssets._2D
 
         private float leftBound, rightBound, bottomBound, topBound;
 
-        private float m_DefaultCamSize;
+        private float m_DefaultCamSize;    
+        //smooth zoom camera
+        private const float m_DurationTime = 1f;
+        private bool m_Transition;
+        private float elapsed = 0.0f;
+        private float m_CamSize;
 
         private void Start()
         {
@@ -67,15 +72,27 @@ namespace UnityStandardAssets._2D
 
                 m_LastTargetPosition = target.position;   
             }
+
+            if (m_Transition)
+            {
+                elapsed += Time.fixedDeltaTime / m_DurationTime;
+
+                Camera.main.orthographicSize = Mathf.Lerp(m_DefaultCamSize, m_CamSize, elapsed);
+
+                if (elapsed > 1.0f)
+                {
+                    m_Transition = false;
+                }
+            }
         }
 
         public IEnumerator SetTarget(Transform player)
         {
-            target = player.transform;
+            target = player;
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
 
-            SetCameraSize(m_DefaultCamSize);
+            Camera.main.orthographicSize = m_DefaultCamSize;
 
             damping = 0f;
 
@@ -84,9 +101,11 @@ namespace UnityStandardAssets._2D
             damping = .2f;
         }
 
-        public void SetCameraSize(float size)
+        public void SetCameraSize(float size = 0f)
         {
-            Camera.main.orthographicSize = size;
+            m_Transition = true;
+
+            m_CamSize = size > 0f ? size : m_DefaultCamSize;
         }
 
         #region camera effects

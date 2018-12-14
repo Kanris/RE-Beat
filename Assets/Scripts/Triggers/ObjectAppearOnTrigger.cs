@@ -28,7 +28,6 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
     
     private bool m_IsQuitting; //is application is closing
     private Transform m_ObjectToFollow;
-    private float m_DefaultCamSize;
     private Camera2DFollow m_Camera;
 
     public bool m_IsPlayerTrigger;
@@ -64,25 +63,12 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
                     m_IsPlayerTrigger = true;
 
                     m_ObjectToFollow = m_Camera.target;
-                    m_DefaultCamSize = Camera.main.orthographicSize;
 
                     m_Camera.target = m_Center;
-                    //m_VirtualCamera.m_Lens.OrthographicSize = m_CamSize;
 
-                    StartCoroutine(SmoothChangeCameraSize(m_CamSize));
+                    m_Camera.SetCameraSize(m_CamSize);
                 }
             }
-        }
-    }
-
-    private IEnumerator SmoothChangeCameraSize(float camSize)
-    {
-        var value = m_CamSize / 10;
-
-        while (Camera.main.orthographicSize < camSize)
-        {
-            Camera.main.orthographicSize += value;
-            yield return new WaitForSeconds(.1f);
         }
     }
 
@@ -124,7 +110,7 @@ public class ObjectAppearOnTrigger : MonoBehaviour {
             if (m_IsCameraControl && m_ObjectToFollow != null)
             {
                 m_Camera.target = m_ObjectToFollow;
-                Camera.main.orthographicSize = m_DefaultCamSize;
+                m_Camera.SetCameraSize();
             }
         }
     }
