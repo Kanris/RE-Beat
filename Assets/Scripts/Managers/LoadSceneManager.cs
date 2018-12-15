@@ -59,7 +59,7 @@ public class LoadSceneManager : MonoBehaviour {
 
         yield return LoadSceneAsync(sceneName);
 
-        yield return new WaitForSeconds(2f); //TODO: Remove 
+        //yield return new WaitForSeconds(2f); //TODO: Remove 
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
@@ -121,7 +121,7 @@ public class LoadSceneManager : MonoBehaviour {
             GameMaster.Instance.RecreateSceneState(locationName);
         }
 
-        yield return new WaitForSeconds(1.5f);
+        //yield return new WaitForSeconds(1.5f); //remove
 
         if (!lookRight)
         {

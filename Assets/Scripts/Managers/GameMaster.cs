@@ -443,14 +443,16 @@ public class GameMaster : MonoBehaviour {
         var respawnPlayer = Instantiate(m_PlayerToRespawn);
         respawnPlayer.transform.position = respawnPosition;
 
+        yield return new WaitForSeconds(.1f); //remove?
+
         //restrict player movement
-        var playerBody = respawnPlayer.transform.GetChild(0).gameObject;
+        /*var playerBody = respawnPlayer.transform.GetChild(0).gameObject;
 
         playerBody.GetComponent<PlatformerCharacter2D>().enabled = false;
 
         yield return new WaitForSeconds(waitTimer);
 
-        playerBody.GetComponent<PlatformerCharacter2D>().enabled = true;
+        playerBody.GetComponent<PlatformerCharacter2D>().enabled = true;*/
     }
 
     #endregion

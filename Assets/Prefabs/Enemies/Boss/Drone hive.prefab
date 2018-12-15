@@ -156,7 +156,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859725932341948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 10.49, z: 0}
+  m_LocalPosition: {x: 7.68, y: 10.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4308504711946834}
@@ -336,8 +336,8 @@ MonoBehaviour:
   FireballGO: {fileID: 1931802493666614, guid: eed2c44fac63847bbac225c857bfea96, type: 2}
   TeleportSpeed: 5
   Key: {fileID: 0}
-  Stage2Health: 200
-  Stage3Health: 100
+  Stage2Health: 150
+  Stage3Health: 80
   TeleportAudio: {fileID: 11400000, guid: 4c557bad1b5a84608a5632ae31e4ca3c, type: 2}
   AttackAudio: {fileID: 11400000, guid: 7fa9eb5e90dee4682abbf1cc05c6d23b, type: 2}
   DeathParticle: {fileID: 1202077413848300, guid: f05580bdf673ca04d884edc6eff2f3eb,
@@ -348,6 +348,11 @@ MonoBehaviour:
   m_BlockDoor: {fileID: 0}
   m_BossBattleAudio: {fileID: 11400000, guid: c7d117acabbe645a8972982728e1a0d2, type: 2}
   m_SceneBackgroundMusic: {fileID: 11400000, guid: 46079873bf39b4b9e85ddfe9b665a738,
+    type: 2}
+  m_SpawnLocation: {fileID: 0}
+  m_KamikazeDrone: {fileID: 1923985286607912, guid: d2ed4969e684141aa855ff1aab45d128,
+    type: 2}
+  m_ChaserDrone: {fileID: 1267201355872330, guid: 452cff92f47ab4f22929b2a885e70f7a,
     type: 2}
 --- !u!114 &114682056013501078
 MonoBehaviour:
