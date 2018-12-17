@@ -75,6 +75,7 @@ namespace UnityStandardAssets._2D
         private void OnEnable()
         {
             m_Rigidbody2D.gravityScale = 3f; //if player while dashed hit "killing ground" return gravity to default value
+            transform.parent.SetParent(null); //if player was on platform
         }
 
         private void FixedUpdate()

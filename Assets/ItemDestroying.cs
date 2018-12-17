@@ -8,6 +8,7 @@ public class ItemDestroying : MonoBehaviour {
     {
         if (collision.CompareTag("Item"))
         {
+            GetComponent<Animator>().SetTrigger("Destroy");
             Destroy(collision.gameObject);
         }
     }
