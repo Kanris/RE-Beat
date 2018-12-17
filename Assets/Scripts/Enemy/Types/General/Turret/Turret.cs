@@ -14,9 +14,6 @@ public class Turret : MonoBehaviour {
     [SerializeField] private Transform m_FirePoint;
     [SerializeField] private Audio m_ShootAudio;
 
-    [Header("Additional")]
-    [SerializeField] private AnimationClip m_AppearAnimation;
-
     private Animator m_Animator;
     private Enemy m_EnemyStats;
 
@@ -98,19 +95,6 @@ public class Turret : MonoBehaviour {
             m_Animator.SetBool("IsPlayerNear", true);
 
             GetComponent<BoxCollider2D>().enabled = false;
-        }
-    }
-
-    private IEnumerator WaitBeforeAppear()
-    {
-        yield return new WaitForSeconds(1.5f);
-
-        if (!m_IsPlayerNearTurret)
-        {
-            GetComponent<BoxCollider2D>().enabled = true;
-            m_Animator.SetBool("IsPlayerNear", false);
-
-            m_NextAttackTime = Time.time + m_AppearAnimation.length;
         }
     }
 

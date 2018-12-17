@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStatsGO : MonoBehaviour {
@@ -126,14 +127,15 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player"))
         {
-            var damageAmount = EnemyStats.DamageAmount;
-
             if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
             {
-                damageAmount = 0;
+                Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
+            }
+            else
+            {
+                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
 
-            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, damageAmount);
 
             if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
             {

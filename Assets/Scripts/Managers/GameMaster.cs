@@ -92,8 +92,10 @@ public class GameMaster : MonoBehaviour {
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic.name);
 
             InitializeSceneState();
-            
-#endregion
+
+            Cursor.lockState = CursorLockMode.Confined; //lock cursor
+
+            #endregion
         }
     }
 

@@ -23,8 +23,13 @@ public class StartScreenManager : MonoBehaviour {
 
     #region serialize fields
 
-    [Header("Warning sign")]
+    [Header("Confirm Dialogue")]
+    [SerializeField] private GameObject m_ConfirmDialogue;
+    [SerializeField] private TextMeshProUGUI m_DialogueText;
+
+    [Header("Startup signs")]
     [SerializeField] private GameObject m_WarningSign;
+    [SerializeField] private GameObject m_Logo;
 
     [Header("General UI")]
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
@@ -46,7 +51,10 @@ public class StartScreenManager : MonoBehaviour {
 
     #region private fields
 
-    private Resolution[] resolutions; //available resolutions
+    private Resolution[] m_Resolutions; //available resolutions
+
+    private delegate void VoidDelegate();
+    private VoidDelegate m_ConfirmDialogueAction;
 
     #endregion
 
@@ -75,6 +83,8 @@ public class StartScreenManager : MonoBehaviour {
 
         InitializeOptionsOnStart();
 
+        Cursor.lockState = CursorLockMode.Confined;
+
 #if MOBILE_INPUT
         MainMenuGrid.transform.localPosition = MainMenuGrid.transform.localPosition.With(y: 60f);
         MainMenuGrid.transform.GetChild(2).gameObject.SetActive(false);
@@ -97,7 +107,17 @@ public class StartScreenManager : MonoBehaviour {
 
     private IEnumerator ShowWarningTitle()
     {
+        m_Logo.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+
+        yield return ScreenFaderManager.Instance.FadeToBlack();
+
+        m_Logo.SetActive(false);
+
         m_WarningSign.SetActive(true);
+
+        yield return ScreenFaderManager.Instance.FadeToClear();
 
         yield return new WaitForSeconds(4f);
 
@@ -110,7 +130,7 @@ public class StartScreenManager : MonoBehaviour {
 
     private void InitializeOptionsOnStart()
     {
-        resolutions = Screen.resolutions; //get available resolutions
+        m_Resolutions = Screen.resolutions; //get available resolutions
 
         InitializeDropDownResolutions(); //show available resolutions
 
@@ -164,7 +184,7 @@ public class StartScreenManager : MonoBehaviour {
 
         var currentResolutionItem = string.Empty;
 
-        foreach (var item in resolutions)
+        foreach (var item in m_Resolutions)
         {
             string option = item.width + " x " + item.height;
 
@@ -231,14 +251,27 @@ public class StartScreenManager : MonoBehaviour {
 
     public void StartNewGame(string name)
     {
-        IsLoadPressed = false;
-        PlayClickSound();
-        LoadSceneManager.Instance.Load(name);
+        m_ConfirmDialogueAction = () =>
+        {
+            IsLoadPressed = false;
+            PlayClickSound();
+            LoadSceneManager.Instance.Load(name);
 
-        LocalizationManager.Instance.LoadJournalLocalizationData(LocalizationToLoad);
-        LocalizationManager.Instance.LoadDialogueLocalizationData(LocalizationToLoad);
+            LocalizationManager.Instance.LoadJournalLocalizationData(LocalizationToLoad);
+            LocalizationManager.Instance.LoadDialogueLocalizationData(LocalizationToLoad);
 
-        ResetGameState();
+            ResetGameState();
+        };
+
+        if (SaveLoadManager.Instance.IsLoadGameDataAvailable())
+        {
+            m_DialogueText.text = "There is active save chip, are you sure you want to erase it?";
+            m_ConfirmDialogue.SetActive(true);
+        }
+        else
+            m_ConfirmDialogueAction();
+
+
     }
 
     public void LoadGame()
@@ -254,8 +287,14 @@ public class StartScreenManager : MonoBehaviour {
 
     public void ExitGame()
     {
-        PlayClickSound();
-        Application.Quit();
+        m_ConfirmDialogueAction = () =>
+        {
+            PlayClickSound();
+            Application.Quit();
+        };
+
+        m_DialogueText.text = "Are you sure want to leave rabbit kingdom on the mercy of fate?";
+        m_ConfirmDialogue.SetActive(true);
     }
 
     public void Options()
@@ -286,7 +325,7 @@ public class StartScreenManager : MonoBehaviour {
 
     public void SetResolution(int resolutionIndex)
     {
-        Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, Screen.fullScreen);
+        Screen.SetResolution(m_Resolutions[resolutionIndex].width, m_Resolutions[resolutionIndex].height, Screen.fullScreen);
         ResolutionIndex = resolutionIndex;
     }
 
@@ -308,6 +347,20 @@ public class StartScreenManager : MonoBehaviour {
         SaveLoadManager.Instance.SaveOptions();
 
         SceneManager.LoadScene("StartScreen");
+    }
+
+    #endregion
+
+    #region confirm dialogue
+
+    public void DialogueYesButton()
+    {
+        m_ConfirmDialogueAction();
+    }
+
+    public void DialogueNoButton()
+    {
+        m_ConfirmDialogue.SetActive(false);
     }
 
     #endregion

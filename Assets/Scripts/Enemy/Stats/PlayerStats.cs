@@ -32,8 +32,8 @@ public class PlayerStats : Stats
     public static int CurrentPlayerHealth;
     public static bool m_IsCanDoubleJump = true;
     public static bool m_IsCanDash = true;
-    public static bool m_IsInvincibleWhileDashing = false;
-    public static bool m_IsDamageEnemyWhileDashing = false;
+    public static bool m_IsInvincibleWhileDashing = true;
+    public static bool m_IsDamageEnemyWhileDashing = true;
     public static int m_ReviveCount = 2;
 
     private static int m_Scrap = 200;
@@ -332,7 +332,7 @@ public class PlayerStats : Stats
 
             yield return ChangeAlpha(0.6f, playerSprite, color);
 
-        } while (invincibleTime >= Time.time);
+        } while (invincibleTime >= Time.time & !m_Animator.GetBool("Dash"));
 
         yield return ChangeAlpha(1f, playerSprite, color, 0f);
     }

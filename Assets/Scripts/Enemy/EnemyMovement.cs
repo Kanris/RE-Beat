@@ -33,6 +33,7 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MaxMoveTime = 4f;
 
     private int m_Direction;
+    private bool m_IsPlayerAttack;
     #endregion
 
     #region inspector fields
@@ -128,13 +129,17 @@ public class EnemyMovement : MonoBehaviour {
         {
             if (m_ThrowUpdateTime > Time.time)
             {
-                m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
+                if (m_IsPlayerAttack)
+                    //m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
+                    m_Rigidbody2D.AddForce(new Vector2(m_EnemyStats.m_ThrowX * 10f * m_Direction, 0f), ForceMode2D.Force);
                 SetAnimation(false);
             }
             else
             {
+
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_IsThrowBack = false;
+                m_IsPlayerAttack = false;
             }
         }
     }
@@ -158,6 +163,18 @@ public class EnemyMovement : MonoBehaviour {
             var distance = collision.transform.position - transform.position;
 
             m_Direction = distance.x > 0 ? -1 : 1;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerAttackRange"))
+        {
+            var distance = collision.transform.position - transform.position;
+
+            m_Direction = distance.x > 0 ? -1 : 1;
+
+            m_IsPlayerAttack = true;
         }
     }
 
