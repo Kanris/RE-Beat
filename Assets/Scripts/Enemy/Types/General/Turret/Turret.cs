@@ -13,9 +13,11 @@ public class Turret : MonoBehaviour {
     [SerializeField] private GameObject m_ExplosionPrefab;
     [SerializeField] private Transform m_FirePoint;
     [SerializeField] private Audio m_ShootAudio;
+    [SerializeField] private SpriteRenderer m_BulletRenderer;
 
     private Animator m_Animator;
     private Enemy m_EnemyStats;
+    private EnemyStatsGO m_EnemyStatsGO;
 
     private Transform m_PlayerTransform;
     private float m_NextAttackTime;
@@ -26,6 +28,7 @@ public class Turret : MonoBehaviour {
 	void Start () {
 
         m_Animator = GetComponent<Animator>();
+        m_EnemyStatsGO = GetComponent<EnemyStatsGO>();
         m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
 
         m_PlayerIsNear.OnPlayerInTrigger += SetPlayerIsNear;
@@ -33,9 +36,14 @@ public class Turret : MonoBehaviour {
 
     }
 
-	// Update is called once per frame
-	void Update () {
-		
+    // Update is called once per frame
+    void Update() {
+
+        if (!m_BulletRenderer.enabled & m_NextAttackTime < Time.time)
+        {
+            m_BulletRenderer.enabled = true;
+        }
+
         if (m_PlayerTransform != null)
         {
             if (!m_Animator.GetBool("IsPlayerNear"))
@@ -69,6 +77,8 @@ public class Turret : MonoBehaviour {
             explosion.GetComponent<ExplosionObject>().SetTarget(m_PlayerTransform);
 
             AudioManager.Instance.Play(m_ShootAudio);
+
+            m_BulletRenderer.enabled = false;
         }
     }
 
@@ -88,19 +98,26 @@ public class Turret : MonoBehaviour {
         if (!value)
         {
             StopAllCoroutines();
-            StartCoroutine(WaitBeforeAppear());
+            m_Animator.SetBool("IsPlayerNear", false);
+            m_Animator.SetBool("IsAttackingPlayer", true);
+
+            m_EnemyStatsGO.enabled = true;
+
+            if (m_NextAttackTime < Time.time)
+                m_NextAttackTime = Time.time + .5f;
         }
         else
         {
+            m_Animator.SetBool("IsAttackingPlayer", false);
             m_Animator.SetBool("IsPlayerNear", true);
 
-            GetComponent<BoxCollider2D>().enabled = false;
+            m_EnemyStatsGO.enabled = false;
         }
     }
 
     private void SetPlayerInAttackRange(bool value, Transform player)
     {
-        m_Animator.SetBool("IsAttacking", value);
+        m_Animator.SetBool("IsAttackingPlayer", value);
 
         if (value)
         {

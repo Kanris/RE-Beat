@@ -62,32 +62,35 @@ public class EnemyStatsGO : MonoBehaviour {
 
     public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0)
     {
-        if (m_EnemyType == EnemyType.Regular)
+        if(GetComponent<EnemyStatsGO>().enabled)
         {
-            if (playerStats != null)
-                playerStats.HitEnemy(EnemyStats, zone);
-            else
-                EnemyStats.TakeDamage(damageAmount, zone);
-
-            if (EnemyStats.CurrentHealth > 0)
-                CreateHitParticles();
-            else
-                CreateScraps();
-        }
-        else
-        {
-            if (!m_IsDestroying)
+            if (m_EnemyType == EnemyType.Regular)
             {
-                EnemyStats.CurrentHealth--;
-
-                if (EnemyStats.CurrentHealth < 1)
-                {
-                    DetroySequence();
-                }
+                if (playerStats != null)
+                    playerStats.HitEnemy(EnemyStats, zone);
                 else
-                {
+                    EnemyStats.TakeDamage(damageAmount, zone);
+
+                if (EnemyStats.CurrentHealth > 0)
                     CreateHitParticles();
-                    m_Animator.SetTrigger("Hit");
+                else
+                    CreateScraps();
+            }
+            else
+            {
+                if (!m_IsDestroying)
+                {
+                    EnemyStats.CurrentHealth--;
+
+                    if (EnemyStats.CurrentHealth < 1)
+                    {
+                        DetroySequence();
+                    }
+                    else
+                    {
+                        CreateHitParticles();
+                        m_Animator.SetTrigger("Hit");
+                    }
                 }
             }
         }
