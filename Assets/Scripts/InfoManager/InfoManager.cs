@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 
 public class InfoManager : MonoBehaviour
 {
-
     #region public fields
 
     public delegate void VoidDelegate(bool value);
@@ -143,15 +142,7 @@ public class InfoManager : MonoBehaviour
 
             if (CrossPlatformInputManager.GetButtonDown("Journal")) //open journal
             {
-                InfoManagement(0);
-            }
-            else if (Input.GetKeyDown(KeyCode.I)) //open inventory
-            {
-                InfoManagement(2);
-            }
-            else if (Input.GetKeyDown(KeyCode.M)) //open map
-            {
-                InfoManagement(3);
+                InfoManagement(m_CurrentOpenBookmark);
             }
         }
     }

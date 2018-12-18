@@ -93,7 +93,8 @@ public class GameMaster : MonoBehaviour {
 
             InitializeSceneState();
 
-            Cursor.lockState = CursorLockMode.Confined; //lock cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
             #endregion
         }

@@ -90,7 +90,8 @@ public class StartScreenManager : MonoBehaviour {
 
         InitializeOptionsOnStart();
 
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
 #if MOBILE_INPUT
         MainMenuGrid.transform.localPosition = MainMenuGrid.transform.localPosition.With(y: 60f);
