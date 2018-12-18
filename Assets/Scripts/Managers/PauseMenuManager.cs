@@ -102,7 +102,7 @@ public class PauseMenuManager : MonoBehaviour {
             OnGamePause(m_UI.activeSelf);
     }
 
-    private void OnApplicationFocus(bool hasFocus)
+    /*private void OnApplicationFocus(bool hasFocus)
     {
         if (!hasFocus & !m_IsCantOpenPauseMenu)
         {
@@ -118,7 +118,7 @@ public class PauseMenuManager : MonoBehaviour {
             if (OnGamePause != null)
                 OnGamePause(m_UI.activeSelf);
         }
-    }
+    }*/
 
     // Update is called once per frame
     private void Update () {

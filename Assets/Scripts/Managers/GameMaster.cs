@@ -61,8 +61,6 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/PauseMenuManager");
 
-            //Initialize("Managers/AnnouncerManager");
-
             Initialize("Managers/DialogueManager");
 
             Initialize("Managers/UIManager");
@@ -74,6 +72,8 @@ public class GameMaster : MonoBehaviour {
             Initialize("Managers/LocalizationManager");
 
             Initialize("Managers/FPSManager");
+
+            Initialize("Managers/MouseControlManager");
 
 #if MOBILE_INPUT
             Initialize("Managers/MobileTouchControl");
