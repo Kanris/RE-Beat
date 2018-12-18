@@ -655,7 +655,6 @@ MonoBehaviour:
   m_DescriptionUI: {fileID: 1799619079145614}
   m_DescriptionNameText: {fileID: 114962320061131852}
   m_DescriptionText: {fileID: 114853701654421328}
-  m_ScrapAmountText: {fileID: 114422452508178952}
   m_Notification: {fileID: 0}
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsGeneralTrader: 0
@@ -818,6 +817,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TraderItem: {fileID: 11400000, guid: fd77c8e1c32514282942d6b7b9926d9b, type: 2}
+  m_ItemImage: {fileID: 0}
+  m_CostText: {fileID: 0}
   m_TraderItemType: 1
   m_UpgradeType: 4
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
@@ -1264,6 +1265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TraderItem: {fileID: 11400000, guid: 0b96d1dbbe27dd049a3ba7725720e403, type: 2}
+  m_ItemImage: {fileID: 0}
+  m_CostText: {fileID: 0}
   m_TraderItemType: 0
   m_UpgradeType: 2
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
@@ -1310,6 +1313,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TraderItem: {fileID: 11400000, guid: c437fb5aee453124893a7df7beb4ba1f, type: 2}
+  m_ItemImage: {fileID: 0}
+  m_CostText: {fileID: 0}
   m_TraderItemType: 0
   m_UpgradeType: 3
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}

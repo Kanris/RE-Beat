@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TraderItem : MonoBehaviour {
 
     public Item m_TraderItem;
 
+    [Header("Display")]
+    [SerializeField] private Image m_ItemImage;
+    [SerializeField] private TextMeshProUGUI m_CostText;
+
     public enum TraderItemType { Upgrade, Heal }
+    [Header("Type")]
     [SerializeField] private TraderItemType m_TraderItemType;
 
     public enum UpgradeType { Dash, DoubleJump, DashDamage, DashInvincible, None }
@@ -17,14 +23,11 @@ public class TraderItem : MonoBehaviour {
     [Header("Additional")]
     [SerializeField] public bool m_IsInfiniteAmount;
 
-    private GameObject m_SelectImage;
     [HideInInspector] public bool m_IsSelected;
+
 
     private void Awake()
     {
-        m_SelectImage = transform.GetChild(0).gameObject;
-        m_SelectImage.SetActive(false);
-
         if (IsUpgradeAvailable())
             Destroy(gameObject);
     }
@@ -33,8 +36,13 @@ public class TraderItem : MonoBehaviour {
     {
         if (m_TraderItem != null)
         {
-            GetComponent<Image>().sprite = m_TraderItem.Image;
+            if (m_ItemImage != null)
+                m_ItemImage.sprite = m_TraderItem.Image;
+
             gameObject.name = m_TraderItem.name;
+
+            if (m_CostText != null)
+                m_CostText.text = m_TraderItem.itemDescription.ScrapAmount.ToString();
         }
     }
 
@@ -97,38 +105,5 @@ public class TraderItem : MonoBehaviour {
         }
 
         GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object);
-    }
-
-    public void MouseHoverEnter()
-    {
-        m_SelectImage.SetActive(true);
-    }
-
-    public void MouseHoverExit()
-    {
-        if (!m_IsSelected)
-            m_SelectImage.SetActive(false);
-    }
-
-    public void OnClick()
-    {
-        for (int index = 0; index < transform.parent.childCount; index++)
-        {
-            var traiderItem = transform.parent.GetChild(index).GetComponent<TraderItem>();
-
-            traiderItem.m_IsSelected = false;
-            traiderItem.MouseHoverExit();
-        }
-
-        m_SelectImage.SetActive(true);
-
-        m_IsSelected = true;
-
-        AudioManager.Instance.Play(m_ClickAudio);
-    }
-
-    public void OnDisable()
-    {
-        m_SelectImage.SetActive(false);
     }
 }

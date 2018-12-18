@@ -12,7 +12,6 @@ public class Trader : MonoBehaviour {
     [SerializeField] private GameObject m_DescriptionUI; //item description ui
     [SerializeField] private TextMeshProUGUI m_DescriptionNameText; //item name
     [SerializeField] private TextMeshProUGUI m_DescriptionText; //item description
-    [SerializeField] private TextMeshProUGUI m_ScrapAmountText; //item cost
 
     [Header("Notification")]
     [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
@@ -118,8 +117,6 @@ public class Trader : MonoBehaviour {
         m_DescriptionNameText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
 
         m_DescriptionText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Description);
-
-        m_ScrapAmountText.text = m_CurrentSelectedItem.itemDescription.ScrapAmount.ToString();
     }
 
     public void BuyItem()
