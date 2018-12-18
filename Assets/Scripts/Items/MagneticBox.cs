@@ -126,7 +126,7 @@ public class MagneticBox : MonoBehaviour {
                 }
             }
         }
-        else if (m_IsBoxPickedUp) //if box is picked up
+        else if (m_IsBoxPickedUp & !PauseMenuManager.IsPauseManagerActive()) //if box is picked up
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {

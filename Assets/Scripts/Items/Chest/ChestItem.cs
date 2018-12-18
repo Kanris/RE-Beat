@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(Image))]
 public class ChestItem : MonoBehaviour {
@@ -8,16 +9,17 @@ public class ChestItem : MonoBehaviour {
 
     [SerializeField] private Item item; //item description
 
-    private Image m_SelectImage;
+    [SerializeField] private Image m_ItemImage;
+    [SerializeField] private TextMeshProUGUI m_ItemText;
 
     #endregion
 
     #region public methods
 
-    private void Awake()
+    private void Start()
     {
-        m_SelectImage = transform.GetChild(0).GetComponent<Image>();
-        m_SelectImage.gameObject.SetActive(false);
+        if (m_ItemText != null & LocalizationManager.Instance != null)
+            m_ItemText.text = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
     }
 
     public void AddToTheInventory()
@@ -41,18 +43,16 @@ public class ChestItem : MonoBehaviour {
     {
         if (item != null)
         {
-            GetComponent<Image>().sprite = item.Image;
+            if (m_ItemImage != null) m_ItemImage.sprite = item.Image;
             transform.name = item.name;
+
+            if (m_ItemText != null & LocalizationManager.Instance != null) 
+                m_ItemText.text = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name );
+
+            else if (m_ItemText != null)
+            {
+                m_ItemText.text = item.itemDescription.Name;
+            }
         }
-    }
-
-    public void MouseHoverEnter()
-    {
-        m_SelectImage.gameObject.SetActive(true);
-    }
-
-    public void MouseHoverExit()
-    {
-        m_SelectImage.gameObject.SetActive(false);
     }
 }

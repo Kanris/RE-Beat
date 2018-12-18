@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class PauseMenuManager : MonoBehaviour {
 
@@ -40,7 +41,11 @@ public class PauseMenuManager : MonoBehaviour {
     #region private fields
 
     [SerializeField] private GameObject m_FirstSelectedGameobject;
+    [SerializeField] private GameObject m_NoDialogueAnswer;
     [SerializeField] private GameObject m_UI;
+
+    [Header("Pause UI")]
+    [SerializeField] private GameObject m_PauseUI;
 
     [Header("Confirm dialogue")]
     [SerializeField] private GameObject m_ConfirmDialogueUI;
@@ -66,27 +71,45 @@ public class PauseMenuManager : MonoBehaviour {
 
     private void SetActiveUI()
     {
-        m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
-
-        if (m_UI.activeSelf == true) //if pause manager show ui
+        if (!m_UI.activeSelf) //if pause manager show ui
         {
+            m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
+
+            m_PauseUI.SetActive(true);
             m_ConfirmDialogueUI.SetActive(false);
+
             Time.timeScale = 0f; //stop game time
+
+            SetButtonInFocus(m_FirstSelectedGameobject);
+
+            if (OnGamePause != null)
+                OnGamePause(m_UI.activeSelf);
         }
         else
-            Time.timeScale = 1f; //resume game time
+        {
+            StartCoroutine(SubmitWithDelay());
+        }
+    }
+
+    private IEnumerator SubmitWithDelay()
+    {
+        yield return null;
+        Time.timeScale = 1f; //resume game time
+
+
+        m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
 
         if (OnGamePause != null)
             OnGamePause(m_UI.activeSelf);
     }
-	
-	// Update is called once per frame
-	private void Update () {
+
+    // Update is called once per frame
+    private void Update () {
 
         if (!m_IsCantOpenPauseMenu)
         {
             //if player pressed pause button
-            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            if (CrossPlatformInputManager.GetButtonDown("Escape"))
             {
                 SetActiveUI();
             }
@@ -108,6 +131,18 @@ public class PauseMenuManager : MonoBehaviour {
     }
 
 #endregion
+
+    public static bool IsPauseManagerActive()
+    {
+        var result = false;
+
+        if (Instance != null)
+        {
+            result = Instance.m_UI.activeSelf;
+        }
+
+        return result;
+    }
 
     public void SetIsCantOpenPauseMenu(bool value)
     {
@@ -134,7 +169,6 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void ResumeGame()
     {
-
         PlayClickSound();
         SetActiveUI();
     }
@@ -142,6 +176,9 @@ public class PauseMenuManager : MonoBehaviour {
     public void ReturnToStartScreen()
     {
         m_ConfirmDialogueUI.SetActive(true);
+        m_PauseUI.SetActive(false);
+
+        SetButtonInFocus(m_NoDialogueAnswer);
 
         actionDelegate = () =>
         {
@@ -163,6 +200,9 @@ public class PauseMenuManager : MonoBehaviour {
     public void ExitGame()
     {
         m_ConfirmDialogueUI.SetActive(true);
+        m_PauseUI.SetActive(false);
+
+        SetButtonInFocus(m_NoDialogueAnswer);
 
         actionDelegate = () =>
         {
@@ -182,6 +222,16 @@ public class PauseMenuManager : MonoBehaviour {
     public void NoButtonPressed()
     {
         m_ConfirmDialogueUI.SetActive(false);
+        m_PauseUI.SetActive(true);
+
+        SetButtonInFocus(m_FirstSelectedGameobject);
+
+    }
+
+    private void SetButtonInFocus(GameObject ItemInFocus)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(ItemInFocus);
     }
 
     #endregion

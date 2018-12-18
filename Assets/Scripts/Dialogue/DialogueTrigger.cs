@@ -35,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (m_Player != null) //if player is near
+        if (m_Player != null & !PauseMenuManager.IsPauseManagerActive()) //if player is near
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
@@ -70,7 +70,12 @@ public class DialogueTrigger : MonoBehaviour {
             m_Player.Move(0f, false, false, false); //stop any character movement
 
         if (m_Player != null & m_Player.enabled != active) //disable or enable character control
+        {
+            m_Player.GetComponent<Player>().TriggerPlayerBussy(!active);
             m_Player.enabled = active;
+
+            PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class StartScreenManager : MonoBehaviour {
 
@@ -26,6 +28,7 @@ public class StartScreenManager : MonoBehaviour {
     [Header("Confirm Dialogue")]
     [SerializeField] private GameObject m_ConfirmDialogue;
     [SerializeField] private TextMeshProUGUI m_DialogueText;
+    [SerializeField] private GameObject m_ConfirmDialogueNoButton;
 
     [Header("Startup signs")]
     [SerializeField] private GameObject m_WarningSign;
@@ -46,6 +49,10 @@ public class StartScreenManager : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio BackgroundMusic; //background music
     [SerializeField] private Audio UIClickAudio;
+
+    [Header("Event systems buttons")]
+    [SerializeField] private GameObject m_MainMenuButton;
+    [SerializeField] private GameObject m_OptionsButton;
 
     #endregion
 
@@ -103,10 +110,14 @@ public class StartScreenManager : MonoBehaviour {
         {
             LoadButton.SetActive(false);
         }
+
+        EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
     }
 
     private IEnumerator ShowWarningTitle()
     {
+        m_MainMenuButton.SetActive(false);
+
         m_Logo.SetActive(true);
 
         yield return new WaitForSeconds(4f);
@@ -124,6 +135,8 @@ public class StartScreenManager : MonoBehaviour {
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
         m_WarningSign.SetActive(false);
+
+        m_MainMenuButton.SetActive(true);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
@@ -176,6 +189,25 @@ public class StartScreenManager : MonoBehaviour {
 
     #region private methods
 
+    private void Update()
+    {
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+        {
+            if (m_ConfirmDialogue.activeSelf)
+            {
+                m_ConfirmDialogue.SetActive(false);
+                EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
+            }
+
+            else if (OptionsMenuGrid.activeSelf)
+            {
+                ChangeGridsVisibility();
+                EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
+            }
+
+        }
+    }
+
     private void InitializeDropDownResolutions()
     {
         resoulutionsDropDown.ClearOptions(); //clear options
@@ -218,7 +250,12 @@ public class StartScreenManager : MonoBehaviour {
         OptionsMenuGrid.SetActive(!OptionsMenuGrid.activeSelf);
 
         if (!OptionsMenuGrid.activeSelf)
+        {
             SaveLoadManager.Instance.SaveOptions();
+            EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
+        }
+        else
+            EventSystem.current.SetSelectedGameObject(m_OptionsButton);
     }
 
     private void ResetGameState()
@@ -267,6 +304,7 @@ public class StartScreenManager : MonoBehaviour {
         {
             m_DialogueText.text = "There is active save chip, are you sure you want to erase it?";
             m_ConfirmDialogue.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(m_ConfirmDialogueNoButton);
         }
         else
             m_ConfirmDialogueAction();
@@ -294,7 +332,9 @@ public class StartScreenManager : MonoBehaviour {
         };
 
         m_DialogueText.text = "Are you sure want to leave rabbit kingdom on the mercy of fate?";
+
         m_ConfirmDialogue.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(m_ConfirmDialogueNoButton);
     }
 
     public void Options()
@@ -361,6 +401,7 @@ public class StartScreenManager : MonoBehaviour {
     public void DialogueNoButton()
     {
         m_ConfirmDialogue.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
     }
 
     #endregion

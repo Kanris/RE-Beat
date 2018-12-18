@@ -116,7 +116,7 @@ public class PickupBox : MonoBehaviour {
             {
                 var parent = m_Player;
 
-                if (m_IsBoxUp)
+                if (m_IsBoxUp & !PauseMenuManager.IsPauseManagerActive())
                 {
                     parent = null;
                 }

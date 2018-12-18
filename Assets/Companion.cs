@@ -7,10 +7,6 @@ public class Companion : MonoBehaviour {
 
     [SerializeField] private Transform m_Target; //who companion follow
 
-    [Header("UI")]
-    [SerializeField] private GameObject m_InteractionUI; //interaction button
-    [SerializeField] private GameObject m_StoreUI; //store ui
-
     [Header("Hideout")]
     [SerializeField] private Transform m_LastTunnel;
 
@@ -56,15 +52,6 @@ public class Companion : MonoBehaviour {
             else
             {
                 m_Animator.SetFloat("Speed", 0f);
-
-                SetActiveInteractionUI(); //try to show interaction button
-            }
-
-            //if trade interaction button is active
-            if (m_InteractionUI.activeSelf &
-                CrossPlatformInputManager.GetButtonDown("Submit"))
-            {
-                SetActiveInventoryUI(!m_StoreUI.activeSelf); //show/hide inventory
             }
         }
         else if (GameMaster.Instance.IsPlayerDead) //if there is no target and player is dead
@@ -73,8 +60,6 @@ public class Companion : MonoBehaviour {
                 StartCoroutine(SearchForPlayer()); //search player
             else
             {
-                HideUI(); //hide inventory
-
                 //move to the tunnel
                 m_Target = m_LastTunnel; 
                 m_IsMovingToTheTunnel = true;
@@ -87,52 +72,9 @@ public class Companion : MonoBehaviour {
             if (target != null)
             {
                 m_Target = target.transform;
-
-                GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
-
-                HideUI();
             }
         }
 	}
-
-    #region store
-    private void SetActiveInteractionUI()
-    {
-        //inventory is not active and player is near
-        if (!m_InteractionUI.activeSelf & Vector2.Distance(m_Target.position, transform.position) < m_DistanceForTrade)
-        {
-            m_InteractionUI.SetActive(true);
-        }
-        //inventory is active but player is far
-        else if (m_InteractionUI.activeSelf & Vector2.Distance(m_Target.position, transform.position) > m_DistanceForTrade)
-        {
-            HideUI();
-        }
-    }
-
-    private void SetActiveInventoryUI(bool value)
-    {
-        //show or hide store ui and trigger player bussy
-        m_StoreUI.SetActive(value);
-        m_Target.GetComponent<Player>().TriggerPlayerBussy(value);
-
-        if (m_StoreUI.activeSelf)
-        {
-            m_StoreUI.transform.localScale = new Vector3(transform.localScale.x, 1, 1); //maybe need to change scale (if companion flip)
-        }
-    }
-
-    private void HideUI()
-    {
-        m_InteractionUI.SetActive(false); //hide interaction button
-
-        GetComponent<Trader>().HideUI(); //hide inventory
-
-        if (m_Target != null)
-            m_Target.GetComponent<Player>().TriggerPlayerBussy(false);
-    }
-
-    #endregion
 
     private void Flip()
     {
@@ -156,8 +98,6 @@ public class Companion : MonoBehaviour {
             m_Target = target.transform;
 
             GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
-
-            HideUI();
         }
         else
         {

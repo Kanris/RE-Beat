@@ -55,7 +55,7 @@ public class Door : MonoBehaviour {
     {
         if (Type == DoorType.Key) //if door is have to open with key
         {
-            if (m_UI.activeSelf) //if player is near door
+            if (m_UI.activeSelf & !PauseMenuManager.IsPauseManagerActive()) //if player is near door
             {
                 if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
                 {

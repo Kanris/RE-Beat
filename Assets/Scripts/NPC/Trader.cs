@@ -2,23 +2,23 @@
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Trader : MonoBehaviour {
 
     [SerializeField] private GameObject m_InteractionUI; //ui that npc show to player when he get closer
     [SerializeField] private GameObject m_StoreUI; //items that this vendor sells
+    [SerializeField] private GameObject m_InventoryUI;
+    [SerializeField] private GameObject m_BuyItem;
 
     [Header("Description UI")]
-    [SerializeField] private GameObject m_DescriptionUI; //item description ui
     [SerializeField] private TextMeshProUGUI m_DescriptionNameText; //item name
     [SerializeField] private TextMeshProUGUI m_DescriptionText; //item description
 
     [Header("Notification")]
     [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
     [SerializeField] private Audio m_ClickAudio;
-
-    [Header("Additional")]
-    [SerializeField] private bool m_IsGeneralTrader = true;
 
     //current selected item info
     private Item m_CurrentSelectedItem; 
@@ -28,39 +28,41 @@ public class Trader : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-        if (m_IsGeneralTrader)
+
+        if (m_Player != null & !PauseMenuManager.IsPauseManagerActive()) //if player is near
         {
-            if (m_Player != null) //if player is near
+            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
             {
-                if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+                if (m_StoreUI.activeSelf)
                 {
-                    if (m_DescriptionUI.activeSelf)
-                    {
-                        m_DescriptionUI.SetActive(false);
-                    }
-                    else if (m_StoreUI.activeSelf)
-                    {
-                        HideUI();
-                        m_InteractionUI.SetActive(true);
-                    }
-                }
-
-                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
-                {
-                    PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
-
-                    m_StoreUI.SetActive(true); //show store ui
-                    m_InteractionUI.SetActive(false); //hide interaction elements
+                    StartCoroutine(HideUI()); //hide npc ui
+                    m_InteractionUI.SetActive(true);
                 }
             }
-            else if (m_InteractionUI.activeSelf)
+
+            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
             {
-                HideUI();
-                m_DescriptionUI.SetActive(false);
+                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+                //m_InventoryUI.transform.GetChild(0).gameObject.GetComponent<Button>().Select();
+
+                m_StoreUI.SetActive(true); //show store ui
+                m_InteractionUI.SetActive(false); //hide interaction elements
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+            }
+            else if (CrossPlatformInputManager.GetButtonDown("Submit") & m_CurrentSelectedItem != null)
+            {
+                BuyItem();
             }
         }
-	}
+        else if (m_InteractionUI.activeSelf)
+        {
+            StartCoroutine(HideUI()); //hide npc ui
+        }
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -90,18 +92,18 @@ public class Trader : MonoBehaviour {
 
             collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
 
-            HideUI(); //hide npc ui
+            StartCoroutine( HideUI() ); //hide npc ui
         }
     }
 
-    public void HideUI()
+    public IEnumerator HideUI()
     {
         if (m_InteractionUI != null) m_InteractionUI.SetActive(false);
 
-        if (m_DescriptionUI != null) m_DescriptionUI.SetActive(false);
         if (m_StoreUI != null) m_StoreUI.SetActive(false);
         if (m_Notification != null) m_Notification.SetActive(false);
 
+        yield return null;
 
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false);
     }
@@ -110,8 +112,6 @@ public class Trader : MonoBehaviour {
     {
         m_CurrentSelectedItem = itemToDisplayGO.GetComponent<TraderItem>().m_TraderItem; //get selected item description
         m_CurrentSelectedItemGO = itemToDisplayGO; //store item gameobject
-         
-        m_DescriptionUI.SetActive(true); //show descripiton ui
 
         //set text to display on description ui
         m_DescriptionNameText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
@@ -155,9 +155,6 @@ public class Trader : MonoBehaviour {
                     //apply item upgrade to the player
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
 
-                    //hide desciption ui
-                    m_DescriptionUI.SetActive(false);
-
                     //move item from store ui (so childCount works properly)
                     if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
                     {
@@ -169,6 +166,11 @@ public class Trader : MonoBehaviour {
                         {
                             m_StoreUI.SetActive(false); //hide store ui
                             m_Notification.SetActive(true); //show trader message
+                        }
+                        else
+                        {
+                            EventSystem.current.SetSelectedGameObject(null);
+                            EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                         }
                     }
                 }         

@@ -28,7 +28,7 @@ public class Tunnel : MonoBehaviour {
 
     private void Update()
     {
-        if (m_CompanionToTeleport != null)
+        if (m_CompanionToTeleport != null & !PauseMenuManager.IsPauseManagerActive())
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {
@@ -69,7 +69,8 @@ public class Tunnel : MonoBehaviour {
         {
             if (IsCanLeaveTunnel(collision.transform))
             {
-                var m_Companion = Instantiate(m_FollowCompanion, m_SpawnOnExit.position, Quaternion.identity);
+                var m_Companion = Instantiate(m_FollowCompanion, m_SpawnOnExit.position, Quaternion.identity)
+                                    .transform.GetChild(0);
 
                 m_Companion.GetComponent<Animator>().SetTrigger("FromTunnel");
 

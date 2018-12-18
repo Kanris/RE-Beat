@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using System;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.EventSystems;
 
 public class InfoManager : MonoBehaviour
 {
@@ -119,9 +120,24 @@ public class InfoManager : MonoBehaviour
         {
             if (m_JournalUI.activeSelf)
             {
-                if (CrossPlatformInputManager.GetButtonDown("Cancel") | CrossPlatformInputManager.GetButtonDown("Submit"))
+                if (CrossPlatformInputManager.GetButtonDown("Escape") | CrossPlatformInputManager.GetButtonDown("Journal"))
                 {
-                    StartCoroutine(CloseJournalWithDelay());
+                    StartCoroutine ( CloseJournalWithDelay() );
+                }
+
+                if (CrossPlatformInputManager.GetButtonDown("LBJournal"))
+                {
+                    if (m_CurrentOpenBookmark > 0)
+                    {
+                        InfoManagement(m_CurrentOpenBookmark - 1);
+                    }
+                }
+                else if (CrossPlatformInputManager.GetButtonDown("RBJournal"))
+                {
+                    if (m_CurrentOpenBookmark < 3)
+                    {
+                        InfoManagement(m_CurrentOpenBookmark + 1);
+                    }
                 }
             }
 
@@ -142,15 +158,14 @@ public class InfoManager : MonoBehaviour
 
     private void InfoManagement(int id)
     {
-        if (m_JournalUI.activeSelf & id == m_CurrentOpenBookmark)
-        {
-            CloseJournal();
-        }
-        else //if need to open another bookmark
-        {
-            OpenBookmark(id);
+        OpenBookmark(id);
 
-            OpenJournal();
+        OpenJournal();
+
+        if (m_ButtonsList[id].Count > 0)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(m_ButtonsList[id][0].gameObject);
         }
     }
 
@@ -272,14 +287,9 @@ public class InfoManager : MonoBehaviour
 
     public IEnumerator CloseJournalWithDelay()
     {
-
-        m_JournalUI.SetActive(false); //hide journal ui
-
         yield return null;
 
-        OnJournalOpen(false); //notify that journal is close
-
-        AudioManager.Instance.Play(m_CloseAudio); //play open journal sound
+        CloseJournal();
     }
 
     public void CloseJournal()

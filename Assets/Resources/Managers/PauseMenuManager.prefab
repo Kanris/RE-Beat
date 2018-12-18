@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0.7058824}
-    m_HighlightedColor: {r: 0.27058825, g: 0.27058825, b: 0.27058825, a: 0.8627451}
+    m_HighlightedColor: {r: 0.6320754, g: 0.623131, b: 0.623131, a: 0.8627451}
     m_PressedColor: {r: 0.27058825, g: 0.27058825, b: 0.27058825, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -820,7 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -987,7 +987,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_FirstSelectedGameobject: {fileID: 1422083260006350}
+  m_NoDialogueAnswer: {fileID: 1706647412697838}
   m_UI: {fileID: 1148640017382000}
+  m_PauseUI: {fileID: 1496150751873898}
   m_ConfirmDialogueUI: {fileID: 1949424234943554}
 --- !u!114 &114341099360928224
 MonoBehaviour:
@@ -1001,7 +1003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1376,7 +1378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1384,7 +1386,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0.7058824}
-    m_HighlightedColor: {r: 0.27058825, g: 0.27058825, b: 0.27058825, a: 0.8627451}
+    m_HighlightedColor: {r: 0.6320754, g: 0.623131, b: 0.623131, a: 0.8627451}
     m_PressedColor: {r: 0.27058825, g: 0.27058825, b: 0.27058825, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

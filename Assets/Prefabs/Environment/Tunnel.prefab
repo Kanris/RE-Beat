@@ -86,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1906498831865562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.928246, y: 0.5536747, z: -0.064453125}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4236591366625100}
@@ -171,8 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionUI: {fileID: 1574759945152102}
+  m_TeleportToTunnel: {fileID: 0}
   m_InTunnelAnimation: {fileID: 7400000, guid: faf08950a1d9a354481984321708c47f, type: 2}
-  m_FollowCompanion: {fileID: 1696087267904816, guid: 95769844d2e1ad54b96f58f8a26d1b1b,
+  m_FollowCompanion: {fileID: 1259393739360816, guid: 95769844d2e1ad54b96f58f8a26d1b1b,
     type: 2}
 --- !u!114 &114492427828216490
 MonoBehaviour:

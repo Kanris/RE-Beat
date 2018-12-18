@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class Chest : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private GameObject m_Inventory; //chest inventory
+    [SerializeField] private GameObject m_ChestUI; //chest inventory
+    [SerializeField] private GameObject m_InventoryUI;
 
     #region enum
 
@@ -62,7 +64,7 @@ public class Chest : MonoBehaviour {
 
         AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
 
-        m_Inventory.SetActive(value); //show or hide chest inventory
+        m_ChestUI.SetActive(value); //show or hide chest inventory
     }
 
     #endregion
@@ -71,22 +73,25 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) //if player is near the chest
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (!PauseMenuManager.IsPauseManagerActive())
             {
-                OpenChest(); //try to open the chest
-            }
-
-            if (m_Inventory.activeSelf)
-            {
-                if (m_Inventory.transform.GetChild(0).childCount == 0 && m_InstantChestContainItems != null) //if there is no child left
+                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_ChestUI.activeSelf) //if player pressed submit button
                 {
-                    ChangeChestSprite();
-                    Destroy(m_InstantChestContainItems);
+                    OpenChest(); //try to open the chest
                 }
 
-                if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+                if (m_ChestUI.activeSelf)
                 {
-                    StartCoroutine(CloseChest());
+                    if (m_InventoryUI.transform.childCount == 0 && m_InstantChestContainItems != null) //if there is no child left
+                    {
+                        ChangeChestSprite();
+                        Destroy(m_InstantChestContainItems);
+                    }
+
+                    if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+                    {
+                        StartCoroutine(CloseChest());
+                    }
                 }
             }
         }
@@ -101,7 +106,7 @@ public class Chest : MonoBehaviour {
         yield return null;
 
         SetActiveInteractionButton(true); //disable chest ui
-        if (m_Inventory.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
+        if (m_ChestUI.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
 
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false); //can open pause menu
     }
@@ -116,11 +121,14 @@ public class Chest : MonoBehaviour {
         }
         else //if chest can be open
         {
-            SetActiveInventory(!m_Inventory.activeSelf); //show or hide chest inventory
+            SetActiveInventory(!m_ChestUI.activeSelf); //show or hide chest inventory
 
-            if (m_Inventory.activeSelf)
+            if (m_ChestUI.activeSelf)
             {
                 PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
             }
         }
     }
@@ -148,7 +156,7 @@ public class Chest : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player is leave chest
         {
             SetActiveInteractionButton(false); //disable chest ui
-            if (m_Inventory.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
+            if (m_ChestUI.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
 
             m_Player = null; //remove player reference
         }
@@ -193,7 +201,7 @@ public class Chest : MonoBehaviour {
 
     public void RemoveFromChest(string name) //remove item from chest inventory
     {
-        var grid = m_Inventory.transform.GetChild(0); //get inventory grid
+        var grid = m_InventoryUI.transform.GetChild(0); //get inventory grid
 
         //search item in grid
         for (int index = 0; index < grid.childCount; index++)

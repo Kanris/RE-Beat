@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour {
 
@@ -74,7 +75,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (m_IsDialogueInProgress) //if is dialogue in progress
         {
-            if (CrossPlatformInputManager.GetButtonDown("Jump")) //if jump button pressed
+            if (CrossPlatformInputManager.GetButtonDown("Jump") & !PauseMenuManager.IsPauseManagerActive()) //if jump button pressed
             {
                 if (m_IsSentenceTyping) //if sentence is still typing
                 {
@@ -184,6 +185,9 @@ public class DialogueManager : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
 
         m_SecondButtonGO.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(m_FirstButton.transform.parent.gameObject);
     }
 
     //notify subscribers that dialogue in progress or not
