@@ -52,6 +52,11 @@ public class Stairs : MonoBehaviour {
             {
                 m_VerticalMove = true;
             }
+
+            if (m_Player.GetComponent<Rigidbody2D>().gravityScale != 0f)
+            {
+                m_Player.GetComponent<Rigidbody2D>().gravityScale = 0f;
+            }
         }
     }
 
