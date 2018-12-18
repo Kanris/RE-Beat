@@ -179,7 +179,8 @@ public class MagneticBox : MonoBehaviour {
         if (collision.transform.CompareTag("Player") & m_Player == null) //if player near box
         {
             m_Player = collision.transform; //save player 
-            m_InteractionButton.SetActive(true); //show box ui
+
+            if (!m_IsBoxPickedUp) m_InteractionButton.SetActive(true); //show box ui
         }
     }
 

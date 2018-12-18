@@ -87,6 +87,7 @@ public class PauseMenuManager : MonoBehaviour {
         }
         else
         {
+            Time.timeScale = 1f; //resume game time
             StartCoroutine(SubmitWithDelay());
         }
     }
@@ -94,13 +95,29 @@ public class PauseMenuManager : MonoBehaviour {
     private IEnumerator SubmitWithDelay()
     {
         yield return null;
-        Time.timeScale = 1f; //resume game time
-
 
         m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
 
         if (OnGamePause != null)
             OnGamePause(m_UI.activeSelf);
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus & !m_IsCantOpenPauseMenu)
+        {
+            m_UI.SetActive(!m_UI.activeSelf); //show/hide pause menu ui
+
+            m_PauseUI.SetActive(true);
+            m_ConfirmDialogueUI.SetActive(false);
+
+            Time.timeScale = 0f; //stop game time
+
+            SetButtonInFocus(m_FirstSelectedGameobject);
+
+            if (OnGamePause != null)
+                OnGamePause(m_UI.activeSelf);
+        }
     }
 
     // Update is called once per frame

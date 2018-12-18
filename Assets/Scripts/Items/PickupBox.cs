@@ -138,7 +138,8 @@ public class PickupBox : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_Player == null) //if player is near box
         {
-            m_InteractionButton.SetActive(true); //show box ui
+            if (!m_IsBoxUp) m_InteractionButton.SetActive(true); //show box ui
+
             m_Player = collision.transform; //get player reference
         }
     }

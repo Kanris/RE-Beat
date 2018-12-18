@@ -84,6 +84,8 @@ public class StartScreenManager : MonoBehaviour {
 
         Initialize("Managers/FPSManager");
 
+        Initialize("Managers/MouseControlManager");
+
         //play background music
         if (!string.IsNullOrEmpty(BackgroundMusic))
             AudioManager.Instance.SetBackgroundMusic(BackgroundMusic);
@@ -112,6 +114,7 @@ public class StartScreenManager : MonoBehaviour {
             LoadButton.SetActive(false);
         }
 
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
     }
 
@@ -138,6 +141,9 @@ public class StartScreenManager : MonoBehaviour {
         m_WarningSign.SetActive(false);
 
         m_MainMenuButton.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
     }
