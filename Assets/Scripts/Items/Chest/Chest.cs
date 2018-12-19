@@ -73,7 +73,7 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) //if player is near the chest
         {
-            if (!PauseMenuManager.IsPauseManagerActive())
+            if (MouseControlManager.IsCanUseSubmitButton())
             {
                 if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_ChestUI.activeSelf) //if player pressed submit button
                 {
@@ -92,12 +92,12 @@ public class Chest : MonoBehaviour {
                         EventSystem.current.SetSelectedGameObject(null);
                         EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                     }
-
-                    if (CrossPlatformInputManager.GetButtonDown("Cancel"))
-                    {
-                        StartCoroutine(CloseChest());
-                    }
                 }
+            }
+
+            if (CrossPlatformInputManager.GetButtonDown("Cancel") || CrossPlatformInputManager.GetButtonDown("Journal"))
+            {
+                StartCoroutine(CloseChest());
             }
         }
         else if (m_InstantInteractionButton.activeSelf)

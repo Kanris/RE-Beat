@@ -38,7 +38,7 @@ public class PickUpItem : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearItem & !PauseMenuManager.IsPauseManagerActive()) //if is player near item
+        if (m_IsPlayerNearItem & MouseControlManager.IsCanUseSubmitButton()) //if is player near item
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
             {

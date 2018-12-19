@@ -24,7 +24,7 @@ public class InfoManager : MonoBehaviour
 
     #region serialize fields
 
-    [SerializeField] private GameObject m_JournalUI; //journal ui
+    [SerializeField] public GameObject m_JournalUI; //journal ui
     [SerializeField] private GameObject m_Bookmarks; //bookmark list
     [SerializeField] private GameObject m_Map;
     [SerializeField] private Transform m_Content; //buttons grid
@@ -44,6 +44,19 @@ public class InfoManager : MonoBehaviour
     [SerializeField] private Audio m_CloseAudio;
 
     #endregion
+
+    public static bool IsJournalOpen
+    {
+        get
+        {
+            if (Instance != null)
+            {
+                return Instance.m_JournalUI.activeSelf;
+            }
+
+            return false;
+        }
+    }
 
     private int m_CurrentOpenBookmark = 0; //current open tab
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list

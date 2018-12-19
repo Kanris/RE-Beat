@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (m_IsDialogueInProgress) //if is dialogue in progress
         {
-            if (CrossPlatformInputManager.GetButtonDown("Jump") & !PauseMenuManager.IsPauseManagerActive()) //if jump button pressed
+            if (CrossPlatformInputManager.GetButtonDown("Jump") & MouseControlManager.IsCanUseSubmitButton()) //if jump button pressed
             {
                 if (m_IsSentenceTyping) //if sentence is still typing
                 {

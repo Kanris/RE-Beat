@@ -28,7 +28,7 @@ public class Tunnel : MonoBehaviour {
 
     private void Update()
     {
-        if (m_CompanionToTeleport != null & !PauseMenuManager.IsPauseManagerActive())
+        if (m_CompanionToTeleport != null & MouseControlManager.IsCanUseSubmitButton())
         {
             if (CrossPlatformInputManager.GetButtonDown("Submit"))
             {

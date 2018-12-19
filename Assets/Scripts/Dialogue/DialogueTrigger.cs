@@ -35,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (m_Player != null & !PauseMenuManager.IsPauseManagerActive()) //if player is near
+        if (m_Player != null & MouseControlManager.IsCanUseSubmitButton()) //if player is near
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {

@@ -27,13 +27,14 @@ public class Trader : MonoBehaviour {
     private float m_TimeToBuy;
 
     private PlayerStats m_Player; //notify is player near the vendor
+    private float m_BuyTime;
 
     // Update is called once per frame
     void Update () {
 
-        if (m_Player != null & !PauseMenuManager.IsPauseManagerActive()) //if player is near
+        if (m_Player != null) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+            if (CrossPlatformInputManager.GetButtonDown("Cancel") || CrossPlatformInputManager.GetButtonDown("Journal"))
             {
                 if (m_StoreUI.activeSelf)
                 {
@@ -42,31 +43,35 @@ public class Trader : MonoBehaviour {
                 }
             }
 
-            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+            if (MouseControlManager.IsCanUseSubmitButton())
             {
-                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
-
-                //m_InventoryUI.transform.GetChild(0).gameObject.GetComponent<Button>().Select();
-
-                m_StoreUI.SetActive(true); //show store ui
-                m_InteractionUI.SetActive(false); //hide interaction elements
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
-            }
-            else if (CrossPlatformInputManager.GetButtonUp("Submit") & m_CurrentSelectedItem != null)
-            {
-                m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
-            }
-            else if (CrossPlatformInputManager.GetButton("Submit") & m_CurrentSelectedItem != null)
-            {
-                if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
+                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
-                    BuyItem();
+                    PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+                    //m_InventoryUI.transform.GetChild(0).gameObject.GetComponent<Button>().Select();
+
+                    m_StoreUI.SetActive(true); //show store ui
+                    m_InteractionUI.SetActive(false); //hide interaction elements
+
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                 }
-                else
+                else if (CrossPlatformInputManager.GetButtonUp("Submit") & m_CurrentSelectedItem != null)
                 {
-                    m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += 0.005f;
+                    m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+                }
+                else if (CrossPlatformInputManager.GetButton("Submit") & m_CurrentSelectedItem != null)
+                {
+                    if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
+                    {
+                        m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+                        BuyItem();
+                    }
+                    else
+                    {
+                        m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.deltaTime);
+                    }
                 }
             }
         }

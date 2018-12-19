@@ -36,6 +36,19 @@ public class PauseMenuManager : MonoBehaviour {
     public delegate void ActionDelegate();
     public ActionDelegate actionDelegate;
 
+    public static bool IsPauseOpen
+    {
+        get
+        {
+            if (Instance != null)
+            {
+                return Instance.m_UI.activeSelf;
+            }
+
+            return false;
+        }
+    }
+
     #endregion
 
     #region private fields
@@ -148,18 +161,6 @@ public class PauseMenuManager : MonoBehaviour {
     }
 
 #endregion
-
-    public static bool IsPauseManagerActive()
-    {
-        var result = false;
-
-        if (Instance != null)
-        {
-            result = Instance.m_UI.activeSelf;
-        }
-
-        return result;
-    }
 
     public void SetIsCantOpenPauseMenu(bool value)
     {

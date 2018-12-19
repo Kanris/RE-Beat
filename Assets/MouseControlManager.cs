@@ -7,7 +7,9 @@ public class MouseControlManager : MonoBehaviour {
 
     private GameObject lastselect;
 
-    private static MouseControlManager Instance;
+    #region singleton
+
+    public static MouseControlManager Instance;
 
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class MouseControlManager : MonoBehaviour {
         }
     }
 
+    #endregion
+
     // Update is called once per frame
     private void Update()
     {
@@ -36,6 +40,19 @@ public class MouseControlManager : MonoBehaviour {
         {
             lastselect = EventSystem.current.currentSelectedGameObject;
         }
+    }
+
+    public static bool IsCanUseSubmitButton()
+    {
+        if (!PauseMenuManager.IsPauseOpen)
+        {
+            if (!InfoManager.IsJournalOpen)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
