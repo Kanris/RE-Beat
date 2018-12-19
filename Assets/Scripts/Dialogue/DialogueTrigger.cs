@@ -67,7 +67,11 @@ public class DialogueTrigger : MonoBehaviour {
     private void EnableUserControl(bool active)
     {
         if (!active) //if player shouldn't controll character
+        {
             m_Player.Move(0f, false, false, false); //stop any character movement
+            m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            m_Player.GetComponent<Animator>().SetBool("Ground", true);
+        }
 
         if (m_Player != null & m_Player.enabled != active) //disable or enable character control
         {
