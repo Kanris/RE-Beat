@@ -24,13 +24,23 @@ public class ChestItem : MonoBehaviour {
 
     public void AddToTheInventory()
     {
-        PlayerStats.PlayerInventory.Add(item.itemDescription, GetComponent<Image>().sprite.name); //add item to the player inventory
+        if (item.itemDescription.itemType == ItemDescription.ItemType.Item)
+        {
+            PlayerStats.PlayerInventory.Add(item.itemDescription, GetComponent<Image>().sprite.name); //add item to the player inventory
 
-        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
-        var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+            var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Name);
+            var itemAddMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
-        UIManager.Instance.DisplayNotificationMessage(itemName + " " + itemAddMessage, 
-            UIManager.Message.MessageType.Item); //display add message
+            UIManager.Instance.DisplayNotificationMessage(itemName + " " + itemAddMessage,
+                UIManager.Message.MessageType.Item); //display add message
+        }
+        else if (item.itemDescription.itemType == ItemDescription.ItemType.Note)
+        {
+            var noteMessage = LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Description);
+
+            UIManager.Instance.DisplayNotificationMessage(noteMessage,
+                UIManager.Message.MessageType.Message, 5); //display add message
+        }
 
         GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
 
