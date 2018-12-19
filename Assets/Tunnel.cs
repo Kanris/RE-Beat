@@ -50,7 +50,7 @@ public class Tunnel : MonoBehaviour {
 
             yield return new WaitForSeconds(m_InTunnelAnimation.length);
 
-            Destroy(collision.gameObject);
+            Destroy(collision.transform.parent.gameObject);
         }
 
         if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
