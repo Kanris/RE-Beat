@@ -10,14 +10,14 @@ public class InventoryItem : MonoBehaviour {
     #region private fields
 
     [SerializeField] private Audio m_ClickAudio;
-    private TextPage m_ItemDescriptionText;
+    private TextMeshProUGUI m_ItemDescriptionText;
     private string m_ItemDescription = "Some item description of the template on over";
 
     #endregion
 
     #region public methods
 
-    public void Initialize(ItemDescription item, TextPage itemDescriptionText)
+    public void Initialize(ItemDescription item, TextMeshProUGUI itemDescriptionText)
     {
         m_ItemDescriptionText = itemDescriptionText;
 
@@ -27,7 +27,7 @@ public class InventoryItem : MonoBehaviour {
     public void ShowItemInfo()
     {
         AudioManager.Instance.Play(m_ClickAudio);
-        m_ItemDescriptionText.ShowText(LocalizationManager.Instance.GetItemsLocalizedValue(m_ItemDescription));
+        m_ItemDescriptionText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_ItemDescription);
     }
 
     #endregion

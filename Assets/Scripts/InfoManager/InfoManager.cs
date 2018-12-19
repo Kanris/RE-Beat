@@ -28,7 +28,6 @@ public class InfoManager : MonoBehaviour
     [SerializeField] private GameObject m_Bookmarks; //bookmark list
     [SerializeField] private GameObject m_Map;
     [SerializeField] private Transform m_Content; //buttons grid
-    [SerializeField] private TextPage m_Page; //main page text
     [SerializeField] private Image m_BatteryImage;
     [SerializeField] private GameObject m_Seperator;
 
@@ -38,6 +37,7 @@ public class InfoManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_DateText;
     [SerializeField] private TextMeshProUGUI m_BatteryText;
     [SerializeField] private GameObject m_NoItemsText;
+    [SerializeField] private TextMeshProUGUI m_MainText;
 
     [Header("Effects")]
     [SerializeField] private Audio m_OpenAudio;
@@ -165,7 +165,7 @@ public class InfoManager : MonoBehaviour
         AudioManager.Instance.Play(m_OpenAudio);
         m_JournalUI.SetActive(true);
 
-        m_Page.ClearText();
+        m_MainText.text = string.Empty;
         m_ScrapText.text = "Scrap amount - <color=yellow>" + PlayerStats.Scrap.ToString() + "</color>";
 
         OnJournalOpen(m_JournalUI.activeSelf); //notify that journal open/close
@@ -202,7 +202,7 @@ public class InfoManager : MonoBehaviour
         instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite =
             itemsSpriteAtlas.SingleOrDefault(x => x.name == item.ImageInAtlas); //add item image from atlas
 
-        instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_Page); //initialize item button info
+        instantiateItemButton.GetComponent<InventoryItem>().Initialize(item, m_MainText); //initialize item button info
 
         instantiateItemButton.SetActive(false); //hide button
 
@@ -267,7 +267,7 @@ public class InfoManager : MonoBehaviour
         }
 
         m_CurrentOpenBookmark = id; //change current book mark id
-        m_Page.ClearText(); //clear main text 
+        m_MainText.text = string.Empty; //clear main text 
         m_HeaderText.text = GetBookmarkname(id);
 
         AudioManager.Instance.Play(m_OpenAudio); //play open journal sound
@@ -305,14 +305,18 @@ public class InfoManager : MonoBehaviour
 
     public void DisplayTaskText(string taskName)
     {
+        var value = string.Empty;
+
         if (CurrentTasks.ContainsKey(taskName)) //search task in current tasks
         {
-            m_Page.ShowText(CurrentTasks[taskName].GetText()); //show task description
+            value = CurrentTasks[taskName].GetText(); //show task description
         }
         else if (CompletedTasks.ContainsKey(taskName)) //search task in completed tasks
         {
-            m_Page.ShowText(CompletedTasks[taskName].GetText()); //show task description
+            value = CompletedTasks[taskName].GetText(); //show task description
         }
+
+        m_MainText.text = value;
     }
 
     public bool AddTask(string taskName, string taskNameKey, string key)
