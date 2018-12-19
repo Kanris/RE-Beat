@@ -87,6 +87,11 @@ public class Chest : MonoBehaviour {
                         ChangeChestSprite();
                         Destroy(m_InstantChestContainItems);
                     }
+                    else if (CrossPlatformInputManager.GetButtonDown("Submit") & m_InventoryUI.transform.childCount > 0)
+                    {
+                        EventSystem.current.SetSelectedGameObject(null);
+                        EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                    }
 
                     if (CrossPlatformInputManager.GetButtonDown("Cancel"))
                     {
