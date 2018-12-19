@@ -10,6 +10,8 @@ public class TraderItem : MonoBehaviour {
     [SerializeField] private Image m_ItemImage;
     [SerializeField] private TextMeshProUGUI m_CostText;
 
+    public Image m_BuyingImage;
+
     public enum TraderItemType { Upgrade, Heal }
     [Header("Type")]
     [SerializeField] private TraderItemType m_TraderItemType;

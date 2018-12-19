@@ -24,6 +24,8 @@ public class Trader : MonoBehaviour {
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
+    private float m_TimeToBuy;
+
     private PlayerStats m_Player; //notify is player near the vendor
 
     // Update is called once per frame
@@ -52,9 +54,20 @@ public class Trader : MonoBehaviour {
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
             }
-            else if (CrossPlatformInputManager.GetButtonDown("Submit") & m_CurrentSelectedItem != null)
+            else if (CrossPlatformInputManager.GetButtonUp("Submit") & m_CurrentSelectedItem != null)
             {
-                BuyItem();
+                m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+            }
+            else if (CrossPlatformInputManager.GetButton("Submit") & m_CurrentSelectedItem != null)
+            {
+                if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
+                {
+                    BuyItem();
+                }
+                else
+                {
+                    m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += 0.005f;
+                }
             }
         }
         else if (m_InteractionUI.activeSelf)
@@ -125,10 +138,10 @@ public class Trader : MonoBehaviour {
         {
             if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
             {
-                if (m_Player.CurrentHealth == m_Player.MaxHealth & 
+                if (m_Player.CurrentHealth == m_Player.MaxHealth &
                     m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
                 {
-                    UIManager.Instance.DisplayNotificationMessage("Can't buy repair at max health!", 
+                    UIManager.Instance.DisplayNotificationMessage("Can't buy repair at max health!",
                         UIManager.Message.MessageType.Message);
                 }
                 else
@@ -145,7 +158,7 @@ public class Trader : MonoBehaviour {
                         var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
 
                         //display that item was added to inventory
-                        UIManager.Instance.DisplayNotificationMessage(itemName + " " + inventoryMessage, 
+                        UIManager.Instance.DisplayNotificationMessage(itemName + " " + inventoryMessage,
                             UIManager.Message.MessageType.Item);
 
                         //add item to inventory
@@ -173,7 +186,7 @@ public class Trader : MonoBehaviour {
                             EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                         }
                     }
-                }         
+                }
             }
             else //if player does not have enought scrap
             {
