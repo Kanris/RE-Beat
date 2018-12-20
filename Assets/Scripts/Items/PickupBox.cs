@@ -109,19 +109,21 @@ public class PickupBox : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-        if (m_Player != null) //if player is near
+
+        if (m_Player != null && !m_IsBoxUp) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (CrossPlatformInputManager.GetButtonDown("Submit") 
+                    && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
-                var parent = m_Player;
+                AttachToParent(m_Player); //attach box to the player
+            }
 
-                if (m_IsBoxUp & MouseControlManager.IsCanUseSubmitButton())
-                {
-                    parent = null;
-                }
-
-                AttachToParent(parent); //attach box to the player
+        } else if (m_IsBoxUp && m_Player == null)
+        {
+            if (CrossPlatformInputManager.GetButtonDown("Submit") 
+                    && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            {
+                AttachToParent(null); //attach box to the player
             }
         }
 
@@ -146,7 +148,7 @@ public class PickupBox : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Player != null) //if player move away from the box
+        if (collision.CompareTag("Player")) //if player move away from the box
         {
             m_InteractionButton.SetActive(false); //hide box ui
             m_Player = null; //remove player reference
@@ -155,6 +157,8 @@ public class PickupBox : MonoBehaviour {
 
     private void AttachToParent(Transform parrent)
     {
+        m_Player = transform.parent;
+
         transform.SetParent(parrent); //attach box to the parrent
 
         if (parrent != null) //if parent there is parent

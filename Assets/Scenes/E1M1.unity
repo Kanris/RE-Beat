@@ -12705,36 +12705,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 61289960815428080, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.21603417
-      objectReference: {fileID: 0}
-    - target: {fileID: 61289960815428080, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 4.203541
-      objectReference: {fileID: 0}
-    - target: {fileID: 212721270443000892, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8d10b89df917e42db8af236ded943c04,
-        type: 3}
-    - target: {fileID: 212721270443000892, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.60706615
-      objectReference: {fileID: 0}
-    - target: {fileID: 212721270443000892, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 5.0443435
-      objectReference: {fileID: 0}
-    - target: {fileID: 4291394082789542, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.9
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4089f7beacff47d41ae5b6b5c212eca8, type: 2}
   m_IsPrefabAsset: 0
@@ -33823,6 +33793,46 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 61838226562855042, guid: a89d3da86d8d88c4b9f99e6c052effb8,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89d3da86d8d88c4b9f99e6c052effb8, type: 2}
   m_IsPrefabAsset: 0
@@ -34394,29 +34404,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4138284190619894, guid: 80972e02dd2db5041bbcc54ec2318ff4,
     type: 2}
   m_PrefabInternal: {fileID: 1008130552}
---- !u!1 &1642110504 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1824741195303298, guid: 4089f7beacff47d41ae5b6b5c212eca8,
-    type: 2}
-  m_PrefabInternal: {fileID: 531611298}
---- !u!95 &1642110506
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1642110504}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 986ac23d13ae54e4a8ed94ed1001895e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1646725365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4138284190619894, guid: 80972e02dd2db5041bbcc54ec2318ff4,
