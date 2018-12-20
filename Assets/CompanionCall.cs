@@ -32,7 +32,7 @@ public class CompanionCall : MonoBehaviour {
 		
         if (m_InteractionUI.activeSelf) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_IsChanging) //if submit button pressed and spawn is not in progress
+            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f & !m_IsChanging) //if submit button pressed and spawn is not in progress
             {
                 StartCoroutine( ChangeCharacter() ); //change character
             }
@@ -61,6 +61,7 @@ public class CompanionCall : MonoBehaviour {
 
         Instantiate(whoToSpawn, transform.position, transform.rotation); //instantiate gameobject
 
+        GameMaster.Instance.IsPlayerDead = m_IsPlayer;
         m_IsChanging = false; //character was change
         m_IsPlayer = !m_IsPlayer;
     }

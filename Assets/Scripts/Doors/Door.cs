@@ -45,7 +45,7 @@ public class Door : MonoBehaviour {
 
     private void InitializeInteractionButton()
     {
-        if (Type == DoorType.Key) //if door type is Key
+        if (m_UI != null) //if door type is Key
         {
             m_UI.SetActive(false); //hide door ui
         }
@@ -57,7 +57,7 @@ public class Door : MonoBehaviour {
         {
             if (m_UI.activeSelf & MouseControlManager.IsCanUseSubmitButton()) //if player is near door
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player pressed submit button
                 {
                     OpenDoorWithKey(); //try to open the door
                 }
@@ -102,24 +102,27 @@ public class Door : MonoBehaviour {
 
     private void OpenDoorWithKey()
     {
-        if (string.IsNullOrEmpty(KeyName.itemDescription.Name)) //if there is not key name
+        if (KeyName != null) 
         {
-            Destroy(gameObject); //open the door
-            GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
-        }
-        else if (PlayerStats.PlayerInventory.IsInBag(KeyName.itemDescription.Name)) //if there is key name and player have it in the bag
-        {
-            if (PlayerStats.PlayerInventory.Remove(KeyName)) //remove key from the inventory
-                ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.itemDescription.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification_key")); //display announcer message that key was removed from the bag
+            if (string.IsNullOrEmpty(KeyName.itemDescription.Name)) //if there is not key name
+            {
+                Destroy(gameObject); //open the door
+                GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
+            }
+            else if (PlayerStats.PlayerInventory.IsInBag(KeyName.itemDescription.Name)) //if there is key name and player have it in the bag
+            {
+                if (PlayerStats.PlayerInventory.Remove(KeyName)) //remove key from the inventory
+                    ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.itemDescription.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification_key")); //display announcer message that key was removed from the bag
 
-            GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
+                GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Object); //save object state
 
-            Destroy(gameObject); //open the door
-        }
-        else if (m_TimeBetweenShowMessage < Time.time)
-        {
-            m_TimeBetweenShowMessage = Time.time + 2f;//if player havn't needed key
-            ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.itemDescription.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification")); //display message that key is required
+                Destroy(gameObject); //open the door
+            }
+            else if (m_TimeBetweenShowMessage < Time.time)
+            {
+                m_TimeBetweenShowMessage = Time.time + 2f;//if player havn't needed key
+                ShowAnnouncerMessage(LocalizationManager.Instance.GetItemsLocalizedValue(KeyName.itemDescription.Name) + " " + LocalizationManager.Instance.GetItemsLocalizedValue("door_notification")); //display message that key is required
+            }
         }
     }
 

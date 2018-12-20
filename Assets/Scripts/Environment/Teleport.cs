@@ -11,9 +11,10 @@ public class Teleport : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
     [SerializeField] private GameObject m_InteractionUI;
-    
-    private GameObject m_InteractionButton; //teleport ui
+
     private GameObject m_Player; //player reference
+
+    private bool m_IsTeleporting;
 
     #endregion
 
@@ -23,24 +24,18 @@ public class Teleport : MonoBehaviour {
 
     private void Start()
     {
-        InitializeInteractionButton(); //initialize teleport ui
-
         SetActiveInteractionButton(false); //hide teleport ui
-    }
-
-    private void InitializeInteractionButton()
-    {
-        m_InteractionButton = Instantiate(m_InteractionUI, transform);
     }
 
     #endregion
 
     private void Update()
     {
-        if (m_Player != null) //if player is near teleport
+        if (m_Player != null & MouseControlManager.IsCanUseSubmitButton()) //if player is near teleport
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player is pressed submit button
+            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f & !m_IsTeleporting) //if player is pressed submit button
             {
+                m_IsTeleporting = true;
                 StartCoroutine(TeleportPlayer()); //start teleport
             }
         }
@@ -92,15 +87,16 @@ public class Teleport : MonoBehaviour {
 
     private void SetActiveInteractionButton(bool isActive)
     {
-        if (m_InteractionButton != null)
+        if (m_InteractionUI != null)
         {
-            m_InteractionButton.SetActive(isActive);
+            m_InteractionUI.SetActive(isActive);
         }
     }
 
     private void ResetToDefaultState()
     {
         m_Player = null; //remove player reference
+        m_IsTeleporting = false;
         SetActiveInteractionButton(false); //hide ui buttons
     }
 

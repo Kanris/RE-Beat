@@ -39,7 +39,7 @@ public class DialogueTrigger : MonoBehaviour {
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player want to start dialogue
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player want to start dialogue
                 {
                     DisplayUI(false); //disable npc ui
                     DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue

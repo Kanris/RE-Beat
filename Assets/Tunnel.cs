@@ -30,7 +30,7 @@ public class Tunnel : MonoBehaviour {
     {
         if (m_CompanionToTeleport != null & MouseControlManager.IsCanUseSubmitButton())
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f)
             {
                 MoveToNextTunnel();
             }

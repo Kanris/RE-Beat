@@ -45,7 +45,7 @@ public class Trader : MonoBehaviour {
 
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 

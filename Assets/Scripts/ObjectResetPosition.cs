@@ -31,7 +31,7 @@ public class ObjectResetPosition : MonoBehaviour {
         {
             if (m_IsCanReset)
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit"))
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f)
                 {
                     m_IsCanReset = false;
                     m_ObjectToReset.ResetPosition();

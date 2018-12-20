@@ -51,7 +51,7 @@ public class Sign : MonoBehaviour {
         {
             if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player want to read the sign
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player want to read the sign
                 {
                     EnableUserControl(false); //disable user controll
                     m_InteractionButton.SetActive(false); //hide sign ui
@@ -94,7 +94,12 @@ public class Sign : MonoBehaviour {
     private void EnableUserControl(bool active)
     {
         if (!active) //if player shouldn't move
+        {
             m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop player movement
+
+            m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            m_Player.GetComponent<Animator>().SetBool("Ground", true);
+        }
 
         if (m_Player != null & m_Player.enabled != active)
             m_Player.enabled = active; //change control state

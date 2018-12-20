@@ -112,7 +112,7 @@ public class MagneticBox : MonoBehaviour {
     {
         if (m_Player != null) //if player near the box
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (CrossPlatformInputManager.GetButtonDown("Submit") & MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {

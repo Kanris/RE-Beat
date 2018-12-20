@@ -19,11 +19,10 @@ public class DoorSwitch : MonoBehaviour {
     [SerializeField] private Door DoorToOpen; //door to open when switch is pressed
 
     [Header("Effects")]
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private GameObject m_UI;
 
     #endregion
 
-    private GameObject m_UI; //switch ui
     private Animator m_Animator; //switch animator
     private bool m_IsQuitting; //if game is closing
 
@@ -36,7 +35,7 @@ public class DoorSwitch : MonoBehaviour {
 
         m_Animator = GetComponent<Animator>(); //get animator component
 
-        InitializeInteractionButton(); //initialize switch ui
+        m_UI.SetActive(false); //initialize switch ui
 
         ChangeIsQuitting(false); //notify that application is not closing
 
@@ -44,13 +43,6 @@ public class DoorSwitch : MonoBehaviour {
     }
 
     #region Initialize
-
-    private void InitializeInteractionButton()
-    {
-        m_UI = Instantiate(m_InteractionUI, transform);
-
-        m_UI.SetActive(false); //hide ui
-    }
 
     private void SubscribeToEvents()
     {
@@ -66,7 +58,7 @@ public class DoorSwitch : MonoBehaviour {
 		
         if (m_UI.activeSelf) //if switch ui is active
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player pressed submit button
             {
                 m_UI.SetActive(false); //hide switch ui
 

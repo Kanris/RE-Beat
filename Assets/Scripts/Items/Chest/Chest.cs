@@ -75,7 +75,7 @@ public class Chest : MonoBehaviour {
         {
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit") & !m_ChestUI.activeSelf) //if player pressed submit button
+                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f && !m_ChestUI.activeSelf) //if player pressed submit button
                 {
                     OpenChest(); //try to open the chest
                 }
@@ -87,7 +87,7 @@ public class Chest : MonoBehaviour {
                         ChangeChestSprite();
                         Destroy(m_InstantChestContainItems);
                     }
-                    else if (CrossPlatformInputManager.GetButtonDown("Submit") & m_InventoryUI.transform.childCount > 0)
+                    else if (EventSystem.current.currentSelectedGameObject == null && m_InventoryUI.transform.childCount > 0)
                     {
                         EventSystem.current.SetSelectedGameObject(null);
                         EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
