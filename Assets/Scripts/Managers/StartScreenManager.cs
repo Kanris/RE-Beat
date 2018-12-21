@@ -54,6 +54,9 @@ public class StartScreenManager : MonoBehaviour {
     [SerializeField] private GameObject m_MainMenuButton;
     [SerializeField] private GameObject m_OptionsButton;
 
+    [Header("Version text")]
+    [SerializeField] private TextMeshProUGUI m_TextVersion;
+
     #endregion
 
     #region private fields
@@ -113,6 +116,8 @@ public class StartScreenManager : MonoBehaviour {
         {
             LoadButton.SetActive(false);
         }
+
+        m_TextVersion.text = "ver. " + Application.version;
 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
