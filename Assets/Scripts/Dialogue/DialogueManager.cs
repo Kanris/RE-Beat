@@ -128,6 +128,8 @@ public class DialogueManager : MonoBehaviour {
             {
                 if (m_IsSentenceTyping) //if player didn't press skip button
                     yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
+
+                GameMaster.Instance.StartJoystickVibrate(.1f, 0.01f);
             }
             else if (letter == '>')
                 isTagFound = false;

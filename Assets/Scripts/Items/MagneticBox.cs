@@ -170,6 +170,8 @@ public class MagneticBox : MonoBehaviour {
 
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
         }
+
+        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

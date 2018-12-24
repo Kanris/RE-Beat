@@ -132,13 +132,11 @@ public class InfoManager : MonoBehaviour
             if (m_JournalUI.activeSelf)
             {
                 if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed || GameMaster.Instance.m_Joystick.Action2)
-                //if (CrossPlatformInputManager.GetButtonDown("Escape") | CrossPlatformInputManager.GetButtonDown("Journal"))
                 {
                     StartCoroutine ( CloseJournalWithDelay() );
                 }
 
                 if (GameMaster.Instance.m_Joystick.LeftBumper.WasPressed)
-                //if (CrossPlatformInputManager.GetButtonDown("LBJournal"))
                 {
                     if (m_CurrentOpenBookmark > 0)
                     {
@@ -288,6 +286,8 @@ public class InfoManager : MonoBehaviour
 
         if (InfoManagerLight.Instance != null)
             InfoManagerLight.Instance.ChangeLight(id);
+
+        GameMaster.Instance.StartJoystickVibrate(1, .05f);
     }
 
     public IEnumerator CloseJournalWithDelay()

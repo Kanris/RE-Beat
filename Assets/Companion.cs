@@ -96,7 +96,8 @@ public class Companion : MonoBehaviour {
         {
             m_Target = target.transform;
 
-            GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
+            if (GetComponent<Trader>() != null)
+                GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
         }
         else
         {

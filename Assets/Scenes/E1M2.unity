@@ -7554,7 +7554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1067802297
 Transform:
   m_ObjectHideFlags: 0
@@ -11218,6 +11218,10 @@ Prefab:
         type: 2}
       propertyPath: EnemyStats.m_ThrowX
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355790987852450, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 2}

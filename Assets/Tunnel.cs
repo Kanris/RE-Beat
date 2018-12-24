@@ -29,7 +29,7 @@ public class Tunnel : MonoBehaviour {
     {
         if (m_CompanionToTeleport != null & MouseControlManager.IsCanUseSubmitButton())
         {
-            if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed)
+            if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed)
             {
                 MoveToNextTunnel();
             }

@@ -170,6 +170,8 @@ public class PickupBox : MonoBehaviour {
         {
             ChangeBoxProperty(false, 14);
         }
+
+        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
     }
 
     private void ChangeBoxProperty(bool isActive, int layerId)

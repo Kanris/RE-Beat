@@ -37,7 +37,7 @@ public class RevivePlayer : MonoBehaviour {
         Instantiate(m_PlayerToRevive, transform.position, transform.rotation)
             .transform.GetChild(0).GetComponent<SpriteRenderer>().material = materialForPlayer;
 
-        Instantiate(m_Companion, transform.position, transform.rotation)
+        Instantiate(m_Companion, transform.position, transform.rotation).transform.GetChild(0)
             .GetComponent<SpriteRenderer>().material = materialForPlayer;
 
         Destroy(Instantiate(m_ReviveParticles, transform.position, Quaternion.identity), 2f);

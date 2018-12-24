@@ -113,6 +113,8 @@ namespace UnityStandardAssets._2D
         public void PlayHitEffect()
         {
             StartCoroutine(PlayCameraHitAnimation());
+
+            GameMaster.Instance.StartJoystickVibrate(2f, .5f);
         }
 
         public void PlayLowHealthEffect()
@@ -127,6 +129,8 @@ namespace UnityStandardAssets._2D
 
         public IEnumerator PlayReviveEffect()
         {
+            GameMaster.Instance.StartJoystickVibrate(2f, .5f);
+
             Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
 
             Camera.main.GetComponent<Kino.AnalogGlitch>().verticalJump = .2f;

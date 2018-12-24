@@ -71,6 +71,7 @@ public class Trader : MonoBehaviour {
                     }
                     else
                     {
+                        GameMaster.Instance.StartJoystickVibrate(0.5f, 0.01f);
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.deltaTime);
                     }
                 }

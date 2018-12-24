@@ -32,7 +32,7 @@ public class Teleport : MonoBehaviour {
     {
         if (m_Player != null & MouseControlManager.IsCanUseSubmitButton()) //if player is near teleport
         {
-            if ((GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed) & !m_IsTeleporting) //if player is pressed submit button
+            if ((GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) & !m_IsTeleporting) //if player is pressed submit button
             {
                 m_IsTeleporting = true;
                 StartCoroutine(TeleportPlayer()); //start teleport

@@ -69,6 +69,7 @@ public class PickUpItem : MonoBehaviour {
         }
         
         GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
+        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
         Destroy(gameObject);
     }
 

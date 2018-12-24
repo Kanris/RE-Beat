@@ -50,7 +50,7 @@ public class Sign : MonoBehaviour {
         {
             if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
             {
-                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed) //if player want to read the sign
+                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player want to read the sign
                 {
                     EnableUserControl(false); //disable user controll
                     m_InteractionButton.SetActive(false); //hide sign ui
