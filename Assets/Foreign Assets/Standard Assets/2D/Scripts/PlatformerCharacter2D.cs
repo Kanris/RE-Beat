@@ -147,7 +147,9 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 
                 ShowDustEffect();
-                
+
+                GameMaster.Instance.StartJoystickVibrate(1, 0.1f);
+
                 m_IsHaveDoubleJump = true;
             }
             else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
@@ -158,7 +160,9 @@ namespace UnityStandardAssets._2D
 
                     m_Rigidbody2D.velocity = Vector2.zero;
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
-                    
+
+                    GameMaster.Instance.StartJoystickVibrate(1, 0.1f);
+
                     ShowDoubleJumpEffect();
                 }
             }
@@ -170,6 +174,8 @@ namespace UnityStandardAssets._2D
                     m_Anim.SetBool("Dash", true);
 
                     StartCoroutine( ShowDashEffect() );
+
+                    GameMaster.Instance.StartJoystickVibrate(1, 0.2f);
                 }
 
                 if (m_Anim.GetBool("Dash"))

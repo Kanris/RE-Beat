@@ -30,8 +30,8 @@ public class PlayerStats : Stats
     public static float Invincible = 2f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
-    public static bool m_IsCanDoubleJump = false;
-    public static bool m_IsCanDash = false;
+    public static bool m_IsCanDoubleJump = true;
+    public static bool m_IsCanDash = true;
     public static bool m_IsInvincibleWhileDashing = false;
     public static bool m_IsDamageEnemyWhileDashing = false;
     public static int m_ReviveCount = 2;

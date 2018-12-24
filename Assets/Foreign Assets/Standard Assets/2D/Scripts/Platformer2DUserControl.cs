@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets._2D
 {
@@ -12,6 +11,9 @@ namespace UnityStandardAssets._2D
         private bool m_Jump;
         private bool m_Dash;
         private float m_UpdateDashTime;
+
+        private float m_VibrateTimer;
+        private bool m_WasJump;    
 
         //public bool IsCanMove;
         public bool IsCanJump;
@@ -33,13 +35,16 @@ namespace UnityStandardAssets._2D
                 if (!m_Jump)
                 {
                     // Read the jump input in Update so button presses aren't missed.
-                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    //m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    m_Jump = GameMaster.Instance.m_Joystick.Action1.WasPressed;
                 }
             }
 
             if (!m_Dash & m_UpdateDashTime < Time.time)
             {
-                m_Dash = CrossPlatformInputManager.GetButtonDown("Shift"); //TODO: replace with CrossPlatformInput
+                //m_Dash = CrossPlatformInputManager.GetButtonDown("Shift"); //TODO: replace with CrossPlatformInput
+
+                m_Dash = GameMaster.Instance.m_Joystick.RightTrigger.WasPressed;
 
                 if (m_Dash) m_UpdateDashTime = Time.time + 1f;
             }
@@ -48,8 +53,12 @@ namespace UnityStandardAssets._2D
         private void FixedUpdate()
         {
             // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
+            bool crouch = false;
+            float h = GameMaster.Instance.m_Joystick.LeftStickX;
+
+            if (h == 0)
+                h = GameMaster.Instance.m_Joystick.DPadX;
+
             // Pass all parameters to the character control script.
             if (m_Character.enabled) m_Character.Move(h, crouch, m_Jump, m_Dash);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityStandardAssets._2D;
+using InControl;
 
 public class GameMaster : MonoBehaviour {
 
@@ -11,6 +12,10 @@ public class GameMaster : MonoBehaviour {
     public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
 
     public string SceneName; //current scene name
+
+    [HideInInspector] public InputDevice m_Joystick;
+    private float m_VibrateTimer;
+    private bool m_IsVibrate;
 
     [Header("Respawn")]
     public Transform m_RespawnPoint; //current respawn point
@@ -49,6 +54,8 @@ public class GameMaster : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(this);
+
+            m_Joystick = InputManager.ActiveDevice;
 
             #region Initialize Managers
             Initialize("Managers/EventSystem");
@@ -145,9 +152,45 @@ public class GameMaster : MonoBehaviour {
         StartPlayerRespawn(false, true); 
     }
 
-#region SceneRecreation
+    private void Update()
+    {
+        m_Joystick = InputManager.ActiveDevice;
+    }
 
-#region Recreate
+    private void FixedUpdate()
+    {
+        if (m_IsVibrate && m_VibrateTimer < Time.time)
+        {
+            StopJoystickVibrate();
+        }
+    }
+
+    #region joystick
+    public void StartJoystickVibrate(float intensity, float time)
+    {
+        if (m_IsVibrate)
+            StopJoystickVibrate();
+
+        m_Joystick.Vibrate(intensity);
+        m_VibrateTimer = time + Time.time;
+        m_IsVibrate = true;
+
+        Debug.LogError("Start");
+    }
+
+    public void StopJoystickVibrate()
+    {
+        m_IsVibrate = false;
+        m_Joystick.Vibrate(0);
+
+        Debug.LogError("End");
+    }
+
+    #endregion
+
+    #region SceneRecreation
+
+    #region Recreate
 
     public void RecreateSceneState(string sceneName)
     {

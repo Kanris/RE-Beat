@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
@@ -158,10 +157,10 @@ public class Player : MonoBehaviour {
         {
             if (!isPlayerBusy) //is not player bussy
             {
-                if (CrossPlatformInputManager.GetButtonDown(buttonToCheck))
+                /*if (CrossPlatformInputManager.GetButtonDown(buttonToCheck))
                 {
                     action();
-                }
+                }*/
             }
         }
     }
