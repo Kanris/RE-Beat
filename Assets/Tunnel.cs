@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class Tunnel : MonoBehaviour {
 
@@ -30,7 +29,7 @@ public class Tunnel : MonoBehaviour {
     {
         if (m_CompanionToTeleport != null & MouseControlManager.IsCanUseSubmitButton())
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f)
+            if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed)
             {
                 MoveToNextTunnel();
             }

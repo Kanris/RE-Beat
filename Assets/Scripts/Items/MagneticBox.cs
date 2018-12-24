@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Animator))]
 public class MagneticBox : MonoBehaviour {
@@ -37,7 +36,7 @@ public class MagneticBox : MonoBehaviour {
 
     #endregion
 
-    #region private fields
+    #region private methods
 
     #region Initialize
     // Use this for initialization
@@ -112,7 +111,7 @@ public class MagneticBox : MonoBehaviour {
     {
         if (m_Player != null) //if player near the box
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit") & MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed & MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {
@@ -128,7 +127,7 @@ public class MagneticBox : MonoBehaviour {
         }
         else if (m_IsBoxPickedUp & MouseControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed) //if player pressed submit button
             {
                 PickUpBox(false); //put the box
             }

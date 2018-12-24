@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
@@ -75,7 +74,8 @@ public class Chest : MonoBehaviour {
         {
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f && !m_ChestUI.activeSelf) //if player pressed submit button
+                if ((GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed) 
+                    && !m_ChestUI.activeSelf) //if player pressed submit button
                 {
                     OpenChest(); //try to open the chest
                 }
@@ -95,7 +95,8 @@ public class Chest : MonoBehaviour {
                 }
             }
 
-            if (CrossPlatformInputManager.GetButtonDown("Cancel") || CrossPlatformInputManager.GetButtonDown("Journal"))
+            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed
+                || GameMaster.Instance.m_Joystick.Action2)
             {
                 StartCoroutine(CloseChest());
             }

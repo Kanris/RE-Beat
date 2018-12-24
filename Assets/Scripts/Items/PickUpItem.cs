@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class PickUpItem : MonoBehaviour {
@@ -40,7 +39,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (m_IsPlayerNearItem & MouseControlManager.IsCanUseSubmitButton()) //if is player near item
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit")) //if player pressed submit button
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed) //if player pressed submit button
             {
                 InteractWithItem(); //add item
             }

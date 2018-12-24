@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.EventSystems;
 using System.Collections;
 
@@ -139,7 +138,7 @@ public class PauseMenuManager : MonoBehaviour {
         if (!m_IsCantOpenPauseMenu)
         {
             //if player pressed pause button
-            if (CrossPlatformInputManager.GetButtonDown("Escape"))
+            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Start).WasPressed)
             {
                 SetActiveUI();
             }

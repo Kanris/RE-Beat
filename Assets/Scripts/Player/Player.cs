@@ -82,16 +82,18 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl(); //check player jump height
 
-        Attack(m_MeleeAttackCooldown, "Fire1", () =>
+        Attack(m_MeleeAttackCooldown, GameMaster.Instance.m_Joystick.Action3, () =>
         {
             m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
+            GameMaster.Instance.StartJoystickVibrate(1, 0.05f);
             StartCoroutine(MeleeAttack());
         });
 
-        Attack(m_RangeAttackCooldown, "Fire2", () =>
+        Attack(m_RangeAttackCooldown, GameMaster.Instance.m_Joystick.RightBumper, () =>
         {
             m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
             UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed);
+            GameMaster.Instance.StartJoystickVibrate(1, 0.05f);
             DrawBullet();
         });
 
@@ -151,16 +153,16 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void Attack(float timeToCheck, string buttonToCheck, VoidDelegate action)
+    private void Attack(float timeToCheck, InControl.InputControl inputControl, VoidDelegate action)
     {
         if (timeToCheck < Time.time) //can player attack
         {
             if (!isPlayerBusy) //is not player bussy
             {
-                /*if (CrossPlatformInputManager.GetButtonDown(buttonToCheck))
+                if (inputControl.WasPressed)
                 {
                     action();
-                }*/
+                }
             }
         }
     }

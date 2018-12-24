@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.CrossPlatformInput;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -34,7 +33,8 @@ public class Trader : MonoBehaviour {
 
         if (m_Player != null) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Cancel") || CrossPlatformInputManager.GetButtonDown("Journal"))
+            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed 
+                || GameMaster.Instance.m_Joystick.Action2)
             {
                 if (m_StoreUI.activeSelf)
                 {
@@ -45,7 +45,8 @@ public class Trader : MonoBehaviour {
 
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+                if ((GameMaster.Instance.m_Joystick.LeftStickY > 0.9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) 
+                    & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 
@@ -57,11 +58,11 @@ public class Trader : MonoBehaviour {
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                 }
-                else if (CrossPlatformInputManager.GetButtonUp("Submit") & m_CurrentSelectedItem != null)
+                else if (GameMaster.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                 }
-                else if (CrossPlatformInputManager.GetButton("Submit") & m_CurrentSelectedItem != null)
+                else if (GameMaster.Instance.m_Joystick.Action4 & m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {

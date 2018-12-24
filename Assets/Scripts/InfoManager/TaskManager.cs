@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class TaskManager : MonoBehaviour {
 
@@ -74,7 +73,7 @@ public class TaskManager : MonoBehaviour {
         {
             if (taskTriggerType == TaskTriggerType.OnSubmit) //if task type - on submit
             {
-                if ( CrossPlatformInputManager.GetButtonDown("Submit") ) //if player press submit button
+                if ( GameMaster.Instance.m_Joystick.Action4.WasPressed ) //if player press submit button
                 {
                     ChangeTaskStatus();
                 }

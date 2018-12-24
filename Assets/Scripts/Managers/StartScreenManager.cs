@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class StartScreenManager : MonoBehaviour {
 
@@ -203,7 +202,7 @@ public class StartScreenManager : MonoBehaviour {
 
     private void Update()
     {
-        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
+        if (GameMaster.Instance.m_Joystick.Action2.WasPressed)
         {
             if (m_ConfirmDialogue.activeSelf)
             {

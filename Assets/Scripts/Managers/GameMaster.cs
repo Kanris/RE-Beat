@@ -174,16 +174,12 @@ public class GameMaster : MonoBehaviour {
         m_Joystick.Vibrate(intensity);
         m_VibrateTimer = time + Time.time;
         m_IsVibrate = true;
-
-        Debug.LogError("Start");
     }
 
     public void StopJoystickVibrate()
     {
         m_IsVibrate = false;
         m_Joystick.Vibrate(0);
-
-        Debug.LogError("End");
     }
 
     #endregion

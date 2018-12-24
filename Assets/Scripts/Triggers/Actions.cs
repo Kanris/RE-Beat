@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class Actions : MonoBehaviour {
 
@@ -51,7 +50,7 @@ public class Actions : MonoBehaviour {
         {
             if (m_IsPlayerNear)
             {
-                if (CrossPlatformInputManager.GetButtonDown("Submit"))
+                if (GameMaster.Instance.m_Joystick.Action4.WasPressed)
                 {
                     ChangeObjectState();
                 }

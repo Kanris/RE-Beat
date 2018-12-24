@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Animator))]
 public class DoorSwitch : MonoBehaviour {
@@ -58,7 +57,7 @@ public class DoorSwitch : MonoBehaviour {
 		
         if (m_UI.activeSelf) //if switch ui is active
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player pressed submit button
+            if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player pressed submit button
             {
                 m_UI.SetActive(false); //hide switch ui
 

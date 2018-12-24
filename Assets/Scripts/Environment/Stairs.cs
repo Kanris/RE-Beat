@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
 
 public class Stairs : MonoBehaviour {
@@ -43,12 +42,13 @@ public class Stairs : MonoBehaviour {
     {
         if (m_Player != null) //if player is on stairs
         {
-            if (CrossPlatformInputManager.GetAxis("Horizontal") != 0f &
-                   CrossPlatformInputManager.GetButtonDown("Jump") & !isJumping) //if player want to jump from stairs
+            if ((GameMaster.Instance.m_Joystick.LeftStickX != 0f || GameMaster.Instance.m_Joystick.DPadX != 0f) &
+                   GameMaster.Instance.m_Joystick.Action1.WasPressed & !isJumping) //if player want to jump from stairs
             {
                 isJumping = true;
             }
-            else if (CrossPlatformInputManager.GetAxis("Vertical") != 0f & !m_VerticalMove & !isJumping) //if player moves on stairs
+            else if ((GameMaster.Instance.m_Joystick.LeftStickY != 0f || GameMaster.Instance.m_Joystick.DPadY != 0f) 
+                & !m_VerticalMove & !isJumping) //if player moves on stairs
             {
                 m_VerticalMove = true;
             }
@@ -75,7 +75,7 @@ public class Stairs : MonoBehaviour {
 
                 var jumpVector = new Vector2(5f, 10f); //jump right
 
-                if (CrossPlatformInputManager.GetAxis("Horizontal") < 0f)
+                if (GameMaster.Instance.m_Joystick.LeftStickX < 0f || GameMaster.Instance.m_Joystick.DPadX < 0f)
                 {
                     jumpVector = new Vector2(-5f, 10f); //jump left
                 }
@@ -95,7 +95,7 @@ public class Stairs : MonoBehaviour {
 
         var yPos = 0.03f; //move value
 
-        if (CrossPlatformInputManager.GetAxis("Vertical") < 0f) //if player move down on stairs
+        if (GameMaster.Instance.m_Joystick.LeftStickY < 0f || GameMaster.Instance.m_Joystick.DPadY < 0f) //if player move down on stairs
         {
             yPos = -yPos; //change move value
             m_Player.position += new Vector2(0, yPos); //move player down

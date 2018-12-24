@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class LanternPickUp : MonoBehaviour {
     
@@ -50,14 +49,14 @@ public class LanternPickUp : MonoBehaviour {
 		
         if (m_Player != null)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (GameMaster.Instance.m_Joystick.Action1.WasPressed)
             {
                 SetPlayerCarriesLantern(true);
             }
         }
         else if (transform.parent != null)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit"))
+            if (GameMaster.Instance.m_Joystick.Action1.WasPressed)
             {
                 SetPlayerCarriesLantern(false);
                 GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);

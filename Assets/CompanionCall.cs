@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
 
 public class CompanionCall : MonoBehaviour {
@@ -32,7 +30,7 @@ public class CompanionCall : MonoBehaviour {
 		
         if (m_InteractionUI.activeSelf) //if player is near
         {
-            if (CrossPlatformInputManager.GetAxis("Vertical") > .1f & !m_IsChanging) //if submit button pressed and spawn is not in progress
+            if ((GameMaster.Instance.m_Joystick.LeftStickY > 0.9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) && !m_IsChanging) //if submit button pressed and spawn is not in progress
             {
                 StartCoroutine( ChangeCharacter() ); //change character
             }

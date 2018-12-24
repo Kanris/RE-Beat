@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Animator))]
 public class Door : MonoBehaviour {
@@ -57,7 +56,7 @@ public class Door : MonoBehaviour {
         {
             if (m_UI.activeSelf & MouseControlManager.IsCanUseSubmitButton()) //if player is near door
             {
-                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player pressed submit button
+                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player pressed submit button
                 {
                     OpenDoorWithKey(); //try to open the door
                 }

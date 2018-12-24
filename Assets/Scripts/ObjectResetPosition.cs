@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.CrossPlatformInput;
 using TMPro;
 
 public class ObjectResetPosition : MonoBehaviour {
@@ -31,7 +30,7 @@ public class ObjectResetPosition : MonoBehaviour {
         {
             if (m_IsCanReset)
             {
-                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f)
+                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed)
                 {
                     m_IsCanReset = false;
                     m_ObjectToReset.ResetPosition();

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 public class PickupBox : MonoBehaviour {
 
@@ -112,7 +111,7 @@ public class PickupBox : MonoBehaviour {
 
         if (m_Player != null && !m_IsBoxUp) //if player is near
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit") 
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed
                     && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 AttachToParent(m_Player); //attach box to the player
@@ -120,7 +119,7 @@ public class PickupBox : MonoBehaviour {
 
         } else if (m_IsBoxUp && m_Player == null)
         {
-            if (CrossPlatformInputManager.GetButtonDown("Submit") 
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed
                     && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 AttachToParent(null); //attach box to the player

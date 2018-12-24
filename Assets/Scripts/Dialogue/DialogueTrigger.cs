@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets._2D;
 
 public class DialogueTrigger : MonoBehaviour {
@@ -39,7 +38,7 @@ public class DialogueTrigger : MonoBehaviour {
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
-                if (CrossPlatformInputManager.GetAxis("Vertical") > .1f) //if player want to start dialogue
+                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player want to start dialogue
                 {
                     DisplayUI(false); //disable npc ui
                     DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
