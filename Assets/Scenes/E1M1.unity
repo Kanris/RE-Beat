@@ -1312,6 +1312,29 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 574c3997f9c52428bb16fa7c603670bb, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &225112594 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1405287595926136, guid: 574c3997f9c52428bb16fa7c603670bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 225112593}
+--- !u!114 &225112595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 225112594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logDebugInfo: 0
+  invertYAxis: 0
+  enableXInput: 1
+  useFixedUpdate: 0
+  dontDestroyOnLoad: 0
+  customProfiles:
+  - CustomProfileExample.KeyboardAndMouseProfile
 --- !u!1 &226326008
 GameObject:
   m_ObjectHideFlags: 0
@@ -25513,6 +25536,27 @@ Prefab:
       propertyPath: DamageAmount
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5aa0f3e1caa57fc478925302d9148b4a,
+        type: 3}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
   m_IsPrefabAsset: 0
@@ -36032,6 +36076,17 @@ Prefab:
     - target: {fileID: 1069721154091234, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5aa0f3e1caa57fc478925302d9148b4a,
+        type: 3}
+    - target: {fileID: 212167749179609724, guid: 80972e02dd2db5041bbcc54ec2318ff4,
+        type: 2}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80972e02dd2db5041bbcc54ec2318ff4, type: 2}

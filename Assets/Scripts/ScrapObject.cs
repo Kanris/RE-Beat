@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScrapObject : MonoBehaviour {
 
     [SerializeField] private Transform m_Target;
+    [SerializeField] private GameObject m_HitParticles;
 
     private int m_ScrapAmount = 0;
 
@@ -23,6 +24,9 @@ public class ScrapObject : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             PlayerStats.Scrap = m_ScrapAmount;
+
+            Instantiate(m_HitParticles, m_Target.position, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }
