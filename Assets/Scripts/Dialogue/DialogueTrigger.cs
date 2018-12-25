@@ -25,6 +25,11 @@ public class DialogueTrigger : MonoBehaviour {
         DisplayUI(false); //hide npc ui
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeDialogueInProcess; //watch if dialogue is started or finished
+
+        if (GetComponent<Animator>() != null)
+        {
+            GetComponent<Animator>().SetFloat("Speed", Random.Range(.8f, 1.2f));
+        }
     }
 
     #endregion
