@@ -82,6 +82,8 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/MouseControlManager");
 
+            Initialize("Managers/InControlManager");
+
 #if MOBILE_INPUT
             Initialize("Managers/MobileTouchControl");
 #endif

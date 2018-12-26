@@ -25,7 +25,7 @@ public class ScrapObject : MonoBehaviour {
         {
             PlayerStats.Scrap = m_ScrapAmount;
 
-            Instantiate(m_HitParticles, m_Target.position, Quaternion.identity);
+            Destroy( Instantiate(m_HitParticles, m_Target.position, Quaternion.identity), 1f);
 
             Destroy(gameObject);
         }
