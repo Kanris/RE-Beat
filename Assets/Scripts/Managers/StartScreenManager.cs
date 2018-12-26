@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
+using InControl;
 
 public class StartScreenManager : MonoBehaviour {
 
@@ -202,7 +203,9 @@ public class StartScreenManager : MonoBehaviour {
 
     private void Update()
     {
-        if (GameMaster.Instance.m_Joystick.Action2.WasPressed)
+        var m_Joystick = InputManager.ActiveDevice;
+
+        if (m_Joystick.Action2.WasPressed)
         {
             if (m_ConfirmDialogue.activeSelf)
             {
