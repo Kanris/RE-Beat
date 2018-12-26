@@ -2,7 +2,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class Trader : MonoBehaviour {
 
@@ -50,8 +49,6 @@ public class Trader : MonoBehaviour {
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 
-                    //m_InventoryUI.transform.GetChild(0).gameObject.GetComponent<Button>().Select();
-
                     m_StoreUI.SetActive(true); //show store ui
                     m_InteractionUI.SetActive(false); //hide interaction elements
 
@@ -92,7 +89,7 @@ public class Trader : MonoBehaviour {
             {
                 m_Player = collision.GetComponent<Player>().playerStats; //indicate that player is near
 
-                collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
+                //collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
                 
                 m_InteractionUI.SetActive(true); //show interaction elements
             }
@@ -110,7 +107,7 @@ public class Trader : MonoBehaviour {
         {
             m_Player = null; //indicate that player is not near trader
 
-            collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
+            //collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
 
             StartCoroutine( HideUI() ); //hide npc ui
         }
