@@ -13,7 +13,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     #region private fields
     
-    private PlatformerCharacter2D m_Player; //player's control
+    private Transform m_Player; //player's control
     private bool m_IsDialogueInProgress; //is dialogue in progress
 
     #endregion
@@ -34,7 +34,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     #endregion
 
-    #region private fields
+    #region private methods
 
     // Update is called once per frame
     private void Update () {
@@ -46,20 +46,22 @@ public class DialogueTrigger : MonoBehaviour {
                 if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player want to start dialogue
                 {
                     DisplayUI(false); //disable npc ui
+                    EnableUserControl(false);
+
                     DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
 
                     if (!dialogue.IsDialogueFinished) //if dialogue is not saved
                         GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
                 }
-
-                if (!m_Player.enabled) //if dialogue is not in progress and player havn't character control
+                else if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump)
                 {
-                    EnableUserControl(true); //enable character control
-                    DisplayUI(true); //show NPC ui
+                    EnableUserControl(true);
+                }
+                else if (!m_NPCUI.activeSelf)
+                {
+                    m_NPCUI.SetActive(true);
                 }
             }
-            else if (m_Player.enabled) //if dialogue in progress and player still have character control
-                EnableUserControl(false); //disable character control
         }
         else if (m_NPCUI.activeSelf)
         {
@@ -72,25 +74,23 @@ public class DialogueTrigger : MonoBehaviour {
     {
         if (!active) //if player shouldn't controll character
         {
-            m_Player.Move(0f, false, false, false); //stop any character movement
+            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop any character movement
             m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             m_Player.GetComponent<Animator>().SetBool("Ground", true);
-        }
 
-        if (m_Player != null & m_Player.enabled != active) //disable or enable character control
-        {
-            m_Player.GetComponent<Player>().TriggerPlayerBussy(!active);
-            m_Player.enabled = active;
-
-            PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
+            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = false;
         }
+        else
+            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = true;
+
+        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) //if player is near npc
         {
-            m_Player = collision.GetComponent<PlatformerCharacter2D>(); //get character control script
+            m_Player = collision.transform; //get character control script
             DisplayUI(true); //show npc ui
         }
     }

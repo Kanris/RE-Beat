@@ -18,7 +18,7 @@ public class Sign : MonoBehaviour {
     #endregion
 
     private GameObject m_InteractionButton; //sign ui
-    private PlatformerCharacter2D m_Player; //player control
+    private Transform m_Player; //player control
     private bool m_IsSentenceShowInProgress; //indicates is dialogue still in progress
 
     #endregion
@@ -61,13 +61,13 @@ public class Sign : MonoBehaviour {
                     m_InteractionButton.SetActive(false); //hide sign ui
                     StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName, transform)); //show sign text
 
-                } else if (!m_Player.enabled) //if player control is disabled
+                } else if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump) //if player control is disabled
                 {
                     EnableUserControl(true); //enable it
                 }
-                else if (!m_InteractionButton.activeSelf) //if sign ui is hidden
+                else if (!m_InteractionButton.activeSelf)
                 {
-                    m_InteractionButton.SetActive(true); //show sign ui
+                    m_InteractionButton.SetActive(true);
                 }
             }
         }
@@ -82,8 +82,8 @@ public class Sign : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_Player == null) //if player enter to the sign trigger
         {
-            var playerControl = collision.GetComponent<PlatformerCharacter2D>(); //get reference to the player control
-            SetUpSign(true, playerControl); 
+            m_InteractionButton.SetActive(true); //show or hide sign ui
+            m_Player = collision.transform;
         }
     }
 
@@ -91,28 +91,26 @@ public class Sign : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & m_Player != null) //if player leave sign trigger
         {
-            SetUpSign(false, null);
+            m_InteractionButton.SetActive(false); //show or hide sign ui
+            m_Player = null;
         }
     }
 
+    //enable or disable character control
     private void EnableUserControl(bool active)
     {
-        if (!active) //if player shouldn't move
+        if (!active) //if player shouldn't controll character
         {
-            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop player movement
-
+            m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop any character movement
             m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             m_Player.GetComponent<Animator>().SetBool("Ground", true);
+
+            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = false;
         }
+        else
+            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = true;
 
-        if (m_Player != null & m_Player.enabled != active)
-            m_Player.enabled = active; //change control state
-    }
-
-    private void SetUpSign(bool value, PlatformerCharacter2D player)
-    {
-        m_InteractionButton.SetActive(value); //show or hide sign ui
-        m_Player = player; //reference to the player's control
+        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
     }
 
     private void ChangeIsInProgress(bool value)
