@@ -312,7 +312,7 @@ public class DialogueManager : MonoBehaviour {
         m_Text.gameObject.SetActive(false);
 
         yield return new WaitForEndOfFrame(); //apply disappear animation
-        
+
         yield return new WaitForSecondsRealtime(m_DialogueBackgroundAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         ChangeIsDialogueInProgress(false); //dialogue is not in ptrogress

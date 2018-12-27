@@ -163,24 +163,35 @@ public class GameMaster : MonoBehaviour {
     public void StartJoystickVibrate(float intensity, float time)
     {
         if (m_IsVibrate)
-            m_IsVibrate = false;
+        {
+            StopJoystickVibrate();
+        }
 
         m_Joystick.Vibrate(intensity);
         m_IsVibrate = true;
 
-        StartCoroutine(GamePadVibrate(intensity, time));
+        StartCoroutine(GamepadVibrate(time));
     }
 
-    private IEnumerator GamePadVibrate(float intensity, float time)
+    private IEnumerator GamepadVibrate(float time)
     {
-        var totalTime = 0f;
+        var currentTimeVibration = 0f;
 
-        while (totalTime > time && m_IsVibrate)
+        while (currentTimeVibration < time)
         {
-            totalTime += 0.01f;
+            currentTimeVibration += 0.01f;
+
             yield return new WaitForSecondsRealtime(0.01f);
         }
 
+        if (m_IsVibrate)
+        {
+            StopJoystickVibrate();
+        }
+    }
+
+    private void StopJoystickVibrate()
+    {
         m_IsVibrate = false;
         m_Joystick.Vibrate(0);
     }
