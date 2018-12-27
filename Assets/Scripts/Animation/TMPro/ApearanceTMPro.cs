@@ -27,7 +27,7 @@ public class ApearanceTMPro : MonoBehaviour {
         {
             m_TextToAnimate.color = m_TextToAnimate.color.ChangeColor(a: value);
 
-            yield return new WaitForSeconds(increment);
+            yield return new WaitForSecondsRealtime(increment);
 
             value += increment;
         }

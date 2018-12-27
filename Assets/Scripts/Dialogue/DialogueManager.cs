@@ -127,7 +127,7 @@ public class DialogueManager : MonoBehaviour {
             if (!isTagFound)
             {
                 if (m_IsSentenceTyping) //if player didn't press skip button
-                    yield return new WaitForSeconds(0.05f); //wait 0.05s until type letter
+                    yield return new WaitForSecondsRealtime(0.05f); //wait 0.05s until type letter
 
                 GameMaster.Instance.StartJoystickVibrate(.1f, 0.01f);
             }
@@ -183,7 +183,7 @@ public class DialogueManager : MonoBehaviour {
     {
         m_FirstButtonGO.SetActive(true);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSecondsRealtime(0.2f);
 
         m_SecondButtonGO.SetActive(true);
 
@@ -203,6 +203,8 @@ public class DialogueManager : MonoBehaviour {
 
         if (OnDialogueInProgressChange != null)
             OnDialogueInProgressChange(value);
+
+        Time.timeScale = value ? 0f : 1f;
     }
 
     #region Sound
@@ -311,7 +313,7 @@ public class DialogueManager : MonoBehaviour {
 
         yield return new WaitForEndOfFrame(); //apply disappear animation
         
-        yield return new WaitForSeconds(m_DialogueBackgroundAnimator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSecondsRealtime(m_DialogueBackgroundAnimator.GetCurrentAnimatorStateInfo(0).length);
 
         ChangeIsDialogueInProgress(false); //dialogue is not in ptrogress
 
