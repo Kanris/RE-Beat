@@ -479,6 +479,10 @@ public class GameMaster : MonoBehaviour {
         var playerGameObject = Instantiate(m_PlayerToRespawn);
         playerGameObject.transform.position = transformToPlacePlayer.position;
 
+        m_ReachableRespawnPoint = null;
+
+        UIManager.Instance.SetReviveAvailable(false);
+
         m_IsPlayerRespawning = false;
         IsPlayerDead = false;
     }
@@ -487,6 +491,10 @@ public class GameMaster : MonoBehaviour {
     {
         var respawnPlayer = Instantiate(m_PlayerToRespawn);
         respawnPlayer.transform.position = respawnPosition;
+
+        m_ReachableRespawnPoint = null;
+
+        UIManager.Instance.SetReviveAvailable(false);
 
         yield return new WaitForSeconds(.1f); //remove?
 

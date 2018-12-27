@@ -11,6 +11,7 @@ public class ReacheblePoint : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             GameMaster.Instance.SetReacheblePoint(transform, m_NearestTunnel);
+            UIManager.Instance.SetReviveAvailable(true);
         }
     }
 

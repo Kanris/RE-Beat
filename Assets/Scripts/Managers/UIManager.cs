@@ -379,4 +379,9 @@ public class UIManager : MonoBehaviour {
     }
 
     #endregion
+
+    public void SetReviveAvailable(bool value)
+    {
+        m_RevivePanel.SetActive(value);
+    }
 }
