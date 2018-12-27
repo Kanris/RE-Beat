@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class EnemyShield : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class EnemyShield : MonoBehaviour {
 
         SubscribeToEvents();
 
-        Destroy(gameObject, m_ShieldDuration + .5f);
+        StartCoroutine(ActivateShield());
     }
 
     private void SubscribeToEvents()
@@ -31,9 +32,40 @@ public class EnemyShield : MonoBehaviour {
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
     }
 
-    public void ActiveShield()
+    public IEnumerator ActivateShield()
     {
+        var currentTime = 0f;
+        var activeTime = 1f;
+
+        while ( currentTime < activeTime)
+        {
+            currentTime += Time.deltaTime;
+            transform.localScale = new Vector3(Mathf.Lerp(.1f, 1f, currentTime / activeTime), 
+                                                   Mathf.Lerp(.1f, 1f, currentTime / activeTime), 1f);
+
+            yield return new WaitForEndOfFrame();
+        }
+
         m_IsActive = true;
+
+        StartCoroutine(CooldownShield());
+    }
+
+    public IEnumerator CooldownShield()
+    {
+        var currentTime = 0f;
+
+        while (currentTime < m_ShieldDuration)
+        {
+            currentTime += Time.deltaTime;
+
+            transform.localScale = new Vector3(Mathf.Lerp(1f, .5f, currentTime / m_ShieldDuration),
+                                                Mathf.Lerp(1f, .5f, currentTime / m_ShieldDuration), 1f);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnApplicationQuit()
