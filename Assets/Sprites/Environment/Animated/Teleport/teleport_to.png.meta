@@ -1,15 +1,16 @@
 fileFormatVersion: 2
-guid: d862391dc1bad5b4997f484d4d700d89
+guid: 628961de2c6a9814998c26239ca402a6
 TextureImporter:
   fileIDToRecycleName:
-    21300000: fantasy_tiles_0
-    21300002: fantasy_tiles_1
-    21300004: fantasy_tiles_2
-    21300006: fantasy_tiles_3
-    21300008: fantasy_tiles_4
-    21300010: fantasy_tiles_5
-    21300012: fantasy_tiles_6
-    21300014: fantasy_tiles_7
+    21300000: teleport_to_0
+    21300002: teleport_to_1
+    21300004: teleport_to_2
+    21300006: teleport_to_3
+    21300008: teleport_to_4
+    21300010: teleport_to_5
+    21300012: teleport_to_6
+    21300014: teleport_to_7
+    21300016: teleport_to_8
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -50,10 +51,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 80
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -103,153 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fantasy_tiles_0
+      name: teleport_to_0
       rect:
         serializedVersion: 2
-        x: 225
-        y: 319
-        width: 26
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8af36711b6c9234692c1674b37a6307
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_1
-      rect:
-        serializedVersion: 2
-        x: 270
-        y: 319
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e77bb7397c0a244c950dace1693b0f3
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_2
-      rect:
-        serializedVersion: 2
-        x: 334
-        y: 319
-        width: 96
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ed9e37500d357d4189cce0ac35c6176
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_5
-      rect:
-        serializedVersion: 2
-        x: 225
-        y: 287
-        width: 26
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d30873858600cb4479a8e8443a5d79f7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_6
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 254
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b0cccf1b9849fa4389c85f45cfb1c9c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_7
-      rect:
-        serializedVersion: 2
-        x: 207
-        y: 209
-        width: 14
-        height: 62
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 4, y: 9, z: 4, w: 8}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63c12b51c08421b419ec73d0d7d9d8a4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_3
-      rect:
-        serializedVersion: 2
-        x: 558
-        y: 199
-        width: 48
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 6, z: 0, w: 1}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 67b1be32e59f3ad4980f4e5c9854aa8b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fantasy_tiles_4
-      rect:
-        serializedVersion: 2
-        x: 462
-        y: 271
-        width: 64
-        height: 58
+        x: 0
+        y: 0
+        width: 80.111115
+        height: 122
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,7 +118,167 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f1ac4f030493614292bba2988dd3644
+      spriteID: 477d37c3df7066b42ba3399092184690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff57cc45b0fd4ba478d3825cf8271a7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79daf3eb56072f42a0f9a4afa2d7c81
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb3cf35f7172cb542af4d953d3548af8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_4
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35abfe74ad2372840b5687cee7e24ba9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de47bc6eb67f4994a91dfbb7c454f89b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c13010b85e12f649963cf0f042cce68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_7
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafd4f3b25f3d0346bc3afac1ec874db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: teleport_to_8
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 80.111115
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e580b08f3d47d947b88e3c70454f11c
       vertices: []
       indices: 
       edges: []
@@ -265,7 +286,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b3913ff3b828d5e4084bb5fee1ba0682
+    spriteID: ac74c0e136955f64484ba2e90447a3bd
     vertices: []
     indices: 
     edges: []
