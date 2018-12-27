@@ -97,7 +97,7 @@ public class SaveLoadManager : MonoBehaviour {
         SaveLoadMaster.SaveGeneralData();
         SaveLoadMaster.SavePlayerData();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSecondsRealtime(2f);
 
         ActiveSaveImage(false); //hide save image
     }

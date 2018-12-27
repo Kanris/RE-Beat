@@ -97,7 +97,6 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                 {
                     m_Grounded = true;
-                    Debug.LogError(colliders[i].gameObject.name);
                 }
             }
             m_Anim.SetBool("Ground", m_Grounded);
