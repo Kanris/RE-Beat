@@ -55,4 +55,9 @@ public class MouseControlManager : MonoBehaviour {
         return false;
     }
 
+    public static bool IsUpperButtonsPressed()
+    {
+        return GameMaster.Instance.m_Joystick.LeftStickY.WasPressed || GameMaster.Instance.m_Joystick.DPadUp.WasPressed;
+    }
+
 }

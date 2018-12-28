@@ -56,7 +56,7 @@ public class Door : MonoBehaviour {
         {
             if (m_UI.activeSelf & MouseControlManager.IsCanUseSubmitButton()) //if player is near door
             {
-                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player pressed submit button
+                if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
                 {
                     OpenDoorWithKey(); //try to open the door
                 }

@@ -57,7 +57,7 @@ public class DoorSwitch : MonoBehaviour {
 		
         if (m_UI.activeSelf) //if switch ui is active
         {
-            if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player pressed submit button
+            if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
             {
                 m_UI.SetActive(false); //hide switch ui
 

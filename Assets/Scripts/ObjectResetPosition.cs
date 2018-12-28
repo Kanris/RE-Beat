@@ -30,7 +30,7 @@ public class ObjectResetPosition : MonoBehaviour {
         {
             if (m_IsCanReset)
             {
-                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed)
+                if (MouseControlManager.IsUpperButtonsPressed())
                 {
                     m_IsCanReset = false;
                     m_ObjectToReset.ResetPosition();

@@ -43,7 +43,7 @@ public class DialogueTrigger : MonoBehaviour {
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
-                if (GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) //if player want to start dialogue
+                if (MouseControlManager.IsUpperButtonsPressed()) //if player want to start dialogue
                 {
                     DisplayUI(false); //disable npc ui
                     EnableUserControl(false);

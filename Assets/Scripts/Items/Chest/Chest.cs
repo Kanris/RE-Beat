@@ -74,8 +74,7 @@ public class Chest : MonoBehaviour {
         {
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if ((GameMaster.Instance.m_Joystick.LeftStickY > .9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) 
-                    && !m_ChestUI.activeSelf) //if player pressed submit button
+                if (MouseControlManager.IsUpperButtonsPressed() && !m_ChestUI.activeSelf) //if player pressed submit button
                 {
                     OpenChest(); //try to open the chest
                 }
