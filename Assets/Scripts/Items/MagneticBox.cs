@@ -79,7 +79,9 @@ public class MagneticBox : MonoBehaviour {
             //respawn new box
             var objectToRespawn = Resources.Load("Items/MagneticBox") as GameObject;
             var instantiatedBox = Instantiate(objectToRespawn);
+
             instantiatedBox.transform.position = m_RespawnPosition;
+            instantiatedBox.name = transform.name;
 
             if (OnBoxDestroy != null)
                 OnBoxDestroy(instantiatedBox.GetComponent<MagneticBox>());

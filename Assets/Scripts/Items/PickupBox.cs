@@ -81,7 +81,9 @@ public class PickupBox : MonoBehaviour {
             //respawn new box
             var newBox = Resources.Load("Items/Box") as GameObject;
             var instantiateNewBox = Instantiate(newBox);
+
             instantiateNewBox.transform.position = m_SpawnPosition;
+            instantiateNewBox.name = transform.name;
          }
      }
 
