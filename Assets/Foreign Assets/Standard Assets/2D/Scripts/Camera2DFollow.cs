@@ -29,6 +29,8 @@ namespace UnityStandardAssets._2D
         private float m_CamSize;
         private float m_CurrentCameraSize;
 
+        private float m_CamShakeAmount;
+
         private void Start()
         {
             m_DefaultCamSize = Camera.main.orthographicSize;
@@ -109,6 +111,35 @@ namespace UnityStandardAssets._2D
         }
 
         #region camera effects
+
+        public void Shake(float amount, float length)
+        {
+            m_CamShakeAmount = amount;
+
+            InvokeRepeating("DoShake", 0f, 0.01f);
+            Invoke("StopShake", length);
+        }
+
+        private void DoShake()
+        {
+            if (m_CamShakeAmount > 0)
+            {
+                var camPosition = Camera.main.transform.position;
+
+                var offsetX = Random.value * m_CamShakeAmount * 2 - m_CamShakeAmount;
+                var offsetY = Random.value * m_CamShakeAmount * 2 - m_CamShakeAmount;
+
+                camPosition.x += offsetX;
+                camPosition.y += offsetY;
+
+                Camera.main.transform.position = camPosition;
+            }
+        }
+
+        private void StopShake()
+        {
+            CancelInvoke("DoShake");
+        }
 
         public void PlayHitEffect()
         {

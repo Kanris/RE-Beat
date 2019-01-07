@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class DestroyingWall : MonoBehaviour {
@@ -10,6 +11,7 @@ public class DestroyingWall : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private GameObject m_HitEffect;
+
     private Animator m_Animator; //destroying wall animator
 
     #endregion
@@ -20,6 +22,7 @@ public class DestroyingWall : MonoBehaviour {
     private void Start () {
 
         m_Animator = GetComponent<Animator>(); //reference to the wall animator
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,12 +38,12 @@ public class DestroyingWall : MonoBehaviour {
             }
             else //if wall health is greater than 0
             {
-                SpawnParticles(collision.transform.parent.transform.localScale.x); //show hit particles
+                ShowHitParticles(collision.transform.parent.transform.localScale.x); //show hit particles
             }
         }
     }
 
-    private void SpawnParticles(float playerLook)
+    private void ShowHitParticles(float playerLook)
     {
         var hitParticlesInstantiate = Instantiate(m_HitEffect);
         hitParticlesInstantiate.transform.position = transform.position;
@@ -55,6 +58,8 @@ public class DestroyingWall : MonoBehaviour {
     private void WallHit()
     {
         Health -= 1; //remove 1 health from current wall health
+
+        Camera.main.GetComponent<Camera2DFollow>().Shake(.05f, .2f);
 
         StartCoroutine(HitAnimation()); //play hit animation
     }

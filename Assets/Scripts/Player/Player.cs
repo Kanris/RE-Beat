@@ -94,6 +94,7 @@ public class Player : MonoBehaviour {
             m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
             UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed);
             GameMaster.Instance.StartJoystickVibrate(1, 0.05f);
+
             DrawBullet();
         });
 

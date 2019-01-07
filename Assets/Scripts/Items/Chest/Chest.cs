@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class Chest : MonoBehaviour {
@@ -16,7 +17,6 @@ public class Chest : MonoBehaviour {
     public ChestType chestType; //current chest type
 
     #endregion
-
 
     [Header("Stats for destroyable")]
     [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
@@ -182,6 +182,8 @@ public class Chest : MonoBehaviour {
     private void DamageChest()
     {
         Health -= 1; //remove 1 health from the chest hp
+
+        Camera.main.GetComponent<Camera2DFollow>().Shake(.05f, .2f);
 
         if (Health == 0)
         {
