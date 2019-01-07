@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class PickUpItem : MonoBehaviour {
@@ -7,8 +8,12 @@ public class PickUpItem : MonoBehaviour {
 
     [SerializeField] private Item item; //item description
 
+    [Header("Additional")]
+    [SerializeField] private TextMeshProUGUI m_ItemDescriptionText;
+
     [Header("Effects")]
     [SerializeField] private GameObject m_InteractionButton; //item ui
+    [SerializeField] private GameObject m_DescriptionUI;
 
     private PlayerStats m_PlayerStats; //player stats (for heal item type)
     private bool m_IsPlayerNearItem = false; //is player near item
@@ -22,6 +27,8 @@ public class PickUpItem : MonoBehaviour {
     private void Start()
     { 
         m_InteractionButton.gameObject.SetActive(false); //hide item ui
+
+        m_ItemDescriptionText.text = GetDisplayText();
     }
 
     private void OnValidate()
@@ -39,7 +46,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (m_IsPlayerNearItem & MouseControlManager.IsCanUseSubmitButton()) //if is player near item
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed) //if player pressed submit button
+            if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
             {
                 InteractWithItem(); //add item
             }
@@ -48,6 +55,31 @@ public class PickUpItem : MonoBehaviour {
         {
             m_InteractionButton.SetActive(false);
         }
+    }
+
+    private string GetDisplayText()
+    {
+        var textToDisplay = string.Empty;
+
+        switch (item.itemDescription.itemType)
+        {
+            case ItemDescription.ItemType.Heal:
+                textToDisplay = "<color=yellow>" + item.itemDescription.Name + "</color> heals you for <color=yellow>"
+                            + item.itemDescription.HealAmount + "</color> points";
+                break;
+
+            case ItemDescription.ItemType.Item:
+                textToDisplay = "<color=yellow>" + item.itemDescription.Name + "</color>";
+                break;
+
+            case ItemDescription.ItemType.Note:
+                textToDisplay = "<color=yellow>" + 
+                            LocalizationManager.Instance.GetItemsLocalizedValue(item.itemDescription.Description) 
+                                                 + "</color>";
+                break;
+        }
+
+        return textToDisplay;
     }
 
     private void InteractWithItem()
@@ -83,6 +115,7 @@ public class PickUpItem : MonoBehaviour {
                 m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
 
             m_InteractionButton.gameObject.SetActive(true); // show item ui
+            m_DescriptionUI.SetActive(true);
         }
     }
 
@@ -96,6 +129,7 @@ public class PickUpItem : MonoBehaviour {
                 m_PlayerStats = null; //remove reference to the player stats
 
             m_InteractionButton.gameObject.SetActive(false); //hide item ui
+            m_DescriptionUI.SetActive(false);
         }
     }
 
