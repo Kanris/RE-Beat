@@ -26,11 +26,9 @@ public class MoveBullet : MonoBehaviour {
     {
         if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
         {
-            var divider = 1;
-
             if (collision.transform.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount, divider);
+                collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount, 1);
             }
             else if (collision.transform.CompareTag("Enemy"))
             {
