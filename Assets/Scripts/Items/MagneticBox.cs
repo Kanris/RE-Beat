@@ -129,7 +129,7 @@ public class MagneticBox : MonoBehaviour {
         }
         else if (m_IsBoxPickedUp & MouseControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed) //if player pressed submit button
+            if (GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed()) //if player pressed submit button
             {
                 PickUpBox(false); //put the box
             }

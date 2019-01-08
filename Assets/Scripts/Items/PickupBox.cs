@@ -121,7 +121,7 @@ public class PickupBox : MonoBehaviour {
 
         } else if (m_IsBoxUp && m_Player == null)
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed
+            if ((GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed())
                     && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 AttachToParent(null); //attach box to the player

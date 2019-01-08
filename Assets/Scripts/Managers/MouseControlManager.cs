@@ -60,4 +60,9 @@ public class MouseControlManager : MonoBehaviour {
         return GameMaster.Instance.m_Joystick.LeftStickY.WasPressed || GameMaster.Instance.m_Joystick.DPadUp.WasPressed;
     }
 
+    public static bool IsAttackButtonsPressed()
+    {
+        return GameMaster.Instance.m_Joystick.RightBumper.WasPressed || GameMaster.Instance.m_Joystick.Action3.WasPressed;
+    }
+
 }
