@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PickupBox : MonoBehaviour {
 
@@ -116,7 +117,7 @@ public class PickupBox : MonoBehaviour {
             if (GameMaster.Instance.m_Joystick.Action4.WasPressed
                     && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
-                AttachToParent(m_Player); //attach box to the player
+                StartCoroutine( AttachToParent(m_Player) ); //attach box to the player
             }
 
         } else if (m_IsBoxUp && m_Player == null)
@@ -124,7 +125,7 @@ public class PickupBox : MonoBehaviour {
             if ((GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed())
                     && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
-                AttachToParent(null); //attach box to the player
+                StartCoroutine( AttachToParent(null) ); //attach box to the player
             }
         }
 
@@ -156,7 +157,7 @@ public class PickupBox : MonoBehaviour {
         }
     }
 
-    private void AttachToParent(Transform parrent)
+    private IEnumerator AttachToParent(Transform parrent)
     {
         m_Player = transform.parent;
 
@@ -166,12 +167,21 @@ public class PickupBox : MonoBehaviour {
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
             transform.localPosition = transform.localPosition.With(x: 0.5f, y: 0f);
+
             ChangeBoxProperty(true, 0);   
         }
         else
         {
             ChangeBoxProperty(false, 14);
         }
+
+        yield return new WaitForEndOfFrame();
+
+        if (parrent != null)
+            parrent.GetComponent<Player>().TriggerPlayerBussy(true);
+        else
+            m_Player.GetComponent<Player>().TriggerPlayerBussy(false);
+
 
         GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
     }

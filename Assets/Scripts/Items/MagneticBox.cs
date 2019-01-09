@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 public class MagneticBox : MonoBehaviour {
@@ -117,7 +118,7 @@ public class MagneticBox : MonoBehaviour {
             {
                 if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {
-                    PickUpBox(true); //pick up box
+                    StartCoroutine( PickUpBox(true) ); //pick up box
                 }
                 else //if player haven't needed item
                 {
@@ -131,7 +132,7 @@ public class MagneticBox : MonoBehaviour {
         {
             if (GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed()) //if player pressed submit button
             {
-                PickUpBox(false); //put the box
+                StartCoroutine ( PickUpBox(false) ); //put the box
             }
             else if (!m_PlayerAnimator.GetBool("Ground")) //if player is in air
             {
@@ -139,7 +140,7 @@ public class MagneticBox : MonoBehaviour {
                 {
                     if (m_PreviousYPosition == transform.parent.position.y) //player stuck in jump with box
                     {
-                        PickUpBox(false); //release the box
+                        StartCoroutine( PickUpBox(false) ); //release the box
                     }
                     else
                     {
@@ -151,9 +152,11 @@ public class MagneticBox : MonoBehaviour {
         }
     }
 
-    private void PickUpBox(bool value)
+    private IEnumerator PickUpBox(bool value)
     {
         m_IsBoxPickedUp = value; //change box value
+
+        var player = m_Player ?? transform.parent;
 
         if (value) //if box is picked up
         {
@@ -172,6 +175,10 @@ public class MagneticBox : MonoBehaviour {
 
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
         }
+
+        yield return new WaitForEndOfFrame();
+
+        player.GetComponent<Player>().TriggerPlayerBussy(value);
 
         GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
     }
