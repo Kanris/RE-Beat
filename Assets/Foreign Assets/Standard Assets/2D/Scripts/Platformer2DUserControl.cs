@@ -51,7 +51,9 @@ namespace UnityStandardAssets._2D
         {
             // Read the inputs.
             bool crouch = false;
-            float h = GameMaster.Instance.m_Joystick.LeftStickX;
+
+            float h = Mathf.Abs( GameMaster.Instance.m_Joystick.LeftStickX) > .3f
+                                    ? GameMaster.Instance.m_Joystick.LeftStickX : 0f;
 
             if (h == 0)
                 h = GameMaster.Instance.m_Joystick.DPadX;
