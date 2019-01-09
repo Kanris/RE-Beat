@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets._2D;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class EnemyStatsGO : MonoBehaviour {
@@ -11,18 +12,23 @@ public class EnemyStatsGO : MonoBehaviour {
     public GameObject m_GameObjectToDestroy;
     public Enemy EnemyStats;
 
-    public delegate void VoidDelegate(bool value);
-    public event VoidDelegate OnDroneDestroy;
+    public delegate void VoidDelegateBool(bool value);
+    public event VoidDelegateBool OnDroneDestroy;
 
     [Header("Drone stats")]
     [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
     [SerializeField] private bool m_DestroyOnCollision = false;
     [SerializeField] private LayerMask m_LayerMask;
 
+    [Header("UI")]
+    [SerializeField] private GameObject m_UI;
+    [SerializeField] private Image m_HealthImage;
+
     [Header("Effects")]
     [SerializeField] private GameObject GroundHitParticles;
     [SerializeField] private GameObject m_HitParticles;
     [SerializeField] private GameObject m_Scraps;
+
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
@@ -30,7 +36,7 @@ public class EnemyStatsGO : MonoBehaviour {
     [HideInInspector] public bool m_IsDestroying = false; //is drone going to blow up
 
     // Use this for initialization
-    void Start () {
+    void Start() {
 
         InitializeStats();
 
@@ -46,6 +52,16 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void ChangeUIScale(float value)
+    {
+        m_UI.transform.localScale = new Vector3(value, 1, 1);
+    }
+
+    private void DisplayHealthChange(float damageAmount)
+    {
+        m_HealthImage.fillAmount = (float)EnemyStats.CurrentHealth / (float)EnemyStats.MaxHealth;
     }
 
     private void Update()
@@ -93,6 +109,8 @@ public class EnemyStatsGO : MonoBehaviour {
                     }
                 }
             }
+
+            if (m_HealthImage != null) DisplayHealthChange(damageAmount);
         }
     }
 

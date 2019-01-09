@@ -31,7 +31,6 @@ public class Enemy : Stats
     public bool m_IsBigMonster;
     [SerializeField] private bool DontResurect;
     [SerializeField] private ShieldInfo m_ShieldInfo;
-
     #endregion
 
     #region private fields

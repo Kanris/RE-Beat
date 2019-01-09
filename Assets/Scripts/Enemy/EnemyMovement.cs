@@ -8,6 +8,9 @@ public class EnemyMovement : MonoBehaviour {
 
     #region private fields
 
+    public delegate void VoidDelegateFloat(float value);
+    public VoidDelegateFloat OnEnemyTurnAround;
+
     [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private LayerMask m_WhatIsGround; // A mask determining what is ground to the character
 
@@ -58,6 +61,8 @@ public class EnemyMovement : MonoBehaviour {
         SpeedChange(GetComponent<EnemyStatsGO>().EnemyStats.Speed);
 
         m_EnemyStats = GetComponent<EnemyStatsGO>().EnemyStats;
+
+        OnEnemyTurnAround = GetComponent<EnemyStatsGO>().ChangeUIScale;
     }
 
     private void SubscribeOnEvents()
@@ -225,6 +230,7 @@ public class EnemyMovement : MonoBehaviour {
 
     public void TurnAround()
     {
+        OnEnemyTurnAround(-transform.localScale.x);
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
     }
 
