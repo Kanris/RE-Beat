@@ -1,14 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
 
 public class DistruptionSignal : MonoBehaviour
 {
-    [SerializeField] private PlayerInTrigger m_PlayerInTrigger;
+    [SerializeField] private PlayerInTrigger m_PlayerInTrigger; //indicates that player in disruption zone or not
 
-    private Camera2DFollow m_Camera;
-    private bool m_IsPlayerNear;
+    private Camera2DFollow m_Camera; //camera to activate/deactivate disruption effect
+    private bool m_IsPlayerNear; //is player in zone or not (to diactivate disruption effect)
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +31,6 @@ public class DistruptionSignal : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.LogError("Is player Near> " + m_IsPlayerNear);
-
         if (m_IsPlayerNear)
         {
             m_Camera.StopLowHealthEffect();
@@ -46,8 +43,6 @@ public class DistruptionSignal : MonoBehaviour
     private void ChangeIsPlayerNear(bool value, Transform target)
     {
         StopAllCoroutines();
-
-        Debug.LogError(value);
 
         m_IsPlayerNear = value;
 

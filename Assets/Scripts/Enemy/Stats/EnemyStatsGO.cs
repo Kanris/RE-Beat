@@ -41,6 +41,8 @@ public class EnemyStatsGO : MonoBehaviour {
         InitializeStats();
 
         InitializeComponents();
+
+        if (m_UI != null) m_UI.SetActive(false);
     }
 
     public void InitializeStats()
@@ -61,6 +63,9 @@ public class EnemyStatsGO : MonoBehaviour {
 
     private void DisplayHealthChange(float damageAmount)
     {
+        if (PlayerStats.m_IsCanSeeEnemyHP && !m_UI.activeSelf)
+            m_UI.SetActive(true);
+
         m_HealthImage.fillAmount = (float)EnemyStats.CurrentHealth / (float)EnemyStats.MaxHealth;
     }
 
