@@ -101,6 +101,13 @@ namespace UnityStandardAssets._2D
             damping = .2f;
         }
 
+        public void ChangeTarget(Transform newTarget)
+        {
+            target = newTarget;
+            m_LastTargetPosition = target.position;
+            m_OffsetZ = (transform.position - target.position).z;
+        }
+
         public void SetCameraSize(float size = 0f)
         {
             m_Transition = true;

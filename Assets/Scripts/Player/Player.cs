@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
     [Header("Camera")]
     [SerializeField] private Transform m_CameraUp;
     [SerializeField] private Transform m_CameraDown;
+    [SerializeField] private Transform m_CameraRight;
+    [SerializeField] private Transform m_CameraLeft;
 
     #endregion
 
@@ -50,7 +52,8 @@ public class Player : MonoBehaviour {
     [HideInInspector] public int m_EnemyHitDirection = 1;
 
     private bool m_IsCreateCriticalHealthEffect;
-
+    private bool m_IsRightStickPressed;
+    
     #endregion
 
     #region private methods
@@ -111,7 +114,30 @@ public class Player : MonoBehaviour {
                 StartCoroutine(CreateLowHealthEffect());
         }
 
-        //if (GameMaster.Instance.m_Joystick.RightStickY.)
+        if (GameMaster.Instance.m_Joystick.RightStickY.IsPressed)
+        {
+            if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickY.Value) > 0.4f)
+            {
+                var cameraTarget = GameMaster.Instance.m_Joystick.RightStickY.Value > 0 ? m_CameraUp : m_CameraDown;
+
+                Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget);
+
+                m_IsRightStickPressed = true;
+            }
+            else if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickX.Value) > 0.4f)
+            {
+                var cameraTarget = GameMaster.Instance.m_Joystick.RightStickX.Value * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft;
+
+                Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget);
+
+                m_IsRightStickPressed = true;
+            }
+        }
+        else if (m_IsRightStickPressed)
+        {
+            m_IsRightStickPressed = false;
+            Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(transform);
+        }
     }
 
     private IEnumerator CreateLowHealthEffect()
