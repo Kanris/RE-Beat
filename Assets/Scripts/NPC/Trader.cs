@@ -22,10 +22,8 @@ public class Trader : MonoBehaviour {
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
-    private float m_TimeToBuy;
-
     private PlayerStats m_Player; //notify is player near the vendor
-    private float m_BuyTime;
+    private bool m_IsBoughtItem; //indicates that player bought item
 
     // Update is called once per frame
     void Update () {
@@ -57,15 +55,19 @@ public class Trader : MonoBehaviour {
                 else if (GameMaster.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+                    m_IsBoughtItem = false;
                 }
-                else if (GameMaster.Instance.m_Joystick.Action4 & m_CurrentSelectedItem != null)
+                //submit button pressed to buy item
+                else if (GameMaster.Instance.m_Joystick.Action4.IsPressed & m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                         BuyItem();
+
+                        m_IsBoughtItem = true;
                     }
-                    else
+                    else if (!m_IsBoughtItem)
                     {
                         GameMaster.Instance.StartJoystickVibrate(0.5f, 0.01f);
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.deltaTime);
