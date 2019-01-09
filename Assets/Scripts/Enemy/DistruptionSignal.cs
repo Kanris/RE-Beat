@@ -5,6 +5,7 @@ using UnityStandardAssets._2D;
 
 public class DistruptionSignal : MonoBehaviour
 {
+    [SerializeField] private PlayerInTrigger m_PlayerInTrigger;
 
     private Camera2DFollow m_Camera;
     private bool m_IsPlayerNear;
@@ -13,6 +14,7 @@ public class DistruptionSignal : MonoBehaviour
     void Start()
     {
         m_Camera = Camera.main.GetComponent<Camera2DFollow>();
+        m_PlayerInTrigger.OnPlayerInTrigger += ChangeIsPlayerNear;
     }
 
     // Update is called once per frame
@@ -30,6 +32,8 @@ public class DistruptionSignal : MonoBehaviour
 
     private void OnDestroy()
     {
+        Debug.LogError("Is player Near> " + m_IsPlayerNear);
+
         if (m_IsPlayerNear)
         {
             m_Camera.StopLowHealthEffect();
@@ -38,36 +42,39 @@ public class DistruptionSignal : MonoBehaviour
                 ("Distruption signal is disappear", UIManager.Message.MessageType.Message);
         }
     }
-
-    private IEnumerator OnTriggerEnter2D(Collider2D collision)
+    
+    private void ChangeIsPlayerNear(bool value, Transform target)
     {
-        if (collision.CompareTag("Player") & !m_IsPlayerNear)
+        StopAllCoroutines();
+
+        Debug.LogError(value);
+
+        m_IsPlayerNear = value;
+
+        if (m_IsPlayerNear)
         {
-            m_IsPlayerNear = true;
-
-            yield return new WaitForSeconds(1f);
-
-            if (m_IsPlayerNear)
-            {
-
-                UIManager.Instance.DisplayNotificationMessage
-                    ("Distruption signal is nearby", UIManager.Message.MessageType.Message);
-
-                m_Camera.PlayLowHealthEffect();
-            }
+            StartCoroutine(PlayerInTrigger());
+        }
+        else
+        {
+            StartCoroutine(PlayerLeaveTrigger());
         }
     }
 
-    private IEnumerator OnTriggerExit2D(Collider2D collision)
+    private IEnumerator PlayerInTrigger()
     {
-        if (collision.CompareTag("Player") & m_IsPlayerNear)
-        {
-            m_IsPlayerNear = false;
+        yield return new WaitForSeconds(1f);
 
-            yield return new WaitForSeconds(1f);
+        UIManager.Instance.DisplayNotificationMessage
+            ("Distruption signal is nearby", UIManager.Message.MessageType.Message);
 
-            if (!m_IsPlayerNear)
-                m_Camera.StopLowHealthEffect();
-        }
+        m_Camera.PlayLowHealthEffect();
+    }
+
+    private IEnumerator PlayerLeaveTrigger()
+    {
+        yield return new WaitForSeconds(1f);
+
+        m_Camera.StopLowHealthEffect();
     }
 }
