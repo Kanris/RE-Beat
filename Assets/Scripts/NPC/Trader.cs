@@ -44,8 +44,7 @@ public class Trader : MonoBehaviour {
 
             if (MouseControlManager.IsCanUseSubmitButton())
             {
-                if ((GameMaster.Instance.m_Joystick.LeftStickY > 0.9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) 
-                    & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+                if (MouseControlManager.IsUpperButtonsPressed() & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 

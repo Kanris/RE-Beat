@@ -34,6 +34,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject m_ShootEffect;
     [SerializeField] private GameObject m_LowHealthEffect;
 
+    [Header("Camera")]
+    [SerializeField] private Transform m_CameraUp;
+    [SerializeField] private Transform m_CameraDown;
+
     #endregion
 
     private Animator m_Animator; //player animator
@@ -106,6 +110,8 @@ public class Player : MonoBehaviour {
             if (gameObject.activeSelf)
                 StartCoroutine(CreateLowHealthEffect());
         }
+
+        //if (GameMaster.Instance.m_Joystick.RightStickY.)
     }
 
     private IEnumerator CreateLowHealthEffect()

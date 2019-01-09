@@ -125,6 +125,7 @@ namespace InControl
                 {
                     if (unityJoystickName == "Unknown Wireless Controller")
 					{
+                        Debug.LogError("Disable controller");
 						// Ignore PS4 controller in Bluetooth mode on Mac since it connects but does nothing.
 						return;
 					}
@@ -135,9 +136,16 @@ namespace InControl
 			if (InputManager.UnityVersion >= new VersionInfo( 4, 6, 3 ))
 			{
 				if (Application.platform == RuntimePlatform.WindowsEditor ||
-				    Application.platform == RuntimePlatform.WindowsPlayer)
-				{
-					if (String.IsNullOrEmpty( unityJoystickName ))
+				    Application.platform == RuntimePlatform.WindowsPlayer
+#if !UNITY_2017_2_OR_NEWER
+                    || Application.platform == RuntimePlatform.OSXDashboardPlayer
+#endif
+#if !UNITY_5_4_OR_NEWER
+                    || Application.platform == RuntimePlatform.OSXWebPlayer
+#endif
+                    )
+                {
+                    if (String.IsNullOrEmpty( unityJoystickName ))
 					{
 						return;
 					}

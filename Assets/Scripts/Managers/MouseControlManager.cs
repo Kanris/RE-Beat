@@ -15,7 +15,6 @@ public class MouseControlManager : MonoBehaviour {
     {
         if (Instance != null)
         {
-            if (Instance != this)
             {
                 Destroy(gameObject);
             }
