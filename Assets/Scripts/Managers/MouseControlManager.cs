@@ -56,7 +56,10 @@ public class MouseControlManager : MonoBehaviour {
 
     public static bool IsUpperButtonsPressed()
     {
-        return GameMaster.Instance.m_Joystick.LeftStickY.WasPressed || GameMaster.Instance.m_Joystick.DPadUp.WasPressed;
+        var leftStickValue = GameMaster.Instance.m_Joystick.LeftStickY.Value > 0 ?
+            Mathf.Abs(GameMaster.Instance.m_Joystick.LeftStickY.Value - 1f) < 0.01f : false;
+
+        return leftStickValue || GameMaster.Instance.m_Joystick.DPadUp.WasPressed;
     }
 
     public static bool IsAttackButtonsPressed()
