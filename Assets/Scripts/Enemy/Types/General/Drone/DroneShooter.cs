@@ -78,6 +78,7 @@ public class DroneShooter : MonoBehaviour {
 
     [SerializeField] private Material TrailMaterial;
     [SerializeField] private PlayerInTrigger m_ChaseRange;
+    [SerializeField] private PlayerInTrigger m_ScanRange;
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 2f; //next point update rate
     [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
@@ -113,6 +114,7 @@ public class DroneShooter : MonoBehaviour {
         InitializeComponents(); //initialize rigidbody and seeker
 
         m_ChaseRange.OnPlayerInTrigger += StartChase;
+        m_ScanRange.OnPlayerInTrigger += StartChase;
 
         StartCoroutine(PatrolBetweenPoints());
     }
@@ -169,7 +171,7 @@ public class DroneShooter : MonoBehaviour {
         else if (m_RadarAnimator != null & !m_IsDestroying)
         {
             if (m_RadarAnimator.GetBool("Threat"))
-                m_RadarAnimator.SetBool("Threat", false);
+                ActiveScan(false);
         }
     }
 
@@ -177,8 +179,12 @@ public class DroneShooter : MonoBehaviour {
     {      
         m_Target = target;
 
+        ActiveScan(value);
+
         if (target != null)
+        {
             InitializeChasing();
+        }
     }
 
     #region shooting
@@ -221,10 +227,6 @@ public class DroneShooter : MonoBehaviour {
 
     private void InitializeChasing()
     {
-        //start a new path to the target
-        if (m_RadarAnimator != null)
-            m_RadarAnimator.SetBool("Threat", true);
-
         m_Seeker.StartPath(transform.position, m_Target.position, OnPathComplete);
         StartCoroutine(UpdatePath());
     }
@@ -278,7 +280,7 @@ public class DroneShooter : MonoBehaviour {
 
                 if (m_Target == null)
                 {
-                    m_RadarAnimator.SetBool("Threat", false);
+                    ActiveScan(false);
                     StartCoroutine(PatrolBetweenPoints());
                 }
             }
@@ -297,6 +299,14 @@ public class DroneShooter : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void ActiveScan(bool value)
+    {
+        m_ChaseRange.gameObject.SetActive(value);
+        m_ScanRange.gameObject.SetActive(!value);
+
+        m_RadarAnimator.SetBool("Threat", value);
     }
 
     private void SetOnDestroy(bool value)

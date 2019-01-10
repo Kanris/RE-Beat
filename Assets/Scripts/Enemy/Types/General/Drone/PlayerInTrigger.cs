@@ -43,6 +43,11 @@ public class PlayerInTrigger : MonoBehaviour {
         }
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private IEnumerator StopChasing()
     {
         m_IsGoingToStop = true;

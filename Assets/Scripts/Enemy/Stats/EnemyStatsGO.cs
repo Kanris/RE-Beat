@@ -100,16 +100,19 @@ public class EnemyStatsGO : MonoBehaviour {
             {
                 if (!m_IsDestroying)
                 {
-                    EnemyStats.CurrentHealth--;
+                    //EnemyStats.CurrentHealth--;
 
-                    if (EnemyStats.CurrentHealth < 1)
+                    if (EnemyStats.CurrentHealth == 1)
                     {
                         DetroySequence();
                     }
                     else
                     {
                         CreateHitParticles();
-                        m_Animator.SetTrigger("Hit");
+
+                        EnemyStats.TakeDamage(1, zone);
+
+                        //m_Animator.SetTrigger("Hit");
                     }
                 }
             }
