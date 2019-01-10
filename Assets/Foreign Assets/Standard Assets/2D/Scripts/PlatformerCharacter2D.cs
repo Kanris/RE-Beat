@@ -161,8 +161,10 @@ namespace UnityStandardAssets._2D
 
                 m_IsHaveDoubleJump = true;
             }
+            //If the player should double jump
             else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
             {
+                //player is not on the ground and have double jump
                 if (!m_Grounded && m_IsHaveDoubleJump && jump)
                 {
                     m_IsHaveDoubleJump = false;
@@ -247,8 +249,10 @@ namespace UnityStandardAssets._2D
             AudioManager.Instance.Play(m_DashAudio); //play dash audio
 
             var dashMaterial = GetComponent<SpriteRenderer>().material; //material for echo effect
-
+            
             var echoAmount = 4;
+
+            Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .05f * echoAmount);
 
             //create echo
             for (var count = 0; count < echoAmount; count++)
