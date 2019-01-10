@@ -28,8 +28,6 @@ public class Trader : MonoBehaviour {
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
-    private GameObject m_PreviousSelectedItemGO;
-
     private PlayerStats m_Player; //notify is player near the vendor
     private bool m_IsBoughtItem; //indicates that player bought item
 
@@ -64,8 +62,6 @@ public class Trader : MonoBehaviour {
 
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
-
-                    m_PreviousSelectedItemGO = m_InventoryUI.transform.GetChild(0).gameObject;
                 }
                 else if (GameMaster.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
                 {
@@ -146,12 +142,15 @@ public class Trader : MonoBehaviour {
         m_CurrentSelectedItem = itemToDisplayGO.GetComponent<TraderItem>().m_TraderItem; //get selected item description
         m_CurrentSelectedItemGO = itemToDisplayGO; //store item gameobject
 
+        //move rect depend on items count
         var index = itemToDisplayGO.transform.GetSiblingIndex();
 
+        //if selected item index 4 or grater - move rect
         if (index > 3)
             m_Content.localPosition = m_Content.localPosition.
-                With(y: m_DefaultYContentPosition + .5f * (index - 3));
-        else
+                With(y: m_DefaultYContentPosition + .5f * (index - 3)); //.5f * index more than 3 (.5f * 2)
+
+        else //if selected item index is less than 4 return rect to normal position
             m_Content.localPosition = m_Content.localPosition.
                 With(y: m_DefaultYContentPosition);
 

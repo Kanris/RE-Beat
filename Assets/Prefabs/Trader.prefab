@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: fd77c8e1c32514282942d6b7b9926d9b, type: 2}
   m_Trader: {fileID: 114316307258952364}
   m_TraderItemType: 1
-  m_UpgradeType: 4
+  m_UpgradeType: 5
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsInfiniteAmount: 1
   m_ItemImage: {fileID: 114867872006931744}
@@ -2709,10 +2709,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8039125043587353074}
-  - component: {fileID: 1720027457846935500}
+  - component: {fileID: 7312236549093705267}
   - component: {fileID: 833204272244907237}
   - component: {fileID: 6565940589667248613}
-  - component: {fileID: 7312236549093705267}
   m_Layer: 0
   m_Name: ScrollInventory
   m_TagString: Untagged
@@ -2740,59 +2739,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1, y: 0}
   m_SizeDelta: {x: 1.6, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1720027457846935500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743056841286407747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1367256648, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Content: {fileID: 224311654622949164}
-  m_Horizontal: 0
-  m_Vertical: 1
-  m_MovementType: 1
-  m_Elasticity: 0.1
-  m_Inertia: 1
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 224311654622949164}
-  m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 0}
-  m_HorizontalScrollbarVisibility: 0
-  m_VerticalScrollbarVisibility: 1
-  m_HorizontalScrollbarSpacing: 0
-  m_VerticalScrollbarSpacing: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &833204272244907237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743056841286407747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 0
---- !u!222 &6565940589667248613
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743056841286407747}
-  m_CullTransparentMesh: 0
 --- !u!114 &7312236549093705267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2822,6 +2768,27 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &833204272244907237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743056841286407747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
+--- !u!222 &6565940589667248613
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743056841286407747}
+  m_CullTransparentMesh: 0
 --- !u!1 &1275307424352285891
 GameObject:
   m_ObjectHideFlags: 0
