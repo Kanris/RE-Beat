@@ -42,7 +42,6 @@ public class EnemyStatsGO : MonoBehaviour {
 
         InitializeComponents();
 
-        if (m_UI != null) m_UI.SetActive(false);
     }
 
     public void InitializeStats()
