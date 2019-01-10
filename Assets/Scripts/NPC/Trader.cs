@@ -51,6 +51,11 @@ public class Trader : MonoBehaviour {
                 }
             }
 
+            if (EventSystem.current.currentSelectedGameObject == null)
+            {
+                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+            }
+
             if (MouseControlManager.IsCanUseSubmitButton())
             {
                 if (MouseControlManager.IsUpperButtonsPressed() & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
@@ -86,7 +91,7 @@ public class Trader : MonoBehaviour {
                 }
             }
         }
-        else if (m_InteractionUI.activeSelf)
+        else if (m_InteractionUI.activeSelf || m_StoreUI.activeSelf)
         {
             StartCoroutine(HideUI()); //hide npc ui
         }
