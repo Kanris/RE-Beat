@@ -2,6 +2,8 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEditor;
+using UnityEngine.UI;
 
 public class Trader : MonoBehaviour {
 
@@ -18,12 +20,23 @@ public class Trader : MonoBehaviour {
     [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
     [SerializeField] private Audio m_ClickAudio;
 
+    [SerializeField] private RectTransform m_Content;
+
+    private float m_DefaultYContentPosition;
+
     //current selected item info
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
+    private GameObject m_PreviousSelectedItemGO;
+
     private PlayerStats m_Player; //notify is player near the vendor
     private bool m_IsBoughtItem; //indicates that player bought item
+
+    private void Awake()
+    {
+        m_DefaultYContentPosition = m_Content.localPosition.y;
+    }
 
     // Update is called once per frame
     void Update () {
@@ -51,6 +64,8 @@ public class Trader : MonoBehaviour {
 
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+
+                    m_PreviousSelectedItemGO = m_InventoryUI.transform.GetChild(0).gameObject;
                 }
                 else if (GameMaster.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
                 {
@@ -131,6 +146,17 @@ public class Trader : MonoBehaviour {
         m_CurrentSelectedItem = itemToDisplayGO.GetComponent<TraderItem>().m_TraderItem; //get selected item description
         m_CurrentSelectedItemGO = itemToDisplayGO; //store item gameobject
 
+        var index = itemToDisplayGO.transform.GetSiblingIndex();
+
+        if (index > 3)
+            m_Content.localPosition = m_Content.localPosition.
+                With(y: m_DefaultYContentPosition + .5f * (index - 3));
+        else
+            m_Content.localPosition = m_Content.localPosition.
+                With(y: m_DefaultYContentPosition);
+
+        //itemToDisplayGO.transform.GetSiblingIndex()
+
         //set text to display on description ui
         m_DescriptionNameText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
 
@@ -199,6 +225,14 @@ public class Trader : MonoBehaviour {
                                                  UIManager.Message.MessageType.Message);
             }
         }
+    }
+
+    public void AddNewItemToTheInventory(string path)
+    {
+        var newTraderItem = AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
+
+        newTraderItem.GetComponent<Button>().onClick.AddListener(() => ShowItemDescription(newTraderItem));
+
     }
 
     public void SetPlayer(PlayerStats player)

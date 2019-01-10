@@ -6,11 +6,7 @@ public class TraderItem : MonoBehaviour {
 
     public Item m_TraderItem;
 
-    [Header("Display")]
-    [SerializeField] private Image m_ItemImage;
-    [SerializeField] private TextMeshProUGUI m_CostText;
-
-    public Image m_BuyingImage;
+    [SerializeField] private Trader m_Trader;
 
     public enum TraderItemType { Upgrade, Heal }
     [Header("Type")]
@@ -25,8 +21,12 @@ public class TraderItem : MonoBehaviour {
     [Header("Additional")]
     [SerializeField] public bool m_IsInfiniteAmount;
 
-    [HideInInspector] public bool m_IsSelected;
+    [Header("Display")]
+    [SerializeField] private Image m_ItemImage;
+    [SerializeField] private TextMeshProUGUI m_CostText;
+    public Image m_BuyingImage;
 
+    [HideInInspector] public bool m_IsSelected;
 
     private void Awake()
     {
@@ -81,6 +81,14 @@ public class TraderItem : MonoBehaviour {
         }
 
         return result;
+    }
+
+    public void ShowItemDescription()
+    {
+        if (m_Trader != null)
+        {
+            m_Trader.ShowItemDescription(gameObject);
+        }
     }
 
     public void ApplyUpgrade(PlayerStats player)
