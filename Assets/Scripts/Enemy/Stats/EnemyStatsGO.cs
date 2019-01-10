@@ -100,8 +100,6 @@ public class EnemyStatsGO : MonoBehaviour {
             {
                 if (!m_IsDestroying)
                 {
-                    //EnemyStats.CurrentHealth--;
-
                     if (EnemyStats.CurrentHealth == 1)
                     {
                         DetroySequence();
@@ -109,10 +107,7 @@ public class EnemyStatsGO : MonoBehaviour {
                     else
                     {
                         CreateHitParticles();
-
                         EnemyStats.TakeDamage(1, zone);
-
-                        //m_Animator.SetTrigger("Hit");
                     }
                 }
             }
@@ -217,8 +212,8 @@ public class EnemyStatsGO : MonoBehaviour {
 
         m_IsDestroying = true;
         m_Rigidbody.sharedMaterial = null;
-        m_Rigidbody.mass = 1f;
         m_Rigidbody.gravityScale = 3f;
+        m_Rigidbody.constraints = RigidbodyConstraints2D.None;
 
         Destroy(GetComponent<TrailRenderer>());
 
