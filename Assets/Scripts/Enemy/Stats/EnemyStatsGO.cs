@@ -21,8 +21,8 @@ public class EnemyStatsGO : MonoBehaviour {
     [SerializeField] private LayerMask m_LayerMask;
 
     [Header("UI")]
-    [SerializeField] private GameObject m_UI;
-    [SerializeField] private Image m_HealthImage;
+    [SerializeField] private GameObject m_HealthUI;
+    [SerializeField] private Image m_CurrentHealthImage;
 
     [Header("Effects")]
     [SerializeField] private GameObject GroundHitParticles;
@@ -57,15 +57,15 @@ public class EnemyStatsGO : MonoBehaviour {
 
     public void ChangeUIScale(float value)
     {
-        m_UI.transform.localScale = new Vector3(value, 1, 1);
+        m_HealthUI.transform.localScale = new Vector3(value, 1, 1);
     }
 
     private void DisplayHealthChange(float damageAmount)
     {
-        if (PlayerStats.m_IsCanSeeEnemyHP && !m_UI.activeSelf)
-            m_UI.SetActive(true);
+        if (PlayerStats.m_IsCanSeeEnemyHP && !m_HealthUI.activeSelf)
+            m_HealthUI.SetActive(true);
 
-        m_HealthImage.fillAmount = (float)EnemyStats.CurrentHealth / (float)EnemyStats.MaxHealth;
+        m_CurrentHealthImage.fillAmount = (float)EnemyStats.CurrentHealth / (float)EnemyStats.MaxHealth;
     }
 
     private void Update()
@@ -112,7 +112,7 @@ public class EnemyStatsGO : MonoBehaviour {
                 }
             }
 
-            if (m_HealthImage != null) DisplayHealthChange(damageAmount);
+            if (m_CurrentHealthImage != null) DisplayHealthChange(damageAmount);
         }
     }
 
