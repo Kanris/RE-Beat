@@ -105,6 +105,7 @@ public class DroneShooter : MonoBehaviour {
     private bool m_IsPlayerInShootingRange = false; //is drone chasing player
     private bool m_IsDestroying = false;
     private float m_AttackCooldownTimer = 0f;
+    private float m_DelayBeforeShoot = .5f;
 
     #region initialize
 
@@ -157,7 +158,7 @@ public class DroneShooter : MonoBehaviour {
             {
                 if (m_AttackCooldownTimer < Time.time) //drone can attack
                 {
-                    m_AttackCooldownTimer = Time.time + m_Stats.EnemyStats.AttackSpeed + .3f; //next available attack time
+                    m_AttackCooldownTimer = Time.time + m_Stats.EnemyStats.AttackSpeed + m_DelayBeforeShoot; //next available attack time
                     StartCoroutine(Shoot()); //shoot at player
                 }
             }
@@ -201,7 +202,7 @@ public class DroneShooter : MonoBehaviour {
 
             m_TargetLine.SetTarget(whereToShoot);
 
-            yield return new WaitForSeconds(.3f); //wait before shoot
+            yield return new WaitForSeconds(m_DelayBeforeShoot); //wait before shoot
 
             m_TargetLine.gameObject.SetActive(false);
 
