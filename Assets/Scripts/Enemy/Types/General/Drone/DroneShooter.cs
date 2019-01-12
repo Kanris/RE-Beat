@@ -107,6 +107,8 @@ public class DroneShooter : MonoBehaviour {
     private float m_AttackCooldownTimer = 0f;
     private float m_DelayBeforeShoot = .5f;
 
+    private bool m_IsPrepareShoot;
+
     #region initialize
 
     // Use this for initialization
@@ -153,6 +155,11 @@ public class DroneShooter : MonoBehaviour {
                 m_IsPlayerInShootingRange = false;
             }
 
+            if (m_IsPlayerInShootingRange & m_IsPrepareShoot)
+            {
+                m_TargetLine.SetTarget(m_Target.position);
+            }
+
             //if player in attack range and drone is not destroying
             if (m_IsPlayerInShootingRange & !m_IsDestroying)
             {
@@ -173,6 +180,11 @@ public class DroneShooter : MonoBehaviour {
         {
             if (m_RadarAnimator.GetBool("Threat"))
                 ActiveScan(false);
+        }
+
+        if (m_TargetLine.gameObject.activeSelf & m_Target == null)
+        {
+            m_TargetLine.gameObject.SetActive(false);
         }
     }
 
@@ -198,15 +210,15 @@ public class DroneShooter : MonoBehaviour {
 
             var m_firePointPosition = transform.position;
 
-            //m_TargetLine.gameObject.SetActive(true);
-
-            m_TargetLine.SetTarget(whereToShoot);
+            m_IsPrepareShoot = false;
 
             yield return new WaitForSeconds(m_DelayBeforeShoot); //wait before shoot
 
             m_TargetLine.gameObject.SetActive(false);
 
             DrawBulletTrailEffect(whereToShoot);
+
+            m_IsPrepareShoot = true;
         }
     }
 
