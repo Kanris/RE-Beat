@@ -93,6 +93,8 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl(); //check player jump height
 
+        #region vertical dash
+
         if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
         {
             if (!m_IsDashingToGround)
@@ -105,29 +107,40 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (m_IsDashingToGround & m_Animator.GetBool("Ground"))
+        if (m_IsDashingToGround)
         {
-            m_IsDashingToGround = false;
-
-            var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(2f, .5f), 0, m_WhatIsEnemy);
-
-            foreach (var enemy in enemiesToDamage)
+            if (m_Animator.GetBool("Ground"))
             {
-                if (enemy.GetComponent<EnemyStatsGO>() != null)
+                m_IsDashingToGround = false;
+
+                var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(2f, .5f), 0, m_WhatIsEnemy);
+
+                foreach (var enemy in enemiesToDamage)
                 {
-                    enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, 3);
+                    if (enemy.GetComponent<EnemyStatsGO>() != null)
+                    {
+                        enemy.GetComponent<EnemyStatsGO>().TakeDamage(null, 3, 10);
+                    }
                 }
+
+                var landEffect = Instantiate(m_LandEffect);
+                landEffect.transform.position = m_Center.position;
+
+                Destroy(landEffect, 2f);
+
+                Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
+
+                GetComponent<Platformer2DUserControl>().enabled = true;
             }
+            else if (m_Animator.GetBool("Hit"))
+            {
+                m_IsDashingToGround = false;
 
-            var landEffect = Instantiate(m_LandEffect);
-            landEffect.transform.position = m_Center.position;
-
-            Destroy(landEffect, 2f);
-
-            Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
-
-            GetComponent<Platformer2DUserControl>().enabled = true;
+                GetComponent<Platformer2DUserControl>().enabled = true;
+            }
         }
+
+        #endregion
 
         #region attack handler
 

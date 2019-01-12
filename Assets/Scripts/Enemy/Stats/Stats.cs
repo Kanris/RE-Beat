@@ -157,6 +157,7 @@ public class Stats {
     {
         if (m_Animator != null)
         {
+            m_Animator.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             m_Animator.SetBool("Hit", isHit);
         }
     }
