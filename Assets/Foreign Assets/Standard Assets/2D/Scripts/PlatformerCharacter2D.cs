@@ -102,7 +102,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Ground", m_Grounded);
 
             // Set the vertical animation
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, Mathf.Clamp(m_Rigidbody2D.velocity.y, -10, 15));
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, Mathf.Clamp(m_Rigidbody2D.velocity.y, -30, 15));
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
@@ -189,7 +189,7 @@ namespace UnityStandardAssets._2D
                     GameMaster.Instance.StartJoystickVibrate(1, 0.2f);
                 }
 
-                if (m_Anim.GetBool("Dash"))
+                if (m_Anim.GetBool("Dash") & !m_Anim.GetBool("Hit"))
                 {
                     var multiplier = 1;
 
@@ -255,7 +255,7 @@ namespace UnityStandardAssets._2D
             Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .05f * echoAmount);
 
             //create echo
-            for (var count = 0; count < echoAmount; count++)
+            for (var count = 0; count < echoAmount & !m_Anim.GetBool("Hit"); count++)
             {
                 var instantiateDashEffect = Instantiate(m_DashEffect); //create echo effect
 
