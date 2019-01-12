@@ -254,6 +254,8 @@ public class PlayerStats : Stats
     {
         PlayHitAnimation(true);
 
+        Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
+
         yield return new WaitForSeconds(0.1f); //time to return player's control
 
         PlayHitAnimation(false);
