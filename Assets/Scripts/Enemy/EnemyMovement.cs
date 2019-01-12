@@ -187,7 +187,6 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (m_Rigidbody2D.position == m_PreviousPosition && !m_IsWaiting) //if enemy can't move further
         {
-            Debug.LogError("Turn around");
             m_CantMoveFurther = true; //turn around
         }
         else
