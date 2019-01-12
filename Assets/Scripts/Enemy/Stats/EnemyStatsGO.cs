@@ -162,6 +162,7 @@ public class EnemyStatsGO : MonoBehaviour {
 
             if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
             {
+                Debug.LogError("Enemy take damage");
                 EnemyStats.TakeDamage(PlayerStats.DamageAmount / 3);
             }
         }

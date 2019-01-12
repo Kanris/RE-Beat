@@ -40,6 +40,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private Transform m_CameraRight;
     [SerializeField] private Transform m_CameraLeft;
 
+    [Header("Vertical Dash")]
+    [SerializeField] private Transform m_Center;
+    [SerializeField] private GameObject m_LandEffect;
+
     #endregion
 
     private Animator m_Animator; //player animator
@@ -53,6 +57,8 @@ public class Player : MonoBehaviour {
 
     private bool m_IsCreateCriticalHealthEffect;
     private bool m_IsRightStickPressed;
+
+    private bool m_IsDashingToGround = false;
     
     #endregion
 
@@ -77,9 +83,7 @@ public class Player : MonoBehaviour {
     {
         PauseMenuManager.Instance.OnGamePause += TriggerPlayerBussy;
         DialogueManager.Instance.OnDialogueInProgressChange += TriggerPlayerBussy;
-        InfoManager.Instance.OnJournalOpen += TriggerPlayerBussy;
-
-        //GetComponent<PlatformerCharacter2D>().OnLandEvent += () => AudioManager.Instance.Play("Land"); 
+        InfoManager.Instance.OnJournalOpen += TriggerPlayerBussy; 
     }
 
     #endregion
@@ -88,6 +92,44 @@ public class Player : MonoBehaviour {
     private void Update () {
 		
         JumpHeightControl(); //check player jump height
+
+        if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+        {
+            if (!m_IsDashingToGround)
+            {
+                m_IsDashingToGround = true;
+
+                m_Rigidbody2D.AddForce(new Vector2(0f, -30f), ForceMode2D.Impulse);
+
+                GetComponent<Platformer2DUserControl>().enabled = false;
+            }
+        }
+
+        if (m_IsDashingToGround & m_Animator.GetBool("Ground"))
+        {
+            m_IsDashingToGround = false;
+
+            var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(2f, .5f), 0, m_WhatIsEnemy);
+
+            foreach (var enemy in enemiesToDamage)
+            {
+                if (enemy.GetComponent<EnemyStatsGO>() != null)
+                {
+                    enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, 3);
+                }
+            }
+
+            var landEffect = Instantiate(m_LandEffect);
+            landEffect.transform.position = m_Center.position;
+
+            Destroy(landEffect, 2f);
+
+            Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
+
+            GetComponent<Platformer2DUserControl>().enabled = true;
+        }
+
+        #region attack handler
 
         Attack(m_MeleeAttackCooldown, GameMaster.Instance.m_Joystick.Action3, () =>
         {
@@ -105,6 +147,10 @@ public class Player : MonoBehaviour {
             DrawBullet();
         });
 
+        #endregion
+
+        #region critical health effect
+
         if (playerStats.CurrentHealth < 3 & !m_IsCreateCriticalHealthEffect)
         {
             m_IsCreateCriticalHealthEffect = true;
@@ -114,9 +160,13 @@ public class Player : MonoBehaviour {
                 StartCoroutine(CreateLowHealthEffect());
         }
 
+        #endregion
+
+        #region camera control right stick
+
         if (GameMaster.Instance.m_Joystick.RightStickY.IsPressed)
         {
-            if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickY.Value) > 0.4f)
+            if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickY.Value) > 0.4f) //if right stick Y pressed
             {
                 var cameraTarget = GameMaster.Instance.m_Joystick.RightStickY.Value > 0 ? m_CameraUp : m_CameraDown;
 
@@ -124,7 +174,7 @@ public class Player : MonoBehaviour {
 
                 m_IsRightStickPressed = true;
             }
-            else if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickX.Value) > 0.4f)
+            else if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickX.Value) > 0.4f) //if right stick X pressed
             {
                 var cameraTarget = GameMaster.Instance.m_Joystick.RightStickX.Value * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft;
 
@@ -138,6 +188,8 @@ public class Player : MonoBehaviour {
             m_IsRightStickPressed = false;
             Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(transform);
         }
+
+        #endregion
     }
 
     private IEnumerator CreateLowHealthEffect()
@@ -247,13 +299,20 @@ public class Player : MonoBehaviour {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(m_AttackPosition.position, new Vector3(m_AttackRangeX, m_AttackRangeY, 1));
         }
+
+        if (m_Center != null)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(m_Center.position, new Vector3(2f, .5f, 1f));
+        }
     }
 
     private void FixedUpdate()
     {
         if (m_Animator.GetBool("Hit"))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
+            GetComponent<Rigidbody2D>().velocity = 
+                new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
         }
     }
 

@@ -50,7 +50,14 @@ namespace CustomProfileExample
 					Target = InputControlType.RightTrigger,
 					Source = KeyCodeButton(KeyCode.D)
 				},
-				new InputControlMapping
+                new InputControlMapping
+                {
+                    Handle ="Jump down attack",
+                    Target = InputControlType.LeftBumper,
+                    Source = KeyCodeButton(KeyCode.V)
+
+                },
+                new InputControlMapping
 				{
 					Handle = "Jump",
 					Target = InputControlType.Action1,

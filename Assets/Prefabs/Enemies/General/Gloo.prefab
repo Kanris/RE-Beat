@@ -128,14 +128,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &95686711767765298
 Animator:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4775839029967382}
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 540672
   m_IsSimpleMovement: 1
   IdleTime: 0
 --- !u!61 &61820548619058144
