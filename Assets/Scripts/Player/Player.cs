@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
     private bool m_IsCreateCriticalHealthEffect;
     private bool m_IsRightStickPressed;
 
-    private bool m_IsDashingToGround = false;
+    private bool m_IsFallAttack = false;
     
     #endregion
 
@@ -97,21 +97,25 @@ public class Player : MonoBehaviour {
 
         if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
         {
-            if (!m_IsDashingToGround)
+            if (!m_IsFallAttack)
             {
-                m_IsDashingToGround = true;
+                m_IsFallAttack = true;
 
                 m_Rigidbody2D.AddForce(new Vector2(0f, -30f), ForceMode2D.Impulse);
 
-                GetComponent<Platformer2DUserControl>().enabled = false;
+                m_Animator.SetBool("FallAttack", true);
+
+                //GetComponent<Platformer2DUserControl>().enabled = false;
             }
         }
 
-        if (m_IsDashingToGround)
+        if (m_IsFallAttack)
         {
             if (m_Animator.GetBool("Ground"))
             {
-                m_IsDashingToGround = false;
+                m_IsFallAttack = false;
+
+                m_Animator.SetBool("FallAttack", false);
 
                 var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(2f, .5f), 0, m_WhatIsEnemy);
 
@@ -130,13 +134,15 @@ public class Player : MonoBehaviour {
 
                 Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
 
-                GetComponent<Platformer2DUserControl>().enabled = true;
+                //GetComponent<Platformer2DUserControl>().enabled = true;
             }
             else if (m_Animator.GetBool("Hit"))
             {
-                m_IsDashingToGround = false;
+                m_IsFallAttack = false;
 
-                GetComponent<Platformer2DUserControl>().enabled = true;
+                m_Animator.SetBool("FallAttack", false);
+
+                //GetComponent<Platformer2DUserControl>().enabled = true;
             }
         }
 

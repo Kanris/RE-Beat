@@ -37,6 +37,8 @@ public class PlayerStats : Stats
     public static bool m_IsCanSeeEnemyHP = false;
     public static int m_ReviveCount = 2;
 
+    public static bool m_LockHP = false;
+
     private static int m_Scrap = 200;
     private static int DamageMultiplier = 1;
 
@@ -248,7 +250,14 @@ public class PlayerStats : Stats
         }
     }
 
+    public IEnumerator ThrowPlayerBack()
+    {
+        PlayHitAnimation(true);
 
+        yield return new WaitForSeconds(0.1f); //time to return player's control
+
+        PlayHitAnimation(false);
+    }
 
     protected override IEnumerator ObjectTakeDamage(int divider)
     {

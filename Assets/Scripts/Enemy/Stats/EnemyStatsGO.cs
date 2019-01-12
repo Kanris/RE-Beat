@@ -148,21 +148,32 @@ public class EnemyStatsGO : MonoBehaviour {
 
     private void OnRegularCollision(Collision2D collision)
     {
+        //if player collide with enemy
         if (collision.transform.CompareTag("Player"))
         {
+            //if player dashing and he has invincible dash chip
             if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
             {
+                //player do not receive any damage
                 Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
-            }
+
+                //if player can damage enemy while dashing
+                if (PlayerStats.m_IsDamageEnemyWhileDashing)
+                {
+                    //enemy receive damage from player (damage divided by 3)
+                    TakeDamage(null, 3, PlayerStats.DamageAmount / 3);
+                }
+            } 
             else
             {
-                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
-            }
-
-            if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
-            {
-                TakeDamage(null, 1, PlayerStats.DamageAmount / 3);
-                //EnemyStats.TakeDamage(PlayerStats.DamageAmount / 3);
+                //if player is perform fall attack
+                if (collision.gameObject.GetComponent<Animator>().GetBool("FallAttack"))
+                    //just throw back player
+                   StartCoroutine( collision.transform.GetComponent<Player>().playerStats.ThrowPlayerBack() );
+                //player just collide with enemy
+                else
+                    //player receive damage from enemy
+                    EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
         }
     }
