@@ -159,6 +159,8 @@ public class EnemyStatsGO : MonoBehaviour {
                 EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
 
+            Debug.LogError(PlayerStats.m_IsDamageEnemyWhileDashing 
+                + " " + collision.gameObject.GetComponent<Animator>().GetBool("Dash"));
 
             if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
             {
