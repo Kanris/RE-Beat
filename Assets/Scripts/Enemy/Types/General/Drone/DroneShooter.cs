@@ -153,9 +153,14 @@ public class DroneShooter : MonoBehaviour {
             else //if player is not in attack range
             {
                 m_IsPlayerInShootingRange = false;
+
+                if (m_IsPrepareShoot)
+                {
+                    m_TargetLine.gameObject.SetActive(false); //hide target line
+                }
             }
 
-            if (m_IsPlayerInShootingRange & m_IsPrepareShoot)
+            if ((m_IsPlayerInShootingRange & m_IsPrepareShoot) & (m_AttackCooldownTimer - .5f < Time.time))
             {
                 m_TargetLine.SetTarget(m_Target.position);
             }
@@ -174,17 +179,14 @@ public class DroneShooter : MonoBehaviour {
         {
             m_IsPlayerInShootingRange = false; //player is not in attack range
 
+            m_TargetLine.gameObject.SetActive(false); //hide target line
+
             StartCoroutine(PatrolBetweenPoints()); //continue patrolling
         }
         else if (m_RadarAnimator != null & !m_IsDestroying)
         {
             if (m_RadarAnimator.GetBool("Threat"))
                 ActiveScan(false);
-        }
-
-        if (m_TargetLine.gameObject.activeSelf & m_Target == null)
-        {
-            m_TargetLine.gameObject.SetActive(false);
         }
     }
 
@@ -208,7 +210,7 @@ public class DroneShooter : MonoBehaviour {
         {
             var whereToShoot = new Vector3(m_Target.position.x, m_Target.position.y);
 
-            var m_firePointPosition = transform.position;
+            m_TargetLine.SetTarget(whereToShoot);
 
             m_IsPrepareShoot = false;
 
