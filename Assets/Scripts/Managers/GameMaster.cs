@@ -491,7 +491,7 @@ public class GameMaster : MonoBehaviour {
 
         m_Player = Instantiate(m_PlayerToRespawn);
         m_Player.transform.position = transformToPlacePlayer.position;
-        
+
 
         m_ReachableRespawnPoint = null;
 

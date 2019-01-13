@@ -242,9 +242,6 @@ public class PlayerStats : Stats
             base.TakeDamage(amount, divider);
             CurrentPlayerHealth -= amount;
 
-            if (CurrentPlayerHealth > 0)
-                Physics2D.IgnoreLayerCollision(8, 13, true); //player can move through enemy
-
             for (var index = 0; index < amount; index++)
                 UIManager.Instance.RemoveHealth(); //remove some health from health ui
         }
@@ -270,8 +267,6 @@ public class PlayerStats : Stats
         PlayHitAnimation(false);
 
         yield return InvincibleAnimation(); //play invincible animation
-
-        Physics2D.IgnoreLayerCollision(8, 13, false); //player can't move through enemy
 
         m_IsInvincible = false; //player is not invincible
     }
