@@ -27,7 +27,7 @@ public class PlayerStats : Stats
     public static int DamageAmount = 50;
     public static float MeleeAttackSpeed = 0.2f;
     public static float RangeAttackSpeed = 2f;
-    public static float Invincible = 1f; //invincible time
+    public static float Invincible = 1.5f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
     public static bool m_IsCanDoubleJump = true;

@@ -146,6 +146,14 @@ public class EnemyStatsGO : MonoBehaviour {
             OnRegularCollision(collision);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (m_EnemyType == EnemyType.Drone)
+            OnDroneCollision(collision);
+        else
+            OnRegularCollision(collision);
+    }
+
     private void OnRegularCollision(Collision2D collision)
     {
         //if player collide with enemy

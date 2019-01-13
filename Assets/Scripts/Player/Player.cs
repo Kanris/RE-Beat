@@ -105,8 +105,6 @@ public class Player : MonoBehaviour {
 
                 m_Animator.SetBool("FallAttack", true);
 
-                //GetComponent<PlatformerCharacter2D>().enabled = false;
-
                 Physics2D.IgnoreLayerCollision(8, 13, true);
             }
         }
@@ -119,7 +117,7 @@ public class Player : MonoBehaviour {
 
                 m_Animator.SetBool("FallAttack", false);
 
-                var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(2f, .5f), 0, m_WhatIsEnemy);
+                var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(3f, .5f), 0, m_WhatIsEnemy);
 
                 foreach (var enemy in enemiesToDamage)
                 {
@@ -137,15 +135,6 @@ public class Player : MonoBehaviour {
                 Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
 
                 Physics2D.IgnoreLayerCollision(8, 13, false);
-                //GetComponent<PlatformerCharacter2D>().enabled = true;
-            }
-            else if (m_Animator.GetBool("Hit"))
-            {
-                m_IsFallAttack = false;
-
-                m_Animator.SetBool("FallAttack", false);
-
-                //GetComponent<PlatformerCharacter2D>().enabled = true;
             }
         }
 
@@ -325,7 +314,7 @@ public class Player : MonoBehaviour {
         if (m_Center != null)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireCube(m_Center.position, new Vector3(2f, .5f, 1f));
+            Gizmos.DrawWireCube(m_Center.position, new Vector3(3f, .5f, 1f));
         }
     }
 
