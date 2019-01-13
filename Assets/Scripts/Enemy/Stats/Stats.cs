@@ -19,8 +19,8 @@ public class Stats {
     [Range(1, 4000)] public int MaxHealth = 200;
 
     [Header("Throw stats")]
-    [Range(0f, 10f)] public float m_ThrowX = 2f; 
-    [Range(0f, 10f)] public float m_ThrowY = 0.5f;
+    [Range(0f, 500f)] public float m_ThrowX = 2f; 
+    [Range(0f, 500f)] public float m_ThrowY = 0.5f;
 
     #endregion
 
