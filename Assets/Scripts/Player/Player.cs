@@ -105,7 +105,9 @@ public class Player : MonoBehaviour {
 
                 m_Animator.SetBool("FallAttack", true);
 
-                //GetComponent<Platformer2DUserControl>().enabled = false;
+                //GetComponent<PlatformerCharacter2D>().enabled = false;
+
+                Physics2D.IgnoreLayerCollision(8, 13, true);
             }
         }
 
@@ -123,7 +125,7 @@ public class Player : MonoBehaviour {
                 {
                     if (enemy.GetComponent<EnemyStatsGO>() != null)
                     {
-                        enemy.GetComponent<EnemyStatsGO>().TakeDamage(null, 3, 10);
+                        enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, 3, 10);
                     }
                 }
 
@@ -134,7 +136,8 @@ public class Player : MonoBehaviour {
 
                 Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
 
-                //GetComponent<Platformer2DUserControl>().enabled = true;
+                Physics2D.IgnoreLayerCollision(8, 13, false);
+                //GetComponent<PlatformerCharacter2D>().enabled = true;
             }
             else if (m_Animator.GetBool("Hit"))
             {
@@ -142,7 +145,7 @@ public class Player : MonoBehaviour {
 
                 m_Animator.SetBool("FallAttack", false);
 
-                //GetComponent<Platformer2DUserControl>().enabled = true;
+                //GetComponent<PlatformerCharacter2D>().enabled = true;
             }
         }
 

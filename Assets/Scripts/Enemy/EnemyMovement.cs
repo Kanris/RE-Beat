@@ -35,8 +35,7 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
 
-    private int m_Direction;
-    private bool m_IsPlayerAttack;
+    private int m_Direction = -1;
     #endregion
 
     #region inspector fields
@@ -114,8 +113,6 @@ public class EnemyMovement : MonoBehaviour {
             {
                 m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
 
-                //m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * m_Speed, 0f);
-
                 if (!m_Animator.GetBool("isWalking")) //if enemy still not playing move animation
                     SetAnimation(true);
 
@@ -134,17 +131,22 @@ public class EnemyMovement : MonoBehaviour {
         {
             if (m_ThrowUpdateTime > Time.time)
             {
-                if (m_IsPlayerAttack)
-                    //m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
-                    m_Rigidbody2D.AddForce(new Vector2(m_EnemyStats.m_ThrowX * 10f * m_Direction, 0f), ForceMode2D.Force);
-                SetAnimation(false);
+                if (m_ThrowUpdateTime > Time.time)
+                {
+                    if (m_Direction == -1)
+                        m_Direction = GetDirection();
+
+                    m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
+
+                    SetAnimation(false);
+                }
             }
             else
             {
+                m_Direction = -1;
 
                 m_Rigidbody2D.velocity = Vector2.zero;
                 m_IsThrowBack = false;
-                m_IsPlayerAttack = false;
             }
         }
     }
@@ -161,26 +163,15 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private int GetDirection()
     {
-        if (collision.transform.CompareTag("Player"))
+        if (GameMaster.Instance.m_Player != null)
         {
-            var distance = collision.transform.position - transform.position;
-
-            m_Direction = distance.x > 0 ? -1 : 1;
+            var distance = GameMaster.Instance.m_Player.transform.GetChild(0).position - transform.position;
+            return distance.x > 0 ? -1 : 1;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("PlayerAttackRange"))
-        {
-            var distance = collision.transform.position - transform.position;
-
-            m_Direction = distance.x > 0 ? -1 : 1;
-
-            m_IsPlayerAttack = true;
-        }
+        return 0;
     }
 
     private void CheckStackPosition()
@@ -191,11 +182,6 @@ public class EnemyMovement : MonoBehaviour {
         }
         else
             m_PreviousPosition = m_Rigidbody2D.position; //remember this position maybe next will be same
-    }
-
-    private void SpeedChange(float speed)
-    {
-        m_Speed = speed;
     }
 
     private IEnumerator Idle()
@@ -217,6 +203,11 @@ public class EnemyMovement : MonoBehaviour {
                 ChangeWaitingState(false);
             }
         }
+    }
+
+    private void SpeedChange(float speed)
+    {
+        m_Speed = speed;
     }
 
     private void SetAnimation(bool value)

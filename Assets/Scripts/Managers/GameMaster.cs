@@ -13,6 +13,8 @@ public class GameMaster : MonoBehaviour {
 
     public string SceneName; //current scene name
 
+    public GameObject m_Player;
+
     [HideInInspector] public InputDevice m_Joystick;
     private float m_VibrateTimer;
     private bool m_IsVibrate;
@@ -487,8 +489,9 @@ public class GameMaster : MonoBehaviour {
     {
         IsPlayerDead = true;
 
-        var playerGameObject = Instantiate(m_PlayerToRespawn);
-        playerGameObject.transform.position = transformToPlacePlayer.position;
+        m_Player = Instantiate(m_PlayerToRespawn);
+        m_Player.transform.position = transformToPlacePlayer.position;
+        
 
         m_ReachableRespawnPoint = null;
 
@@ -500,8 +503,8 @@ public class GameMaster : MonoBehaviour {
 
     private IEnumerator RespawnWithoutFade(Vector2 respawnPosition, float waitTimer)
     {
-        var respawnPlayer = Instantiate(m_PlayerToRespawn);
-        respawnPlayer.transform.position = respawnPosition;
+        m_Player = Instantiate(m_PlayerToRespawn);
+        m_Player.transform.position = respawnPosition;
 
         m_ReachableRespawnPoint = null;
 
