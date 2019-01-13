@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour {
     private Vector2 m_PreviousPosition = Vector2.zero;
 
     private float m_ThrowUpdateTime;
-    private float m_Speed = 1f;
+    private float m_Speed = 10f;
     private bool m_IsWaiting = false;
     private bool m_IsThrowBack;
     private bool m_Grounded;
@@ -87,22 +87,43 @@ public class EnemyMovement : MonoBehaviour {
     {
         m_Grounded = false;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
+        m_Grounded = CheckGround(m_GroundCheck.position);
+        //Debug.LogError(CheckGround(m_GroundCheck.position.Add(y:1f)));
+
+        if (m_Grounded)
         {
-            if (colliders[i].gameObject != gameObject)
-                m_Grounded = true;
+            if(CheckGround(m_GroundCheck.position.Add(y: 1f))) //if enemy stack
+            {
+                m_CantMoveFurther = true;
+            }
+        }
+        else
+        {
+            m_CantMoveFurther = true;
         }
 
-        if (!m_Grounded)
-        {
-            TurnAround();
-        }
-        else if (m_CantMoveFurther)
+        if (m_CantMoveFurther)
         {
             m_CantMoveFurther = false;
             TurnAround();
         }
+    }
+
+    private bool CheckGround(Vector3 position)
+    {
+        var grounded = false;
+
+        var colliders = Physics2D.OverlapCircleAll(position, k_GroundedRadius, m_WhatIsGround);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+            {
+                grounded = true;
+                break;
+            }
+        }
+
+        return grounded;
     }
 
     private void FixedUpdate()
@@ -111,15 +132,13 @@ public class EnemyMovement : MonoBehaviour {
         {
             if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear) | m_IsSimpleMovement)
             {
-                m_Rigidbody2D.position += new Vector2(-transform.localScale.x, 0) * Time.fixedDeltaTime * m_Speed; //move enemy
+                m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * m_Speed, 0); //move enemy
 
                 if (!m_Animator.GetBool("isWalking")) //if enemy still not playing move animation
                     SetAnimation(true);
 
                 if (m_EnemyStats.IsPlayerNear) //Continue pursuit time if enemy will loose sight of player
                     m_MoveUpdateTime = Time.time + 2.2f;
-
-                CheckStackPosition();
             }
             else
                 StartCoroutine(Idle());
@@ -174,22 +193,14 @@ public class EnemyMovement : MonoBehaviour {
         return 0;
     }
 
-    private void CheckStackPosition()
-    {
-        if (m_Rigidbody2D.position == m_PreviousPosition && !m_IsWaiting) //if enemy can't move further
-        {
-            m_CantMoveFurther = true; //turn around
-        }
-        else
-            m_PreviousPosition = m_Rigidbody2D.position; //remember this position maybe next will be same
-    }
-
     private IEnumerator Idle()
     {
         if (!m_IsWaiting)
         {
             ChangeWaitingState(true);
             SetAnimation(false);
+
+            m_Rigidbody2D.velocity = Vector2.zero;
 
             yield return new WaitForSeconds(IdleTime);
 
