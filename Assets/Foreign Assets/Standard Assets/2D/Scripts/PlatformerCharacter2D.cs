@@ -146,60 +146,65 @@ namespace UnityStandardAssets._2D
                     Flip();
                 }
             }
-            // If the player should jump...
-            if (m_Grounded && jump)
+
+            if (!m_Anim.GetBool("FallAttack")) //player is not performe fall attack
             {
-                // Add a vertical force to the player.
-                m_Grounded = false;
-                m_Anim.SetBool("Ground", false);
-                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0f);
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-
-                ShowDustEffect();
-
-                GameMaster.Instance.StartJoystickVibrate(1, 0.1f);
-
-                m_IsHaveDoubleJump = true;
-            }
-            //If the player should double jump
-            else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
-            {
-                //player is not on the ground and have double jump
-                if (!m_Grounded && m_IsHaveDoubleJump && jump)
+                // If the player should jump...
+                if (m_Grounded && jump)
                 {
-                    m_IsHaveDoubleJump = false;
+                    // Add a vertical force to the player.
+                    m_Grounded = false;
+                    m_Anim.SetBool("Ground", false);
+                    m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0f);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 
-                    m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
+                    ShowDustEffect();
 
                     GameMaster.Instance.StartJoystickVibrate(1, 0.1f);
 
-                    ShowDoubleJumpEffect();
+                    m_IsHaveDoubleJump = true;
+                }
+                //If the player should double jump
+                else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
+                {
+                    //player is not on the ground and have double jump
+                    if (!m_Grounded && m_IsHaveDoubleJump && jump)
+                    {
+                        m_IsHaveDoubleJump = false;
+
+                        m_Rigidbody2D.velocity = Vector2.zero;
+                        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
+
+                        GameMaster.Instance.StartJoystickVibrate(1, 0.1f);
+
+                        ShowDoubleJumpEffect();
+                    }
+                }
+
+                if (PlayerStats.m_IsCanDash & m_DashEffect != null)
+                {
+                    if (dash && m_Anim.GetFloat("Speed") > 0.01f)
+                    {
+                        m_Anim.SetBool("Dash", true);
+
+                        StartCoroutine(ShowDashEffect());
+
+                        GameMaster.Instance.StartJoystickVibrate(1, 0.2f);
+                    }
+
+                    if (m_Anim.GetBool("Dash") & !m_Anim.GetBool("Hit"))
+                    {
+                        var multiplier = 1;
+
+                        if (!m_FacingRight)
+                            multiplier = -1;
+
+                        m_Rigidbody2D.velocity = Vector2.zero;
+                        m_Rigidbody2D.AddForce(new Vector2(10f * multiplier, 0f), ForceMode2D.Impulse);
+                    }
                 }
             }
 
-            if (PlayerStats.m_IsCanDash & m_DashEffect != null)
-            {
-                if (dash && m_Anim.GetFloat("Speed") > 0.01f)
-                {
-                    m_Anim.SetBool("Dash", true);
-
-                    StartCoroutine( ShowDashEffect() );
-
-                    GameMaster.Instance.StartJoystickVibrate(1, 0.2f);
-                }
-
-                if (m_Anim.GetBool("Dash") & !m_Anim.GetBool("Hit"))
-                {
-                    var multiplier = 1;
-
-                    if (!m_FacingRight)
-                        multiplier = -1;
-
-                    m_Rigidbody2D.velocity = Vector2.zero;
-                    m_Rigidbody2D.AddForce(new Vector2(10f * multiplier , 0f), ForceMode2D.Impulse);
-                }
-            }
         }
 
         public void Flip()
