@@ -53,6 +53,7 @@ public class Player : MonoBehaviour {
     private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown;
+    private float m_FallAttackCooldown;
     [HideInInspector] public int m_EnemyHitDirection = 1;
 
     private bool m_IsCreateCriticalHealthEffect;
@@ -95,17 +96,20 @@ public class Player : MonoBehaviour {
 
         #region vertical dash
 
-        if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+        if (m_FallAttackCooldown < Time.time)
         {
-            if (!m_IsFallAttack)
+            if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
             {
-                m_IsFallAttack = true;
+                if (!m_IsFallAttack)
+                {
+                    m_IsFallAttack = true;
 
-                m_Rigidbody2D.AddForce(new Vector2(0f, -30f), ForceMode2D.Impulse);
+                    m_Rigidbody2D.AddForce(new Vector2(0f, -30f), ForceMode2D.Impulse);
 
-                m_Animator.SetBool("FallAttack", true);
+                    m_Animator.SetBool("FallAttack", true);
 
-                Physics2D.IgnoreLayerCollision(8, 13, true);
+                    Physics2D.IgnoreLayerCollision(8, 13, true);
+                }
             }
         }
 
@@ -137,6 +141,8 @@ public class Player : MonoBehaviour {
                 Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
 
                 Physics2D.IgnoreLayerCollision(8, 13, false);
+
+                m_FallAttackCooldown = PlayerStats.FallAttackSpeed + Time.time;
             }
         }
 
