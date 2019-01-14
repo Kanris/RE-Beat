@@ -77,7 +77,7 @@ public class EnemyMovement : MonoBehaviour {
 
         if (GetComponent<PatrolEnemy>() != null)
             GetComponent<PatrolEnemy>().OnPlayerSpot += ChangeWaitingState;
-        else if (GetComponent<PatrolEnemy>() != null)
+        else if (GetComponent<RangeEnemy>() != null)
             GetComponent<RangeEnemy>().OnPlayerSpot += ChangeWaitingState;
     }
 
@@ -88,7 +88,6 @@ public class EnemyMovement : MonoBehaviour {
         m_Grounded = false;
 
         m_Grounded = CheckGround(m_GroundCheck.position);
-        //Debug.LogError(CheckGround(m_GroundCheck.position.Add(y:1f)));
 
         if (m_Grounded)
         {
@@ -128,6 +127,8 @@ public class EnemyMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        //Debug.LogError(m_IsWaiting + " " + m_IsThrowBack);
+
         if (!m_IsWaiting & !m_IsThrowBack) //if enemey is not waiting or is not throwing back
         {
             if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear) | m_IsSimpleMovement)

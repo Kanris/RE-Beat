@@ -15,6 +15,7 @@ public class RangeEnemy : MonoBehaviour {
 
     [SerializeField] private SpriteRenderer m_AlarmImage;
     [SerializeField] private Transform m_FirePoint;
+
     [Header("Spells that mage knows")]
     [SerializeField] private GameObject[] ThrowObjects;
 
@@ -74,9 +75,8 @@ public class RangeEnemy : MonoBehaviour {
     }
 
     private void ChangeAlertStatus(bool value)
-    { 
-        if (OnPlayerSpot != null)
-            OnPlayerSpot(value); //stop moving 
+    {
+        OnPlayerSpot?.Invoke(value);
 
         m_AlarmImage.gameObject.SetActive(value);
     }

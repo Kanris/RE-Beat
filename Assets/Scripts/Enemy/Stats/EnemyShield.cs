@@ -8,6 +8,9 @@ public class EnemyShield : MonoBehaviour {
 
     public DebuffPanel.DebuffTypes m_DebuffType;
 
+    [Header("Effects")]
+    [SerializeField] private Transform m_SieldImage;
+
     [Header("Durations")]
     [SerializeField, Range(1f, 5f)] private float m_DebuffDuration = 5f;
     [SerializeField, Range(1f, 5f)] private float m_ShieldDuration = 2f;
@@ -19,7 +22,7 @@ public class EnemyShield : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        GetComponent<SpriteRenderer>().color = GetShieldColor();
+        m_SieldImage.gameObject.GetComponent<SpriteRenderer>().color = GetShieldColor();
 
         SubscribeToEvents();
 
@@ -40,7 +43,7 @@ public class EnemyShield : MonoBehaviour {
         while ( currentTime < activeTime)
         {
             currentTime += Time.deltaTime;
-            transform.localScale = new Vector3(Mathf.Lerp(.1f, 1f, currentTime / activeTime), 
+            m_SieldImage.localScale = new Vector3(Mathf.Lerp(.1f, 1f, currentTime / activeTime), 
                                                    Mathf.Lerp(.1f, 1f, currentTime / activeTime), 1f);
 
             yield return new WaitForEndOfFrame();
@@ -59,7 +62,7 @@ public class EnemyShield : MonoBehaviour {
         {
             currentTime += Time.deltaTime;
 
-            transform.localScale = new Vector3(Mathf.Lerp(1f, .5f, currentTime / m_ShieldDuration),
+            m_SieldImage.localScale = new Vector3(Mathf.Lerp(1f, .5f, currentTime / m_ShieldDuration),
                                                 Mathf.Lerp(1f, .5f, currentTime / m_ShieldDuration), 1f);
 
             yield return new WaitForEndOfFrame();
