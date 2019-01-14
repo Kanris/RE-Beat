@@ -91,6 +91,7 @@ public class UIManager : MonoBehaviour {
     [Header("Upper")]
     [SerializeField] private GameObject m_LifePanel; //life panel
     [SerializeField] private Image m_BulletImage; //bullet display cooldown
+    [SerializeField] private Image m_FallAttack; //fall attack display cooldown
 
     [Header("Scrap")]
     [SerializeField] private TextMeshProUGUI m_AmountText; //current coins amount
@@ -126,6 +127,9 @@ public class UIManager : MonoBehaviour {
         m_MessagePipeline = new List<Message>(); //initialize pipeline
 
         m_AmountText.text = PlayerStats.Scrap.ToString(); //display current scrap amount
+
+        if (PlayerStats.m_IsFallAttack)
+            SetFallAttackImageActive();
     }
 
     private void OnDestroy()
@@ -286,23 +290,33 @@ public class UIManager : MonoBehaviour {
         m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
     }
 
-    #region bullet
+    #region skills
 
     public void BulletCooldown(float cooldown)
     {
-        StartCoroutine(DisplayBulletCooldown(cooldown));
+        StartCoroutine(DisplayBulletCooldown(cooldown, m_BulletImage));
     }
 
-    private IEnumerator DisplayBulletCooldown(float time)
+    public void FallAttackCooldown(float cooldown)
     {
-        m_BulletImage.fillAmount = 0f;
+        StartCoroutine(DisplayBulletCooldown(cooldown, m_FallAttack));
+    }
+
+    public void SetFallAttackImageActive()
+    {
+        m_FallAttack.gameObject.transform.parent.gameObject.SetActive(true);
+    }
+
+    private IEnumerator DisplayBulletCooldown(float time, Image displayCooldown)
+    {
+        displayCooldown.fillAmount = 0f;
 
         var tickTime = time * .1f;
 
-        while (m_BulletImage.fillAmount < 1)
+        while (displayCooldown.fillAmount < 1)
         {
             yield return new WaitForSeconds(tickTime);
-            m_BulletImage.fillAmount += .1f;
+            displayCooldown.fillAmount += .1f;
         }
     }
 

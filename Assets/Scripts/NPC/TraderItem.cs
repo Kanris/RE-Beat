@@ -120,6 +120,7 @@ public class TraderItem : MonoBehaviour {
 
                 case UpgradeType.FallAttack:
                     PlayerStats.m_IsFallAttack = true;
+                    UIManager.Instance.SetFallAttackImageActive();
                     break;
 
                 case UpgradeType.EnemyHP:

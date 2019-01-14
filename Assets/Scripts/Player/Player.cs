@@ -142,6 +142,8 @@ public class Player : MonoBehaviour {
 
                 Physics2D.IgnoreLayerCollision(8, 13, false);
 
+                UIManager.Instance.FallAttackCooldown(PlayerStats.FallAttackSpeed);
+
                 m_FallAttackCooldown = PlayerStats.FallAttackSpeed + Time.time;
             }
         }
