@@ -117,7 +117,9 @@ public class Player : MonoBehaviour {
 
                 m_Animator.SetBool("FallAttack", false);
 
-                var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, new Vector2(3f, .5f), 0, m_WhatIsEnemy);
+                var enemiesToDamage = Physics2D.OverlapBoxAll(m_Center.position, 
+                    new Vector2(m_LandEffect.GetComponent<ParticleSystem>().shape.scale.x, 
+                                    m_LandEffect.GetComponent<ParticleSystem>().shape.scale.y), 0, m_WhatIsEnemy);
 
                 foreach (var enemy in enemiesToDamage)
                 {
