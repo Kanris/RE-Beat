@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: fd77c8e1c32514282942d6b7b9926d9b, type: 2}
   m_Trader: {fileID: 114316307258952364}
   m_TraderItemType: 1
-  m_UpgradeType: 5
+  m_UpgradeType: 0
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsInfiniteAmount: 1
   m_ItemImage: {fileID: 114867872006931744}
@@ -2048,8 +2048,8 @@ RectTransform:
   m_Father: {fileID: 8039125043587353074}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.8, y: -0.75}
   m_SizeDelta: {x: 1.6, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2311,7 +2311,7 @@ MonoBehaviour:
   m_TraderItem: {fileID: 11400000, guid: 63948d3ea8619473286503df3dd98985, type: 2}
   m_Trader: {fileID: 114316307258952364}
   m_TraderItemType: 0
-  m_UpgradeType: 1
+  m_UpgradeType: 2
   m_ClickAudio: {fileID: 11400000, guid: debc637c580c34030b52f6cee292f411, type: 2}
   m_IsInfiniteAmount: 0
   m_ItemImage: {fileID: 114460221807183222}

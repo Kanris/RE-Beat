@@ -32,7 +32,8 @@ public class PlayerStats : Stats
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
     public static bool m_IsCanDoubleJump = true;
-    public static bool m_IsCanDash = true;
+    public static bool m_IsCanDash = false;
+    public static bool m_IsFallAttack = false;
     public static bool m_IsInvincibleWhileDashing = false;
     public static bool m_IsDamageEnemyWhileDashing = false;
     public static bool m_IsCanSeeEnemyHP = false;

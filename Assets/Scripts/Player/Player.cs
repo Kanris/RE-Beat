@@ -96,7 +96,7 @@ public class Player : MonoBehaviour {
 
         #region vertical dash
 
-        if (m_FallAttackCooldown < Time.time)
+        if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
         {
             if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
             {
