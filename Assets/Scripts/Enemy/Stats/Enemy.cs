@@ -51,6 +51,8 @@ public class Enemy : Stats
         }
     }
 
+    public EnemyShield CreatedShield { set; get; }
+
     #endregion
 
     #region override
@@ -85,6 +87,7 @@ public class Enemy : Stats
                 {
                     m_IsShieldCreated = true;
                     m_IsInvincible = true;
+
                     CreateShield();
                 }
             }
@@ -135,6 +138,8 @@ public class Enemy : Stats
             var shieldInstantiate = GameMaster.Instantiate(shieldGO, m_GameObject.transform);
 
             shieldInstantiate.GetComponent<EnemyShield>().OnShieldDestroy += SetInvincible;
+
+            CreatedShield = shieldInstantiate.GetComponent<EnemyShield>();
         }
     }
 

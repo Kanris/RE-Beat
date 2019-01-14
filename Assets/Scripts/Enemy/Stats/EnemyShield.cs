@@ -71,6 +71,12 @@ public class EnemyShield : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public void ApplyDebuff()
+    {
+        GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>()
+            .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
+    }
+
     private void OnApplicationQuit()
     {
         ChangeIsQuitting(true);
@@ -111,12 +117,7 @@ public class EnemyShield : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("PlayerAttackRange") & m_IsActive)
-        {
-            collision.transform.parent.GetComponent<Player>()
-                .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
-        }
-        else if (collision.CompareTag("PlayerBullet"))
+        if (collision.CompareTag("PlayerBullet"))
         {
             Destroy(collision.gameObject);
             Destroy(gameObject);

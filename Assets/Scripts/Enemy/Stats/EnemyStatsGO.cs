@@ -82,7 +82,11 @@ public class EnemyStatsGO : MonoBehaviour {
 
     public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0)
     {
-        if(GetComponent<EnemyStatsGO>().enabled)
+        if (EnemyStats.CreatedShield != null)
+        {
+            EnemyStats.CreatedShield?.ApplyDebuff();
+        }
+        else if (GetComponent<EnemyStatsGO>().enabled)
         {
             if (m_EnemyType == EnemyType.Regular)
             {
