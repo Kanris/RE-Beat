@@ -270,7 +270,7 @@ namespace UnityStandardAssets._2D
 
                 Destroy(instantiateDashEffect, .16f); //destroy echo
 
-                yield return new WaitForSeconds(.05f); //wait timer before create next echo
+                yield return new WaitForSeconds(.08f); //wait timer before create next echo
             }
 
             m_Rigidbody2D.gravityScale = 3f;
