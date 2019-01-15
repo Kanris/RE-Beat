@@ -35,10 +35,7 @@ public class Sign : MonoBehaviour {
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeIsInProgress; //subscribe to dialogue in progress
 
-        if (GetComponent<Animator>() != null)
-        {
-            GetComponent<Animator>().SetFloat("Speed", Random.Range(.8f, 1.2f));
-        }
+        GetComponent<Animator>()?.SetFloat("Speed", Random.Range(.8f, 1.2f));
     }
 
     private void InitializeInteractionButton()

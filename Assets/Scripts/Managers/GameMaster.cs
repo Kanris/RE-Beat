@@ -327,6 +327,8 @@ public class GameMaster : MonoBehaviour {
     {
         if (reacheblePoint != m_ReachableRespawnPoint)
         {
+            m_ReachableRespawnPoint?.GetComponent<ReachablePoint>()?.SetActivatePoint(false);
+
             m_ReachableRespawnPoint = reacheblePoint;
             m_NearestTunnel = nearestTunnel;
         }
