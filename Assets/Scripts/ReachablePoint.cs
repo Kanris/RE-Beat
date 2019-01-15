@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityStandardAssets._2D;
+﻿using UnityEngine;
 
 public class ReachablePoint : MonoBehaviour {
 
     [SerializeField] private Transform m_NearestTunnel;
 
     private SpriteRenderer m_SpriteRenderer;
+    private bool m_IsActive;
 
     private void Start()
     {
@@ -18,7 +16,7 @@ public class ReachablePoint : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player triggered reacheble point
+        if (collision.CompareTag("Player") & !m_IsActive) //if player triggered reacheble point
         {
             //set reachable point transform
             GameMaster.Instance.SetReachablePoint(transform, m_NearestTunnel);
@@ -42,6 +40,7 @@ public class ReachablePoint : MonoBehaviour {
             ColorUtility.TryParseHtmlString("#FF56BC", out color);
         }
 
+        m_IsActive = value;
         m_SpriteRenderer.color = color;
     }
 
