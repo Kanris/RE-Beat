@@ -268,7 +268,7 @@ namespace UnityStandardAssets._2D
                 instantiateDashEffect.transform.localScale = transform.localScale; //flip echo
                 instantiateDashEffect.GetComponent<SpriteRenderer>().material = dashMaterial; //change echo material
 
-                Destroy(instantiateDashEffect, .16f); //destroy echo
+                Destroy(instantiateDashEffect, 1); //destroy echo
 
                 yield return new WaitForSeconds(.08f); //wait timer before create next echo
             }
