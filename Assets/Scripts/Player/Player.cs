@@ -141,7 +141,7 @@ public class Player : MonoBehaviour {
             m_Rigidbody2D.velocity = Vector2.zero;
             m_Rigidbody2D.gravityScale = 0f;
 
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.2f);
 
             //push player to the ground
             m_Rigidbody2D.AddForce(new Vector2(0f, -30f), ForceMode2D.Impulse);
