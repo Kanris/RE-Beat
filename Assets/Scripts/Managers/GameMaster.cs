@@ -375,7 +375,7 @@ public class GameMaster : MonoBehaviour {
             }
         }
 
-        Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform);
+        m_Player = Instantiate(m_RevivePlayer, m_ReachableRespawnPoint.transform);
         Instantiate(m_Companion, m_NearestTunnel.position, Quaternion.identity);
 
         yield return ScreenFaderManager.Instance.FadeToClear();
