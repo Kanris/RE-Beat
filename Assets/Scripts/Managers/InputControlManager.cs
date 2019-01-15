@@ -108,7 +108,7 @@ public class InputControlManager : MonoBehaviour {
         var leftStickValue = Instance.m_Joystick.LeftStickY.Value > 0 ?
             Mathf.Abs(Instance.m_Joystick.LeftStickY.Value - 1f) < 0.01f : false;
 
-        return leftStickValue || Instance.m_Joystick.DPadUp.WasPressed;
+        return (leftStickValue & Instance.m_Joystick.LeftStickY.WasPressed) || Instance.m_Joystick.DPadUp.WasPressed;
     }
 
     public static bool IsAttackButtonsPressed()
