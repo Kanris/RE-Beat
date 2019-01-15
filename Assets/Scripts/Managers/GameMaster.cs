@@ -323,7 +323,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
-    public void SetReacheblePoint(Transform reacheblePoint, Transform nearestTunnel)
+    public void SetReachablePoint(Transform reacheblePoint, Transform nearestTunnel)
     {
         if (reacheblePoint != m_ReachableRespawnPoint)
         {
