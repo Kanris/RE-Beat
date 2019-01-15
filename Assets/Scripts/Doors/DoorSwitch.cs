@@ -61,7 +61,7 @@ public class DoorSwitch : MonoBehaviour {
             {
                 m_UI.SetActive(false); //hide switch ui
 
-                StartCoroutine(OpenTheDoor()); //open attached door
+                OpenTheDoor(); //open attached door
             }
         }
 
@@ -83,15 +83,13 @@ public class DoorSwitch : MonoBehaviour {
         }
     }
 
-    private IEnumerator OpenTheDoor()
+    private void OpenTheDoor()
     {
         if (DoorToOpen != null) //if door to open is attached
         {
             m_Animator.SetTrigger("Triggering"); //play switch trigerring animation
 
             DoorToOpen.PlayOpenDoorAnimation(); //open the door
-
-            yield return new WaitForSeconds(1f); //wait 1s
 
             GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
             GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
