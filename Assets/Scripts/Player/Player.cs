@@ -59,7 +59,7 @@ public class Player : MonoBehaviour {
     private bool m_IsCreateCriticalHealthEffect;
     private bool m_IsRightStickPressed;
 
-    private bool m_IsFallAttack = false;    
+    private bool m_IsFallAttack = false;
     #endregion
 
     #region private methods
@@ -150,10 +150,6 @@ public class Player : MonoBehaviour {
 
     private void StopFallAttack()
     {
-        m_IsFallAttack = false; //fall attack is not performing
-
-        m_Animator.SetBool("FallAttack", false); //stop play fall attack animation
-
         DamageEnemiesInArea(m_Center.position, 
             m_LandEffect.GetComponent<ParticleSystem>().shape.scale.x, m_LandEffect.GetComponent<ParticleSystem>().shape.scale.y, 
             damageAmount: 10);
@@ -178,8 +174,13 @@ public class Player : MonoBehaviour {
 
     private void ReturnPlayersDefaultValues()
     {
+        m_IsFallAttack = false; //fall attack is not performing
+
+        m_Animator.SetBool("FallAttack", false); //stop play fall attack animation
+
         //return default values
         m_Rigidbody2D.gravityScale = 3f;
+        m_Rigidbody2D.velocity = Vector2.zero;
 
         Physics2D.IgnoreLayerCollision(8, 13, false);
 
@@ -356,11 +357,20 @@ public class Player : MonoBehaviour {
     //show low health effect
     private void OnEnable()
     {
+        //if player have to show critical health effect
         if (playerStats.CurrentHealth < 3 & GameMaster.Instance.m_IsPlayerReturning)
         {
-            m_IsCreateCriticalHealthEffect = true;
-            DebuffPanel.Instance.ShowCriticalDamageSign();
-            StartCoroutine(CreateLowHealthEffect());
+            m_IsCreateCriticalHealthEffect = true; //indicates that player creates particle critical effects
+
+            DebuffPanel.Instance.ShowCriticalDamageSign(); //show again danger sign
+            StartCoroutine(CreateLowHealthEffect()); //start showing critical health effect
+        }
+
+        //if player's performing fall attack
+        if (m_IsFallAttack)
+        {
+            //stop it
+            ReturnPlayersDefaultValues();
         }
     }
 
