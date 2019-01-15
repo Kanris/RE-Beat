@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityStandardAssets._2D;
-using InControl;
 
 public class GameMaster : MonoBehaviour {
 
@@ -14,10 +13,6 @@ public class GameMaster : MonoBehaviour {
     public string SceneName; //current scene name
 
     public GameObject m_Player;
-
-    [HideInInspector] public InputDevice m_Joystick;
-    private float m_VibrateTimer;
-    private bool m_IsVibrate;
 
     [Header("Respawn")]
     public Transform m_RespawnPoint; //current respawn point
@@ -57,8 +52,6 @@ public class GameMaster : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(this);
 
-            m_Joystick = InputManager.ActiveDevice;
-
             #region Initialize Managers
             Initialize("Managers/EventSystem");
 
@@ -82,7 +75,7 @@ public class GameMaster : MonoBehaviour {
 
             Initialize("Managers/FPSManager");
 
-            Initialize("Managers/MouseControlManager");
+            Initialize("Managers/InputControlManager");
 
             Initialize("Managers/InControlManager");
 
@@ -155,50 +148,6 @@ public class GameMaster : MonoBehaviour {
     {
         StartPlayerRespawn(false, true); 
     }
-
-    private void Update()
-    {
-        m_Joystick = InputManager.ActiveDevice;
-    }
-
-    #region joystick
-    public void StartJoystickVibrate(float intensity, float time)
-    {
-        if (m_IsVibrate)
-        {
-            StopJoystickVibrate();
-        }
-
-        m_Joystick.Vibrate(intensity);
-        m_IsVibrate = true;
-
-        StartCoroutine(GamepadVibrate(time));
-    }
-
-    private IEnumerator GamepadVibrate(float time)
-    {
-        var currentTimeVibration = 0f;
-
-        while (currentTimeVibration < time)
-        {
-            currentTimeVibration += 0.01f;
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        if (m_IsVibrate)
-        {
-            StopJoystickVibrate();
-        }
-    }
-
-    private void StopJoystickVibrate()
-    {
-        m_IsVibrate = false;
-        m_Joystick.Vibrate(0);
-    }
-
-    #endregion
 
     #region SceneRecreation
 

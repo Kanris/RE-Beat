@@ -131,19 +131,19 @@ public class InfoManager : MonoBehaviour
         {
             if (m_JournalUI.activeSelf)
             {
-                if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed || GameMaster.Instance.m_Joystick.Action2)
+                if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed || InputControlManager.Instance.m_Joystick.Action2)
                 {
                     StartCoroutine ( CloseJournalWithDelay() );
                 }
 
-                if (GameMaster.Instance.m_Joystick.LeftBumper.WasPressed)
+                if (InputControlManager.Instance.m_Joystick.LeftBumper.WasPressed)
                 {
                     if (m_CurrentOpenBookmark > 0)
                     {
                         InfoManagement(m_CurrentOpenBookmark - 1);
                     }
                 }
-                else if (GameMaster.Instance.m_Joystick.RightBumper.WasPressed)
+                else if (InputControlManager.Instance.m_Joystick.RightBumper.WasPressed)
                 {
                     if (m_CurrentOpenBookmark < 3)
                     {
@@ -152,7 +152,7 @@ public class InfoManager : MonoBehaviour
                 }
             }
 
-            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed) //open journal
+            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed) //open journal
             {
                 InfoManagement(m_CurrentOpenBookmark);
             }
@@ -287,7 +287,7 @@ public class InfoManager : MonoBehaviour
         if (InfoManagerLight.Instance != null)
             InfoManagerLight.Instance.ChangeLight(id);
 
-        GameMaster.Instance.StartJoystickVibrate(1, .05f);
+        InputControlManager.Instance.StartJoystickVibrate(1, .05f);
     }
 
     public IEnumerator CloseJournalWithDelay()

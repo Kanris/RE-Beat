@@ -42,12 +42,12 @@ public class Stairs : MonoBehaviour {
     {
         if (m_Player != null) //if player is on stairs
         {
-            if ((GameMaster.Instance.m_Joystick.LeftStickX != 0f || GameMaster.Instance.m_Joystick.DPadX != 0f) &
-                   GameMaster.Instance.m_Joystick.Action1.WasPressed & !isJumping) //if player want to jump from stairs
+            if ((InputControlManager.Instance.m_Joystick.LeftStickX != 0f || InputControlManager.Instance.m_Joystick.DPadX != 0f) &
+                   InputControlManager.Instance.m_Joystick.Action1.WasPressed & !isJumping) //if player want to jump from stairs
             {
                 isJumping = true;
             }
-            else if ((GameMaster.Instance.m_Joystick.LeftStickY != 0f || GameMaster.Instance.m_Joystick.DPadY != 0f) 
+            else if ((InputControlManager.Instance.m_Joystick.LeftStickY != 0f || InputControlManager.Instance.m_Joystick.DPadY != 0f) 
                 & !m_VerticalMove & !isJumping) //if player moves on stairs
             {
                 m_VerticalMove = true;
@@ -75,7 +75,7 @@ public class Stairs : MonoBehaviour {
 
                 var jumpVector = new Vector2(5f, 10f); //jump right
 
-                if (GameMaster.Instance.m_Joystick.LeftStickX < 0f || GameMaster.Instance.m_Joystick.DPadX < 0f)
+                if (InputControlManager.Instance.m_Joystick.LeftStickX < 0f || InputControlManager.Instance.m_Joystick.DPadX < 0f)
                 {
                     jumpVector = new Vector2(-5f, 10f); //jump left
                 }
@@ -95,7 +95,7 @@ public class Stairs : MonoBehaviour {
 
         var yPos = 0.03f; //move value
 
-        if (GameMaster.Instance.m_Joystick.LeftStickY < 0f || GameMaster.Instance.m_Joystick.DPadY < 0f) //if player move down on stairs
+        if (InputControlManager.Instance.m_Joystick.LeftStickY < 0f || InputControlManager.Instance.m_Joystick.DPadY < 0f) //if player move down on stairs
         {
             yPos = -yPos; //change move value
             m_Player.position += new Vector2(0, yPos); //move player down

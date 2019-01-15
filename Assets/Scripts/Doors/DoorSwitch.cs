@@ -57,7 +57,7 @@ public class DoorSwitch : MonoBehaviour {
 		
         if (m_UI.activeSelf) //if switch ui is active
         {
-            if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
             {
                 m_UI.SetActive(false); //hide switch ui
 

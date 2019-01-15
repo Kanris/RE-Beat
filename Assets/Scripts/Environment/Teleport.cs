@@ -30,9 +30,9 @@ public class Teleport : MonoBehaviour {
 
     private void Update()
     {
-        if (m_Player != null & MouseControlManager.IsCanUseSubmitButton()) //if player is near teleport
+        if (m_Player != null & InputControlManager.IsCanUseSubmitButton()) //if player is near teleport
         {
-            if (MouseControlManager.IsUpperButtonsPressed() & !m_IsTeleporting) //if player is pressed submit button
+            if (InputControlManager.IsUpperButtonsPressed() & !m_IsTeleporting) //if player is pressed submit button
             {
                 m_IsTeleporting = true;
                 StartCoroutine(TeleportPlayer()); //start teleport

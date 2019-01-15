@@ -44,7 +44,7 @@ public class ChestItem : MonoBehaviour {
 
         GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
 
-        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
 
         Destroy(gameObject); //destroy item
     }

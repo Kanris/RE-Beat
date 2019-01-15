@@ -50,7 +50,7 @@ public class Actions : MonoBehaviour {
         {
             if (m_IsPlayerNear)
             {
-                if (GameMaster.Instance.m_Joystick.Action4.WasPressed)
+                if (InputControlManager.Instance.m_Joystick.Action4.WasPressed)
                 {
                     ChangeObjectState();
                 }

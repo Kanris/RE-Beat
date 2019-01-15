@@ -44,9 +44,9 @@ public class PickUpItem : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearItem & MouseControlManager.IsCanUseSubmitButton()) //if is player near item
+        if (m_IsPlayerNearItem & InputControlManager.IsCanUseSubmitButton()) //if is player near item
         {
-            if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
             {
                 InteractWithItem(); //add item
             }
@@ -101,7 +101,7 @@ public class PickUpItem : MonoBehaviour {
         }
         
         GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
-        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
         Destroy(gameObject);
     }
 

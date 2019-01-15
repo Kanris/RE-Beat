@@ -30,7 +30,7 @@ public class ObjectResetPosition : MonoBehaviour {
         {
             if (m_IsCanReset)
             {
-                if (MouseControlManager.IsUpperButtonsPressed())
+                if (InputControlManager.IsUpperButtonsPressed())
                 {
                     m_IsCanReset = false;
                     m_ObjectToReset.ResetPosition();

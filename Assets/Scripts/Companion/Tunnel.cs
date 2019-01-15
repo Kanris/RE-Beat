@@ -27,9 +27,9 @@ public class Tunnel : MonoBehaviour {
 
     private void Update()
     {
-        if (m_CompanionToTeleport != null & MouseControlManager.IsCanUseSubmitButton())
+        if (m_CompanionToTeleport != null & InputControlManager.IsCanUseSubmitButton())
         {
-            if (MouseControlManager.IsUpperButtonsPressed())
+            if (InputControlManager.IsUpperButtonsPressed())
             {
                 MoveToNextTunnel();
             }

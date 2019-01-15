@@ -98,7 +98,7 @@ public class Player : MonoBehaviour {
 
         if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
         {
-            if (GameMaster.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+            if (InputControlManager.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
             {
                 if (!m_IsFallAttack)
                 {
@@ -152,18 +152,18 @@ public class Player : MonoBehaviour {
 
         #region attack handler
 
-        Attack(m_MeleeAttackCooldown, GameMaster.Instance.m_Joystick.Action3, () =>
+        Attack(m_MeleeAttackCooldown, InputControlManager.Instance.m_Joystick.Action3, () =>
         {
             m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
-            GameMaster.Instance.StartJoystickVibrate(1, 0.05f);
+            InputControlManager.Instance.StartJoystickVibrate(1, 0.05f);
             StartCoroutine(MeleeAttack());
         });
 
-        Attack(m_RangeAttackCooldown, GameMaster.Instance.m_Joystick.RightBumper, () =>
+        Attack(m_RangeAttackCooldown, InputControlManager.Instance.m_Joystick.RightBumper, () =>
         {
             m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
             UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed);
-            GameMaster.Instance.StartJoystickVibrate(1, 0.05f);
+            InputControlManager.Instance.StartJoystickVibrate(1, 0.05f);
 
             DrawBullet();
         });
@@ -185,19 +185,19 @@ public class Player : MonoBehaviour {
 
         #region camera control right stick
 
-        if (GameMaster.Instance.m_Joystick.RightStickY.IsPressed)
+        if (InputControlManager.Instance.m_Joystick.RightStickY.IsPressed)
         {
-            if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickY.Value) > 0.4f) //if right stick Y pressed
+            if (Mathf.Abs(InputControlManager.Instance.m_Joystick.RightStickY.Value) > 0.4f) //if right stick Y pressed
             {
-                var cameraTarget = GameMaster.Instance.m_Joystick.RightStickY.Value > 0 ? m_CameraUp : m_CameraDown;
+                var cameraTarget = InputControlManager.Instance.m_Joystick.RightStickY.Value > 0 ? m_CameraUp : m_CameraDown;
 
                 Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget);
 
                 m_IsRightStickPressed = true;
             }
-            else if (Mathf.Abs(GameMaster.Instance.m_Joystick.RightStickX.Value) > 0.4f) //if right stick X pressed
+            else if (Mathf.Abs(InputControlManager.Instance.m_Joystick.RightStickX.Value) > 0.4f) //if right stick X pressed
             {
-                var cameraTarget = GameMaster.Instance.m_Joystick.RightStickX.Value * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft;
+                var cameraTarget = InputControlManager.Instance.m_Joystick.RightStickX.Value * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft;
 
                 Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget);
 

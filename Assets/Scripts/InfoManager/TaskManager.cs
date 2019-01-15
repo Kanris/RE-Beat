@@ -73,7 +73,7 @@ public class TaskManager : MonoBehaviour {
         {
             if (taskTriggerType == TaskTriggerType.OnSubmit) //if task type - on submit
             {
-                if ( GameMaster.Instance.m_Joystick.Action4.WasPressed ) //if player press submit button
+                if (InputControlManager.Instance.m_Joystick.Action4.WasPressed ) //if player press submit button
                 {
                     ChangeTaskStatus();
                 }

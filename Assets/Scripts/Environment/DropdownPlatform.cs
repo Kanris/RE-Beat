@@ -28,8 +28,8 @@ public class DropdownPlatform : MonoBehaviour {
     {
         if (player != null) //if player is on the platform
         {
-            if ( ( GameMaster.Instance.m_Joystick.LeftStickY < .5f || GameMaster.Instance.m_Joystick.DPadDown.WasPressed)
-                && GameMaster.Instance.m_Joystick.Action1.WasPressed) //if player pressed s and space 
+            if ( (InputControlManager.Instance.m_Joystick.LeftStickY < .5f || InputControlManager.Instance.m_Joystick.DPadDown.WasPressed)
+                && InputControlManager.Instance.m_Joystick.Action1.WasPressed) //if player pressed s and space 
             {
                 m_IsDropDown = true;
             }

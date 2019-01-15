@@ -30,7 +30,7 @@ public class CompanionCall : MonoBehaviour {
 		
         if (m_InteractionUI.activeSelf) //if player is near
         {
-            if ((GameMaster.Instance.m_Joystick.LeftStickY > 0.9f || GameMaster.Instance.m_Joystick.DPadUp.WasPressed) && !m_IsChanging) //if submit button pressed and spawn is not in progress
+            if ((InputControlManager.IsUpperButtonsPressed()) && !m_IsChanging) //if submit button pressed and spawn is not in progress
             {
                 StartCoroutine( ChangeCharacter() ); //change character
             }

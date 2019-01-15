@@ -114,16 +114,16 @@ public class PickupBox : MonoBehaviour {
 
         if (m_Player != null && !m_IsBoxUp) //if player is near
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed
-                    && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed
+                    && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 StartCoroutine( AttachToParent(m_Player) ); //attach box to the player
             }
 
         } else if (m_IsBoxUp && m_Player == null)
         {
-            if ((GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed())
-                    && MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if ((InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed())
+                    && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 StartCoroutine( AttachToParent(null) ); //attach box to the player
             }
@@ -183,7 +183,7 @@ public class PickupBox : MonoBehaviour {
             m_Player.GetComponent<Player>().TriggerPlayerBussy(false);
 
 
-        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
     }
 
     private void ChangeBoxProperty(bool isActive, int layerId)

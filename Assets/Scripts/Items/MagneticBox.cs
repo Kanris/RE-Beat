@@ -114,7 +114,7 @@ public class MagneticBox : MonoBehaviour {
     {
         if (m_Player != null) //if player near the box
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed & MouseControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed & InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {
@@ -128,9 +128,9 @@ public class MagneticBox : MonoBehaviour {
                 }
             }
         }
-        else if (m_IsBoxPickedUp & MouseControlManager.IsCanUseSubmitButton()) //if box is picked up
+        else if (m_IsBoxPickedUp & InputControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (GameMaster.Instance.m_Joystick.Action4.WasPressed || MouseControlManager.IsAttackButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
             {
                 StartCoroutine ( PickUpBox(false) ); //put the box
             }
@@ -180,7 +180,7 @@ public class MagneticBox : MonoBehaviour {
 
         player.GetComponent<Player>().TriggerPlayerBussy(value);
 
-        GameMaster.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

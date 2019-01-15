@@ -41,11 +41,11 @@ public class DoorButton : MonoBehaviour {
 
                 m_Animator.SetTrigger("Pressed"); //set button to pressed animation 
 
-                GameMaster.Instance.StartJoystickVibrate(5, .1f);
+                InputControlManager.Instance.StartJoystickVibrate(5, .1f);
             }
             else //if need to close the door
             {
-                GameMaster.Instance.StartJoystickVibrate(5, .1f);
+                InputControlManager.Instance.StartJoystickVibrate(5, .1f);
                 m_Animator.SetTrigger("Unpressed"); //set button to unpressed animation
             }
 

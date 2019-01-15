@@ -54,9 +54,9 @@ public class Door : MonoBehaviour {
     {
         if (Type == DoorType.Key) //if door is have to open with key
         {
-            if (m_UI.activeSelf & MouseControlManager.IsCanUseSubmitButton()) //if player is near door
+            if (m_UI.activeSelf & InputControlManager.IsCanUseSubmitButton()) //if player is near door
             {
-                if (MouseControlManager.IsUpperButtonsPressed()) //if player pressed submit button
+                if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
                 {
                     OpenDoorWithKey(); //try to open the door
                 }

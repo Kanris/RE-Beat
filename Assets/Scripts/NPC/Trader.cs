@@ -41,8 +41,8 @@ public class Trader : MonoBehaviour {
 
         if (m_Player != null) //if player is near
         {
-            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed 
-                || GameMaster.Instance.m_Joystick.Action2)
+            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed 
+                || InputControlManager.Instance.m_Joystick.Action2)
             {
                 if (m_StoreUI.activeSelf)
                 {
@@ -56,9 +56,9 @@ public class Trader : MonoBehaviour {
                 EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
             }
 
-            if (MouseControlManager.IsCanUseSubmitButton())
+            if (InputControlManager.IsCanUseSubmitButton())
             {
-                if (MouseControlManager.IsUpperButtonsPressed() & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+                if (InputControlManager.IsUpperButtonsPressed() & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 
@@ -68,13 +68,13 @@ public class Trader : MonoBehaviour {
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                 }
-                else if (GameMaster.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                     m_IsBoughtItem = false;
                 }
                 //submit button pressed to buy item
-                else if (GameMaster.Instance.m_Joystick.Action4.IsPressed & m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.m_Joystick.Action4.IsPressed & m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {
@@ -85,7 +85,7 @@ public class Trader : MonoBehaviour {
                     }
                     else if (!m_IsBoughtItem)
                     {
-                        GameMaster.Instance.StartJoystickVibrate(0.5f, 0.01f);
+                        InputControlManager.Instance.StartJoystickVibrate(0.5f, 0.01f);
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.deltaTime);
                     }
                 }

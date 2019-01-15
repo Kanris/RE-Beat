@@ -72,9 +72,9 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) //if player is near the chest
         {
-            if (MouseControlManager.IsCanUseSubmitButton())
+            if (InputControlManager.IsCanUseSubmitButton())
             {
-                if (MouseControlManager.IsUpperButtonsPressed() && !m_ChestUI.activeSelf) //if player pressed submit button
+                if (InputControlManager.IsUpperButtonsPressed() && !m_ChestUI.activeSelf) //if player pressed submit button
                 {
                     OpenChest(); //try to open the chest
                 }
@@ -94,8 +94,8 @@ public class Chest : MonoBehaviour {
                 }
             }
 
-            if (GameMaster.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed
-                || GameMaster.Instance.m_Joystick.Action2)
+            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed
+                || InputControlManager.Instance.m_Joystick.Action2)
             {
                 StartCoroutine(CloseChest());
             }

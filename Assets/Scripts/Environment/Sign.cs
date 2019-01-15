@@ -55,7 +55,7 @@ public class Sign : MonoBehaviour {
         {
             if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
             {
-                if (MouseControlManager.IsUpperButtonsPressed()) //if player want to read the sign
+                if (InputControlManager.IsUpperButtonsPressed()) //if player want to read the sign
                 {
                     EnableUserControl(false); //disable user controll
                     m_InteractionButton.SetActive(false); //hide sign ui

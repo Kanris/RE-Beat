@@ -87,7 +87,7 @@ public class StartScreenManager : MonoBehaviour {
 
         Initialize("Managers/FPSManager");
 
-        Initialize("Managers/MouseControlManager");
+        Initialize("Managers/InputControlManager");
 
         //play background music
         if (!string.IsNullOrEmpty(BackgroundMusic))
