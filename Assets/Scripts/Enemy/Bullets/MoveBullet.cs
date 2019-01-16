@@ -60,7 +60,7 @@ public class MoveBullet : MonoBehaviour {
         else if (hitTransform.CompareTag("Enemy")) //if hit enemy
         {
             //damage enemy
-            hitTransform.GetComponent<EnemyStatsGO>().TakeDamage(null, 0, DamageAmount);
+            hitTransform.GetComponent<EnemyStatsGO>()?.TakeDamage(null, 0, DamageAmount);
         }
         else if (hitTransform.CompareTag("WorldObject")) //if hit world object
         {
