@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
 public class MoveGrass : MonoBehaviour {
 
     #region private fields
 
-    private Animator m_Animator;
-    private int m_Health = 1;
+    [SerializeField] private GameObject m_GrassParticles; //grass destroy particles
 
-    [SerializeField] private GameObject m_GrassParticles;
+    private Animator m_Animator; //grass animator
+    private WorldObjectStats m_WorldObjectStats;
+    private bool m_IsDestroyed; //is grass is destroyed
 
     #endregion
 
@@ -21,30 +20,29 @@ public class MoveGrass : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        m_Animator = GetComponent<Animator>();
+        m_Animator = GetComponent<Animator>(); //get grass animator
+        InitializeWorldObjectStats(); //initialize world object stats
+    }
 
+    private void InitializeWorldObjectStats()
+    {
+        m_WorldObjectStats = GetComponent<WorldObjectStats>(); //get world object stats component from gameobject
+        m_WorldObjectStats.OnHealthZero = DestroyGrass; //method that will be invoke when grass is destroyed
     }
 
     #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_Health > 0) //if player in grass
+        if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
         {
             m_Animator.SetTrigger("Move"); //play move grass animation
-        }
-
-        if (collision.CompareTag("PlayerAttackRange") & m_Health > 0) //if player attack grass
-        {
-            m_Health--;
-            DestroyGrass(); //show destroy grass animation
         }
     }
 
     private void DestroyGrass()
     {
         ShowDestroyParticles(); //show destroy particles
-        m_Animator.SetTrigger("Hit"); //play grass hit animation
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f); //move grass a little below
     }
 

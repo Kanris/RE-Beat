@@ -115,11 +115,15 @@ public class Player : MonoBehaviour {
         //deal damage to all enemies in area
         foreach (var enemy in enemiesToDamage)
         {
-            if (enemy.GetComponent<EnemyStatsGO>() != null)
+            if (enemy.GetComponent<EnemyStatsGO>() != null) //if enemy hitted
             {
                 var distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
 
                 enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, GetHitZone(distance), damageAmount);
+            }
+            else if (enemy.GetComponent<WorldObjectStats>() != null) //if world object hitted
+            {
+                enemy.GetComponent<WorldObjectStats>().TakeDamage();
             }
         }
     }

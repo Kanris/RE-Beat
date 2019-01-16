@@ -8,31 +8,29 @@ public class Chest : MonoBehaviour {
 
     #region private fields
 
-    [SerializeField] private GameObject m_ChestUI; //chest inventory
-    [SerializeField] private GameObject m_InventoryUI;
-
     #region enum
 
-    public enum ChestType { Common, Destroyable }
+    public enum ChestType { Common, Destroyable } //types of chest
+    [Header("Type")]
     public ChestType chestType; //current chest type
 
     #endregion
 
-    [Header("Stats for destroyable")]
-    [SerializeField, Range(0, 10)] private int Health = 0; //chest health (for destroyable chest)
-
     [Header("UI")]
+    [SerializeField] private GameObject m_ChestUI; //chest inventory
+    [SerializeField] private GameObject m_InventoryUI; //chest inventory
     [SerializeField] private GameObject m_InstantInteractionButton; //chest ui
 
     [Header("Effects")]
-    [SerializeField] private GameObject m_HitEffect;
-    [SerializeField] private GameObject m_ChestContainItems;
-    [SerializeField] private Sprite m_OpenChestSprite;
-    [SerializeField] private Audio ChestOpenAudio;
+    [SerializeField] private GameObject m_ChestContainItems; //particles that indicate is there any items in the chest
+    [SerializeField] private Sprite m_OpenChestSprite; //sprite to swap when chest is empty
+    [SerializeField] private Audio ChestOpenAudio; //sound that plays when chest is open/close
 
-    private GameObject m_InstantChestContainItems;
-    private Player m_Player; //player
-    private Animator m_Animator; //chest animator
+    private GameObject m_InstantChestContainItems; //instantiated chest contain items particles
+    private Player m_Player; //indicates is player near or not
+
+    private bool m_IsCanBeOpen; //indicates is chest can be open or not (for destroyable chest)
+    private WorldObjectStats m_WorldObjectStats;
 
     #endregion
 
@@ -41,13 +39,21 @@ public class Chest : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        m_Animator = GetComponent<Animator>();
+        m_InstantChestContainItems = Instantiate(m_ChestContainItems, transform); //instantiate chest particles
 
-        m_InstantChestContainItems = Instantiate(m_ChestContainItems, transform);
+        SetActiveInteractionButton(false); //hide interactive ui
 
-        SetActiveInteractionButton(false);
+        SetActiveInventory(false); //hide inventory ui
 
-        SetActiveInventory(false);
+        if (chestType == ChestType.Destroyable)
+            InitializeWorldObjectStats(); //initialize destroyable chest
+    }
+
+    private void InitializeWorldObjectStats()
+    {
+        m_WorldObjectStats = GetComponent<WorldObjectStats>();
+
+        m_WorldObjectStats.OnHealthZero = SetIsCanBeOpen;
     }
 
     #region SetActive
@@ -118,7 +124,7 @@ public class Chest : MonoBehaviour {
 
     private void OpenChest()
     {
-        if (chestType == ChestType.Destroyable & Health != 0) //if chest is destroyable but still have health
+        if (chestType == ChestType.Destroyable & !m_IsCanBeOpen) //if chest is destroyable but still have health
         {
             var chestInfo = LocalizationManager.Instance.GetItemsLocalizedValue("chest_info");
             UIManager.Instance.DisplayNotificationMessage(chestInfo, 
@@ -145,15 +151,6 @@ public class Chest : MonoBehaviour {
             m_Player = collision.GetComponent<Player>(); //get player reference
             SetActiveInteractionButton(true); //show chest ui
         }
-
-        if (chestType == ChestType.Destroyable) //if chest is destroyable
-        {
-            if (collision.CompareTag("PlayerAttackRange") & Health > 0) //if player is attacking chest and it health is greater than zero
-            {
-                ShowHitParticles(collision.transform.parent.transform.localScale.x); //show hit particles
-                DamageChest(); //damage chest
-            }
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -164,34 +161,6 @@ public class Chest : MonoBehaviour {
             if (m_ChestUI.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
 
             m_Player = null; //remove player reference
-        }
-    }
-
-    private void ShowHitParticles(float playerLook)
-    {
-        var hitParticlesInstantiate = Instantiate(m_HitEffect);
-        hitParticlesInstantiate.transform.position = transform.position;
-
-        if (playerLook == 1) //where player look
-            hitParticlesInstantiate.transform.rotation = 
-                new Quaternion(hitParticlesInstantiate.transform.rotation.x, hitParticlesInstantiate.transform.rotation.y * -1, hitParticlesInstantiate.transform.rotation.z, hitParticlesInstantiate.transform.rotation.w);
-
-        Destroy(hitParticlesInstantiate, 1.5f); //destroy particles after 1.5s
-    }
-
-    private void DamageChest()
-    {
-        Health -= 1; //remove 1 health from the chest hp
-
-        Camera.main.GetComponent<Camera2DFollow>().Shake(.05f, .2f);
-
-        if (Health == 0)
-        {
-            ChangeChestSprite();
-        }
-        else
-        {
-            m_Animator.SetTrigger("TakeDamage"); //play take damage animation
         }
     }
 
@@ -223,13 +192,18 @@ public class Chest : MonoBehaviour {
                 if (grid.childCount == 0) //if there is no child left
                 {
                     ChangeChestSprite(); //chest is empty
-                    Health = 0;
-                    Destroy(m_InstantChestContainItems);
+                    SetIsCanBeOpen(); //indicate that chest can be open
+                    Destroy(m_InstantChestContainItems); //remove particles that show that chest has items in it
                 }
 
                 break;
             }
         }
+    }
+
+    public void SetIsCanBeOpen()
+    {
+        m_IsCanBeOpen = true;
     }
 
     #endregion
