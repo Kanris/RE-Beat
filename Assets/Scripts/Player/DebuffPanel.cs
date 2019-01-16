@@ -55,7 +55,7 @@ public class DebuffPanel : MonoBehaviour {
 
             if (item.gameObject.activeSelf) //if debuff is already on pannel
             {
-                item.appearTimer += displayTime;
+                item.appearTimer = displayTime;
             }
             else //new debuff
             {
