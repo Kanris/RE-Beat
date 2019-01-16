@@ -82,9 +82,9 @@ public class EnemyStatsGO : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0)
+    public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0, bool isBulletDamage = false)
     {
-        if (EnemyStats.CreatedShield != null)
+        if (EnemyStats.CreatedShield != null && !isBulletDamage)
         {
             EnemyStats.CreatedShield.ApplyDebuff();
         }

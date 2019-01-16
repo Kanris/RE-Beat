@@ -283,7 +283,7 @@ namespace UnityStandardAssets._2D
 
         private IEnumerator OnCollisionEnter2D(Collision2D collision)
         {
-            if (m_Anim.GetBool("Dash"))
+            if (m_Anim.GetBool("Dash") && !((m_WhatIsGround & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
             {
                 yield return new WaitForEndOfFrame();
 

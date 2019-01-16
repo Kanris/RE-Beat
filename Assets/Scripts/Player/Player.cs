@@ -121,7 +121,8 @@ public class Player : MonoBehaviour {
             {
                 var distance = enemy.Distance(GetComponent<CapsuleCollider2D>()).distance;
 
-                enemy.GetComponent<EnemyStatsGO>().TakeDamage(playerStats, GetHitZone(distance), damageAmount);
+                enemy.GetComponent<EnemyStatsGO>().TakeDamage
+                    (damageAmount == 0 ? playerStats : null, GetHitZone(distance), damageAmount);
             }
             else if (enemy.GetComponent<WorldObjectStats>() != null) //if world object hitted
             {
