@@ -15,8 +15,9 @@ public class WorldObjectStats : MonoBehaviour
     [SerializeField] private bool m_IsNeedCamShake; //indicates that cam shake effect is needed
 
     [Header("Additional")]
-    [SerializeField] private bool m_IsAcceptDamageFromBullet; //indicates that object will take damage from bullet
+    [SerializeField] private bool m_IsAcceptBullet; //indicates that object will take damage from bullet
     [SerializeField] private bool m_DestroyAtZero; //should script destroy this object when health amount is zero
+    [SerializeField] private bool m_IsAcceptDash;
 
     private Animator m_Animator; //current object animator
 
@@ -30,7 +31,7 @@ public class WorldObjectStats : MonoBehaviour
     public void TakeDamage(bool isBulletDamage = false)
     {
         //if current object health is greater than zero and isBulletDamage -> m_isAcceptDamage
-        if (m_HealthAmount > 0 && (!isBulletDamage || m_IsAcceptDamageFromBullet))
+        if (m_HealthAmount > 0 && (!isBulletDamage || m_IsAcceptBullet))
         {
             m_HealthAmount--; //remove 1 health
 
@@ -102,6 +103,22 @@ public class WorldObjectStats : MonoBehaviour
         if (m_IsNeedCamShake)
         {
             Camera.main.GetComponent<Camera2DFollow>().Shake(.05f, .2f); //show cam shake effect
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (m_IsAcceptDash) //if object can accept damage from Dash
+        {
+            if (collision.transform.CompareTag("Player")) //if player is in collision
+            {
+                //if player can deal damage while dashing and he is dash right now
+                if (PlayerStats.m_IsDamageEnemyWhileDashing 
+                    && collision.transform.GetComponent<Animator>().GetBool("Dash"))
+                {
+                    TakeDamage(); //apply damage to the object
+                }
+            }
         }
     }
 }

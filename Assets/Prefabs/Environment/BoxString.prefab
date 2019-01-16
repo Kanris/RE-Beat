@@ -136,8 +136,9 @@ MonoBehaviour:
   m_HealthAmount: 1
   m_OnHitParticles: {fileID: 0}
   m_IsNeedCamShake: 0
-  m_IsAcceptDamageFromBullet: 0
+  m_IsAcceptBullet: 1
   m_DestroyAtZero: 1
+  m_IsAcceptDash: 0
 --- !u!1 &1846643860262880
 GameObject:
   m_ObjectHideFlags: 0

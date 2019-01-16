@@ -2,6 +2,7 @@
 
 public class MoveBullet : MonoBehaviour {
 
+    [Header("Attack stats")]
     [SerializeField] private LayerMask m_LayerMask; //what bullet can hit
     [Range(1, 10)] public int DamageAmount = 1; //damage amount that bullet can deal
 
