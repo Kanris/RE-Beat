@@ -8571,6 +8571,28 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 114550833905410416, guid: c6fc85782dc1dfe41813ca879a8e5a2d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c6fc85782dc1dfe41813ca879a8e5a2d, type: 3}
+--- !u!1 &1360794417 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1825073258671120, guid: 995fa2579245283448091d083a464636,
+    type: 3}
+  m_PrefabInstance: {fileID: 1414642693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &1360794418
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360794417}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1001 &1363623021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8768,7 +8790,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1825073258671120, guid: 995fa2579245283448091d083a464636, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4890274745066842, guid: 995fa2579245283448091d083a464636, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8776,7 +8798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4890274745066842, guid: 995fa2579245283448091d083a464636, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.75
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 4890274745066842, guid: 995fa2579245283448091d083a464636, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8810,7 +8832,7 @@ PrefabInstance:
     - target: {fileID: 114126048342006236, guid: 995fa2579245283448091d083a464636,
         type: 3}
       propertyPath: EnemyStats.Speed
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1716536188579591745, guid: 995fa2579245283448091d083a464636,
         type: 3}
@@ -8820,9 +8842,10 @@ PrefabInstance:
     - target: {fileID: 50165198865163298, guid: 995fa2579245283448091d083a464636,
         type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 61820548619058144, guid: 995fa2579245283448091d083a464636, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 995fa2579245283448091d083a464636, type: 3}
 --- !u!1001 &1438388515
 PrefabInstance:

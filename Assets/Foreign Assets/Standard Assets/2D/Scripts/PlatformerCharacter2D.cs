@@ -248,8 +248,9 @@ namespace UnityStandardAssets._2D
             var dashMaterial = GetComponent<SpriteRenderer>().material; //material for echo effect
             
             var echoAmount = 4;
+            var timeBetweenEcho = .05f;
 
-            Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .1f * echoAmount);
+            Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, timeBetweenEcho * echoAmount);
 
             //create echo
             for (var count = 0; count < echoAmount && 
@@ -263,9 +264,14 @@ namespace UnityStandardAssets._2D
 
                 Destroy(instantiateDashEffect, 1); //destroy echo
 
-                //yield return new WaitForSeconds(.1f); //wait timer before create next echo
+                yield return new WaitForSeconds(timeBetweenEcho); //wait timer before create next echo
             }
-            yield return new WaitForEndOfFrame();
+
+            ReturnDefaultValuesAfterDash();
+        }
+
+        private void ReturnDefaultValuesAfterDash()
+        {
             m_Rigidbody2D.gravityScale = 3f;
 
             m_Anim.SetBool("Dash", false);
