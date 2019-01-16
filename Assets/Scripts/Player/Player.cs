@@ -35,31 +35,33 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject m_LowHealthEffect;
 
     [Header("Camera")]
-    [SerializeField] private Transform m_CameraUp;
-    [SerializeField] private Transform m_CameraDown;
-    [SerializeField] private Transform m_CameraRight;
-    [SerializeField] private Transform m_CameraLeft;
+    [SerializeField] private Transform m_CameraUp; //camera up transform for right stick cam control
+    [SerializeField] private Transform m_CameraDown; //camera down transform for right stick cam control
+    [SerializeField] private Transform m_CameraRight; //camera right transform for right stick cam control
+    [SerializeField] private Transform m_CameraLeft; //camera left transform for right stick cam control
 
     [Header("Vertical Dash")]
-    [SerializeField] private Transform m_Center;
-    [SerializeField] private GameObject m_LandEffect;
+    [SerializeField] private Transform m_Center; //center to draw box for fall attack
+    [SerializeField] private GameObject m_LandEffect; //particles that will be player when player land
+    [SerializeField] private Audio m_FallAttackAudio; //fall attack sound
 
     #endregion
 
     private Animator m_Animator; //player animator
-    private Rigidbody2D m_Rigidbody2D;
+    private Rigidbody2D m_Rigidbody2D; //player's rigidbody
     private float m_YPositionBeforeJump; //player y position before jump
     private bool isPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
     private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
-    private float m_RangeAttackCooldown;
-    private float m_FallAttackCooldown;
-    [HideInInspector] public int m_EnemyHitDirection = 1;
+    private float m_RangeAttackCooldown; //range attack cooldown
+    private float m_FallAttackCooldown; //fall attack cooldown
 
-    private bool m_IsCreateCriticalHealthEffect;
-    private bool m_IsRightStickPressed;
+    [HideInInspector] public int m_EnemyHitDirection = 1; //from where player receive damage
 
-    private bool m_IsFallAttack = false;
+    private bool m_IsCreateCriticalHealthEffect; //indicates that player should display critical health particles
+    private bool m_IsRightStickPressed; //indicates that player pressed right stick (to move camera)
+
+    private bool m_IsFallAttack = false; //indicates that player is performing fall attack
     #endregion
 
     #region private methods
@@ -155,7 +157,8 @@ public class Player : MonoBehaviour {
     private void StopFallAttack()
     {
         DamageEnemiesInArea(m_Center.position, 
-            m_LandEffect.GetComponent<ParticleSystem>().shape.scale.x, m_LandEffect.GetComponent<ParticleSystem>().shape.scale.y, 
+            m_LandEffect.GetComponent<ParticleSystem>().shape.scale.x, 
+            m_LandEffect.GetComponent<ParticleSystem>().shape.scale.y, 
             damageAmount: 10);
 
         //play land effect
@@ -166,14 +169,17 @@ public class Player : MonoBehaviour {
 
         //shake screen when player land
         Camera.main.GetComponent<Camera2DFollow>().Shake(.2f, .2f);
+
+        //play land effect sound
+        AudioManager.Instance.Play(m_FallAttackAudio);
     }
 
     private void CreateLandParticles()
     {
-        var landEffect = Instantiate(m_LandEffect);
-        landEffect.transform.position = m_Center.position;
+        var landEffect = Instantiate(m_LandEffect); //create land particles
+        landEffect.transform.position = m_Center.position; //place land particles in player feet
 
-        Destroy(landEffect, 2f);
+        Destroy(landEffect, 2f); //destroy land particles after 2 seconds
     }
 
     private void ReturnPlayersDefaultValues()
@@ -202,8 +208,9 @@ public class Player : MonoBehaviour {
     private void PerformMeleeAtack()
     {
         m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
-        InputControlManager.Instance.StartJoystickVibrate(1, 0.05f);
-        StartCoroutine(MeleeAttack());
+        InputControlManager.Instance.StartJoystickVibrate(1, 0.05f); //vibrate gamepad
+
+        StartCoroutine(MeleeAttack()); //perform meleeattack
     }
 
     //TODO: rewrite Melee attack
