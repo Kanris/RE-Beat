@@ -143,7 +143,7 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        private void StopShake()
+        public void StopShake()
         {
             CancelInvoke("DoShake");
         }

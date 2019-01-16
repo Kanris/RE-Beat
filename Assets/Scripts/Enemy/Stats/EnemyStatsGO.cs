@@ -35,6 +35,8 @@ public class EnemyStatsGO : MonoBehaviour {
     private float m_DestroyTimer;
     [HideInInspector] public bool m_IsDestroying = false; //is drone going to blow up
 
+    private bool m_IsReceiveDamageFromDash;
+
     // Use this for initialization
     void Start() {
 
@@ -84,7 +86,7 @@ public class EnemyStatsGO : MonoBehaviour {
     {
         if (EnemyStats.CreatedShield != null)
         {
-            EnemyStats.CreatedShield?.ApplyDebuff();
+            EnemyStats.CreatedShield.ApplyDebuff();
         }
         else if (GetComponent<EnemyStatsGO>().enabled)
         {
@@ -152,10 +154,18 @@ public class EnemyStatsGO : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (m_EnemyType == EnemyType.Drone)
-            OnDroneCollision(collision);
-        else
-            OnRegularCollision(collision);
+        if (!m_IsReceiveDamageFromDash)
+        {
+            if (m_EnemyType == EnemyType.Drone)
+                OnDroneCollision(collision);
+            else
+                OnRegularCollision(collision);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        m_IsReceiveDamageFromDash = false;
     }
 
     private void OnRegularCollision(Collision2D collision)
@@ -172,20 +182,17 @@ public class EnemyStatsGO : MonoBehaviour {
                 //if player can damage enemy while dashing
                 if (PlayerStats.m_IsDamageEnemyWhileDashing)
                 {
-                    //enemy receive damage from player (damage divided by 3)
-                    TakeDamage(null, 3, PlayerStats.DamageAmount / 3);
+                    TakeDamage(null,
+                        //GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().playerStats, 
+                            1, PlayerStats.DamageAmount / 3);
+
+                    m_IsReceiveDamageFromDash = true;
                 }
             } 
             else
             {
-                //if player is perform fall attack
-                if (collision.gameObject.GetComponent<Animator>().GetBool("FallAttack"))
-                    //just throw back player
-                   StartCoroutine( collision.transform.GetComponent<Player>().playerStats.ThrowPlayerBack() );
-                //player just collide with enemy
-                else
-                    //player receive damage from enemy
-                    EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
+                //player receive damage from enemy
+                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
         }
     }

@@ -6544,10 +6544,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
-    - target: {fileID: 1642957300447368, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4191418293414282, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.0835075
@@ -6592,17 +6588,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114879631205071088, guid: 4c3b77b88c431e742a72059fbc306a1a,
-        type: 3}
-      propertyPath: ThrowObjects.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114879631205071088, guid: 4c3b77b88c431e742a72059fbc306a1a,
-        type: 3}
-      propertyPath: ThrowObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 1052902559322968, guid: f2dec8f507fb83e4db114f069c8f84e5,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 3}
 --- !u!1001 &1019830265
@@ -11677,11 +11662,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
-    - target: {fileID: 114074688157870410, guid: 139eb539f2552f24ba30a4457c9cd24f,
-        type: 3}
-      propertyPath: EnemyStats.m_ThrowX
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 3}
 --- !u!1 &1704983843

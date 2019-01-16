@@ -28,15 +28,15 @@ public class PlayerStats : Stats
     public static float MeleeAttackSpeed = 0.2f;
     public static float RangeAttackSpeed = 2f;
     public static float FallAttackSpeed = 2f;
-    public static float Invincible = 1.5f; //invincible time
+    public static float Invincible = 10f; //invincible time
     public static Inventory PlayerInventory;
     public static int CurrentPlayerHealth;
     public static bool m_IsCanDoubleJump = true;
     public static bool m_IsCanDash = true;
     public static bool m_IsFallAttack = true;
-    public static bool m_IsInvincibleWhileDashing = false;
-    public static bool m_IsDamageEnemyWhileDashing = false;
-    public static bool m_IsCanSeeEnemyHP = false;
+    public static bool m_IsInvincibleWhileDashing = true;
+    public static bool m_IsDamageEnemyWhileDashing = true;
+    public static bool m_IsCanSeeEnemyHP = true;
     public static int m_ReviveCount = 2;
 
     public static bool m_LockHP = false;

@@ -108,13 +108,23 @@ public class WorldObjectStats : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        ApplyDashDamage(collision.transform);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        ApplyDashDamage(collision.transform);
+    }
+
+    private void ApplyDashDamage(Transform collisionTransform)
+    {
         if (m_IsAcceptDash) //if object can accept damage from Dash
         {
-            if (collision.transform.CompareTag("Player")) //if player is in collision
+            if (collisionTransform.CompareTag("Player")) //if player is in collision
             {
                 //if player can deal damage while dashing and he is dash right now
-                if (PlayerStats.m_IsDamageEnemyWhileDashing 
-                    && collision.transform.GetComponent<Animator>().GetBool("Dash"))
+                if (PlayerStats.m_IsDamageEnemyWhileDashing
+                    && collisionTransform.GetComponent<Animator>().GetBool("Dash"))
                 {
                     TakeDamage(); //apply damage to the object
                 }

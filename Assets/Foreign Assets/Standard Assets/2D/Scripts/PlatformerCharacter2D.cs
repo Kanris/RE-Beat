@@ -31,10 +31,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private Audio m_DashAudio;
         [SerializeField] private Audio m_DoubleJumpAudio;
 
-
         [HideInInspector] public bool m_IsHaveDoubleJump;
 
-        const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
 
         private Rigidbody2D m_Rigidbody2D;
@@ -192,15 +190,10 @@ namespace UnityStandardAssets._2D
                         InputControlManager.Instance.StartJoystickVibrate(1, 0.2f);
                     }
 
-                    if (m_Anim.GetBool("Dash") & !m_Anim.GetBool("Hit"))
+                    if (m_Anim.GetBool("Dash") && !m_Anim.GetBool("Hit"))
                     {
-                        var multiplier = 1;
-
-                        if (!m_FacingRight)
-                            multiplier = -1;
-
-                        m_Rigidbody2D.velocity = Vector2.zero;
-                        m_Rigidbody2D.AddForce(new Vector2(10f * multiplier, 0f), ForceMode2D.Impulse);
+                        var multiplier = !m_FacingRight ? -1 : 1;
+                        m_Rigidbody2D.velocity = new Vector2(10f * multiplier, 0f);
                     }
                 }
             }
@@ -229,8 +222,7 @@ namespace UnityStandardAssets._2D
 
         public void OnLandEffect()
         {
-            if (OnLandEvent != null)
-                OnLandEvent();
+            OnLandEvent?.Invoke();
         }
 
         private void ShowDoubleJumpEffect()
@@ -257,10 +249,11 @@ namespace UnityStandardAssets._2D
             
             var echoAmount = 4;
 
-            Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .05f * echoAmount);
+            Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .1f * echoAmount);
 
             //create echo
-            for (var count = 0; count < echoAmount & !m_Anim.GetBool("Hit"); count++)
+            for (var count = 0; count < echoAmount && 
+                            (!m_Anim.GetBool("Hit") && m_Anim.GetBool("Dash")); count++)
             {
                 var instantiateDashEffect = Instantiate(m_DashEffect); //create echo effect
 
@@ -270,14 +263,31 @@ namespace UnityStandardAssets._2D
 
                 Destroy(instantiateDashEffect, 1); //destroy echo
 
-                yield return new WaitForSeconds(.08f); //wait timer before create next echo
+                //yield return new WaitForSeconds(.1f); //wait timer before create next echo
             }
-
+            yield return new WaitForEndOfFrame();
             m_Rigidbody2D.gravityScale = 3f;
 
             m_Anim.SetBool("Dash", false);
+
+            m_Rigidbody2D.velocity = Vector2.zero;
         }
 
         #endregion
+
+        private IEnumerator OnCollisionEnter2D(Collision2D collision)
+        {
+            if (m_Anim.GetBool("Dash"))
+            {
+                yield return new WaitForEndOfFrame();
+
+                m_Anim.SetBool("Dash", false);
+                m_Rigidbody2D.gravityScale = 3f;
+
+                m_Rigidbody2D.velocity = Vector2.zero;
+
+                Camera.main.GetComponent<Camera2DFollow>().StopShake();
+            }
+        }
     }
 }
