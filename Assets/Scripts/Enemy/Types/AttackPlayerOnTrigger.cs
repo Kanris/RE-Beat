@@ -45,7 +45,7 @@ public class AttackPlayerOnTrigger : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
 
         if (m_PlayerStats != null)
-            m_PlayerStats.TakeDamage(m_EnemyStats.DamageAmount);
+            m_PlayerStats.HitPlayer(m_EnemyStats.DamageAmount);
 
         m_Animator.SetBool("Attack", false);
 

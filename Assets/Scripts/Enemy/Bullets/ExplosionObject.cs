@@ -63,10 +63,10 @@ public class ExplosionObject : MonoBehaviour {
             var fromWhereHit = hit2D.transform.position - transform.position;
             fromWhereHit.Normalize();
 
-            hit2D.GetComponent<Player>().m_EnemyHitDirection = fromWhereHit.x > 0f ? 1 : -1;
+            var playerComponent = hit2D.GetComponent<Player>();
 
-            //player takes damage
-            hit2D.GetComponent<Player>().playerStats.TakeDamage(1);
+            playerComponent.m_EnemyHitDirection = fromWhereHit.x > 0f ? 1 : -1;
+            playerComponent.playerStats.HitPlayer(1);
         }
 
         Destroy(

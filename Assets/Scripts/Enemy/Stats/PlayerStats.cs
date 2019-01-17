@@ -20,6 +20,12 @@ public class PlayerStats : Stats
     [SerializeField] private GameObject m_HealEffect;
     [SerializeField] private Audio m_HealEffectAudio;
 
+    [Header("Throw stats")]
+    public static float m_ThrowEnemyX = 5f;
+
+    public float m_ThrowPlayerX = 15f;
+    public float m_ThrowPlayerY = 8f;
+
     private int m_CriticalHealthAmount = 3;
 
     private int m_OverHealScrapAmount = 5;
@@ -34,8 +40,8 @@ public class PlayerStats : Stats
     public static bool m_IsCanDoubleJump = true;
     public static bool m_IsCanDash = true;
     public static bool m_IsFallAttack = true;
-    public static bool m_IsInvincibleWhileDashing = false;
-    public static bool m_IsDamageEnemyWhileDashing = false;
+    public static bool m_IsInvincibleWhileDashing = true;
+    public static bool m_IsDamageEnemyWhileDashing = true;
     public static bool m_IsCanSeeEnemyHP = true;
     public static int m_ReviveCount = 2;
 
@@ -119,14 +125,26 @@ public class PlayerStats : Stats
 
     public void HitEnemy(Enemy enemy, int zone)
     {
-        var damageToEnemy = GetDamageAmount(zone); //get damage amount base on the distance between enemy and player
-        enemy.TakeDamage(damageToEnemy, zone);
+        if (zone > 0)
+        {
+            var damageToEnemy = GetDamageAmount(zone); //get damage amount base on the distance between enemy and player
+            enemy.TakeDamage(damageToEnemy, m_ThrowEnemyX / zone, 0f);
+        }
+        else
+        {
+            enemy.TakeDamage(DamageAmount, 0, 0);
+        }
+    }
+
+    public void HitPlayer(int amount)
+    {
+        TakeDamage(amount, m_ThrowPlayerX, m_ThrowPlayerY);
     }
 
     public void ReturnPlayerOnReturnPoint() //kill player even if he invincible
     {
         //player take's 1 damage and does not receive invincible
-        TakeDamage(1, -1);
+        TakeDamage(0, 0, 0);
 
         //if player still alive
         if (CurrentPlayerHealth > 0)
@@ -228,20 +246,20 @@ public class PlayerStats : Stats
 #endregion
     }
 
-    public override void TakeDamage(int amount, int divider = 1)
+    public override void TakeDamage(int amount, float throwX, float throwY)
     {
         if (!m_IsInvincible) //player is not invincible
         {
-            if (divider == 1)
-            {
+            if (amount > 0)
                 m_IsInvincible = true; //player is invincible
-            }
+            else
+                amount = 1;
 
             amount *= DamageMultiplier;
 
             Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
 
-            base.TakeDamage(amount, divider);
+            base.TakeDamage(amount, throwX, throwY);
             CurrentPlayerHealth -= amount;
 
             for (var index = 0; index < amount; index++)
@@ -260,7 +278,7 @@ public class PlayerStats : Stats
         PlayHitAnimation(false);
     }
 
-    protected override IEnumerator ObjectTakeDamage(int divider)
+    protected override IEnumerator ObjectTakeDamage()
     {
         PlayHitAnimation(true); 
 

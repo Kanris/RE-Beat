@@ -156,7 +156,7 @@ public class EnemyMovement : MonoBehaviour {
                     if (m_Direction == -1)
                         m_Direction = GetDirection();
 
-                    m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowX * m_Direction, 0f);
+                    m_Rigidbody2D.velocity = new Vector2(m_EnemyStats.m_ThrowBackX * m_Direction, 0f);
 
                     SetAnimation(false);
                 }
@@ -171,15 +171,12 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    private void StartThrowBack(bool value, int divider)
+    private void StartThrowBack(bool value)
     {
         if (!m_EnemyStats.m_IsBigMonster)
         {
-            if (divider > 0)
-            {
-                m_IsThrowBack = true;
-                m_ThrowUpdateTime = Time.time + 0.2f;
-            }
+            m_IsThrowBack = true;
+            m_ThrowUpdateTime = Time.time + 0.2f;
         }
     }
 

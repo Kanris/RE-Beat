@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -93,7 +92,7 @@ public class SpikesTrap : MonoBehaviour {
     private void AttackPlayer()
     {
         if (m_Player != null)
-            m_Player.TakeDamage(DamageAmount);
+            m_Player.HitPlayer(DamageAmount);
     }
     #endregion
 }

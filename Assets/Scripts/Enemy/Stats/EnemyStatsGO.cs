@@ -116,7 +116,7 @@ public class EnemyStatsGO : MonoBehaviour {
                 if (playerStats != null) //calculate damage base on the combo
                     playerStats.HitEnemy(EnemyStats, zone);
                 else //receive regular damage
-                    EnemyStats.TakeDamage(damageAmount, zone);
+                    EnemyStats.TakeDamage(damageAmount, PlayerStats.m_ThrowEnemyX, 0);
 
                 //create effects base on the current health
                 //if current health greater than 0
@@ -142,7 +142,7 @@ public class EnemyStatsGO : MonoBehaviour {
                     else
                     {
                         CreateHitParticles(); //create hit particles effect
-                        EnemyStats.TakeDamage(1, zone); //receive 1 damage
+                        EnemyStats.TakeDamage(1, 0, 0); //receive 1 damage
                     }
                 }
             }
@@ -160,7 +160,7 @@ public class EnemyStatsGO : MonoBehaviour {
         if (m_Scraps != null)
         {
             //get player's transform from gamemaster or if gamemaster has null reference find player on scene
-            var target = GameMaster.Instance.m_Player.transform.GetChild(0).transform ?? GameObject.FindGameObjectWithTag("Player").transform;
+            var target = GameMaster.Instance.m_Player.transform.GetChild(0).transform;
 
             //create scrap gameobject on scene and...
             Instantiate(m_Scraps, transform.position, Quaternion.identity) //game master instantiate
@@ -228,7 +228,7 @@ public class EnemyStatsGO : MonoBehaviour {
             else
             {
                 //player receive damage from enemy
-                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
+                collision.transform.GetComponent<Player>().playerStats.HitPlayer(EnemyStats.DamageAmount);
             }
 
             //if player can damage enemy while dashing
@@ -256,7 +256,7 @@ public class EnemyStatsGO : MonoBehaviour {
             }
             else //player receive damage
             {
-                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
+                collision.transform.GetComponent<Player>().playerStats.HitPlayer(EnemyStats.DamageAmount);
             }
 
             //if player can deal damage while dashing
@@ -311,7 +311,7 @@ public class EnemyStatsGO : MonoBehaviour {
     //receive information about all enemies (from layerMask) and deal damage
     private void DamageInArea()
     {
-        var targetsInCircle = Physics2D.OverlapCircleAll(transform.position, 2, m_LayerMask); // find all "enemyes" in circle range
+        var targetsInCircle = Physics2D.OverlapCircleAll(transform.position, 2, m_LayerMask); // find all "enemies" in circle range
 
         foreach (var target in targetsInCircle)
         {
@@ -334,7 +334,7 @@ public class EnemyStatsGO : MonoBehaviour {
                     var playerStats = target.GetComponent<Player>().playerStats;
 
                     target.GetComponent<Player>().m_EnemyHitDirection = hitDirection; //hit direction
-                    playerStats.TakeDamage(EnemyStats.DamageAmount); //apply damage to the player
+                    playerStats.HitPlayer(EnemyStats.DamageAmount); //apply damage to the player
                     playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f); //apply defense debuf on player (receive double amount of damage when hitted)
                 }
                 //if enemy is in area and it is not this drone
@@ -371,7 +371,7 @@ public class EnemyStatsGO : MonoBehaviour {
         CreateScraps();
 
         //destroy this drone
-        EnemyStats.TakeDamage(1);
+        //EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);
     }
     #endregion

@@ -443,7 +443,6 @@ public class GameMaster : MonoBehaviour {
         m_Player = Instantiate(m_PlayerToRespawn);
         m_Player.transform.position = transformToPlacePlayer.position;
 
-
         m_ReachableRespawnPoint = null;
 
         UIManager.Instance.SetReviveAvailable(false);
@@ -462,15 +461,6 @@ public class GameMaster : MonoBehaviour {
         UIManager.Instance.SetReviveAvailable(false);
 
         yield return new WaitForSeconds(.1f); //remove?
-
-        //restrict player movement
-        /*var playerBody = respawnPlayer.transform.GetChild(0).gameObject;
-
-        playerBody.GetComponent<PlatformerCharacter2D>().enabled = false;
-
-        yield return new WaitForSeconds(waitTimer);
-
-        playerBody.GetComponent<PlatformerCharacter2D>().enabled = true;*/
     }
 
     #endregion

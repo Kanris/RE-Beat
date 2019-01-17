@@ -411,7 +411,7 @@ public class Player : MonoBehaviour {
         if (m_Animator.GetBool("Hit"))
         {
             GetComponent<Rigidbody2D>().velocity = 
-                new Vector2(m_EnemyHitDirection * playerStats.m_ThrowX, playerStats.m_ThrowY);
+                new Vector2(m_EnemyHitDirection * playerStats.m_ThrowBackX, playerStats.m_ThrowBackY);
         }
     }
 

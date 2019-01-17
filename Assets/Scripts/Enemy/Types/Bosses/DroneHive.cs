@@ -259,7 +259,7 @@ public class DroneHive : MonoBehaviour
 
     #region Teleport
 
-    private void OnPlayerHitTeleport(bool value, int divider)
+    private void OnPlayerHitTeleport(bool value)
     {
         if (!m_IsTeleporting)
         {
@@ -401,7 +401,7 @@ public class DroneHive : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(m_Stats.DamageAmount);
+            collision.gameObject.GetComponent<Player>().playerStats.HitPlayer(m_Stats.DamageAmount);
         }
     }
 

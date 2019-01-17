@@ -78,33 +78,8 @@ public class Fireball : MonoBehaviour {
     {
         if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) & !isDestroying)
         {
-            Stats statsToTakeDamage = null;
-            var divider = 1;
-
-            if (collision.transform.CompareTag("Player"))
-                statsToTakeDamage = collision.gameObject.GetComponent<Player>().playerStats;
-            else
-                if (collision.transform.CompareTag("Enemy"))
-            {
-                if (collision.gameObject.GetComponent<EnemyStatsGO>() != null)
-                {
-                    statsToTakeDamage = collision.gameObject.GetComponent<EnemyStatsGO>().EnemyStats;
-                    divider = 0;
-                }
-                else
-                    DestroyFireball();
-            }
-
-            Damage(statsToTakeDamage, divider);
+            collision.gameObject.GetComponent<Player>().playerStats.HitPlayer(DamageAmount);
         }
-        else
-            DestroyFireball();
-    }
-
-    private void Damage(Stats statsToTakeDamage, int divider)
-    {
-        if (statsToTakeDamage != null)
-            statsToTakeDamage.TakeDamage(DamageAmount, divider);
 
         DestroyFireball();
     }

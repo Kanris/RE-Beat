@@ -73,7 +73,7 @@ public class Barrier : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player")) //if player hit barrier collider
         {
-            collision.gameObject.GetComponent<Player>().playerStats.TakeDamage(DamageAmount); //damage player
+            collision.gameObject.GetComponent<Player>().playerStats.HitPlayer(DamageAmount); //damage player
         }
     }
 

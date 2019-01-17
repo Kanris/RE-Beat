@@ -18,9 +18,8 @@ public class Stats {
     [Header("General stats")]
     [Range(1, 4000)] public int MaxHealth = 200;
 
-    [Header("Throw stats")]
-    [Range(0f, 500f)] public float m_ThrowX = 2f; 
-    [Range(0f, 500f)] public float m_ThrowY = 0.5f;
+    [HideInInspector] public float m_ThrowBackX;
+    [HideInInspector] public float m_ThrowBackY;
 
     #endregion
 
@@ -79,55 +78,36 @@ public class Stats {
 
     #region virtual methods
 
-    public virtual void TakeDamage(int amount, int divider = 1)
+    public virtual void TakeDamage(int amount, float throwX, float throwY)
     {
         CurrentHealth -= amount; //change current health
 
         if (CurrentHealth == 0) //if object is dead
         {
-            if (OnObjectDeath != null) //notify event
-                OnObjectDeath();
+            OnObjectDeath?.Invoke();
 
             PlayDeathSound();
             KillObject(); //destroy gameobject
         }
         else if (CurrentHealth > 0) //object still alive
         {
-            GameMaster.Instance.StartCoroutine(ObjectTakeDamage(divider)); //play hit animation and throw back object
+            //set throwback values
+            m_ThrowBackX = throwX;
+            m_ThrowBackY = throwY;
+
+            Debug.LogError(m_GameObject.name + " x:" + m_ThrowBackX + " y:" + m_ThrowBackY);
+
+            GameMaster.Instance.StartCoroutine(ObjectTakeDamage()); //play hit animation and throw back object
         }
     }
 
-    protected virtual IEnumerator ObjectTakeDamage(int divider)
+    protected virtual IEnumerator ObjectTakeDamage()
     {
-        if (divider > 0)
-        {
-            PlayHitAnimation(true); //play hit animation
+        PlayHitAnimation(true); //play hit animation
 
-            //save default throw values
-            var m_prevThrowX = m_ThrowX;
-            var m_prevThrowY = m_ThrowY;
+        yield return new WaitForSeconds(0.1f); //thorw time
 
-            //get new throw values base on divider
-            m_ThrowX /= divider;
-            m_ThrowY /= divider;
-
-            yield return new WaitForSeconds(0.1f); //thorw time
-
-            //return default throw values
-            m_ThrowX = m_prevThrowX;
-            m_ThrowY = m_prevThrowY;
-
-            PlayHitAnimation(false); //stop hit animation
-        }
-        else
-        {
-            PlayHitAnimation(true); //play hit animation
-
-            yield return new WaitForSeconds(0.1f); //thorw time
-
-            PlayHitAnimation(false); //stop hit animation
-        }
-
+        PlayHitAnimation(false); //stop hit animation
     }
 
     protected virtual void KillObject()

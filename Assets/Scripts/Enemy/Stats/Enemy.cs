@@ -10,12 +10,9 @@ public class Enemy : Stats
     public event VoidFloatDelegate OnSpeedChange;
     public event VoidFloatDelegate OnEnemyTakeDamageValue;
 
-
-    public delegate void VoidBoolIntDelegate(bool value, int divider);
-    public event VoidBoolIntDelegate OnEnemyTakeDamage;
-
     public delegate void VoidBoolDelegate(bool value);
     public event VoidBoolDelegate OnPlayerHit;
+    public event VoidBoolDelegate OnEnemyTakeDamage;
 
     #endregion
 
@@ -65,21 +62,15 @@ public class Enemy : Stats
         base.Initialize(gameObject, animator);
     }
 
-    public override void TakeDamage(int amount, int divider = 1)
+    public override void TakeDamage(int amount, float throwX, float throwY)
     {
         if (!m_IsInvincible)
         {
-            if (OnEnemyTakeDamage != null)
-            {
-                OnEnemyTakeDamage(m_IsPlayerNear, divider);
-            }
+            OnEnemyTakeDamage?.Invoke(m_IsPlayerNear);
 
-            if (OnEnemyTakeDamageValue != null)
-            {
-                OnEnemyTakeDamageValue(amount);
-            }
+            OnEnemyTakeDamageValue?.Invoke(amount);
 
-            base.TakeDamage(amount, divider);
+            base.TakeDamage(amount, throwX, throwY);
 
             if (m_ShieldInfo.IsHasShield)
             {
@@ -93,17 +84,6 @@ public class Enemy : Stats
             }
         }
     }
-
-    public void HitPlayer(PlayerStats player, int damageAmount = -1)
-    {
-        if (OnPlayerHit != null)
-            OnPlayerHit(m_IsPlayerNear);
-
-        damageAmount = damageAmount > -1 ? damageAmount : DamageAmount;
-
-        player.TakeDamage(damageAmount);
-    }
-
     #endregion
 
     #region public methods
