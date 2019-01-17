@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
     private Animator m_Animator; //player animator
     private Rigidbody2D m_Rigidbody2D; //player's rigidbody
     private float m_YPositionBeforeJump; //player y position before jump
-    private bool isPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
+    private bool m_IsPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
     private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown; //range attack cooldown
@@ -97,12 +97,9 @@ public class Player : MonoBehaviour {
     {
         if (timeToCheck < Time.time) //can player attack
         {
-            if (!isPlayerBusy) //is not player bussy
+            if (inputControl.WasPressed)
             {
-                if (inputControl.WasPressed)
-                {
-                    action();
-                }
+                action();
             }
         }
     }
@@ -136,7 +133,7 @@ public class Player : MonoBehaviour {
     //begin of fall attack
     private IEnumerator StartFallAttack()
     {
-        if (!m_IsFallAttack) //is fall attack is not performing
+        if (!m_IsFallAttack) //is fall attack is not performing and player is not bussy
         {
             m_IsFallAttack = true; //fall attack is performing
 
@@ -297,33 +294,37 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl(); //check player jump height
 
-        #region fall attack
-
-        if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
+        if (!GameMaster.Instance.IsPlayerDead && !m_IsPlayerBusy)
         {
-            if (InputControlManager.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+            #region fall attack
+
+            if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
             {
-                StartCoroutine(StartFallAttack());
+                if (InputControlManager.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+                {
+                    StartCoroutine(StartFallAttack());
+                }
             }
-        }
 
-        if (m_IsFallAttack)
-        {
-            if (m_Animator.GetBool("Ground"))
+            if (m_IsFallAttack)
             {
-                StopFallAttack();
+                if (m_Animator.GetBool("Ground"))
+                {
+                    StopFallAttack();
+                }
             }
+
+            #endregion
+
+            #region attack handler
+
+            Attack(m_MeleeAttackCooldown, InputControlManager.Instance.m_Joystick.Action3, PerformMeleeAtack);
+
+            Attack(m_RangeAttackCooldown, InputControlManager.Instance.m_Joystick.RightBumper, PerformRangeAttack);
+
+            #endregion
+
         }
-
-        #endregion
-
-        #region attack handler
-
-        Attack(m_MeleeAttackCooldown, InputControlManager.Instance.m_Joystick.Action3, PerformMeleeAtack);
-
-        Attack(m_RangeAttackCooldown, InputControlManager.Instance.m_Joystick.RightBumper, PerformRangeAttack);
-
-        #endregion
 
         #region critical health effect
 
@@ -450,7 +451,7 @@ public class Player : MonoBehaviour {
 
     public void TriggerPlayerBussy(bool value)
     {
-        isPlayerBusy = value;
+        m_IsPlayerBusy = value;
     }
 
     #endregion
