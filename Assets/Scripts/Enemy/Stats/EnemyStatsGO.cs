@@ -6,70 +6,85 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Animator))]
 public class EnemyStatsGO : MonoBehaviour {
 
-    public enum EnemyType { Regular, Drone }
-    public EnemyType m_EnemyType;
-
-    public GameObject m_GameObjectToDestroy;
-    public Enemy EnemyStats;
-
     public delegate void VoidDelegateBool(bool value);
-    public event VoidDelegateBool OnDroneDestroy;
+    public event VoidDelegateBool OnDroneDestroy; //call when drone is destroyed
+
+    public enum EnemyType { Regular, Drone }
+    public EnemyType m_EnemyType; //type of enemy (walk or fly)
+
+    public GameObject m_GameObjectToDestroy; //object to destroy when enemy is dead
+    public Enemy EnemyStats; //current enemy stats for example: hp, attack speed etc
 
     [Header("Drone stats")]
     [SerializeField, Range(0f, 10f)] private float DeathDetonationTimer = 2f; //time before destroying drone
-    [SerializeField] private bool m_DestroyOnCollision = false;
-    [SerializeField] private LayerMask m_LayerMask;
+    [SerializeField] private bool m_DestroyOnCollision = false; //is drone has to explode on collision
+    [SerializeField] private LayerMask m_LayerMask; //enemies for drone
 
     [Header("UI")]
-    [SerializeField] private GameObject m_HealthUI;
-    [SerializeField] private Image m_CurrentHealthImage;
+    [SerializeField] private GameObject m_HealthUI; //enemies health ui (available only when player has needed chip)
+    [SerializeField] private Image m_CurrentHealthImage; //current enemy bar hp
 
     [Header("Effects")]
-    [SerializeField] private GameObject GroundHitParticles;
-    [SerializeField] private GameObject m_HitParticles;
-    [SerializeField] private GameObject m_Scraps;
+    [SerializeField] private GameObject GroundHitParticles; //particles that creates when drone hit ground
+    [SerializeField] private GameObject m_HitParticles; //particles that creates when player hit enemy
+    [SerializeField] private GameObject m_Scraps; //gameobject that creates when player destroy this enemy
 
+     
+    private Rigidbody2D m_Rigidbody; //current enemy rigidbody
+    private Animator m_Animator; //current enemy animator
 
-    private Rigidbody2D m_Rigidbody;
-    private Animator m_Animator;
-    private float m_DestroyTimer;
+    private float m_DestroyTimer; //timer that indicates when drone is going to explode
     [HideInInspector] public bool m_IsDestroying = false; //is drone going to blow up
 
-    private bool m_IsReceiveDamageFromDash;
+    private bool m_IsReceiveDamageFromDash; //indicates that enemy receive damage from dash
+
+    #region initialize
 
     // Use this for initialization
     void Start() {
 
-        InitializeStats();
+        InitializeStats(); //initialize enemy stats
 
-        InitializeComponents();
+        InitializeComponents(); //initialize animator and rigidbody variables
 
     }
 
     public void InitializeStats()
     {
-        EnemyStats.Initialize(m_GameObjectToDestroy, GetComponent<Animator>());
+        EnemyStats.Initialize(m_GameObjectToDestroy, GetComponent<Animator>()); //initialize stats
     }
 
     private void InitializeComponents()
     {
+        //get components from current gameobject
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    #endregion
+
+    #region health ui
+
+    //change ui scale when enemy is flipped
     public void ChangeUIScale(float value)
     {
         m_HealthUI.transform.localScale = new Vector3(value, 1, 1);
     }
 
-    private void DisplayHealthChange(float damageAmount)
+    //change health bar fill base on the current enemy hp
+    private void DisplayHealthChange()
     {
+        //if player can see enemy hp and HP ui is not displayed
         if (PlayerStats.m_IsCanSeeEnemyHP && !m_HealthUI.activeSelf)
             m_HealthUI.SetActive(true);
 
+        //change enemy current hp bar
         m_CurrentHealthImage.fillAmount = (float)EnemyStats.CurrentHealth / (float)EnemyStats.MaxHealth;
     }
 
+    #endregion
+
+    //if drone is in destroy sequence destroy it after some amount of time (because he does not hit ground)
     private void Update()
     {
         if (m_IsDestroying)
@@ -82,90 +97,118 @@ public class EnemyStatsGO : MonoBehaviour {
         }
     }
 
+    //general take damage method
     public void TakeDamage(PlayerStats playerStats, int zone, int damageAmount = 0, bool isBulletDamage = false)
     {
+        //if enemy's shield created and TakeDamage is not called by bullet
         if (EnemyStats.CreatedShield != null && !isBulletDamage)
         {
+            //apply debuff on player
             EnemyStats.CreatedShield.ApplyDebuff();
         }
-        else if (GetComponent<EnemyStatsGO>().enabled)
+        //if enemy does not have active shies - receive damage
+        else if (GetComponent<EnemyStatsGO>().enabled) //if enemy stats is active and enemy can receive damage
         {
+            //apply damage base on the type of the enemy
+            //regular enemy receive damage by basic player's stats
             if (m_EnemyType == EnemyType.Regular)
             {
-                if (playerStats != null)
+                if (playerStats != null) //calculate damage base on the combo
                     playerStats.HitEnemy(EnemyStats, zone);
-                else
+                else //receive regular damage
                     EnemyStats.TakeDamage(damageAmount, zone);
 
+                //create effects base on the current health
+                //if current health greater than 0
                 if (EnemyStats.CurrentHealth > 0)
-                    CreateHitParticles();
-                else
-                    CreateScraps();
+                    CreateHitParticles(); //create hit particles
+                else //if current health is less or equal to zero
+                    CreateScraps(); //create scraps gameobject
             }
+            //drone enemy receive damage 1 by attack
             else
             {
+                //if drone is not in destory sequence
                 if (!m_IsDestroying)
                 {
+                    //if drone has 1 health
                     if (EnemyStats.CurrentHealth == 1)
                     {
+                        //start destroy sequence
                         DetroySequence();
                     }
+                    //if drone greater than 1 health
                     else
                     {
-                        CreateHitParticles();
-                        EnemyStats.TakeDamage(1, zone);
+                        CreateHitParticles(); //create hit particles effect
+                        EnemyStats.TakeDamage(1, zone); //receive 1 damage
                     }
                 }
             }
 
-            if (m_CurrentHealthImage != null) DisplayHealthChange(damageAmount);
+            //display ui health change
+            if (m_CurrentHealthImage != null) DisplayHealthChange();
         }
     }
 
+    #region effects
+
+    //create scraps gameobject that aims player
     private void CreateScraps()
     {
         if (m_Scraps != null)
         {
-            var target = GameObject.FindGameObjectWithTag("Player").transform;
+            //get player's transform from gamemaster or if gamemaster has null reference find player on scene
+            var target = GameMaster.Instance.m_Player.transform.GetChild(0).transform ?? GameObject.FindGameObjectWithTag("Player").transform;
 
-            GameMaster.Instantiate(m_Scraps, transform.position, Quaternion.identity)
-                .GetComponent<ScrapObject>().SetTarget(target, EnemyStats.DropScrap);
+            //create scrap gameobject on scene and...
+            Instantiate(m_Scraps, transform.position, Quaternion.identity) //game master instantiate
+                .GetComponent<ScrapObject>().SetTarget(target, EnemyStats.DropScrap); //aim it on player
         }
     }
 
+    //create hit particles effect
     private void CreateHitParticles()
     {
+        //if there is hit particles in editor
         if (m_HitParticles != null)
         {
-            var hitParticles = Instantiate(m_HitParticles);
-            hitParticles.transform.position = transform.position;
+            var hitParticles = Instantiate(m_HitParticles); //create hit particles on scene
+            hitParticles.transform.position = transform.position; //place it on enemy's gameobject
 
-            Destroy(hitParticles, 2f);
+            Destroy(hitParticles, 2f); //destroy them after 2 seconds
         }
     }
+
+    #endregion
+
+    #region collisions
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (m_EnemyType == EnemyType.Drone)
-            OnDroneCollision(collision);
-        else
-            OnRegularCollision(collision);
+        InvokeCollisionByType(collision); //execute collision logic base on the enemy's type
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (!m_IsReceiveDamageFromDash)
+        if (!m_IsReceiveDamageFromDash) //if enemy is not received damage from dash, but player still near him
         {
-            if (m_EnemyType == EnemyType.Drone)
-                OnDroneCollision(collision);
-            else
-                OnRegularCollision(collision);
+            InvokeCollisionByType(collision); //execute collision logic base on the enemy's type
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        m_IsReceiveDamageFromDash = false;
+        m_IsReceiveDamageFromDash = false; //indicates the player is no longer deal damage with dash
+    }
+
+    //determines what collision method need to call
+    private void InvokeCollisionByType(Collision2D collision)
+    {
+        if (m_EnemyType == EnemyType.Drone) //if enemy's type - drone
+            OnDroneCollision(collision); //invoke drone collision method
+        else //if enemy's type - regular
+            OnRegularCollision(collision); //invoke regular enemy collision method
     }
 
     private void OnRegularCollision(Collision2D collision)
@@ -173,53 +216,60 @@ public class EnemyStatsGO : MonoBehaviour {
         //if player collide with enemy
         if (collision.transform.CompareTag("Player"))
         {
+            var isPlayerDashing = collision.gameObject.GetComponent<Animator>().GetBool("Dash"); //indicates is player dashing
+
             //if player dashing and he has invincible dash chip
-            if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            if (PlayerStats.m_IsInvincibleWhileDashing && isPlayerDashing)
             {
                 //player do not receive any damage
                 Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
-
-                //if player can damage enemy while dashing
-                if (PlayerStats.m_IsDamageEnemyWhileDashing)
-                {
-                    TakeDamage(null,
-                        //GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().playerStats, 
-                            1, PlayerStats.DamageAmount / 3);
-
-                    m_IsReceiveDamageFromDash = true;
-                }
             } 
             else
             {
                 //player receive damage from enemy
                 EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
+
+            //if player can damage enemy while dashing
+            if (PlayerStats.m_IsDamageEnemyWhileDashing && isPlayerDashing)
+            {
+                TakeDamage(null, 1, PlayerStats.DamageAmount / 3); //receive damage in zone 1
+
+                m_IsReceiveDamageFromDash = true; //indicate that enemy receive damage from dash
+            }
         }
     }
 
     private void OnDroneCollision(Collision2D collision)
     {
+        //if player in drone's collision and drone is not in destroy sequence
         if (collision.transform.CompareTag("Player") & !m_IsDestroying)
         {
-            var damageAmount = 1;
+            var isPlayerDashing = collision.gameObject.GetComponent<Animator>().GetBool("Dash");
 
-            if (PlayerStats.m_IsInvincibleWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            //if player dashing and has invincible dash chip
+            if (isPlayerDashing && PlayerStats.m_IsInvincibleWhileDashing)
             {
-                damageAmount = 0;
+                //player do not receive any damage
+                Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
+            }
+            else //player receive damage
+            {
+                EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, EnemyStats.DamageAmount);
             }
 
-            EnemyStats.HitPlayer(collision.transform.GetComponent<Player>().playerStats, damageAmount);
-
-            if (PlayerStats.m_IsDamageEnemyWhileDashing && collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+            //if player can deal damage while dashing
+            if (isPlayerDashing && PlayerStats.m_IsDamageEnemyWhileDashing)
             {
-                EnemyStats.TakeDamage(damageAmount);
+                TakeDamage(null, 1); //receive 1 damage
+                m_IsReceiveDamageFromDash = true; //indicates that drone receive damage from dash
             }
 
+            //if drone has to explode when collide with player
             if (m_DestroyOnCollision)
             {
-                m_IsDestroying = true;
-                m_DestroyTimer = 3f + Time.time;
-                StartCoroutine(DestroyDrone());
+                m_IsDestroying = true; //indicates that drone is going to destroy
+                StartCoroutine(DestroyDrone()); //destroy drone
             }
         }
 
@@ -234,6 +284,8 @@ public class EnemyStatsGO : MonoBehaviour {
                 1f);
         }
     }
+
+    #endregion
 
     #region drone's methods
     private void DetroySequence()
@@ -252,7 +304,7 @@ public class EnemyStatsGO : MonoBehaviour {
         OnDroneDestroy(true);
     }
 
-    private IEnumerator DestroyDrone(float waitTimeBeforeDestroy = 0f)
+    private IEnumerator DestroyDrone(float waitTimeBeforeDestroy = 0.01f)
     {
         yield return new WaitForSeconds(waitTimeBeforeDestroy);
 
