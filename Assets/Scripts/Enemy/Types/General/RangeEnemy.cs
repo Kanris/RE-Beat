@@ -54,7 +54,7 @@ public class RangeEnemy : MonoBehaviour {
 
     private void Update()
     {
-        if (GameMaster.Instance.IsPlayerDead)
+        if (GameMaster.Instance.IsPlayerDead && GameMaster.Instance.m_Player == null)
         {
             if (m_EnemyStats.IsPlayerNear)
             {

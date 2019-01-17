@@ -95,8 +95,6 @@ public class Stats {
             m_ThrowBackX = throwX;
             m_ThrowBackY = throwY;
 
-            Debug.LogError(m_GameObject.name + " x:" + m_ThrowBackX + " y:" + m_ThrowBackY);
-
             GameMaster.Instance.StartCoroutine(ObjectTakeDamage()); //play hit animation and throw back object
         }
     }
