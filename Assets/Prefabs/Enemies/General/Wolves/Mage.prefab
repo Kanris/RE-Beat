@@ -363,7 +363,7 @@ Rigidbody2D:
   m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 20
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -400,8 +400,9 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 4846380334338922}
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 540672
+    m_Bits: 2637824
   m_IsSimpleMovement: 0
+  m_Direction: -1
   IdleTime: 2
 --- !u!114 &114879631205071088
 MonoBehaviour:
@@ -455,10 +456,10 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
     MaxHealth: 100
-    m_ThrowX: 3
+    m_ThrowX: 5
     m_ThrowY: 0.5
     DamageAmount: 1
-    Speed: 1
+    Speed: 2
     AttackSpeed: 2
     DropScrap: 1
     m_IsBigMonster: 0

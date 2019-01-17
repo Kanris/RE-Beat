@@ -345,7 +345,7 @@ public class EnemyStatsGO : MonoBehaviour {
                     if (enemyStats.GetComponent<EnemyMovement>() != null) //if enemy has movement script
                         enemyStats.GetComponent<EnemyMovement>().m_Direction = hitDirection; //apply throw back direction
 
-                    enemyStats.TakeDamage(null, EnemyStats.DamageAmount); //deal damage to the hitted enemy
+                    enemyStats.TakeDamage(null, 1, 20); //deal damage to the hitted enemy
                 }
             }
         }
