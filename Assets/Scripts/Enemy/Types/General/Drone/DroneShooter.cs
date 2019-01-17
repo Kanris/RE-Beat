@@ -188,6 +188,11 @@ public class DroneShooter : MonoBehaviour {
             if (m_RadarAnimator.GetBool("Threat"))
                 ActiveScan(false);
         }
+
+        if (m_IsDestroying & m_TargetLine.gameObject.activeSelf)
+        {
+            m_TargetLine.gameObject.SetActive(false); //hide target line
+        }
     }
 
     private void StartChase(bool value, Transform target)

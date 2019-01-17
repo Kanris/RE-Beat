@@ -42,9 +42,9 @@ public class TraderItem : MonoBehaviour {
                 m_ItemImage.sprite = m_TraderItem.Image;
 
             gameObject.name = m_TraderItem.name;
-
+            
             if (m_CostText != null)
-                m_CostText.text = m_TraderItem.itemDescription.ScrapAmount.ToString();
+                m_CostText.text = m_TraderItem.itemDescription?.ScrapAmount.ToString();
         }
     }
 

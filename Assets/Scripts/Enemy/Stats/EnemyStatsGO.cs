@@ -75,7 +75,7 @@ public class EnemyStatsGO : MonoBehaviour {
     private void DisplayHealthChange()
     {
         //if player can see enemy hp and HP ui is not displayed
-        if (PlayerStats.m_IsCanSeeEnemyHP && !m_HealthUI.activeSelf)
+        if (PlayerStats.m_IsCanSeeEnemyHP && !m_HealthUI.activeSelf && !m_IsDestroying)
             m_HealthUI.SetActive(true);
 
         //change enemy current hp bar
@@ -134,6 +134,7 @@ public class EnemyStatsGO : MonoBehaviour {
                     //if drone has 1 health
                     if (EnemyStats.CurrentHealth == 1)
                     {
+                        HideHealthUI(); //hide health ui if it's active
                         //start destroy sequence
                         DetroySequence();
                     }
@@ -374,6 +375,14 @@ public class EnemyStatsGO : MonoBehaviour {
         Destroy(m_GameObjectToDestroy);
     }
     #endregion
+
+    private void HideHealthUI()
+    {
+        if (m_HealthUI.activeSelf) //hide health ui
+        {
+            m_HealthUI.SetActive(false);
+        }
+    }
 
     #region test methods
 
