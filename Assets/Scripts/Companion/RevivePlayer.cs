@@ -34,8 +34,8 @@ public class RevivePlayer : MonoBehaviour {
 
         Destroy(m_PlayerThatInteract.transform.parent.gameObject);
 
-        Instantiate(m_PlayerToRevive, transform.position, transform.rotation)
-            .transform.GetChild(0).GetComponent<SpriteRenderer>().material = materialForPlayer;
+        GameMaster.Instance.m_Player = Instantiate(m_PlayerToRevive, transform.position, transform.rotation);
+        GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<SpriteRenderer>().material = materialForPlayer;
 
         Instantiate(m_Companion, transform.position, transform.rotation).transform.GetChild(0)
             .GetComponent<SpriteRenderer>().material = materialForPlayer;
