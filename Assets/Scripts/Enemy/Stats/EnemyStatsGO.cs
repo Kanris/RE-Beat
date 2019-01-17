@@ -273,66 +273,103 @@ public class EnemyStatsGO : MonoBehaviour {
             }
         }
 
-        if (collision.gameObject.layer == 14 & m_IsDestroying) //object layer - ground
+        //if drone hit ground and he is in destroy sequence
+        if (collision.gameObject.layer == 14 & m_IsDestroying)
         {
-            StartCoroutine(DestroyDrone(DeathDetonationTimer));
+            StartCoroutine(DestroyDrone(DeathDetonationTimer)); //start destroy timer with DeathDetonationTimer amount of time
         }
+        //drone hit ground but is not destroying
         else if (collision.gameObject.layer == 14)
         {
             Destroy(
                 Instantiate(GroundHitParticles, collision.contacts[0].point, Quaternion.identity),
-                1f);
+                1f); //create ground hit particles
         }
     }
 
     #endregion
 
     #region drone's methods
+    //start destroy sequence
     private void DetroySequence()
     {
-        m_Animator.SetTrigger("Destroy");
+        m_Animator.SetTrigger("Destroy"); //play destroy animation
 
-        m_IsDestroying = true;
-        m_Rigidbody.sharedMaterial = null;
-        m_Rigidbody.gravityScale = 3f;
-        m_Rigidbody.constraints = RigidbodyConstraints2D.None;
+        m_IsDestroying = true; //indicates that drone is going to explode
+        m_Rigidbody.sharedMaterial = null; //remove bouncy material from rigidbody
+        m_Rigidbody.gravityScale = 3f; //add gravity to rigidbody, so drone cann start to fall
+        m_Rigidbody.constraints = RigidbodyConstraints2D.None; //remove any constraints (so drone will rotate when player move him with his collider)
 
-        Destroy(GetComponent<TrailRenderer>());
+        Destroy(GetComponent<TrailRenderer>()); //remove trail from gameobject
 
-        m_DestroyTimer = 3f + Time.time;
+        m_DestroyTimer = 3f + Time.time; //set timer after 3 seconds drone will explode no mater he hit ground or not
 
-        OnDroneDestroy(true);
+        OnDroneDestroy?.Invoke(true); //indicates that drone start destroy sequence
     }
 
+    //receive information about all enemies (from layerMask) and deal damage
+    private void DamageInArea()
+    {
+        var targetsInCircle = Physics2D.OverlapCircleAll(transform.position, 2, m_LayerMask); // find all "enemyes" in circle range
+
+        foreach (var target in targetsInCircle)
+        {
+            //if world object in explosion area
+            if (target.GetComponent<WorldObjectStats>() != null)
+            {
+                //deal damage to the world object
+                target.GetComponent<WorldObjectStats>().TakeDamage();
+            }
+            //if player or enemy is in area
+            else
+            {
+                //calculate hit direction
+                var hitDirection = (target.transform.position - transform.position).x > 0f ? 1 : -1;
+
+                //if player in range
+                if (target.GetComponent<Player>() != null)
+                {
+                    //get player stats
+                    var playerStats = target.GetComponent<Player>().playerStats;
+
+                    target.GetComponent<Player>().m_EnemyHitDirection = hitDirection; //hit direction
+                    playerStats.TakeDamage(EnemyStats.DamageAmount); //apply damage to the player
+                    playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f); //apply defense debuf on player (receive double amount of damage when hitted)
+                }
+                //if enemy is in area and it is not this drone
+                else if (target.GetComponent<EnemyStatsGO>() != null && target.gameObject != gameObject)
+                {
+                    var enemyStats = target.GetComponent<EnemyStatsGO>(); //get hitted enemy stats
+
+                    if (enemyStats.GetComponent<EnemyMovement>() != null) //if enemy has movement script
+                        enemyStats.GetComponent<EnemyMovement>().m_Direction = hitDirection; //apply throw back direction
+
+                    enemyStats.TakeDamage(null, EnemyStats.DamageAmount); //deal damage to the hitted enemy
+                }
+            }
+        }
+    }
+
+    //destroy drone
     private IEnumerator DestroyDrone(float waitTimeBeforeDestroy = 0.01f)
     {
-        yield return new WaitForSeconds(waitTimeBeforeDestroy);
+        yield return new WaitForSeconds(waitTimeBeforeDestroy); //wait seconds before destroy
 
-        var hit2D = Physics2D.OverlapCircle(transform.position, 2, m_LayerMask); // player in range
+        DamageInArea(); //deal damage to all enemies in circle area
 
-        if (hit2D != null)
-        {
-            //set hit direction
-            var fromWhereHit = hit2D.transform.position - transform.position;
-            fromWhereHit.Normalize();
-            hit2D.GetComponent<Player>().m_EnemyHitDirection = fromWhereHit.x > 0f ? 1 : -1;
-
-            //player takes damage
-            var playerStats = hit2D.GetComponent<Player>().playerStats;
-
-            playerStats.TakeDamage(EnemyStats.DamageAmount);
-            playerStats.DebuffPlayer(DebuffPanel.DebuffTypes.Defense, 5f);
-        }
-
+        //if drone has attached death particles
         if (EnemyStats.DeathParticle != null)
         {
+            //show them on scene
             Destroy(
                 Instantiate(EnemyStats.DeathParticle, transform.position, Quaternion.identity), 2f);
             EnemyStats.DeathParticle = null;
         }
 
+        //create scraps gameobject
         CreateScraps();
 
+        //destroy this drone
         EnemyStats.TakeDamage(1);
         Destroy(m_GameObjectToDestroy);
     }

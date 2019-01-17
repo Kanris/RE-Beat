@@ -530,7 +530,7 @@ MonoBehaviour:
   m_DestroyOnCollision: 0
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2105600
   m_HealthUI: {fileID: 2335554903634710663}
   m_CurrentHealthImage: {fileID: 3097502443369837790}
   GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
@@ -1049,15 +1049,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d25443e0f38c44be19db7c78ca2cba62, type: 3}
---- !u!224 &3419933689093153601 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8847198021667468305, guid: d25443e0f38c44be19db7c78ca2cba62,
-    type: 3}
-  m_PrefabInstance: {fileID: 6174861888595089232}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2335554903634710663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8491549073896064983, guid: d25443e0f38c44be19db7c78ca2cba62,
+    type: 3}
+  m_PrefabInstance: {fileID: 6174861888595089232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &3419933689093153601 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8847198021667468305, guid: d25443e0f38c44be19db7c78ca2cba62,
     type: 3}
   m_PrefabInstance: {fileID: 6174861888595089232}
   m_PrefabAsset: {fileID: 0}

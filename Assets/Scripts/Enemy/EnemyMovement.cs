@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
 
-    private int m_Direction = -1;
+    [HideInInspector] public int m_Direction = -1;
     #endregion
 
     #region inspector fields
