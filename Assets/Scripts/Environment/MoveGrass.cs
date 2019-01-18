@@ -8,7 +8,7 @@ public class MoveGrass : MonoBehaviour {
     [SerializeField] private GameObject m_GrassParticles; //grass destroy particles
 
     private Animator m_Animator; //grass animator
-    private WorldObjectStats m_WorldObjectStats;
+    private WorldObjectStats m_WorldObjectStats; //world object stats
     private bool m_IsDestroyed; //is grass is destroyed
 
     #endregion
@@ -32,29 +32,42 @@ public class MoveGrass : MonoBehaviour {
 
     #endregion
 
+    //when player enter to the grass zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
         {
-            if (collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
-                DestroyGrass();
-            else
+            if (collision.gameObject.GetComponent<Animator>().GetBool("Dash")) //if player dash near grass
+                m_WorldObjectStats.TakeDamage(); //destroy grass
+            else //is player move near grass
                 m_Animator.SetTrigger("Move"); //play move grass animation
         }
     }
 
+    //when player stayed in the grass zone 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
+        {
+            if (collision.gameObject.GetComponent<Animator>().GetBool("Dash")) //if player dash near grass
+                m_WorldObjectStats.TakeDamage(); //destroy grass
+        }
+    }
+
+
     private void DestroyGrass()
     {
+        m_IsDestroyed = true; //indicates that grass is destroyed
         ShowDestroyParticles(); //show destroy particles
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f); //move grass a little below
     }
 
     private void ShowDestroyParticles()
     {
-        var resourceDestroyParticlesInstantiate = Instantiate(m_GrassParticles);
-        resourceDestroyParticlesInstantiate.transform.position = transform.position;
+        var resourceDestroyParticlesInstantiate = Instantiate(m_GrassParticles); //create destroy particles on grass
+        resourceDestroyParticlesInstantiate.transform.position = transform.position; //place destroy particles on grass position
 
-        Destroy(resourceDestroyParticlesInstantiate, 5f);
+        Destroy(resourceDestroyParticlesInstantiate, 5f); //destroy grass after 5 seconds
     }
 
     #endregion
