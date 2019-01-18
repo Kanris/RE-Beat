@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AlarmImage: {fileID: 212575243324112112}
-  m_IdleSpeed: 2.5
-  m_SpeedUpSpeed: 3
+  m_IdleSpeed: 2
+  m_SpeedUpSpeed: 2.5
   WaitTimeAfterSpot: 2
   m_YBoundaries: -30
 --- !u!114 &114777930182066012
@@ -288,11 +288,11 @@ MonoBehaviour:
       type: 3}
     HitSound: {fileID: 11400000, guid: 92c8e81fe40b342948dff8f41198ec9c, type: 2}
     DeathSound: {fileID: 11400000, guid: d658fabea6ac94529bf4b97cbf264d52, type: 2}
-    MaxHealth: 100
-    m_ThrowX: 5
-    m_ThrowY: 0.5
+    MaxHealth: 200
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
     DamageAmount: 1
-    Speed: 2.5
+    Speed: 2
     AttackSpeed: 2
     DropScrap: 20
     m_IsBigMonster: 0

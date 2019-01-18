@@ -116,7 +116,16 @@ public class EnemyStatsGO : MonoBehaviour {
                 if (playerStats != null) //calculate damage base on the combo
                     playerStats.HitEnemy(EnemyStats, zone);
                 else //receive regular damage
-                    EnemyStats.TakeDamage(damageAmount, PlayerStats.m_ThrowEnemyX, 0);
+                {
+                    var throwbackValueX = PlayerStats.m_ThrowEnemyX;
+
+                    if (isBulletDamage)
+                        throwbackValueX = 0;
+
+                    Debug.LogError("Regular damage throwback value> " + throwbackValueX);
+
+                    EnemyStats.TakeDamage(damageAmount, throwbackValueX, 0);
+                }
 
                 //create effects base on the current health
                 //if current health greater than 0

@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D; //player's rigidbody
     private float m_YPositionBeforeJump; //player y position before jump
     private bool m_IsPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
-    private bool m_IsAttacking; //is player attacking
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown; //range attack cooldown
     private float m_FallAttackCooldown; //fall attack cooldown

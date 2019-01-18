@@ -149,7 +149,7 @@ public class EnemyMovement : MonoBehaviour {
 
         if (m_IsThrowBack)
         {
-            if (m_ThrowUpdateTime > Time.time)
+            if (m_ThrowUpdateTime > Time.time && m_EnemyStats.m_ThrowBackX > 0)
             {
                 if (m_ThrowUpdateTime > Time.time)
                 {

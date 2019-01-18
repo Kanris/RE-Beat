@@ -30,15 +30,10 @@ public class MoveBullet : MonoBehaviour {
         if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
         {
             DamageObject(collision.transform); //damage hited collision
+        }
 
-            CreateBulletHitEffect(collision); //create destroying bullet particles
-            Destroy(gameObject); //destroy bullet
-        }
-        else //hit ground
-        {
-            CreateBulletHitEffect(collision); //create destroying bullet particles
-            Destroy(gameObject); //destroy bullet
-        }
+        CreateBulletHitEffect(collision); //create destroying bullet particles
+        Destroy(gameObject); //destroy bullet
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,7 +55,7 @@ public class MoveBullet : MonoBehaviour {
         else if (hitTransform.CompareTag("Enemy")) //if hit enemy
         {
             //damage enemy
-            hitTransform.GetComponent<EnemyStatsGO>()?.TakeDamage(null, 0, DamageAmount, true);
+            hitTransform.GetComponent<EnemyStatsGO>()?.TakeDamage(null, 0, DamageAmount, isBulletDamage:true);
         }
         else if (hitTransform.CompareTag("WorldObject")) //if hit world object
         {

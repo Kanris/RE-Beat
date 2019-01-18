@@ -6740,6 +6740,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 1642957300447368, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4191418293414282, guid: 4c3b77b88c431e742a72059fbc306a1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.0835075
@@ -8749,6 +8753,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.1999999
       objectReference: {fileID: 0}
+    - target: {fileID: 1323922013138560, guid: 935505709d81e5a43bb9a486a7ffd383, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4284218238293116, guid: 935505709d81e5a43bb9a486a7ffd383, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.43
@@ -8765,6 +8773,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.57
       objectReference: {fileID: 0}
+    - target: {fileID: 114788152566824716, guid: 935505709d81e5a43bb9a486a7ffd383,
+        type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 2105600
+      objectReference: {fileID: 0}
     - target: {fileID: 1283236396280418, guid: 935505709d81e5a43bb9a486a7ffd383, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -8778,15 +8791,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1323922013138560, guid: 935505709d81e5a43bb9a486a7ffd383, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114788152566824716, guid: 935505709d81e5a43bb9a486a7ffd383,
-        type: 3}
-      propertyPath: m_LayerMask.m_Bits
-      value: 2105600
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935505709d81e5a43bb9a486a7ffd383, type: 3}

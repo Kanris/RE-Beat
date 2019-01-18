@@ -127,8 +127,8 @@ public class PlayerStats : Stats
     {
         if (zone > 0)
         {
-            var damageToEnemy = GetDamageAmount(zone); //get damage amount base on the distance between enemy and player
-            enemy.TakeDamage(damageToEnemy, m_ThrowEnemyX / zone, 0f);
+            var (Damage, ThrowBack) = GetDamageAmount(zone); //get damage amount base on the distance between enemy and player (and get throwback value if it's in combo)
+            enemy.TakeDamage(Damage, ThrowBack, 0f);
         }
         else
         {
@@ -303,15 +303,16 @@ public class PlayerStats : Stats
 
     #region private methods
 
-    private int GetDamageAmount(int zone)
+    private (int Damage, float ThrowBack) GetDamageAmount(int zone)
     {
         var damageToEnemy = DamageAmount / zone; //damage to enemy base on the hit zone
+        var throwBackXValue = 0f;
 
         if (m_CheckNextComboTime > Time.time) //simple combo check
         {
             m_SeriesCombo++; //hit in series
 
-            CheckIsComboComplete(ref damageToEnemy); //maybe combo is complete
+            CheckIsComboComplete(ref damageToEnemy, ref throwBackXValue); //maybe combo is complete
         }
         else if (m_SeriesCombo == 1 & (m_CheckNextComboTime + 1f) > Time.time) //move to complecate combo (hit pause hit)
         {
@@ -327,23 +328,26 @@ public class PlayerStats : Stats
 
         m_CheckNextComboTime = Time.time + 0.6f; //check next hit in combo
 
-        return damageToEnemy;
+        return (damageToEnemy, throwBackXValue);
     }
 
-    private void CheckIsComboComplete(ref int damageToEnemy)
+    private void CheckIsComboComplete(ref int damageToEnemy, ref float throwBackXValue)
     {
         if (m_CurrentComboIndex == 1) //index is 1 than it's third hit in combo
         {
             m_SeriesCombo = 0;
             m_CurrentComboIndex = 0;
+            damageToEnemy *= 2;
+
             Debug.LogError("Pause combo");
         }
         else if (m_SeriesCombo == 3) //three hits in combo
         {
             m_CurrentComboIndex = 0;
             m_SeriesCombo = 0;
-            damageToEnemy *= 2;
-            Debug.LogError("Damage combo");
+            throwBackXValue = m_ThrowEnemyX / 3;
+
+            Debug.LogError("Damage combo> throwValue is" + throwBackXValue);
         }
     }
 
