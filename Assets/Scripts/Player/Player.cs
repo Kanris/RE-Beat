@@ -23,7 +23,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private Transform m_AttackPosition; //attack position
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeX; //attack range x
     [SerializeField, Range(0.1f, 5f)] private float m_AttackRangeY; //attack range y
-    [SerializeField] private Transform m_FirePosition;
+    [SerializeField] private Transform m_FirePosition; //position to fire
     [SerializeField] private LayerMask m_WhatIsEnemy; //defines what is enemy
 
     [Header("Effects")]

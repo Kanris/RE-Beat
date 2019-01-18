@@ -36,7 +36,10 @@ public class MoveGrass : MonoBehaviour {
     {
         if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
         {
-            m_Animator.SetTrigger("Move"); //play move grass animation
+            if (collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
+                DestroyGrass();
+            else
+                m_Animator.SetTrigger("Move"); //play move grass animation
         }
     }
 
