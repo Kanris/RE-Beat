@@ -294,12 +294,12 @@ public class UIManager : MonoBehaviour {
 
     public void BulletCooldown(float cooldown)
     {
-        StartCoroutine(DisplayBulletCooldown(cooldown, m_BulletImage));
+        StartCoroutine(DisplayCooldown(cooldown, m_BulletImage));
     }
 
     public void FallAttackCooldown(float cooldown)
     {
-        StartCoroutine(DisplayBulletCooldown(cooldown, m_FallAttack));
+        StartCoroutine(DisplayCooldown(cooldown, m_FallAttack));
     }
 
     public void SetFallAttackImageActive()
@@ -307,7 +307,7 @@ public class UIManager : MonoBehaviour {
         m_FallAttack.gameObject.transform.parent.gameObject.SetActive(true);
     }
 
-    private IEnumerator DisplayBulletCooldown(float time, Image displayCooldown)
+    private IEnumerator DisplayCooldown(float time, Image displayCooldown)
     {
         displayCooldown.fillAmount = 0f;
 
@@ -374,13 +374,16 @@ public class UIManager : MonoBehaviour {
 
     #endregion
 
-    #region ui controll
+    #region ui control
 
     public void EnableRegularUI()
     {
         m_BulletImage.transform.parent.gameObject.SetActive(true);
         m_AmountText.gameObject.SetActive(true);
         m_AddScrapText.gameObject.SetActive(true);
+
+        m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
+
         m_BackgroundImage.color = m_BackgroundImage.color.ChangeColor(.377f, .377f, .377f, m_BackgroundImage.color.a);
     }
 
@@ -389,6 +392,9 @@ public class UIManager : MonoBehaviour {
         m_BulletImage.transform.parent.gameObject.SetActive(false);
         m_AmountText.gameObject.SetActive(false);
         m_AddScrapText.gameObject.SetActive(false);
+
+        m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
+
         m_BackgroundImage.color = m_BackgroundImage.color.ChangeColor(.549f, .980f, .984f, m_BackgroundImage.color.a);
     }
 

@@ -235,8 +235,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2637824
   m_IsSimpleMovement: 0
-  m_Direction: -1
   IdleTime: 2
+  m_CantMoveFurther: 0
+  m_Direction: -1
 --- !u!114 &114450152582583560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4552045832577098}
   - component: {fileID: 61237159028034092}
-  m_Layer: 16
+  m_Layer: 13
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

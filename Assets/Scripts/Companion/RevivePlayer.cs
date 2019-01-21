@@ -29,6 +29,7 @@ public class RevivePlayer : MonoBehaviour {
         m_IsReviving = true;
 
         var materialForPlayer = m_PlayerThatInteract.GetComponent<SpriteRenderer>().material;
+        materialForPlayer.color = materialForPlayer.color.ChangeColor(a: 1f);
 
         yield return Camera.main.GetComponent<Camera2DFollow>().PlayReviveEffect();
 
@@ -50,7 +51,9 @@ public class RevivePlayer : MonoBehaviour {
         PlayerStats.m_ReviveCount -= 1;
 
         GameMaster.Instance.IsPlayerDead = false;
-        
+
+        Physics2D.IgnoreLayerCollision(8, 13, false); //ignore all enemies
+
         Destroy(gameObject);
     }
 

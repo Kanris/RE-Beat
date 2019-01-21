@@ -27,11 +27,14 @@ public class MagneticBox : MonoBehaviour {
 
     private bool m_IsBoxPickedUp; //is box in player hands
     private bool m_IsQuitting; //is application closing
+
     private Animator m_Animator; //box animator
     private Transform m_Player; //player reference
     private Vector2 m_RespawnPosition; //box respawn point
 
     private Animator m_PlayerAnimator;
+
+    //!!!remove ????
     private float m_PreviousYPosition = 0f;
     private float m_CheckPositionTime;
 
@@ -170,7 +173,7 @@ public class MagneticBox : MonoBehaviour {
         else //if need to put box down
         {
             transform.SetParent(null); //detach from parent
-            transform.gameObject.layer = 14; //chage layer so player can play ground animation
+            transform.gameObject.layer = 12; //chage layer so player can play ground animation
             m_Animator.SetTrigger("Inactive"); //play inactive animation
 
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position

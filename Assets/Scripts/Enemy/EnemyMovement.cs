@@ -17,6 +17,8 @@ public class EnemyMovement : MonoBehaviour {
     [Header("Walking type")]
     [SerializeField] private bool m_IsSimpleMovement; //from collider to collider
 
+    [SerializeField, Range(0f, 20f)] private float IdleTime = 2f;
+
     const float k_GroundedRadius = .05f; // Radius of the overlap circle to determine if grounded
 
     private Rigidbody2D m_Rigidbody2D;
@@ -36,12 +38,6 @@ public class EnemyMovement : MonoBehaviour {
     private float m_MaxMoveTime = 4f;
 
     [HideInInspector] public int m_Direction = -1;
-    #endregion
-
-    #region inspector fields
-
-    [SerializeField, Range(0f, 20f)] private float IdleTime = 2f;
-
     #endregion
 
     #region private methods

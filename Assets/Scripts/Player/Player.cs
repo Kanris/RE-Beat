@@ -276,8 +276,6 @@ public class Player : MonoBehaviour {
         GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: alphaValue);
 
         Physics2D.IgnoreLayerCollision(8, 13, value);
-
-        gameObject.tag = value ? "Untagged" : "Player";
     }
 
     #endregion
@@ -319,7 +317,7 @@ public class Player : MonoBehaviour {
 		
         JumpHeightControl(); //check player jump height
 
-        if (!GameMaster.Instance.IsPlayerDead && !m_IsPlayerBusy)
+        if (!GameMaster.Instance.IsPlayerDead && !m_IsPlayerBusy) //player's attacks
         {
             #region fall attack
 
@@ -350,14 +348,17 @@ public class Player : MonoBehaviour {
             #endregion
 
         }
-        else if (GameMaster.Instance.IsPlayerDead)
+        else if (GameMaster.Instance.IsPlayerDead) //companion's abilities
         {
-            if (m_InvisibleAbilityCooldown < Time.time)
+            if (m_InvisibleAbilityCooldown < Time.time) //if can use invisible ability
             {
-                if (InputControlManager.Instance.m_Joystick.Action3.WasPressed)
+                if (InputControlManager.Instance.m_Joystick.Action3.WasPressed) //if attack button pressed
                 {
-                    m_InvisibleAbilityCooldown = Time.time + PlayerStats.InvisibleTimeSpeed * 2;
-                    StartCoroutine(StealthAbility(PlayerStats.InvisibleTimeSpeed));
+                    m_InvisibleAbilityCooldown = Time.time + PlayerStats.InvisibleTimeSpeed * 2; //set cooldown timer
+
+                    UIManager.Instance.FallAttackCooldown(PlayerStats.InvisibleTimeSpeed * 2); //show cooldown on panel
+
+                    StartCoroutine(StealthAbility(PlayerStats.InvisibleTimeSpeed)); //start invisible
                 }
             }
         }
