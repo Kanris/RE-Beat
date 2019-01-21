@@ -312,7 +312,7 @@ public class PlayerStats : Stats
     private (int Damage, float ThrowBack) GetDamageAmount(int zone)
     {
         var damageToEnemy = DamageAmount / zone; //damage to enemy base on the hit zone
-        var throwBackXValue = 0f;
+        var throwBackXValue = m_ThrowEnemyX / 4; //stun enemy
 
         if (m_CheckNextComboTime > Time.time) //simple combo check
         {
@@ -351,7 +351,7 @@ public class PlayerStats : Stats
         {
             m_CurrentComboIndex = 0;
             m_SeriesCombo = 0;
-            throwBackXValue = m_ThrowEnemyX / 3;
+            throwBackXValue = m_ThrowEnemyX;
 
             Debug.LogError("Damage combo> throwValue is" + throwBackXValue);
         }
