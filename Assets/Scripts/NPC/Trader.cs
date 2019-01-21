@@ -231,14 +231,6 @@ public class Trader : MonoBehaviour {
         }
     }
 
-    public void AddNewItemToTheInventory(string path)
-    {
-        var newTraderItem = AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
-
-        newTraderItem.GetComponent<Button>().onClick.AddListener(() => ShowItemDescription(newTraderItem));
-
-    }
-
     public void SetPlayer(PlayerStats player)
     {
         m_Player = player;
