@@ -2,35 +2,39 @@
 
 public class ReachablePoint : MonoBehaviour {
 
-    [SerializeField] private Transform m_NearestTunnel;
+    [SerializeField] private Transform m_NearestTunnel; //tunnel where companion will be spawned
 
-    private SpriteRenderer m_SpriteRenderer;
-    private bool m_IsActive;
+    private SpriteRenderer m_SpriteRenderer; //reachable point sprite
+    private bool m_IsActive; //is this reachable point is actvie
 
     private void Start()
     {
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>(); //get gameobject's spriterenderer
 
-        GetComponent<Animator>()?.SetFloat("Speed", Random.Range(.8f, 1.2f));
+        GetComponent<Animator>()?.SetFloat("Speed", Random.Range(.8f, 1.2f)); //change animator speed
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsActive) //if player triggered reacheble point
+        if (!GameMaster.Instance.IsPlayerDead) //if player is not dead
         {
-            //set reachable point transform
-            GameMaster.Instance.SetReachablePoint(transform, m_NearestTunnel);
+            if (collision.CompareTag("Player") && !m_IsActive) //if player triggered reacheble point
+            {
+                //set reachable point transform
+                GameMaster.Instance.SetReachablePoint(transform, m_NearestTunnel);
 
-            //activate point effect
-            SetActivatePoint(true);
+                //activate point effect
+                SetActivatePoint(true);
 
-            //display to the player that revive with companion is available
-            UIManager.Instance.SetReviveAvailable(true);
-            UIManager.Instance
-                .DisplayNotificationMessage("Companion can now revive you", UIManager.Message.MessageType.Message);
+                //display to the player that revive with companion is available
+                UIManager.Instance.SetReviveAvailable(true);
+                UIManager.Instance
+                    .DisplayNotificationMessage("Companion can now revive you", UIManager.Message.MessageType.Message);
+            }
         }
     }
 
+    //change point color to indicate is it active or not
     public void SetActivatePoint(bool value)
     {
         var color = Color.white;
