@@ -39,6 +39,9 @@ public class PlayerStats : Stats
     public static float FallAttackSpeed = 2f; //fall attack speed
     public static float Invincible = 1f; //invincible time
 
+    //companion attack stats
+    public static float InvisibleTimeSpeed = 3f;
+
     public static Inventory PlayerInventory; //player's inventory
 
     public static int CurrentPlayerHealth; //current health amount (for load or moving between scenes)

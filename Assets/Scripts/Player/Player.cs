@@ -51,9 +51,12 @@ public class Player : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D; //player's rigidbody
     private float m_YPositionBeforeJump; //player y position before jump
     private bool m_IsPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
+
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown; //range attack cooldown
     private float m_FallAttackCooldown; //fall attack cooldown
+
+    private float m_InvisibleAbilityCooldown;
 
     [HideInInspector] public int m_EnemyHitDirection = 1; //from where player receive damage
 
@@ -256,6 +259,25 @@ public class Player : MonoBehaviour {
 
     #endregion
 
+    #region abilities
+
+    private IEnumerator StealthAbility(float timeStealth)
+    {
+        GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: .2f);
+
+        transform.tag = "Untagged";
+        gameObject.layer = 20;
+
+        yield return new WaitForSeconds(timeStealth);
+
+        GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: 1f);
+
+        transform.tag = "Player";
+        gameObject.layer = 8;
+    }
+
+    #endregion
+
     #region camera control
 
     private void CameraRightStickControl()
@@ -323,6 +345,17 @@ public class Player : MonoBehaviour {
 
             #endregion
 
+        }
+        else if (GameMaster.Instance.IsPlayerDead)
+        {
+            if (m_InvisibleAbilityCooldown < Time.time)
+            {
+                if (InputControlManager.Instance.m_Joystick.Action3.WasPressed)
+                {
+                    m_InvisibleAbilityCooldown = Time.time + PlayerStats.InvisibleTimeSpeed * 2;
+                    StartCoroutine(StealthAbility(PlayerStats.InvisibleTimeSpeed));
+                }
+            }
         }
 
         #region critical health effect
