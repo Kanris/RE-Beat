@@ -60,6 +60,15 @@ public class PatrolEnemy : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            m_EnemyStats.ChangeIsPlayerNear(true);
+            PlayerSpot(m_EnemyStats.IsPlayerNear);
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") & m_EnemyStats.IsPlayerNear)
