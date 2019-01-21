@@ -125,12 +125,10 @@ public class PickupBox : MonoBehaviour {
     #endregion
 
     private IEnumerator AttachToParent(bool value)
-    {
-        var parrent = value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null;
+    { 
+        transform.SetParent(value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null); //attach box to the parrent
 
-        transform.SetParent(parrent); //attach box to the parrent
-
-        if (parrent != null) //if parent there is parent
+        if (value) //if parent there is parent
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
 
@@ -138,7 +136,7 @@ public class PickupBox : MonoBehaviour {
             transform.localPosition = transform.localPosition.With(x: 0f, y: 0.4f);
         }
 
-        ChangeBoxProperty(value, value ? 0 : 14); //change box propert (change rigidbody, layer etc)
+        ChangeBoxProperty(value, value ? 0 : 12); //change box propert (change rigidbody, layer etc)
 
         yield return new WaitForEndOfFrame(); //wait before give player control
 

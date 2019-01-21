@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 114556497925562608}
   - component: {fileID: 212225322645907360}
   - component: {fileID: 114297180545618332}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: Box
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -128,6 +128,7 @@ MonoBehaviour:
   DestroySound: {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
   m_InteractionUI: {fileID: 4490013316233606245}
   YRestrictions: -10
+  m_IsBoxUp: 0
 --- !u!212 &212225322645907360
 SpriteRenderer:
   m_ObjectHideFlags: 0

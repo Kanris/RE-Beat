@@ -1010,7 +1010,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 2637824
+    m_Bits: 2641920
   JumpPlatformPrefab: {fileID: 1020155768551936, guid: ed875a334c3b3b846b85839266d5c499,
     type: 3}
   m_LandEffect: {fileID: 1224409648855476, guid: 9716735c25cea984e8c1a5f286af4de8,
@@ -1052,13 +1052,15 @@ MonoBehaviour:
     HitSound: {fileID: 0}
     DeathSound: {fileID: 11400000, guid: 97494bfcffca64af3b9c162a7cca4592, type: 2}
     MaxHealth: 6
-    m_ThrowX: 10
-    m_ThrowY: 5
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
     platformerCharacter2D: {fileID: 114819696113986082}
     m_HealEffect: {fileID: 1610558710650812, guid: d83ee6f9415fe024eb86fe137e928552,
       type: 3}
     m_HealEffectAudio: {fileID: 11400000, guid: c07fc8f19d9f9404dba06ba14724e8b7,
       type: 2}
+    m_ThrowPlayerX: 15
+    m_ThrowPlayerY: 8
   YFallDeath: -10
   m_AttackPosition: {fileID: 4012858144039836}
   m_AttackRangeX: 1
