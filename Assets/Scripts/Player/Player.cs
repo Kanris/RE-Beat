@@ -263,17 +263,21 @@ public class Player : MonoBehaviour {
 
     private IEnumerator StealthAbility(float timeStealth)
     {
-        GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: .2f);
-
-        transform.tag = "Untagged";
-        gameObject.layer = 20;
+        IsInvisible(true);
 
         yield return new WaitForSeconds(timeStealth);
 
-        GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: 1f);
+        IsInvisible(false);
+    }
 
-        transform.tag = "Player";
-        gameObject.layer = 8;
+    public void IsInvisible(bool value)
+    {
+        var alphaValue = value ? .4f : 1f;
+        GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: alphaValue);
+
+        Physics2D.IgnoreLayerCollision(8, 13, value);
+
+        gameObject.tag = value ? "Untagged" : "Player";
     }
 
     #endregion

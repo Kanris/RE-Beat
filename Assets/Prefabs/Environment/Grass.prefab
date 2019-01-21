@@ -157,7 +157,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.44, y: 0.44}
+  m_Size: {x: 0.35, y: 0.35}
   m_EdgeRadius: 0
 --- !u!114 &8458185293218090675
 MonoBehaviour:
@@ -188,5 +188,6 @@ MonoBehaviour:
   m_HealthAmount: 1
   m_OnHitParticles: {fileID: 0}
   m_IsNeedCamShake: 0
-  m_IsAcceptDamageFromBullet: 0
+  m_IsAcceptBullet: 0
   m_DestroyAtZero: 0
+  m_IsAcceptDash: 0
