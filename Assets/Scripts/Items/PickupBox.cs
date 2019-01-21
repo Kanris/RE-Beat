@@ -20,7 +20,7 @@ public class PickupBox : MonoBehaviour {
     private Vector3 m_SpawnPosition; //box spawn position
     private BoxCollider2D m_BoxCollider;
 
-    private bool m_IsBoxUp; //is box in player's hand
+    [SerializeField] private bool m_IsBoxUp; //is box in player's hand
     private bool m_IsQuitting; //is application closing
 
     #endregion
@@ -86,6 +86,13 @@ public class PickupBox : MonoBehaviour {
             }
         }
 
+        //if player is holding box, but interaction button is active
+        if (m_IsBoxUp && m_InteractionUI.activeSelf)
+        {
+            //hide interaction button
+            m_InteractionUI.SetActive(false);
+        }
+
         #endregion
 
         if (!m_IsQuitting) //if application is not closing
@@ -121,11 +128,6 @@ public class PickupBox : MonoBehaviour {
     {
         var parrent = value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null;
 
-        if (parrent == null) //place box in front of the player
-        {
-            transform.localPosition = transform.localPosition.With(x: 0.5f, y: 0f);
-        }
-
         transform.SetParent(parrent); //attach box to the parrent
 
         if (parrent != null) //if parent there is parent
@@ -159,6 +161,7 @@ public class PickupBox : MonoBehaviour {
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(100f * GameMaster.Instance.m_Player.transform.GetChild(0).localScale.x, 200f));
             //save current box position
             GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
         }
