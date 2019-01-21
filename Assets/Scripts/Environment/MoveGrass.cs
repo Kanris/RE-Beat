@@ -9,8 +9,8 @@ public class MoveGrass : MonoBehaviour {
 
     private Animator m_Animator; //grass animator
     private WorldObjectStats m_WorldObjectStats; //world object stats
-    private bool m_IsDestroyed; //is grass is destroyed
 
+    private bool m_IsDestroyed; //is grass is destroyed
     #endregion
 
     #region private methods
@@ -35,7 +35,7 @@ public class MoveGrass : MonoBehaviour {
     //when player enter to the grass zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
+        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) & !m_IsDestroyed) //if player in grass
         {
             if (collision.gameObject.GetComponent<Animator>().GetBool("Dash")) //if player dash near grass
                 m_WorldObjectStats.TakeDamage(); //destroy grass
@@ -47,17 +47,17 @@ public class MoveGrass : MonoBehaviour {
     //when player stayed in the grass zone 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsDestroyed) //if player in grass
+        if (collision.CompareTag("Player") && !m_IsDestroyed) //if player in grass
         {
             if (collision.gameObject.GetComponent<Animator>().GetBool("Dash")) //if player dash near grass
                 m_WorldObjectStats.TakeDamage(); //destroy grass
         }
     }
 
-
     private void DestroyGrass()
     {
-        m_IsDestroyed = true; //indicates that grass is destroyed
+        SetIsDestroyed(true); //indicates that grass is destroyed
+
         ShowDestroyParticles(); //show destroy particles
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.3f); //move grass a little below
     }
@@ -68,6 +68,11 @@ public class MoveGrass : MonoBehaviour {
         resourceDestroyParticlesInstantiate.transform.position = transform.position; //place destroy particles on grass position
 
         Destroy(resourceDestroyParticlesInstantiate, 5f); //destroy grass after 5 seconds
+    }
+
+    private void SetIsDestroyed(bool value)
+    {
+        m_IsDestroyed = value;
     }
 
     #endregion

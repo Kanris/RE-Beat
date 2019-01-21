@@ -29,7 +29,7 @@ public class EnemyMovement : MonoBehaviour {
     private bool m_IsWaiting = false;
     private bool m_IsThrowBack;
     private bool m_Grounded;
-    private bool m_CantMoveFurther;
+    [SerializeField] private bool m_CantMoveFurther;
 
     private float m_MoveUpdateTime;
     private float m_MinMoveTime = 0.5f;
@@ -103,8 +103,11 @@ public class EnemyMovement : MonoBehaviour {
 
         if (m_CantMoveFurther)
         {
-            m_CantMoveFurther = false;
-            TurnAround();
+            if (!m_EnemyStats.IsPlayerNear)
+            {
+                m_CantMoveFurther = false;
+                TurnAround();
+            }
         }
     }
 
@@ -127,11 +130,9 @@ public class EnemyMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        //Debug.LogError(m_IsWaiting + " " + m_IsThrowBack);
-
-        if (!m_IsWaiting & !m_IsThrowBack) //if enemey is not waiting or is not throwing back
+        if (!m_IsWaiting && !m_IsThrowBack && !m_CantMoveFurther) //if enemey is not waiting and is not throwing back and is can move further
         {
-            if ((m_MoveUpdateTime > Time.time | m_EnemyStats.IsPlayerNear) | m_IsSimpleMovement)
+            if ((m_MoveUpdateTime > Time.time || m_EnemyStats.IsPlayerNear) || m_IsSimpleMovement)
             {
                 m_Rigidbody2D.velocity = new Vector2(-transform.localScale.x * m_Speed, 0); //move enemy
 
@@ -232,6 +233,8 @@ public class EnemyMovement : MonoBehaviour {
     {
         OnEnemyTurnAround(-transform.localScale.x);
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+
+        m_CantMoveFurther = false;
     }
 
     public void ChangeWaitingState(bool value)
