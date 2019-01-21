@@ -57,7 +57,7 @@ public class CompanionCall : MonoBehaviour {
             m_StationImage.color = new Color(.549f, .980f, .984f);
         }
 
-        Instantiate(whoToSpawn, transform.position, transform.rotation); //instantiate gameobject
+        GameMaster.Instance.m_Player = Instantiate(whoToSpawn, transform.position, transform.rotation); //instantiate gameobject
 
         GameMaster.Instance.IsPlayerDead = m_IsPlayer;
         m_IsChanging = false; //character was change
