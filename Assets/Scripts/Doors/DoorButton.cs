@@ -8,6 +8,7 @@ public class DoorButton : MonoBehaviour {
     #region private fields
 
     [SerializeField] private Door DoorToOpen; //door to open when button is pressed
+
     private Animator m_Animator; //button animator
 
     #endregion
@@ -19,37 +20,51 @@ public class DoorButton : MonoBehaviour {
         m_Animator = GetComponent<Animator>(); //get button animator
     }
 
+    #region collision
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Item")) //if item is on the button
-            OpenDoor(true); //open attached door
+        CollisionHandler(collision, true);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        CollisionHandler(collision, true);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Item")) //if item is no longer on the button
-            OpenDoor(false); //close attached door
+        if (collision.transform.CompareTag("Item")) //if item is on the button
+        {
+            OpenDoor(false); //open attached door
+        }
     }
 
-    private void OpenDoor(bool open)
+    private void CollisionHandler(Collision2D collision, bool value)
+    {
+        if (collision.transform.CompareTag("Item") && DoorToOpen.gameObject.activeSelf) //if item is on the button
+        {
+            if ( Mathf.Abs(collision.contacts[0].normal.x) < 0.3f )
+                OpenDoor(true); //open attached door
+        }
+    }
+
+    #endregion
+
+    private void OpenDoor(bool value)
     {
         if (DoorToOpen != null) //if attached door is not equal to null
         {
-            if (open) //if need to open the door
+            if (value) //if need to open the door
             {
                 DoorToOpen.PlayOpenDoorAnimation(); //play open door animation
-
-                m_Animator.SetTrigger("Pressed"); //set button to pressed animation 
-
-                InputControlManager.Instance.StartJoystickVibrate(5, .1f);
-            }
-            else //if need to close the door
-            {
-                InputControlManager.Instance.StartJoystickVibrate(5, .1f);
-                m_Animator.SetTrigger("Unpressed"); //set button to unpressed animation
             }
 
-            DoorToOpen.gameObject.SetActive(!open); //active or disable attached door
+            m_Animator.SetBool("Pressed", value); //set button to pressed animation 
+
+            InputControlManager.Instance.StartJoystickVibrate(5, .1f); //vibrate gamepad
+
+            DoorToOpen.gameObject.SetActive(!value); //active or disable attached door
         }
         else
         {
