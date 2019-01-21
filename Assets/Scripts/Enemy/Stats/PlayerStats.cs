@@ -16,27 +16,34 @@ public class PlayerStats : Stats
     #region public fields
 
     [Header("Additional")]
-    public PlatformerCharacter2D platformerCharacter2D;
-    [SerializeField] private GameObject m_HealEffect;
-    [SerializeField] private Audio m_HealEffectAudio;
+    public PlatformerCharacter2D platformerCharacter2D; //character control
+
+    [Header("Effects")]
+    [SerializeField] private GameObject m_HealEffect; //heal effect particles
+    [SerializeField] private Audio m_HealEffectAudio; //audio that player when player heals
 
     [Header("Throw stats")]
-    public static float m_ThrowEnemyX = 5f;
+    public static float m_ThrowEnemyX = 5f; //change static value
 
-    public float m_ThrowPlayerX = 15f;
-    public float m_ThrowPlayerY = 8f;
+    //players throw stats
+    [SerializeField, Range(0, 100)] private float m_ThrowPlayerX = 15f;
+    [SerializeField, Range(0, 100)] private float m_ThrowPlayerY = 8f;
 
-    private int m_CriticalHealthAmount = 3;
+    private int m_CriticalHealthAmount = 3; //critical health amount (to start show critical health effect)
+    private int m_OverHealScrapAmount = 5; //how much player will receive when he has max amount of health but picked up heal potion
 
-    private int m_OverHealScrapAmount = 5;
-
-    public static int DamageAmount = 50;
-    public static float MeleeAttackSpeed = 0.2f;
-    public static float RangeAttackSpeed = 2f;
-    public static float FallAttackSpeed = 2f;
+    //attack
+    public static int DamageAmount = 50; //player's damage amount
+    public static float MeleeAttackSpeed = 0.2f; //melee attack speed
+    public static float RangeAttackSpeed = 2f; //range attack speed
+    public static float FallAttackSpeed = 2f; //fall attack speed
     public static float Invincible = 1f; //invincible time
-    public static Inventory PlayerInventory;
-    public static int CurrentPlayerHealth;
+
+    public static Inventory PlayerInventory; //player's inventory
+
+    public static int CurrentPlayerHealth; //current health amount (for load or moving between scenes)
+
+    //player's abilitys
     public static bool m_IsCanDoubleJump = true;
     public static bool m_IsCanDash = true;
     public static bool m_IsFallAttack = true;
@@ -45,18 +52,20 @@ public class PlayerStats : Stats
     public static bool m_IsCanSeeEnemyHP = true;
     public static int m_ReviveCount = 2;
 
-    public static bool m_LockHP = false;
+    //public static bool m_LockHP = false;
 
-    private static int m_Scrap = 200;
-    private static int DamageMultiplier = 1;
+    private static int m_Scrap = 200; //total scrap amout
 
-    private static float DefaultMeleeAttackSpeed = 0.3f;
-    private static float DefaultSpeed = 4f;
+    //player's debuffs
+    private static int DamageMultiplier = 1; //damage multiplier
+    private static float DefaultMeleeAttackSpeed = 0.2f; //default attack speed
+    private static float DefaultMovementSpeed = 4f; //defaul movement speed
 
     #endregion
 
     #region properties
 
+    //change scrap amount
     public static int Scrap
     {
         set
@@ -68,10 +77,7 @@ public class PlayerStats : Stats
                 else
                     m_Scrap += value;
 
-                if (OnScrapAmountChange != null) //notify that coins amount changed
-                {
-                    OnScrapAmountChange(value);
-                }
+                OnScrapAmountChange?.Invoke(value);
             }
         }
         get
@@ -196,7 +202,7 @@ public class PlayerStats : Stats
                 break;
 
             case DebuffPanel.DebuffTypes.Cold:
-                platformerCharacter2D.m_MaxSpeed = DefaultSpeed;
+                platformerCharacter2D.m_MaxSpeed = DefaultMovementSpeed;
                 break;
 
             case DebuffPanel.DebuffTypes.Defense:
@@ -395,7 +401,7 @@ public class PlayerStats : Stats
         DamageMultiplier = 1;
 
         DefaultMeleeAttackSpeed = 0.3f;
-        DefaultSpeed = 4f;
+        DefaultMovementSpeed = 4f;
 
         OnScrapAmountChange = null;
     }
