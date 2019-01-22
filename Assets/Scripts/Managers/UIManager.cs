@@ -389,7 +389,6 @@ public class UIManager : MonoBehaviour {
 
     public void EnableCompanionUI()
     {
-        m_BulletImage.transform.parent.gameObject.SetActive(false);
         m_AmountText.gameObject.SetActive(false);
         m_AddScrapText.gameObject.SetActive(false);
 

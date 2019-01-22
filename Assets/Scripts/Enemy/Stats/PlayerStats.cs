@@ -41,6 +41,7 @@ public class PlayerStats : Stats
 
     //companion attack stats
     public static float InvisibleTimeSpeed = 3f;
+    public static float EnemyTrapSpeed = 5f;
 
     public static Inventory PlayerInventory; //player's inventory
 
@@ -54,8 +55,6 @@ public class PlayerStats : Stats
     public static bool m_IsDamageEnemyWhileDashing = false;
     public static bool m_IsCanSeeEnemyHP = true;
     public static int m_ReviveCount = 2;
-
-    //public static bool m_LockHP = false;
 
     private static int m_Scrap = 200; //total scrap amout
 

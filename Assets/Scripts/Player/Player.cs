@@ -45,6 +45,9 @@ public class Player : MonoBehaviour {
     [SerializeField] private GameObject m_LandEffect; //particles that will be player when player land
     [SerializeField] private Audio m_FallAttackAudio; //fall attack sound
 
+    [Header("Abilities")]
+    [SerializeField] private GameObject m_TrapAbility; //trap ability 
+
     #endregion
 
     private Animator m_Animator; //player animator
@@ -52,11 +55,14 @@ public class Player : MonoBehaviour {
     private float m_YPositionBeforeJump; //player y position before jump
     private bool m_IsPlayerBusy = false; //is player busy right now (read map, read tasks etc.)
 
+    //player's ability cooldown
     private float m_MeleeAttackCooldown; //next attack time
     private float m_RangeAttackCooldown; //range attack cooldown
     private float m_FallAttackCooldown; //fall attack cooldown
 
-    private float m_InvisibleAbilityCooldown;
+    //companion's ability cooldown
+    private float m_InvisibleAbilityCooldown; //invisible ability cooldown
+    private float m_TrapAbilityCooldown; //enemy trap abilityi cooldown
 
     [HideInInspector] public int m_EnemyHitDirection = 1; //from where player receive damage
 
@@ -298,6 +304,13 @@ public class Player : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(8, 13, value);
     }
 
+    //create trap
+    private void TrapAbility()
+    {
+        UIManager.Instance.BulletCooldown(PlayerStats.EnemyTrapSpeed); //show trap cooldown
+        Instantiate(m_TrapAbility, transform.position.Add(y: -0.2f), Quaternion.identity); //create enemy trap on scene
+    }
+
     #endregion
 
     #region camera control
@@ -379,6 +392,15 @@ public class Player : MonoBehaviour {
                     UIManager.Instance.FallAttackCooldown(PlayerStats.InvisibleTimeSpeed * 2); //show cooldown on panel
 
                     StartCoroutine(StealthAbility(PlayerStats.InvisibleTimeSpeed)); //start invisible
+                }
+            }
+
+            if (m_TrapAbilityCooldown < Time.time)
+            {
+                if (InputControlManager.Instance.m_Joystick.RightBumper.WasPressed)
+                {
+                    m_TrapAbilityCooldown = PlayerStats.EnemyTrapSpeed + Time.time;
+                    TrapAbility();
                 }
             }
         }

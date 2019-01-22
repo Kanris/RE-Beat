@@ -20,6 +20,7 @@ public class CompanionTrap : MonoBehaviour
     void Start()
     {
         m_LifeCountTime = m_LifeTime + Time.time; //time when trap is has to be destroyed (if there is not enemies in trap)
+        m_Animator = GetComponent<Animator>(); //get trap's animator
     }
 
     // Update is called once per frame
@@ -55,6 +56,7 @@ public class CompanionTrap : MonoBehaviour
         if (m_EnemyInTrap != null) //if enemy with enemymovement script is in trap
         {
             HoldInTrap(true); //place enemy in trap
+            m_Animator.SetTrigger("Triggered"); //play triggered animation
             m_HoldCountTime = m_HoldTime + Time.time; //set hold time
         }
     }
