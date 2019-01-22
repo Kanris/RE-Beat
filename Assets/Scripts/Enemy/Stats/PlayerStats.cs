@@ -51,7 +51,7 @@ public class PlayerStats : Stats
     public static bool m_IsCanDash = true;
     public static bool m_IsFallAttack = true;
     public static bool m_IsInvincibleWhileDashing = true;
-    public static bool m_IsDamageEnemyWhileDashing = true;
+    public static bool m_IsDamageEnemyWhileDashing = false;
     public static bool m_IsCanSeeEnemyHP = true;
     public static int m_ReviveCount = 2;
 
