@@ -237,7 +237,7 @@ public class EnemyStatsGO : MonoBehaviour {
             else
             {
                 //player receive damage from enemy
-                collision.transform.GetComponent<Player>().playerStats.HitPlayer(EnemyStats.DamageAmount);
+                collision.transform.GetComponent<Player>()?.playerStats.HitPlayer(EnemyStats.DamageAmount);
             }
 
             //if player can damage enemy while dashing

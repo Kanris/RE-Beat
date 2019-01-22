@@ -55,7 +55,6 @@ public class PatrolEnemy : MonoBehaviour {
             StopAllCoroutines();
 
             m_EnemyStats.ChangeIsPlayerNear(true);
-
             PlayerSpot(m_EnemyStats.IsPlayerNear);
         }
     }
@@ -71,7 +70,7 @@ public class PatrolEnemy : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & m_EnemyStats.IsPlayerNear)
+        if (collision.CompareTag("Player") && m_EnemyStats.IsPlayerNear)
         {
             StartCoroutine(ResetState());
         }
@@ -90,8 +89,7 @@ public class PatrolEnemy : MonoBehaviour {
     {
         m_AlarmImage.gameObject.SetActive(isSpot);
 
-        if (OnPlayerSpot != null)
-            OnPlayerSpot(false); //continue moving 
+        OnPlayerSpot?.Invoke(false); //continue moving 
 
         if (isSpot)
             m_EnemyStats.ChangeSpeed(m_SpeedUpSpeed);

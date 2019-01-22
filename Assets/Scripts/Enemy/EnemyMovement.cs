@@ -31,12 +31,12 @@ public class EnemyMovement : MonoBehaviour {
     private bool m_IsWaiting = false;
     private bool m_IsThrowBack;
     private bool m_Grounded;
-    [SerializeField] private bool m_CantMoveFurther;
+    private bool m_CantMoveFurther;
 
     private float m_MoveUpdateTime;
     private float m_MinMoveTime = 0.5f;
     private float m_MaxMoveTime = 4f;
-
+    
     [HideInInspector] public int m_Direction = -1;
     #endregion
 
@@ -81,26 +81,29 @@ public class EnemyMovement : MonoBehaviour {
 
     private void Update()
     {
-        m_Grounded = false;
+        m_Grounded = false; //by default consider that enemy is not on the ground
 
-        m_Grounded = CheckGround(m_GroundCheck.position);
+        m_Grounded = CheckGround(m_GroundCheck.position); //check is enemy on ground
 
-        if (m_Grounded)
+        if (m_Grounded) //if enemy on ground
         {
             if(CheckGround(m_GroundCheck.position.Add(y: 1f))) //if enemy stack
             {
-                m_CantMoveFurther = true;
+                m_CantMoveFurther = true; //he can't move further
             }
         }
-        else
+        else //enemy is not on the ground
         {
-            m_CantMoveFurther = true;
+            m_CantMoveFurther = true; //he can't move further
         }
 
+        //if enemy can't move further
         if (m_CantMoveFurther)
         {
+            //if player is not near
             if (!m_EnemyStats.IsPlayerNear)
             {
+                //turn around
                 m_CantMoveFurther = false;
                 TurnAround();
             }
