@@ -263,18 +263,38 @@ public class Player : MonoBehaviour {
 
     private IEnumerator StealthAbility(float timeStealth)
     {
-        IsInvisible(true);
+        IsInvisible(true); //enable invisible ability
 
-        yield return new WaitForSeconds(timeStealth);
+        var timeForBlink = .5f;
 
-        IsInvisible(false);
+        yield return new WaitForSeconds(timeStealth - timeForBlink); //wait for timeStealth seconds
+
+        var blinkTime = 0f; //blinking time
+        var alphaValue = .4f; //next alpha value
+
+        //while blinkTime is less than .5f
+        while (blinkTime < timeForBlink)
+        {   
+            //change sprite alpha
+            GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: alphaValue);
+            alphaValue = alphaValue > .4f ? .4f : 1f; //get next alphaValue
+
+            yield return new WaitForSeconds(.05f); //wait for .05 seconds
+
+            blinkTime += .05f; //waited time to the blinkTime
+        }
+
+        IsInvisible(false); //disable invisible ability
     }
 
+    //enable/disable invisible ability depence on value
     public void IsInvisible(bool value)
     {
-        var alphaValue = value ? .4f : 1f;
+        var alphaValue = value ? .4f : 1f; //opacity depence on value
+        //change sprite alpha
         GetComponent<SpriteRenderer>().material.color = GetComponent<SpriteRenderer>().material.color.ChangeColor(a: alphaValue);
 
+        //ignore collision base on value
         Physics2D.IgnoreLayerCollision(8, 13, value);
     }
 
