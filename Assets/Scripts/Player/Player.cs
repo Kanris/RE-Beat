@@ -78,6 +78,8 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
+        Physics2D.IgnoreLayerCollision(8, 13, false); //remove ignore collision between enemy and player
+
         StartCoroutine( 
             Camera.main.GetComponent<Camera2DFollow>().SetTarget(transform) ); //set new camera target
 

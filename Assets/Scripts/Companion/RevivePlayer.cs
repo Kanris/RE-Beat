@@ -79,7 +79,7 @@ public class RevivePlayer : MonoBehaviour {
 
         //remove invisible ability effect
         materialForPlayer.color = materialForPlayer.color.ChangeColor(a: 1f);
-        Physics2D.IgnoreLayerCollision(8, 13, false); //ignore all enemies
+        //Physics2D.IgnoreLayerCollision(8, 13, false); //remove ignore collision between enemy and player
 
         return materialForPlayer;
     }
