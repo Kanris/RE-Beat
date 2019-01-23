@@ -2,48 +2,48 @@
 using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
-using UnityEditor;
 using UnityEngine.UI;
 
 public class Trader : MonoBehaviour {
 
     [SerializeField] private GameObject m_InteractionUI; //ui that npc show to player when he get closer
     [SerializeField] private GameObject m_StoreUI; //items that this vendor sells
-    [SerializeField] private GameObject m_InventoryUI;
-    [SerializeField] private GameObject m_BuyItem;
+    [SerializeField] private GameObject m_InventoryUI; //trader's store UI
 
     [Header("Description UI")]
     [SerializeField] private TextMeshProUGUI m_DescriptionNameText; //item name
     [SerializeField] private TextMeshProUGUI m_DescriptionText; //item description
 
-    [Header("Notification")]
-    [SerializeField] private GameObject m_Notification; //message that vendor show when there is nothing to sell
-    [SerializeField] private Audio m_ClickAudio;
+    [Header("Scroll")]
+    [SerializeField] private RectTransform m_Content; //traders store inventory
+    [SerializeField] private GameObject m_ArrowUP; //arrow up image
+    [SerializeField] private GameObject m_ArrowDown; //arrow down image
 
-    [SerializeField] private RectTransform m_Content;
-
-    private float m_DefaultYContentPosition;
+    private float m_DefaultYContentPosition; //default y position for trader's inventory
 
     //current selected item info
     private Item m_CurrentSelectedItem; 
     private GameObject m_CurrentSelectedItemGO;
 
-    private PlayerStats m_Player; //notify is player near the vendor
+    private bool m_IsPlayerNear; //indicates is player near
     private bool m_IsBoughtItem; //indicates that player bought item
+
+    private int m_CurrentSelectedItemIndex = 0;
 
     private void Awake()
     {
-        m_DefaultYContentPosition = m_Content.localPosition.y;
+        m_DefaultYContentPosition = m_Content.localPosition.y; //get default position y position for trader's inventory
     }
 
     // Update is called once per frame
     void Update () {
 
-        if (m_Player != null) //if player is near
+        if (m_IsPlayerNear) //if player is near
         {
             if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed 
-                || InputControlManager.Instance.m_Joystick.Action2)
+                || InputControlManager.Instance.m_Joystick.Action2) //if back button or attack button pressed
             {
+                //if trader's store is open
                 if (m_StoreUI.activeSelf)
                 {
                     StartCoroutine(HideUI()); //hide npc ui
@@ -51,34 +51,38 @@ public class Trader : MonoBehaviour {
                 }
             }
 
+            //if there is not selected object in trader's inventory
             if (EventSystem.current.currentSelectedGameObject == null)
             {
-                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                //select first item
+                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
             }
 
+            //if player can press submit button
             if (InputControlManager.IsCanUseSubmitButton())
             {
-                if (InputControlManager.IsUpperButtonsPressed() & !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
+                if (InputControlManager.IsUpperButtonsPressed() && !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 
                     m_StoreUI.SetActive(true); //show store ui
                     m_InteractionUI.SetActive(false); //hide interaction elements
 
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                    EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
+                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
                 }
-                else if (InputControlManager.Instance.m_Joystick.Action4.WasReleased & m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.m_Joystick.Action4.WasReleased && m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                     m_IsBoughtItem = false;
                 }
                 //submit button pressed to buy item
-                else if (InputControlManager.Instance.m_Joystick.Action4.IsPressed & m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.m_Joystick.Action4.IsPressed && m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+
                         BuyItem();
 
                         m_IsBoughtItem = true;
@@ -102,19 +106,9 @@ public class Trader : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player is near
         {
-            if (CheckInventoryAmount()) //if there are items to sell
-            {
-                m_Player = collision.GetComponent<Player>().playerStats; //indicate that player is near
+            m_IsPlayerNear = true; //indicates that plyear is near
 
-                //collision.GetComponent<Player>().TriggerPlayerBussy(true); //dont allow player to attack
-                
-                m_InteractionUI.SetActive(true); //show interaction elements
-            }
-            else //if there is nothing to sell
-            {
-                collision.GetComponent<Player>().TriggerPlayerBussy(true); //don't allow player to attack
-                m_Notification.SetActive(true); //show npc message
-            }
+            m_InteractionUI.SetActive(true); //show interaction elements
         }
     }
 
@@ -122,24 +116,27 @@ public class Trader : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leave trader trigger
         {
-            m_Player = null; //indicate that player is not near trader
-
-            //collision.GetComponent<Player>().TriggerPlayerBussy(false); //allow player to attack
+            m_IsPlayerNear = false; //indicate that player is not near trader
 
             StartCoroutine( HideUI() ); //hide npc ui
         }
     }
 
+    //hide all trader's ui elemetnts
     public IEnumerator HideUI()
     {
-        if (m_InteractionUI != null) m_InteractionUI.SetActive(false);
+        m_InteractionUI?.SetActive(false); //hide interaction UI
 
-        if (m_StoreUI != null) m_StoreUI.SetActive(false);
-        if (m_Notification != null) m_Notification.SetActive(false);
+        m_StoreUI?.SetActive(false); //hide store UI
 
-        yield return null;
+        //remove item's selection
+        m_CurrentSelectedItemIndex = 0;
+        EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
+        EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
 
-        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false);
+        yield return new WaitForEndOfFrame();
+
+        PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false); //allow to open pause menu
     }
 
     public void ShowItemDescription(GameObject itemToDisplayGO)
@@ -149,6 +146,11 @@ public class Trader : MonoBehaviour {
 
         //move rect depend on items count
         var index = itemToDisplayGO.transform.GetSiblingIndex();
+
+        //play arrows animation
+        ManageArrowsVisibility(index, m_CurrentSelectedItemIndex);
+
+        m_CurrentSelectedItemIndex = index;
 
         //if selected item index 4 or grater - move rect
         if (index > 3)
@@ -167,73 +169,110 @@ public class Trader : MonoBehaviour {
         m_DescriptionText.text = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Description);
     }
 
+    #region arrows control
+
+    //manage arraows visibility (base on current selected item index)
+    public void ManageArrowsVisibility(int index, int previousIndex)
+    {
+        if (index > 0) //index below first items
+        {
+            if (index + 1 == m_Content.childCount) //there is more items below current item
+            {
+                if (m_Content.childCount > 1 && m_ArrowUP.GetComponent<Image>().color.a < .001f)
+                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show");
+
+                m_ArrowDown.GetComponent<Animator>().SetTrigger("Hide");
+            }
+            else if (index > m_CurrentSelectedItemIndex)
+            {
+                if (m_ArrowUP.GetComponent<Image>().color.a < .001f)
+                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show");
+
+                m_ArrowDown.GetComponent<Animator>().SetTrigger("Move");
+            }
+            else
+            {
+                if (m_ArrowDown.GetComponent<Image>().color.a < .001f)
+                    m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
+
+                m_ArrowUP.GetComponent<Animator>().SetTrigger("Move");
+            }
+        }
+        else //index on first items
+        {
+            if (m_Content.childCount > 1 && m_ArrowDown.GetComponent<Image>().color.a < .001f)
+                m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
+
+            m_ArrowUP.GetComponent<Animator>().SetTrigger("Hide");
+        }
+    }
+
+    //activate/disable arrows base on values
+    private void ArrowVisibility(bool upValue, bool downValue)
+    {
+        m_ArrowUP.SetActive(upValue);
+        m_ArrowDown.SetActive(downValue);
+    }
+
+    #endregion
+
     public void BuyItem()
     {
         if (m_CurrentSelectedItem != null) //if item were selected
         {
-            if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
+            //current player on scene
+            var player = GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().playerStats;
+
+            if (player != null)
             {
-                if (m_Player.CurrentHealth == m_Player.MaxHealth &
-                    m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
+                if ((PlayerStats.Scrap - m_CurrentSelectedItem.itemDescription.ScrapAmount) >= 0) //if player has enough scrap
                 {
-                    UIManager.Instance.DisplayNotificationMessage("Can't buy repair at max health!",
-                        UIManager.Message.MessageType.Message);
-                }
-                else
-                {
-                    AudioManager.Instance.Play(m_ClickAudio);
-
-                    PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
-
-                    //add item to the inventory if it's not heal potion
-                    if (m_CurrentSelectedItem.itemDescription.itemType != ItemDescription.ItemType.Heal)
+                    if (player.CurrentHealth == player.MaxHealth &
+                        m_CurrentSelectedItem.itemDescription.itemType == ItemDescription.ItemType.Heal)
                     {
-                        //get item info
-                        var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
-                        var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
-
-                        //display that item was added to inventory
-                        UIManager.Instance.DisplayNotificationMessage(itemName + " " + inventoryMessage,
-                            UIManager.Message.MessageType.Item);
-
-                        //add item to inventory
-                        PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
+                        UIManager.Instance.DisplayNotificationMessage("Can't buy repair at max health!",
+                            UIManager.Message.MessageType.Message);
                     }
-
-                    //apply item upgrade to the player
-                    m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(m_Player);
-
-                    //move item from store ui (so childCount works properly)
-                    if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
+                    else
                     {
-                        m_CurrentSelectedItemGO.transform.SetParent(null);
-                        Destroy(m_CurrentSelectedItemGO);
+                        PlayerStats.Scrap = -m_CurrentSelectedItem.itemDescription.ScrapAmount; //change player's scrap amount
 
-                        //if there is nothing to sell
-                        if (!CheckInventoryAmount())
+                        //add item to the inventory if it's not heal potion
+                        if (m_CurrentSelectedItem.itemDescription.itemType != ItemDescription.ItemType.Heal)
                         {
-                            m_StoreUI.SetActive(false); //hide store ui
-                            m_Notification.SetActive(true); //show trader message
+                            //get item info
+                            var itemName = LocalizationManager.Instance.GetItemsLocalizedValue(m_CurrentSelectedItem.itemDescription.Name);
+                            var inventoryMessage = LocalizationManager.Instance.GetItemsLocalizedValue("add_to_inventory_message");
+
+                            //display that item was added to inventory
+                            UIManager.Instance.DisplayNotificationMessage(itemName + " " + inventoryMessage,
+                                UIManager.Message.MessageType.Item);
+
+                            //add item to inventory
+                            PlayerStats.PlayerInventory.Add(m_CurrentSelectedItem.itemDescription, m_CurrentSelectedItem.Image.name);
                         }
-                        else
+
+                        //apply item upgrade to the player
+                        m_CurrentSelectedItemGO.GetComponent<TraderItem>().ApplyUpgrade(player);
+
+                        //move item from store ui (so childCount works properly)
+                        if (!m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_IsInfiniteAmount)
                         {
+                            m_CurrentSelectedItemGO.transform.SetParent(null);
+                            Destroy(m_CurrentSelectedItemGO);
+
+                            //get in focuse next trader's item
                             EventSystem.current.SetSelectedGameObject(null);
-                            EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
                         }
                     }
                 }
-            }
-            else //if player does not have enought scrap
-            {
-                UIManager.Instance.DisplayNotificationMessage("Payment rejected <br> \"You don't have enough scraps\"",
-                                                 UIManager.Message.MessageType.Message);
+                else //if player does not have enought scrap
+                {
+                    UIManager.Instance.DisplayNotificationMessage("Payment rejected <br> \"You don't have enough scraps\"",
+                                                     UIManager.Message.MessageType.Message);
+                }
             }
         }
-    }
-
-    public void SetPlayer(PlayerStats player)
-    {
-        m_Player = player;
     }
 
     private bool CheckInventoryAmount()

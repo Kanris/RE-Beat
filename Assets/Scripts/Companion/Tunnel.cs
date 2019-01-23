@@ -95,10 +95,10 @@ public class Tunnel : MonoBehaviour {
         var difference = player.position - transform.position;
         var result = true;
 
-        if (difference.x < 0 & transform.localScale.x > 0)
+        if (difference.x < 0 && transform.localScale.x > 0)
             result = false;
 
-        else if (difference.x > 0 & transform.localScale.x < 0)
+        else if (difference.x > 0 && transform.localScale.x < 0)
             result = false;
 
         return result;

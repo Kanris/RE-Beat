@@ -1,44 +1,43 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Companion : MonoBehaviour {
+public class Companion : MonoBehaviour
+{
 
     [SerializeField] private Transform m_Target; //who companion follow
 
     [Header("Hideout")]
-    [SerializeField] private Transform m_LastTunnel;
+    [SerializeField] private Transform m_LastTunnel; //last activated tunnel
 
     private Animator m_Animator; //companion animator
-
-    private const float m_DistanceForTrade = .4f; //distance to show/hide interaction button
-    private bool m_IsMovingToTheTunnel = false; //is companion moves to the tunnel
+    private bool m_IsMovingToTunnel; //is player move to the tunnel
 
     public static bool m_IsWithPlayer;
 
-	// Use this for initialization
-	void Start () {
-
+    // Use this for initialization
+    private void Start()
+    {
         m_Animator = GetComponent<Animator>();
         m_IsWithPlayer = true;
     }
-
+    
     private void OnDestroy()
     {
         m_IsWithPlayer = false;
     }
 
     // Update is called once per frame
-    void Update () {
-		
+    void Update()
+    {
+
         if (m_Target != null) //if there is something to follow
         {
             var diffrence = m_Target.position - transform.position;
 
             //if companion is not too close to the target or he is not moving to the tunnel
             if ((Mathf.Abs(diffrence.x) > 1.5f & (Mathf.Abs(diffrence.y) < 4f)
-                | (Mathf.Abs(diffrence.x) > 4f)
-                | m_IsMovingToTheTunnel))
+                || (Mathf.Abs(diffrence.x) > 4f)
+                || m_IsMovingToTunnel))
             {
                 //move towards target
                 transform.position = new Vector2(Vector2.MoveTowards(transform.position, m_Target.position, 2f * Time.deltaTime).x,
@@ -55,25 +54,17 @@ public class Companion : MonoBehaviour {
         }
         else if (GameMaster.Instance.IsPlayerDead) //if there is no target and player is dead
         {
-            if (m_LastTunnel == null) //if there is not saved tunnels
-                StartCoroutine(SearchForPlayer()); //search player
-            else
-            {
-                //move to the tunnel
-                m_Target = m_LastTunnel; 
-                m_IsMovingToTheTunnel = true;
-                m_LastTunnel = null;
-            }
-        } else if (m_Target == null & m_LastTunnel == null)
-        {
-            var target = GameObject.FindGameObjectWithTag("Player");
+            //move to the tunnel
+            m_Target = m_LastTunnel;
+            m_IsMovingToTunnel = true;
+            m_LastTunnel = null;
 
-            if (target != null)
-            {
-                m_Target = target.transform;
-            }
         }
-	}
+        else
+        {
+            m_Target = GameMaster.Instance.m_Player.transform.GetChild(0); //get player target
+        }
+    }
 
     private void Flip()
     {
@@ -88,25 +79,6 @@ public class Companion : MonoBehaviour {
         transform.localScale = new Vector3(value, 1, 1);
     }
 
-    private IEnumerator SearchForPlayer()
-    {
-        var target = GameObject.FindGameObjectWithTag("Player");
-
-        if (target != null)
-        {
-            m_Target = target.transform;
-
-            if (GetComponent<Trader>() != null)
-                GetComponent<Trader>().SetPlayer(m_Target.GetComponent<Player>().playerStats);
-        }
-        else
-        {
-            yield return new WaitForSeconds(.1f);
-
-            yield return SearchForPlayer();
-        }
-    }
-
     #region public methods
 
     //set target to follow
@@ -119,11 +91,6 @@ public class Companion : MonoBehaviour {
     public void SetTunnel(Transform tunnel)
     {
         m_LastTunnel = tunnel;
-
-        if (m_IsMovingToTheTunnel)
-            StartCoroutine(SearchForPlayer());
-
-        m_IsMovingToTheTunnel = false;
     }
 
     #endregion
