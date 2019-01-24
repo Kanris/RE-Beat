@@ -28,7 +28,7 @@ public class Trader : MonoBehaviour {
     private bool m_IsPlayerNear; //indicates is player near
     private bool m_IsBoughtItem; //indicates that player bought item
 
-    private int m_CurrentSelectedItemIndex = 0;
+    private int m_CurrentSelectedItemIndex = 0; //save current selected item to evaluate with next item's index
 
     private void Awake()
     {
@@ -154,9 +154,9 @@ public class Trader : MonoBehaviour {
         m_CurrentSelectedItemIndex = index;
 
         //if selected item index 4 or grater - move rect
-        if (index > 3)
+        if (index > 1)
             m_Content.localPosition = m_Content.localPosition.
-                With(y: m_DefaultYContentPosition + .5f * (index - 3)); //.5f * index more than 3 (.5f * 2)
+                With(y: m_DefaultYContentPosition + .5f * (index - 1)); //.5f * index more than 3 (.5f * 2)
 
         else //if selected item index is less than 4 return rect to normal position
             m_Content.localPosition = m_Content.localPosition.
@@ -203,8 +203,7 @@ public class Trader : MonoBehaviour {
             if (m_Content.childCount == 1)
             {
                 //hide buttons
-                m_ArrowUP.SetActive(false);
-                m_ArrowDown.SetActive(false);
+                ArrowVisibility(false, false);
             }
             else
             {
