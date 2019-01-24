@@ -1085,6 +1085,7 @@ MonoBehaviour:
   m_LandEffect: {fileID: 5619149521185307939, guid: 5609ae37648434330b162fcbbe8b1e3c,
     type: 3}
   m_FallAttackAudio: {fileID: 11400000, guid: cf27140c3752a4fe890096f4b914ab98, type: 2}
+  m_TrapAbility: {fileID: 0}
   m_EnemyHitDirection: 1
 --- !u!114 &114709436517681144
 MonoBehaviour:
@@ -1680,7 +1681,7 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.02
   m_Range: 2
   m_SpotAngle: 30
   m_CookieSize: 10
