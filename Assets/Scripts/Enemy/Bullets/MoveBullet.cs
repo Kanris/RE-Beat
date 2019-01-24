@@ -30,10 +30,10 @@ public class MoveBullet : MonoBehaviour {
         if (((m_LayerMask & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
         {
             DamageObject(collision.transform); //damage hited collision
-        }
 
-        CreateBulletHitEffect(collision); //create destroying bullet particles
-        Destroy(gameObject); //destroy bullet
+            CreateBulletHitEffect(collision); //create destroying bullet particles
+            Destroy(gameObject); //destroy bullet
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

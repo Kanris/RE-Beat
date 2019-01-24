@@ -51,7 +51,8 @@ public class DialogueManager : MonoBehaviour {
 
     [Header("UI")]
     [SerializeField] private GameObject m_DialogueUI; //dialogue ui
-    [SerializeField] private Animator m_DialogueBackgroundAnimator;
+    [SerializeField] private Animator m_DialogueBackgroundAnimator; //background animator
+    [SerializeField] private Animator m_BorderBackgroundAnimator; //border animator
     [Header("Buttons")]
     [SerializeField] private GameObject m_Buttons; //answer buttons
     [SerializeField] private GameObject m_FirstButtonGO;
@@ -188,7 +189,7 @@ public class DialogueManager : MonoBehaviour {
         m_SecondButtonGO.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(m_FirstButton.transform.parent.gameObject);
+        EventSystem.current.SetSelectedGameObject(m_FirstButtonGO.transform.GetChild(0).gameObject);
     }
 
     //notify subscribers that dialogue in progress or not
@@ -307,6 +308,7 @@ public class DialogueManager : MonoBehaviour {
     private IEnumerator AnimateDialogueHide()
     {
         m_DialogueBackgroundAnimator.SetTrigger("Disappear");
+        m_BorderBackgroundAnimator.SetTrigger("Disappear");
 
         m_NextImage.SetActive(false);
         m_Text.gameObject.SetActive(false);
