@@ -181,35 +181,20 @@ public class Trader : MonoBehaviour {
         {
             if (index + 1 == m_Content.childCount) //there is more items below current item
             {
-                //if there is more than 1 item in list and up button is in hide trigger
-                if (m_Content.childCount > 1 && m_ArrowUP.GetComponent<Image>().color.a < epsilon)
-                    //show up arrow appear animation
-                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show"); 
-
-                //hide down arrow (because there is no items below current item)
-                m_ArrowDown.GetComponent<Animator>().SetTrigger("Hide");
+                //show ArrowUp and hide ArrowDown
+                ArrowHideAnimation(m_ArrowUP, m_ArrowDown, epsilon);
             }
             //selected item is below previous selected
             else if (index > m_CurrentSelectedItemIndex)
             {
-                //if up arrow is hidden
-                if (m_ArrowUP.GetComponent<Image>().color.a < epsilon)
-                    //show up arrow appear animation
-                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show");
-
-                //play arrow move down animation
-                m_ArrowDown.GetComponent<Animator>().SetTrigger("Move");
+                //show arow up and play arrow down move animation
+                ArrowMoveAnimation(m_ArrowUP, m_ArrowDown, epsilon);
             }
             //selected item is above previous selected
             else
             {
-                //if down arrow is hiiden
-                if (m_ArrowDown.GetComponent<Image>().color.a < epsilon)
-                    //show down arrow appear animation
-                    m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
-
-                //play arrow move up animation
-                m_ArrowUP.GetComponent<Animator>().SetTrigger("Move");
+                //show arrow down and play arrow up move animation
+                ArrowMoveAnimation(m_ArrowDown, m_ArrowUP, epsilon);
             }
         }
         else //index on first items
@@ -223,12 +208,32 @@ public class Trader : MonoBehaviour {
             }
             else
             {
-                if (m_Content.childCount > 1 && m_ArrowDown.GetComponent<Image>().color.a < epsilon)
-                    m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
-
-                m_ArrowUP.GetComponent<Animator>().SetTrigger("Hide");
+                //show arrow down and hide arrow up
+                ArrowHideAnimation(m_ArrowDown, m_ArrowUP, epsilon);
             }
         }
+    }
+
+    private void ArrowHideAnimation(GameObject toShow, GameObject toHide, float epsilon)
+    {
+        //if there is more than 1 item in list and toShow arrow is hiiden
+        if (m_Content.childCount > 1 && toShow.GetComponent<Image>().color.a < epsilon)
+            //play appear animation
+            toShow.GetComponent<Animator>().SetTrigger("Show");
+
+        //play hide animation
+        toHide.GetComponent<Animator>().SetTrigger("Hide");
+    }
+
+    private void ArrowMoveAnimation(GameObject toShow, GameObject toMove, float epsilon)
+    {
+        //if toShow arrow is hidden
+        if (toShow.GetComponent<Image>().color.a < epsilon)
+            //play appear animation
+            toShow.GetComponent<Animator>().SetTrigger("Show");
+
+        //play move down animation
+        toMove.GetComponent<Animator>().SetTrigger("Move");
     }
 
     //activate/disable arrows base on values
