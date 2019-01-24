@@ -147,8 +147,9 @@ public class Trader : MonoBehaviour {
         //move rect depend on items count
         var index = itemToDisplayGO.transform.GetSiblingIndex();
 
-        //play arrows animation
-        ManageArrowsVisibility(index, m_CurrentSelectedItemIndex);
+        //play arrows animation if arrows are available
+        if (m_ArrowUP.activeSelf) 
+            ManageArrowsVisibility(index, m_CurrentSelectedItemIndex);
 
         m_CurrentSelectedItemIndex = index;
 
@@ -174,36 +175,59 @@ public class Trader : MonoBehaviour {
     //manage arraows visibility (base on current selected item index)
     public void ManageArrowsVisibility(int index, int previousIndex)
     {
+        var epsilon = .01f; //epsilon to check alpha value
+
         if (index > 0) //index below first items
         {
             if (index + 1 == m_Content.childCount) //there is more items below current item
             {
-                if (m_Content.childCount > 1 && m_ArrowUP.GetComponent<Image>().color.a < .001f)
-                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show");
+                //if there is more than 1 item in list and up button is in hide trigger
+                if (m_Content.childCount > 1 && m_ArrowUP.GetComponent<Image>().color.a < epsilon)
+                    //show up arrow appear animation
+                    m_ArrowUP.GetComponent<Animator>().SetTrigger("Show"); 
 
+                //hide down arrow (because there is no items below current item)
                 m_ArrowDown.GetComponent<Animator>().SetTrigger("Hide");
             }
+            //selected item is below previous selected
             else if (index > m_CurrentSelectedItemIndex)
             {
-                if (m_ArrowUP.GetComponent<Image>().color.a < .001f)
+                //if up arrow is hidden
+                if (m_ArrowUP.GetComponent<Image>().color.a < epsilon)
+                    //show up arrow appear animation
                     m_ArrowUP.GetComponent<Animator>().SetTrigger("Show");
 
+                //play arrow move down animation
                 m_ArrowDown.GetComponent<Animator>().SetTrigger("Move");
             }
+            //selected item is above previous selected
             else
             {
-                if (m_ArrowDown.GetComponent<Image>().color.a < .001f)
+                //if down arrow is hiiden
+                if (m_ArrowDown.GetComponent<Image>().color.a < epsilon)
+                    //show down arrow appear animation
                     m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
 
+                //play arrow move up animation
                 m_ArrowUP.GetComponent<Animator>().SetTrigger("Move");
             }
         }
         else //index on first items
         {
-            if (m_Content.childCount > 1 && m_ArrowDown.GetComponent<Image>().color.a < .001f)
-                m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
+            //there is only 1 item in list
+            if (m_Content.childCount == 1)
+            {
+                //hide buttons
+                m_ArrowUP.SetActive(false);
+                m_ArrowDown.SetActive(false);
+            }
+            else
+            {
+                if (m_Content.childCount > 1 && m_ArrowDown.GetComponent<Image>().color.a < epsilon)
+                    m_ArrowDown.GetComponent<Animator>().SetTrigger("Show");
 
-            m_ArrowUP.GetComponent<Animator>().SetTrigger("Hide");
+                m_ArrowUP.GetComponent<Animator>().SetTrigger("Hide");
+            }
         }
     }
 
