@@ -30,7 +30,7 @@ public class ObjectResetPosition : MonoBehaviour {
         {
             if (m_IsCanReset)
             {
-                if (InputControlManager.IsUpperButtonsPressed())
+                if (InputControlManager.Instance.m_Joystick.Action4.WasPressed && InputControlManager.IsCanUseSubmitButton())
                 {
                     m_IsCanReset = false;
                     m_ObjectToReset.ResetPosition();

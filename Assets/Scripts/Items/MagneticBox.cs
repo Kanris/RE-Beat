@@ -150,12 +150,15 @@ public class MagneticBox : MonoBehaviour {
         }
         else if (m_IsBoxPickedUp && InputControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (!m_IsCantRelease)
+            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
             {
-                if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
-                {
+                //is player can release box
+                if (!m_IsCantRelease)
                     StartCoroutine(PickUpBox(false)); //put the box
-                }
+                //player can't release box
+                else
+                    //show error message
+                    UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
             }
         }
 
@@ -211,10 +214,7 @@ public class MagneticBox : MonoBehaviour {
     //return box to the default position
     public void ResetPosition()
     {
-        ShowDeathParticles(); //show destroying particles
-        PlayDestroySound(); //play destroying sound
-
-        transform.position = m_RespawnPosition; //return box to the default position
+        Destroy(gameObject);
     }
 
     #endregion
