@@ -9,6 +9,9 @@ public class ApearanceTMPro : MonoBehaviour {
     [Header("Time")]
     [SerializeField] private float increment = .05f;
 
+    [Header("Conditions")]
+    [SerializeField] private bool m_PlayOnEnable = false;
+
     public void TextAppearance()
     {
         m_TextToAnimate.color = m_TextToAnimate.color.ChangeColor(a: 0f);
@@ -30,6 +33,16 @@ public class ApearanceTMPro : MonoBehaviour {
             yield return new WaitForSecondsRealtime(increment);
 
             value += increment;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (m_PlayOnEnable)
+        {
+            Debug.LogError("Play on enable");
+
+            TextAppearance();
         }
     }
 }
