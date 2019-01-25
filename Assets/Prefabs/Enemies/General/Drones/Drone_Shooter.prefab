@@ -515,8 +515,8 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
     DeathSound: {fileID: 11400000, guid: fca0dfe2b0c743f4f8da27a09a9fbd64, type: 2}
     MaxHealth: 3
-    m_ThrowX: 0
-    m_ThrowY: 0
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
     DamageAmount: 1
     Speed: 350
     AttackSpeed: 1
@@ -533,8 +533,7 @@ MonoBehaviour:
     m_Bits: 2105600
   m_HealthUI: {fileID: 2335554903634710663}
   m_CurrentHealthImage: {fileID: 3097502443369837790}
-  GroundHitParticles: {fileID: 1082120231036556, guid: d9a886055b0904160bcf290d794d7588,
-    type: 3}
+  GroundHitParticles: {fileID: 0}
   m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
     type: 3}
   m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}

@@ -289,7 +289,7 @@ public class EnemyStatsGO : MonoBehaviour {
             StartCoroutine(DestroyDrone(DeathDetonationTimer)); //start destroy timer with DeathDetonationTimer amount of time
         }
         //drone hit ground but is not destroying
-        else if (collision.gameObject.layer == 14)
+        else if (collision.gameObject.layer == 14 && GroundHitParticles != null)
         {
             Destroy(
                 Instantiate(GroundHitParticles, collision.contacts[0].point, Quaternion.identity),
