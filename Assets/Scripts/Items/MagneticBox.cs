@@ -23,10 +23,16 @@ public class MagneticBox : MonoBehaviour {
     [SerializeField] private Audio DestroySound; //destroying sound
     [SerializeField] private GameObject m_InteractionButton; //box ui
 
+    [Header("Additional")]
+    [SerializeField] private Transform m_CeilingCheck;
+    [SerializeField] private LayerMask m_WhatIsGround;
+
     #endregion
 
     private bool m_IsBoxPickedUp; //is box in player hands
     private bool m_IsQuitting; //is application closing
+
+    private bool m_IsCantRelease; //can't release magnetic box
 
     private Animator m_Animator; //box animator
     private Vector2 m_RespawnPosition; //where respawn box, after this will be destroyed
@@ -111,6 +117,21 @@ public class MagneticBox : MonoBehaviour {
 
     private void Update()
     {
+        //check is player can release magnetic box right now
+        if (m_IsBoxPickedUp)
+        {
+            //is there ground above box
+            if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
+            {
+                m_IsCantRelease = true;
+            }
+            //there is no ground above box
+            else
+            {
+                m_IsCantRelease = false;
+            }
+        }
+
         if (m_InteractionButton.activeSelf) //if player near the box
         {
             if (InputControlManager.Instance.m_Joystick.Action4.WasPressed && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
@@ -129,9 +150,12 @@ public class MagneticBox : MonoBehaviour {
         }
         else if (m_IsBoxPickedUp && InputControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
+            if (!m_IsCantRelease)
             {
-                StartCoroutine ( PickUpBox(false) ); //put the box
+                if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
+                {
+                    StartCoroutine(PickUpBox(false)); //put the box
+                }
             }
         }
 
@@ -146,10 +170,14 @@ public class MagneticBox : MonoBehaviour {
     {
         m_IsBoxPickedUp = value; //change box value
 
+        //place box above player
+        if (!value)
+            transform.localPosition = new Vector2(0, .6f);
+
         transform.SetParent(value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null); //attach or detach box to the player
 
         if (value) //if box is picked up
-            transform.localPosition = new Vector2(0f, 0.4f); //put box in above of the player
+            transform.localPosition = new Vector2(0f, 0.3f); //put box in above of the player
         else //if need to put box down
             GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position); //save box position
 
