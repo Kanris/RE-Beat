@@ -40,8 +40,6 @@ public class ApearanceTMPro : MonoBehaviour {
     {
         if (m_PlayOnEnable)
         {
-            Debug.LogError("Play on enable");
-
             TextAppearance();
         }
     }
