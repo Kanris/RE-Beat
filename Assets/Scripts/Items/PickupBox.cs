@@ -15,6 +15,10 @@ public class PickupBox : MonoBehaviour {
     [Header("Destroy conditions")]
     [SerializeField, Range(100f, -100f)] private float YRestrictions = -10f; //y fall restrictions
 
+    [Header("Additional")]
+    [SerializeField] private Transform m_CeilingCheck;
+    [SerializeField] private LayerMask m_WhatIsGround;
+
     #region private fields
 
     private Vector3 m_SpawnPosition; //box spawn position
@@ -22,6 +26,8 @@ public class PickupBox : MonoBehaviour {
 
     [SerializeField] private bool m_IsBoxUp; //is box in player's hand
     private bool m_IsQuitting; //is application closing
+
+    private bool m_IsCantRelease; //can't release box
 
     #endregion
 
@@ -66,6 +72,21 @@ public class PickupBox : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        //check is player can release box right now
+        if (m_IsBoxUp)
+        {
+            //is there ground above box
+            if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
+            {
+                m_IsCantRelease = true;
+            }
+            //there is no ground above box
+            else
+            {
+                m_IsCantRelease = false;
+            }
+        }
+
         #region pickup handler
 
         if (m_InteractionUI.activeSelf && !m_IsBoxUp) //if player is near and box is not in player's hand
@@ -82,7 +103,11 @@ public class PickupBox : MonoBehaviour {
             if ((InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed())
                     && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit or attack button
             {
-                StartCoroutine( AttachToParent(false) ); //attach box to the player
+                if (!m_IsCantRelease)
+                    StartCoroutine( AttachToParent(false) ); //attach box to the player
+                else
+                    //show error message
+                    UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
             }
         }
 
