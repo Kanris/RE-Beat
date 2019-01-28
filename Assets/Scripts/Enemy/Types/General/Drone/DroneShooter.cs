@@ -76,14 +76,16 @@ public class DroneScriptEditor : Editor
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(Seeker))]
 public class DroneShooter : MonoBehaviour {
 
-    [SerializeField] private Material TrailMaterial;
-    [SerializeField] private PlayerInTrigger m_ChaseRange;
-    [SerializeField] private PlayerInTrigger m_ScanRange;
+    [SerializeField] private Material TrailMaterial; //drone's aim trail material
+
+    [SerializeField] private PlayerInTrigger m_ChaseRange; //range where drone wouldn't lost player's sight
+    [SerializeField] private PlayerInTrigger m_ScanRange; //range where player can detect player
+
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 2f; //next point update rate
     [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
     [Header("Movement points")]
-    [SerializeField] private Transform[] m_PatrolPoints;
+    [SerializeField] private Transform[] m_PatrolPoints; //points between which drone moves
 
     [Header("Effects")]
     [SerializeField] private GameObject BulletTrailPrefab;
@@ -116,6 +118,8 @@ public class DroneShooter : MonoBehaviour {
 
         InitializeComponents(); //initialize rigidbody and seeker
 
+        SetRandomScanSpeed();
+
         m_ChaseRange.OnPlayerInTrigger += StartChase;
         m_ScanRange.OnPlayerInTrigger += StartChase;
 
@@ -129,6 +133,12 @@ public class DroneShooter : MonoBehaviour {
         m_Stats = GetComponent<EnemyStatsGO>();
 
         m_Stats.OnDroneDestroy += SetOnDestroy;
+    }
+
+    private void SetRandomScanSpeed()
+    {
+        var randomSpeed = Random.Range(.8f, 1.2f);
+        m_RadarAnimator.SetFloat("Speed", randomSpeed);
     }
 
     #endregion
