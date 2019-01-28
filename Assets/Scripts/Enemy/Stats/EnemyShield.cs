@@ -12,6 +12,9 @@ public class EnemyShield : MonoBehaviour {
     [SerializeField, Range(1f, 5f)] private float m_DebuffDuration = 5f;
     [SerializeField, Range(1f, 5f)] private float m_ShieldDuration = 2f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject m_DestroyParticles;
+
     private bool m_IsQuitting; //is application closing
     private Transform m_SieldImage;
 
@@ -131,9 +134,22 @@ public class EnemyShield : MonoBehaviour {
     {
         if (collision.CompareTag("PlayerBullet"))
         {
+            CreateDestroyParticles();
+
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
+    }
+
+    private void CreateDestroyParticles()
+    {
+        var instantiateDestroyParticles = Instantiate(m_DestroyParticles);
+        instantiateDestroyParticles.transform.position = transform.position;
+
+        var main = instantiateDestroyParticles.GetComponent<ParticleSystem>().main;
+        main.startColor = m_SieldImage.GetComponent<SpriteRenderer>().color;
+
+        Destroy(instantiateDestroyParticles, 15f);
     }
 
     private void ChangeIsQuitting(bool value)
