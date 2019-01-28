@@ -91,8 +91,7 @@ public class PickupBox : MonoBehaviour {
 
         if (m_InteractionUI.activeSelf && !m_IsBoxUp) //if player is near and box is not in player's hand
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed
-                    && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 StartCoroutine( AttachToParent(true) ); //pickup box
             }
@@ -100,7 +99,7 @@ public class PickupBox : MonoBehaviour {
         }
         else if (m_IsBoxUp && !m_InteractionUI.activeSelf) //if player is holding box
         {
-            if ((InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed())
+            if ((InputControlManager.Instance.IsPickupPressed() || InputControlManager.IsAttackButtonsPressed())
                     && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit or attack button
             {
                 if (!m_IsCantRelease)
@@ -168,7 +167,7 @@ public class PickupBox : MonoBehaviour {
         if (!GameMaster.Instance.IsPlayerDead)
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(value); //trigger player bussy
 
-        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
     }
 
     private void ChangeBoxProperty(bool value, int layerId)

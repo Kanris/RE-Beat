@@ -101,7 +101,7 @@ public class PickUpItem : MonoBehaviour {
         }
         
         GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
-        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
         Destroy(gameObject);
     }
 

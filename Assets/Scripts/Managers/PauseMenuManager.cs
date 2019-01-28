@@ -138,7 +138,7 @@ public class PauseMenuManager : MonoBehaviour {
         if (!m_IsCantOpenPauseMenu)
         {
             //if player pressed pause button
-            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Start).WasPressed)
+            if (InputControlManager.Instance.IsStartMenuPressed())
             {
                 SetActiveUI();
             }

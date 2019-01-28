@@ -165,7 +165,7 @@ namespace UnityStandardAssets._2D
         {
             StartCoroutine(PlayCameraHitAnimation());
 
-            InputControlManager.Instance.StartJoystickVibrate(2f, .5f);
+            InputControlManager.Instance.StartGamepadVibration(2f, .5f);
         }
 
         //play low health effect
@@ -183,7 +183,7 @@ namespace UnityStandardAssets._2D
         //play revive effect
         public IEnumerator PlayReviveEffect()
         {
-            InputControlManager.Instance.StartJoystickVibrate(2f, .5f);
+            InputControlManager.Instance.StartGamepadVibration(2f, .5f);
 
             Camera.main.GetComponent<Kino.AnalogGlitch>().enabled = true;
 

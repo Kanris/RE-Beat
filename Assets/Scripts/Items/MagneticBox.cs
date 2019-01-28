@@ -134,7 +134,7 @@ public class MagneticBox : MonoBehaviour {
 
         if (m_InteractionButton.activeSelf) //if player near the box
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
                 {
@@ -150,7 +150,7 @@ public class MagneticBox : MonoBehaviour {
         }
         else if (m_IsBoxPickedUp && InputControlManager.IsCanUseSubmitButton()) //if box is picked up
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.Instance.IsPickupPressed() || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
             {
                 //is player can release box
                 if (!m_IsCantRelease)
@@ -192,7 +192,7 @@ public class MagneticBox : MonoBehaviour {
         if (!GameMaster.Instance.IsPlayerDead)
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(value); //trigger player bussy
 
-        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f); //vibrate gamepad
+        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f); //vibrate gamepad
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

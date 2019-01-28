@@ -100,8 +100,7 @@ public class Chest : MonoBehaviour {
                 }
             }
 
-            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed
-                || InputControlManager.Instance.m_Joystick.Action2)
+            if (InputControlManager.Instance.IsBackMenuPressed() || InputControlManager.Instance.IsBackPressed())
             {
                 StartCoroutine(CloseChest());
             }

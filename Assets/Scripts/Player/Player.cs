@@ -103,11 +103,11 @@ public class Player : MonoBehaviour {
     #region attacks
 
     //Generic method to execute attack logic
-    private void Attack(float timeToCheck, InControl.InputControl inputControl, VoidDelegate action)
+    private void Attack(float timeToCheck, bool buttonPressed, VoidDelegate action)
     {
         if (timeToCheck < Time.time) //can player attack
         {
-            if (inputControl.WasPressed)
+            if (buttonPressed)
             {
                 action();
             }
@@ -216,7 +216,7 @@ public class Player : MonoBehaviour {
     private void PerformMeleeAtack()
     {
         m_MeleeAttackCooldown = Time.time + PlayerStats.MeleeAttackSpeed; //next attack time
-        InputControlManager.Instance.StartJoystickVibrate(1, 0.05f); //vibrate gamepad
+        InputControlManager.Instance.StartGamepadVibration(1, 0.05f); //vibrate gamepad
 
         StartCoroutine(MeleeAttack()); //perform meleeattack
     }
@@ -240,7 +240,7 @@ public class Player : MonoBehaviour {
     private void PerformRangeAttack()
     {
         m_RangeAttackCooldown = Time.time + PlayerStats.RangeAttackSpeed; //next attack time
-        InputControlManager.Instance.StartJoystickVibrate(1, 0.05f);
+        InputControlManager.Instance.StartGamepadVibration(1, 0.05f);
         UIManager.Instance.BulletCooldown(PlayerStats.RangeAttackSpeed); //show bullet cooldown in player's ui
 
         var whereToShoot = transform.localScale.x == -1 ? 180f : 0f; // direction of shooting
@@ -319,23 +319,19 @@ public class Player : MonoBehaviour {
 
     private void CameraRightStickControl()
     {
-        if (InputControlManager.Instance.m_Joystick.RightStick.State) //if right stick pressed
+        if (InputControlManager.Instance.IsRightStickPressed()) //if right stick pressed
         {
-            if (Mathf.Abs(InputControlManager.Instance.m_Joystick.RightStickY.Value) > 0.4f) //if right stick Y pressed
+            if (Mathf.Abs(InputControlManager.Instance.GetVerticalRightStickValue()) > 0.4f) //if right stick Y pressed
             {
-                var cameraTarget = InputControlManager.Instance.m_Joystick.RightStickY.Value > 0 ? m_CameraUp : m_CameraDown; //determine where to look
+                var cameraTarget = InputControlManager.Instance.GetVerticalRightStickValue() > 0 ? m_CameraUp : m_CameraDown; //determine where to look
 
-                Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget); //move camera to that positon
-
-                m_IsRightStickPressed = true; //indicates that camera is not looking at player
+                MoveCamera(cameraTarget); //move camera to cameraTarget
             }
-            else if (Mathf.Abs(InputControlManager.Instance.m_Joystick.RightStickX.Value) > 0.4f) //if right stick X pressed
+            else if (Mathf.Abs(InputControlManager.Instance.GetHorizontalRightStickValue()) > 0.4f) //if right stick X pressed
             {
-                var cameraTarget = InputControlManager.Instance.m_Joystick.RightStickX.Value * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft; //determine where to look
+                var cameraTarget = InputControlManager.Instance.GetHorizontalRightStickValue() * transform.localScale.x > 0 ? m_CameraRight : m_CameraLeft; //determine where to look
 
-                Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget); //move camera to that positon
-
-                m_IsRightStickPressed = true; //indicates that camera is not looking at player
+                MoveCamera(cameraTarget); //move camera to cameraTarget
             }
         }
         else if (m_IsRightStickPressed) //if camera is not looking at the player and right stick is not pressed
@@ -343,6 +339,12 @@ public class Player : MonoBehaviour {
             m_IsRightStickPressed = false; //right stick is not pressed
             Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(transform); //return camera to the player
         }
+    }
+
+    private void MoveCamera(Transform cameraTarget)
+    {
+        Camera.main.GetComponent<Camera2DFollow>().ChangeTarget(cameraTarget); //move camera to that positon
+        m_IsRightStickPressed = true; //indicates that camera is not looking at player
     }
 
     #endregion
@@ -358,7 +360,7 @@ public class Player : MonoBehaviour {
 
             if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
             {
-                if (InputControlManager.Instance.m_Joystick.LeftBumper & !m_Animator.GetBool("Ground"))
+                if (InputControlManager.Instance.IsFallAttackPressed() && !m_Animator.GetBool("Ground"))
                 {
                     StartCoroutine(StartFallAttack());
                 }
@@ -376,9 +378,9 @@ public class Player : MonoBehaviour {
 
             #region attack handler
 
-            Attack(m_MeleeAttackCooldown, InputControlManager.Instance.m_Joystick.Action3, PerformMeleeAtack);
+            Attack(m_MeleeAttackCooldown, InputControlManager.Instance.IsAttackPressed(), PerformMeleeAtack);
 
-            Attack(m_RangeAttackCooldown, InputControlManager.Instance.m_Joystick.RightBumper, PerformRangeAttack);
+            Attack(m_RangeAttackCooldown, InputControlManager.Instance.IsShootPressed(), PerformRangeAttack);
 
             #endregion
 
@@ -387,7 +389,7 @@ public class Player : MonoBehaviour {
         {
             if (m_InvisibleAbilityCooldown < Time.time) //if can use invisible ability
             {
-                if (InputControlManager.Instance.m_Joystick.Action3.WasPressed) //if attack button pressed
+                if (InputControlManager.Instance.IsAttackPressed()) //if attack button pressed
                 {
                     m_InvisibleAbilityCooldown = Time.time + PlayerStats.InvisibleTimeSpeed * 2; //set cooldown timer
 
@@ -399,7 +401,7 @@ public class Player : MonoBehaviour {
 
             if (m_TrapAbilityCooldown < Time.time)
             {
-                if (InputControlManager.Instance.m_Joystick.RightBumper.WasPressed)
+                if (InputControlManager.Instance.IsShootPressed())
                 {
                     m_TrapAbilityCooldown = PlayerStats.EnemyTrapSpeed + Time.time;
                     TrapAbility();

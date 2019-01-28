@@ -49,14 +49,14 @@ public class LanternPickUp : MonoBehaviour {
 		
         if (m_Player != null)
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed)
+            if (InputControlManager.Instance.IsPickupPressed())
             {
                 SetPlayerCarriesLantern(true);
             }
         }
         else if (transform.parent != null)
         {
-            if (InputControlManager.Instance.m_Joystick.Action4.WasPressed)
+            if (InputControlManager.Instance.IsPickupPressed())
             {
                 SetPlayerCarriesLantern(false);
                 GameMaster.Instance.SaveState(transform.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
@@ -81,7 +81,7 @@ public class LanternPickUp : MonoBehaviour {
             transform.SetParent(null);
         }
 
-        InputControlManager.Instance.StartJoystickVibrate(1f, 0.05f);
+        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -158,7 +158,7 @@ namespace UnityStandardAssets._2D
 
                     ShowDustEffect();
 
-                    InputControlManager.Instance.StartJoystickVibrate(1, 0.1f);
+                    InputControlManager.Instance.StartGamepadVibration(1, 0.1f);
 
                     m_IsHaveDoubleJump = true;
                 }
@@ -173,7 +173,7 @@ namespace UnityStandardAssets._2D
                         m_Rigidbody2D.velocity = Vector2.zero;
                         m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce - 100f));
 
-                        InputControlManager.Instance.StartJoystickVibrate(1, 0.1f);
+                        InputControlManager.Instance.StartGamepadVibration(1, 0.1f);
 
                         ShowDoubleJumpEffect();
                     }
@@ -187,7 +187,7 @@ namespace UnityStandardAssets._2D
 
                         StartCoroutine(ShowDashEffect());
 
-                        InputControlManager.Instance.StartJoystickVibrate(1, 0.2f);
+                        InputControlManager.Instance.StartGamepadVibration(1, 0.2f);
                     }
 
                     if (m_Anim.GetBool("Dash") && !m_Anim.GetBool("Hit"))

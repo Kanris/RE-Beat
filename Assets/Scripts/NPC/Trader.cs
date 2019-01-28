@@ -40,8 +40,7 @@ public class Trader : MonoBehaviour {
 
         if (m_IsPlayerNear) //if player is near
         {
-            if (InputControlManager.Instance.m_Joystick.GetControl(InControl.InputControlType.Back).WasPressed 
-                || InputControlManager.Instance.m_Joystick.Action2) //if back button or attack button pressed
+            if (InputControlManager.Instance.IsBackMenuPressed()|| InputControlManager.Instance.IsBackPressed()) //if back button button pressed
             {
                 //if trader's store is open
                 if (m_StoreUI.activeSelf)
@@ -73,13 +72,13 @@ public class Trader : MonoBehaviour {
                     EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
                 }
-                else if (InputControlManager.Instance.m_Joystick.Action4.WasReleased && m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.IsPickupReleased() && m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                     m_IsBoughtItem = false;
                 }
                 //submit button pressed to buy item
-                else if (InputControlManager.Instance.m_Joystick.Action4.IsPressed && m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.IsPickupPressing() && m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {
@@ -91,7 +90,7 @@ public class Trader : MonoBehaviour {
                     }
                     else if (!m_IsBoughtItem)
                     {
-                        InputControlManager.Instance.StartJoystickVibrate(0.5f, 0.01f);
+                        InputControlManager.Instance.StartGamepadVibration(0.5f, 0.01f);
                         m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.unscaledDeltaTime);
                     }
                 }

@@ -62,7 +62,7 @@ public class DoorButton : MonoBehaviour {
 
             m_Animator.SetBool("Pressed", value); //set button to pressed animation 
 
-            InputControlManager.Instance.StartJoystickVibrate(5, .1f); //vibrate gamepad
+            InputControlManager.Instance.StartGamepadVibration(5, .1f); //vibrate gamepad
 
             DoorToOpen.gameObject.SetActive(!value); //active or disable attached door
         }

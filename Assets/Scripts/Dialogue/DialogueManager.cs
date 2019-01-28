@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (m_IsDialogueInProgress) //if is dialogue in progress
         {
-            if (InputControlManager.Instance.m_Joystick.Action1.WasPressed & InputControlManager.IsCanUseSubmitButton()) //if jump button pressed
+            if (InputControlManager.Instance.IsJumpPressed() && InputControlManager.IsCanUseSubmitButton()) //if jump button pressed to skip sentence
             {
                 if (m_IsSentenceTyping) //if sentence is still typing
                 {
@@ -130,7 +130,7 @@ public class DialogueManager : MonoBehaviour {
                 if (m_IsSentenceTyping) //if player didn't press skip button
                     yield return new WaitForSecondsRealtime(0.05f); //wait 0.05s until type letter
 
-                InputControlManager.Instance.StartJoystickVibrate(.1f, 0.01f);
+                InputControlManager.Instance.StartGamepadVibration(.1f, 0.01f);
             }
             else if (letter == '>')
                 isTagFound = false;
