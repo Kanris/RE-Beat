@@ -15,6 +15,8 @@ public class EnemyShield : MonoBehaviour {
     private bool m_IsQuitting; //is application closing
     private Transform m_SieldImage;
 
+    private bool m_IsShieldActive;
+
     #region initialize
 
     private void Awake()
@@ -24,8 +26,6 @@ public class EnemyShield : MonoBehaviour {
 
     // Use this for initialization
     private void Start () {
-
-        m_SieldImage.gameObject.GetComponent<SpriteRenderer>().color = GetShieldColor(); //change shield color (base on debuff type)
 
         SubscribeToEvents();
 
@@ -54,11 +54,15 @@ public class EnemyShield : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
+        m_SieldImage.gameObject.GetComponent<SpriteRenderer>().color = GetShieldColor(); //change shield color (base on debuff type)
+
         StartCoroutine(CooldownShield());
     }
 
     public IEnumerator CooldownShield()
     {
+        m_IsShieldActive = true;
+
         var currentTime = 0f;
 
         while (currentTime < m_ShieldDuration)
@@ -76,8 +80,9 @@ public class EnemyShield : MonoBehaviour {
 
     public void ApplyDebuff()
     {
-        GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>()
-            .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
+        if (m_IsShieldActive)
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>()
+                .playerStats.DebuffPlayer(m_DebuffType, m_DebuffDuration);
     }
 
     private void OnApplicationQuit()
@@ -102,6 +107,10 @@ public class EnemyShield : MonoBehaviour {
 
         switch (m_DebuffType)
         {
+            case DebuffPanel.DebuffTypes.AttackSpeed:
+                shieldColor = new Color(255, 0, 0, .5f);
+                break;
+
             case DebuffPanel.DebuffTypes.Cold:
                 shieldColor = new Color(0, 255, 227, 0.5f);
                 break;
