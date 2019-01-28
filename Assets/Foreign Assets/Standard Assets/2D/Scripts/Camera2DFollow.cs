@@ -5,14 +5,14 @@ namespace UnityStandardAssets._2D
 {
     public class Camera2DFollow : MonoBehaviour
     {
-        public Transform target;
+        public Transform target; //target to follow
         public float damping = 1;
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
 
         [Header("Camera bounds")]
-        public BoxCollider2D m_CameraBounds;
+        public BoxCollider2D m_CameraBounds; //camera bounds in scene
 
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
@@ -35,6 +35,11 @@ namespace UnityStandardAssets._2D
         {
             m_DefaultCamSize = Camera.main.orthographicSize;
 
+            SetCameraBounds();
+        }
+
+        private void SetCameraBounds()
+        {
             float camExtentV = Camera.main.orthographicSize;
             float camExtentH = (camExtentV * Screen.width) / Screen.height;
 
@@ -62,11 +67,11 @@ namespace UnityStandardAssets._2D
                 }
                 else
                 {
-                    m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
+                    m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.unscaledDeltaTime * lookAheadReturnSpeed);
                 }
 
                 Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
-                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
+                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping, 20, Time.unscaledDeltaTime);
 
                 newPos = new Vector3(Mathf.Clamp(newPos.x, leftBound, rightBound), 
                                         Mathf.Clamp(newPos.y, bottomBound, topBound), newPos.z);
@@ -78,7 +83,7 @@ namespace UnityStandardAssets._2D
 
             if (m_Transition)
             {
-                elapsed += Time.fixedDeltaTime / m_DurationTime;
+                elapsed += Time.unscaledDeltaTime / m_DurationTime;
 
                 Camera.main.orthographicSize = Mathf.Lerp(m_CurrentCameraSize, m_CamSize, elapsed);
 
@@ -94,11 +99,11 @@ namespace UnityStandardAssets._2D
 
             Camera.main.orthographicSize = m_DefaultCamSize;
 
-            damping = 0f;
+            damping = 0f; //move fast camera to the player
 
             yield return null;
 
-            damping = .2f;
+            damping = .2f; //return smoothing
         }
 
         public void ChangeTarget(Transform newTarget)
@@ -119,6 +124,9 @@ namespace UnityStandardAssets._2D
 
         #region camera effects
 
+        #region shake
+
+        //play shake effect
         public void Shake(float amount, float length)
         {
             m_CamShakeAmount = amount;
@@ -127,6 +135,7 @@ namespace UnityStandardAssets._2D
             Invoke("StopShake", length);
         }
 
+        //shake camera
         private void DoShake()
         {
             if (m_CamShakeAmount > 0)
@@ -143,11 +152,15 @@ namespace UnityStandardAssets._2D
             }
         }
 
+        //stop shaking
         public void StopShake()
         {
             CancelInvoke("DoShake");
         }
 
+        #endregion
+
+        //play hit effect
         public void PlayHitEffect()
         {
             StartCoroutine(PlayCameraHitAnimation());
@@ -155,16 +168,19 @@ namespace UnityStandardAssets._2D
             InputControlManager.Instance.StartJoystickVibrate(2f, .5f);
         }
 
+        //play low health effect
         public void PlayLowHealthEffect()
         {
             Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = true;
         }
 
+        //stop playing low health effect
         public void StopLowHealthEffect()
         {
             Camera.main.GetComponent<Kino.DigitalGlitch>().enabled = false;
         }
 
+        //play revive effect
         public IEnumerator PlayReviveEffect()
         {
             InputControlManager.Instance.StartJoystickVibrate(2f, .5f);
