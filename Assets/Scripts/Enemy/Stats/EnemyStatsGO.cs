@@ -107,7 +107,7 @@ public class EnemyStatsGO : MonoBehaviour {
             EnemyStats.CreatedShield.ApplyDebuff();
         }
         //if enemy does not have active shies - receive damage
-        else if (GetComponent<EnemyStatsGO>().enabled) //if enemy stats is active and enemy can receive damage
+        else if (GetComponent<EnemyStatsGO>().enabled && EnemyStats.CreatedShield == null) //if enemy stats is active and enemy can receive damage
         {
             //apply damage base on the type of the enemy
             //regular enemy receive damage by basic player's stats
