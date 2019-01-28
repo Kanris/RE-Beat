@@ -662,6 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TextToAnimate: {fileID: 7039066595226728357}
   increment: 0.05
+  m_PlayOnEnable: 0
 --- !u!1 &4155237268683090912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,7 +1279,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: faa5c424d34a4e24ebd21b29b483bf95, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

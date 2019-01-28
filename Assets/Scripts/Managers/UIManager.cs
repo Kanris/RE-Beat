@@ -153,7 +153,7 @@ public class UIManager : MonoBehaviour {
         m_NotificationUI.GetComponent<Image>().color = itemToDisplay.color; //change notification color
         m_Text.text = itemToDisplay.message; //change notification text
 
-        yield return new WaitForSeconds(itemToDisplay.duration); //display need amount time
+        yield return new WaitForSecondsRealtime(itemToDisplay.duration); //display need amount time
 
         m_MessagePipeline.RemoveAt(0); //remove displayed item from queue
 
@@ -180,7 +180,7 @@ public class UIManager : MonoBehaviour {
 
             yield return new WaitForEndOfFrame();
 
-            yield return new WaitForSeconds(m_Animator.GetCurrentAnimatorStateInfo(0).length);
+            yield return new WaitForSecondsRealtime(m_Animator.GetCurrentAnimatorStateInfo(0).length);
         }
 
         m_NotificationUI.SetActive(active);
@@ -221,7 +221,7 @@ public class UIManager : MonoBehaviour {
         m_AddScrapText.gameObject.SetActive(true); //display add amount text
         m_AddScrapText.text = sign + value.ToString(); //display amount that will be added
 
-        yield return new WaitForSeconds(.5f); //time before start add amount
+        yield return new WaitForSecondsRealtime(.5f); //time before start add amount
 
         //display add animation
         for (; value > 0; value--)
@@ -231,12 +231,12 @@ public class UIManager : MonoBehaviour {
 
             m_AddScrapText.text = sign + value.ToString();
 
-            yield return new WaitForSeconds(.005f);
+            yield return new WaitForSecondsRealtime(.005f);
         }
 
         m_AddScrapText.text = sign + value.ToString(); //show zero add value at the end
 
-        yield return new WaitForSeconds(.5f); //wait before hide add text
+        yield return new WaitForSecondsRealtime(.5f); //wait before hide add text
 
         m_AddScrapText.gameObject.SetActive(false);
     }
