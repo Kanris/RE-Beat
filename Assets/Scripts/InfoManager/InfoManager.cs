@@ -174,6 +174,8 @@ public class InfoManager : MonoBehaviour
 
     private void OpenJournal()
     {
+        Time.timeScale = 0f; //stop time
+
         AudioManager.Instance.Play(m_OpenAudio);
         m_JournalUI.SetActive(true);
 
@@ -209,8 +211,10 @@ public class InfoManager : MonoBehaviour
         var instantiateItemButton = Instantiate(resourceItemButton, m_Content);
 
         instantiateItemButton.name = LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button name to the item name
+
         instantiateItemButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
             LocalizationManager.Instance.GetItemsLocalizedValue(item.Name); //change button caption to the item name
+
         instantiateItemButton.transform.GetChild(1).GetComponent<Image>().sprite =
             itemsSpriteAtlas.SingleOrDefault(x => x.name == item.ImageInAtlas); //add item image from atlas
 
@@ -284,8 +288,7 @@ public class InfoManager : MonoBehaviour
 
         AudioManager.Instance.Play(m_OpenAudio); //play open journal sound
 
-        if (InfoManagerLight.Instance != null)
-            InfoManagerLight.Instance.ChangeLight(id);
+        InfoManagerLight.Instance?.ChangeLight(id);
 
         InputControlManager.Instance.StartJoystickVibrate(1, .05f);
     }
@@ -299,8 +302,10 @@ public class InfoManager : MonoBehaviour
 
     public void CloseJournal()
     {
+        Time.timeScale = 1f; //return time back to normal
+
         m_JournalUI.SetActive(false); //hide journal ui
-        OnJournalOpen(false); //notify that journal is close
+        OnJournalOpen?.Invoke(false); //notify that journal is close
 
         AudioManager.Instance.Play(m_CloseAudio); //play open journal sound 
 
