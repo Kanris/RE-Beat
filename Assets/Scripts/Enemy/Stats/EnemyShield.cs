@@ -8,21 +8,24 @@ public class EnemyShield : MonoBehaviour {
 
     public DebuffPanel.DebuffTypes m_DebuffType;
 
-    [Header("Effects")]
-    [SerializeField] private Transform m_SieldImage;
-
     [Header("Durations")]
     [SerializeField, Range(1f, 5f)] private float m_DebuffDuration = 5f;
     [SerializeField, Range(1f, 5f)] private float m_ShieldDuration = 2f;
 
     private bool m_IsQuitting; //is application closing
+    private Transform m_SieldImage;
 
-    private bool m_IsActive;
+    #region initialize
+
+    private void Awake()
+    {
+        m_SieldImage = transform.GetChild(0);
+    }
 
     // Use this for initialization
     private void Start () {
 
-        m_SieldImage.gameObject.GetComponent<SpriteRenderer>().color = GetShieldColor();
+        m_SieldImage.gameObject.GetComponent<SpriteRenderer>().color = GetShieldColor(); //change shield color (base on debuff type)
 
         SubscribeToEvents();
 
@@ -34,6 +37,8 @@ public class EnemyShield : MonoBehaviour {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //is player return to the start screen
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //is player move to the next scene
     }
+
+    #endregion
 
     public IEnumerator ActivateShield()
     {
@@ -48,8 +53,6 @@ public class EnemyShield : MonoBehaviour {
 
             yield return new WaitForEndOfFrame();
         }
-
-        m_IsActive = true;
 
         StartCoroutine(CooldownShield());
     }

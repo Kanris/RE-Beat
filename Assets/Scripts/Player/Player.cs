@@ -358,18 +358,21 @@ public class Player : MonoBehaviour {
         {
             #region fall attack
 
-            if (m_FallAttackCooldown < Time.time & PlayerStats.m_IsFallAttack)
+            //if player can perform fall attack and fall attack is not in cooldown
+            if (m_FallAttackCooldown < Time.time && PlayerStats.m_IsFallAttack)
             {
                 if (InputControlManager.Instance.IsFallAttackPressed() && !m_Animator.GetBool("Ground"))
                 {
                     StartCoroutine(StartFallAttack());
                 }
             }
-
+            //is player performing fall attack
             if (m_IsFallAttack)
             {
+                //and if player is grounded
                 if (m_Animator.GetBool("Ground"))
                 {
+                    //stop fall attack
                     StopFallAttack();
                 }
             }
