@@ -68,6 +68,8 @@ public class Trader : MonoBehaviour {
                     m_StoreUI.SetActive(true); //show store ui
                     m_InteractionUI.SetActive(false); //hide interaction elements
 
+                    Time.timeScale = 0f; //stop time
+
                     EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
                 }
@@ -90,7 +92,7 @@ public class Trader : MonoBehaviour {
                     else if (!m_IsBoughtItem)
                     {
                         InputControlManager.Instance.StartJoystickVibrate(0.5f, 0.01f);
-                        m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.deltaTime);
+                        m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount += (1f * Time.unscaledDeltaTime);
                     }
                 }
             }
@@ -125,12 +127,15 @@ public class Trader : MonoBehaviour {
     //hide all trader's ui elemetnts
     public IEnumerator HideUI()
     {
+        Time.timeScale = 1f; //return time back to normal
+
         m_InteractionUI?.SetActive(false); //hide interaction UI
 
         m_StoreUI?.SetActive(false); //hide store UI
 
         //remove item's selection
         m_CurrentSelectedItemIndex = 0;
+
         EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
         EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
 
