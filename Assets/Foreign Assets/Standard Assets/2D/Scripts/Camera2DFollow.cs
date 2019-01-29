@@ -71,7 +71,7 @@ namespace UnityStandardAssets._2D
                 }
 
                 Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
-                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping, 20, Time.unscaledDeltaTime);
+                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping, Mathf.Infinity, Time.unscaledDeltaTime);
 
                 newPos = new Vector3(Mathf.Clamp(newPos.x, leftBound, rightBound), 
                                         Mathf.Clamp(newPos.y, bottomBound, topBound), newPos.z);
@@ -101,7 +101,7 @@ namespace UnityStandardAssets._2D
 
             damping = 0f; //move fast camera to the player
 
-            yield return null;
+            yield return new WaitForSeconds(10f);
 
             damping = .2f; //return smoothing
         }
