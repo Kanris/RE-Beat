@@ -392,13 +392,15 @@ public class GameMaster : MonoBehaviour {
 
             if ((PlayerStats.m_ReviveCount < 1 || respawnWithoutRevive))
             {
-                if (PlayerStats.m_ReviveCount < 1)
-                    PlayerStats.Scrap = -PlayerStats.Scrap;
+                Debug.LogError("Start player respawn");
 
                 m_IsPlayerRespawning = true;
 
                 if (respawnWithFade)
+                {
+                    PlayerStats.Scrap = -PlayerStats.Scrap;
                     StartCoroutine(RespawnWithFade(m_RespawnPoint));
+                }
                 else
                     RespawnWithoutFade(m_RespawnPoint);
 
@@ -446,6 +448,7 @@ public class GameMaster : MonoBehaviour {
         m_ReachableRespawnPoint = null;
 
         UIManager.Instance.SetReviveAvailable(false);
+        UIManager.Instance.DisplayNotificationMessage("Companion can't revive you", UIManager.Message.MessageType.Message, 3f);
 
         m_IsPlayerRespawning = false;
         IsPlayerDead = false;
@@ -459,6 +462,10 @@ public class GameMaster : MonoBehaviour {
         m_ReachableRespawnPoint = null;
 
         UIManager.Instance.SetReviveAvailable(false);
+        UIManager.Instance.DisplayNotificationMessage("Companion can't revive you", UIManager.Message.MessageType.Message, 3f);
+
+        m_IsPlayerRespawning = false;
+        IsPlayerDead = false;
 
         yield return new WaitForSeconds(.1f); //remove?
     }

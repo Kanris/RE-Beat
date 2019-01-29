@@ -74,6 +74,8 @@ public class UIManager : MonoBehaviour {
         }
         else
         {
+            m_MessagePipeline = new List<Message>(); //initialize pipeline
+
             Instance = this;
             DontDestroyOnLoad(this);
         }
@@ -123,8 +125,6 @@ public class UIManager : MonoBehaviour {
         InitializeHealList();
 
         PlayerStats.OnScrapAmountChange += ChangeScrapAmount; //subscribe on coins amount change
-
-        m_MessagePipeline = new List<Message>(); //initialize pipeline
 
         m_AmountText.text = PlayerStats.Scrap.ToString(); //display current scrap amount
 
