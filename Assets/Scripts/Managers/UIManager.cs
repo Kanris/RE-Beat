@@ -292,6 +292,11 @@ public class UIManager : MonoBehaviour {
 
     #region skills
 
+    public void ShowFallAttack(bool value)
+    {
+        m_FallAttack.gameObject.transform.parent.gameObject.SetActive(value);
+    }
+
     public void BulletCooldown(float cooldown)
     {
         StartCoroutine(DisplayCooldown(cooldown, m_BulletImage));

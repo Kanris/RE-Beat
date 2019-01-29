@@ -262,7 +262,10 @@ public class PlayerStats : Stats
             CurrentPlayerHealth = CurrentHealth;
         }
 
-#endregion
+        #endregion
+
+        if (!m_IsFallAttack)
+            UIManager.Instance?.ShowFallAttack(false);
     }
 
     public override void TakeDamage(int amount, float throwX, float throwY)

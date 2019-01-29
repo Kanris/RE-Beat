@@ -101,7 +101,7 @@ namespace UnityStandardAssets._2D
 
             damping = 0f; //move fast camera to the player
 
-            yield return new WaitForSeconds(10f);
+            yield return null;
 
             damping = .2f; //return smoothing
         }

@@ -5791,7 +5791,7 @@ PrefabInstance:
     - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
@@ -5812,6 +5812,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Terminal
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224566592948164972, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
@@ -25668,6 +25678,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212533038501834828, guid: 139eb539f2552f24ba30a4457c9cd24f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 3}
 --- !u!4 &1003083589 stripped
@@ -31695,6 +31710,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212533038501834828, guid: 139eb539f2552f24ba30a4457c9cd24f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 139eb539f2552f24ba30a4457c9cd24f, type: 3}
 --- !u!4 &1154702331 stripped
