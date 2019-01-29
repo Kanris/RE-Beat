@@ -274,7 +274,7 @@ public class PlayerStats : Stats
         {
             if (amount > 0)
                 m_IsInvincible = true; //player is invincible
-            else
+            else if (amount < 0)
                 amount = 1;
 
             amount *= DamageMultiplier;
