@@ -392,8 +392,6 @@ public class GameMaster : MonoBehaviour {
 
             if ((PlayerStats.m_ReviveCount < 1 || respawnWithoutRevive))
             {
-                Debug.LogError("Start player respawn");
-
                 m_IsPlayerRespawning = true;
 
                 if (respawnWithFade)

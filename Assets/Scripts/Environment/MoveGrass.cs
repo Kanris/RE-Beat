@@ -35,15 +35,15 @@ public class MoveGrass : MonoBehaviour {
     //when player enter to the grass zone
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy")) && !m_IsDestroyed) //if player in grass
+        if ((collision.CompareTag("Player") || collision.CompareTag("Enemy") || collision.CompareTag("Companion")) && !m_IsDestroyed) //if player in grass
         {
             if (collision.gameObject.GetComponent<Animator>() != null) //if player dash near grass
             {
                 if (collision.gameObject.GetComponent<Animator>().GetBool("Dash"))
                     m_WorldObjectStats.TakeDamage(); //destroy grass
             }
-            else //is player move near grass
-                m_Animator.SetTrigger("Move"); //play move grass animation
+
+            m_Animator.SetTrigger("Move"); //play move grass animation
         }
     }
 
