@@ -410,6 +410,8 @@ public class PlayerStats : Stats
         m_IsCanDash = false;
         m_IsInvincibleWhileDashing = false;
         m_IsDamageEnemyWhileDashing = false;
+        m_IsCanSeeEnemyHP = false;
+        m_IsFallAttack = false;
 
         m_ReviveCount = 2;
 
