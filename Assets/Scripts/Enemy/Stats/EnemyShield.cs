@@ -119,7 +119,7 @@ public class EnemyShield : MonoBehaviour {
                 break;
 
             case DebuffPanel.DebuffTypes.Defense:
-                shieldColor = new Color(255, 0, 183, 0.5f);
+                shieldColor = new Color(234, 0, 255, 0.5f);
                 break;
 
             case DebuffPanel.DebuffTypes.Fire:

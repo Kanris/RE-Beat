@@ -16,8 +16,7 @@ public class Sign : MonoBehaviour {
     [SerializeField] private GameObject m_InteractionUI;
 
     #endregion
-
-    private GameObject m_InteractionButton; //sign ui
+    
     private Transform m_Player; //player control
     private bool m_IsSentenceShowInProgress; //indicates is dialogue still in progress
 
@@ -29,19 +28,12 @@ public class Sign : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        InitializeInteractionButton(); //initialize sign ui
-
-        m_InteractionButton.SetActive(false); //hide ui
+        m_InteractionUI.SetActive(false); //hide ui
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeIsInProgress; //subscribe to dialogue in progress
 
         if (GetComponent<Animator>() != null)
             GetComponent<Animator>().SetFloat("Speed", Random.Range(.8f, 1.2f));
-    }
-
-    private void InitializeInteractionButton()
-    {
-        m_InteractionButton = Instantiate(m_InteractionUI, transform) as GameObject;
     }
 
     #endregion
@@ -55,44 +47,20 @@ public class Sign : MonoBehaviour {
             {
                 if (InputControlManager.IsUpperButtonsPressed()) //if player want to read the sign
                 {
-                    EnableUserControl(false); //disable user controll
-                    m_InteractionButton.SetActive(false); //hide sign ui
+                    EnableUserControl(false);
                     StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName, transform)); //show sign text
 
                 } else if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump) //if player control is disabled
                 {
-                    EnableUserControl(true); //enable it
-                }
-                else if (!m_InteractionButton.activeSelf)
-                {
-                    m_InteractionButton.SetActive(true);
+                    EnableUserControl(true);
                 }
             }
         }
-        else if (m_InteractionButton.activeSelf)
+        else if (m_InteractionUI.activeSelf)
         {
-            m_InteractionButton.SetActive(false);
+            m_InteractionUI.SetActive(false);
         }
-
 	}
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & m_Player == null) //if player enter to the sign trigger
-        {
-            m_InteractionButton.SetActive(true); //show or hide sign ui
-            m_Player = collision.transform;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") & m_Player != null) //if player leave sign trigger
-        {
-            m_InteractionButton.SetActive(false); //show or hide sign ui
-            m_Player = null;
-        }
-    }
 
     //enable or disable character control
     private void EnableUserControl(bool active)
@@ -101,14 +69,33 @@ public class Sign : MonoBehaviour {
         {
             m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop any character movement
             m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            m_Player.GetComponent<Animator>().SetBool("Ground", true);
-
-            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = false;
         }
-        else
-            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = true;
 
+        m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = active;
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
+
+        m_InteractionUI.SetActive(active); //hide sign ui
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (m_Player == null)
+        {
+            if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground"))
+            {
+                m_Player = collision.transform;
+                m_InteractionUI.SetActive(true);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player")) //if player leave sign trigger
+        {
+            m_InteractionUI.SetActive(false); //show or hide sign ui
+            m_Player = null;
+        }
     }
 
     private void ChangeIsInProgress(bool value)

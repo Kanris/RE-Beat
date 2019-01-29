@@ -57,10 +57,6 @@ public class DialogueTrigger : MonoBehaviour {
                 {
                     EnableUserControl(true);
                 }
-                else if (!m_NPCUI.activeSelf)
-                {
-                    m_NPCUI.SetActive(true);
-                }
             }
         }
         else if (m_NPCUI.activeSelf)
@@ -76,22 +72,23 @@ public class DialogueTrigger : MonoBehaviour {
         {
             m_Player.GetComponent<PlatformerCharacter2D>().Move(0f, false, false, false); //stop any character movement
             m_Player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            m_Player.GetComponent<Animator>().SetBool("Ground", true);
-
-            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = false;
         }
-        else
-            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = true;
 
+        m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = active;
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
+
+        m_NPCUI.SetActive(active); //hide sign ui
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is near npc
+        if (m_Player == null)
         {
-            m_Player = collision.transform; //get character control script
-            DisplayUI(true); //show npc ui
+            if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground")) //if player is near npc
+            {
+                m_Player = collision.transform; //get character control script
+                DisplayUI(true); //show npc ui
+            }
         }
     }
 
