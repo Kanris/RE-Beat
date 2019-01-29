@@ -21,6 +21,7 @@ public class PlayerStats : Stats
     [Header("Effects")]
     [SerializeField] private GameObject m_HealEffect; //heal effect particles
     [SerializeField] private Audio m_HealEffectAudio; //audio that player when player heals
+    [SerializeField] private GameObject m_ScrapGameobject; //scrap gameobject
 
     [Header("Throw stats")]
     public static float m_ThrowEnemyX = 5f; //change static value
@@ -105,7 +106,7 @@ public class PlayerStats : Stats
     {
         if (CurrentHealth == MaxHealth) //if player is already full health
         {
-            Scrap = m_OverHealScrapAmount; //add scrap
+            CreateScrapEffect();
         }
         else //heal player
         {
@@ -129,6 +130,16 @@ public class PlayerStats : Stats
 
             AudioManager.Instance.Play(m_HealEffectAudio);
         }
+    }
+
+    private void CreateScrapEffect()
+    {
+        Scrap = m_OverHealScrapAmount; //add scrap
+
+        var scrapEffect = GameMaster.Instantiate(m_ScrapGameobject);
+        scrapEffect.transform.position = m_GameObject.transform.position;
+
+        GameMaster.Destroy(scrapEffect, 1.5f);
     }
 
     public void HitEnemy(Enemy enemy, int zone)
