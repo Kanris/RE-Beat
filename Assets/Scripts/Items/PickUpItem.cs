@@ -46,7 +46,7 @@ public class PickUpItem : MonoBehaviour {
     {
         if (m_IsPlayerNearItem & InputControlManager.IsCanUseSubmitButton()) //if is player near item
         {
-            if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.Instance.IsPickupPressed()) //if player pressed submit button
             {
                 InteractWithItem(); //add item
             }

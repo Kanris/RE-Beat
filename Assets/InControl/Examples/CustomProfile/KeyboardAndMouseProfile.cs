@@ -33,28 +33,28 @@ namespace CustomProfileExample
 			{
 				new InputControlMapping
 				{
-					Handle = "Fire - Keyboard",
+					Handle = "Attack - Keyboard",
 					Target = InputControlType.Action3,
 					// KeyCodeButton fires when any of the provided KeyCode params are down.
-					Source = KeyCodeButton( KeyCode.A )
+					Source = MouseButton0
 				},
 				new InputControlMapping
 				{
 					Handle = "Shoot - Keyboard",
-					Target = InputControlType.RightBumper,
-					Source = KeyCodeButton(KeyCode.S)
+					Target = InputControlType.RightTrigger,
+					Source = MouseButton1
 				},
                 new InputControlMapping
 				{
 					Handle = "Dash",
-					Target = InputControlType.RightTrigger,
-					Source = KeyCodeButton(KeyCode.D)
+					Target = InputControlType.RightBumper,
+					Source = KeyCodeButton(KeyCode.LeftShift)
 				},
                 new InputControlMapping
                 {
                     Handle ="Jump down attack",
                     Target = InputControlType.LeftBumper,
-                    Source = KeyCodeButton(KeyCode.V)
+                    Source = KeyCodeButton(KeyCode.Q)
 
                 },
                 new InputControlMapping
@@ -101,7 +101,7 @@ namespace CustomProfileExample
                 new InputControlMapping
                 {
                     Handle = "Submit",
-                    Target = InputControlType.Action4,
+                    Target = InputControlType.Action2,
 					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
 					Source = KeyCodeButton( KeyCode.F )
                 },
@@ -112,12 +112,12 @@ namespace CustomProfileExample
 				new InputControlMapping {
 					Handle = "Move X Alternate",
 					Target = InputControlType.LeftStickX,
-					Source = KeyCodeAxis( KeyCode.LeftArrow, KeyCode.RightArrow )
+					Source = KeyCodeAxis( KeyCode.A, KeyCode.D )
 				},
 				new InputControlMapping {
 					Handle = "Move Y Alternate",
 					Target = InputControlType.LeftStickY,
-					Source = KeyCodeAxis( KeyCode.DownArrow, KeyCode.UpArrow )
+					Source = KeyCodeAxis( KeyCode.S, KeyCode.W )
 				}
 			};
 		}

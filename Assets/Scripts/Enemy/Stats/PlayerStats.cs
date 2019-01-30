@@ -49,11 +49,11 @@ public class PlayerStats : Stats
     public static int CurrentPlayerHealth; //current health amount (for load or moving between scenes)
 
     //player's abilitys
-    public static bool m_IsCanDoubleJump = false;
-    public static bool m_IsCanDash = false;
-    public static bool m_IsFallAttack = false;
-    public static bool m_IsInvincibleWhileDashing = false;
-    public static bool m_IsDamageEnemyWhileDashing = false;
+    public static bool m_IsCanDoubleJump = true;
+    public static bool m_IsCanDash = true;
+    public static bool m_IsFallAttack = true;
+    public static bool m_IsInvincibleWhileDashing = true;
+    public static bool m_IsDamageEnemyWhileDashing = true;
     public static bool m_IsCanSeeEnemyHP = false;
     public static int m_ReviveCount = 2;
 

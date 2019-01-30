@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityStandardAssets._2D;
 
 public class Trader : MonoBehaviour {
 
@@ -40,7 +41,7 @@ public class Trader : MonoBehaviour {
 
         if (m_IsPlayerNear) //if player is near
         {
-            if (InputControlManager.Instance.IsBackMenuPressed()|| InputControlManager.Instance.IsBackPressed()) //if back button button pressed
+            if (InputControlManager.Instance.IsBackMenuPressed() || InputControlManager.Instance.IsBackPressed()) //if back button button pressed
             {
                 //if trader's store is open
                 if (m_StoreUI.activeSelf)
@@ -71,14 +72,16 @@ public class Trader : MonoBehaviour {
 
                     EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
                     EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
+
+                    GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = false;
                 }
-                else if (InputControlManager.Instance.IsPickupReleased() && m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.IsSubmitReleased() && m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                     m_IsBoughtItem = false;
                 }
                 //submit button pressed to buy item
-                else if (InputControlManager.Instance.IsPickupPressing() && m_CurrentSelectedItem != null)
+                else if (InputControlManager.Instance.IsSubmitPressing() && m_CurrentSelectedItem != null)
                 {
                     if (m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount >= 1f)
                     {
@@ -128,6 +131,13 @@ public class Trader : MonoBehaviour {
     {
         Time.timeScale = 1f; //return time back to normal
 
+        //remove buying fill
+        if (m_CurrentSelectedItemGO != null)
+        {
+            m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
+            m_IsBoughtItem = false;
+        }
+
         m_InteractionUI?.SetActive(false); //hide interaction UI
 
         m_StoreUI?.SetActive(false); //hide store UI
@@ -139,6 +149,8 @@ public class Trader : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
 
         yield return new WaitForEndOfFrame();
+
+        GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = true;
 
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false); //allow to open pause menu
     }
