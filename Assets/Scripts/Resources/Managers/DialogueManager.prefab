@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 222563261950071834}
   - component: {fileID: 114356963555485664}
   - component: {fileID: 114476824686660682}
+  - component: {fileID: 2300869709982787868}
   m_Layer: 0
   m_Name: FirstButton
   m_TagString: Untagged
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18431373, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -129,6 +130,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2300869709982787868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170473546055548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.02, y: -0.02}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1291863335685490
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +417,7 @@ GameObject:
   - component: {fileID: 222390521092868580}
   - component: {fileID: 114952137084258610}
   - component: {fileID: 95125530825354456}
+  - component: {fileID: 6550348352225106378}
   m_Layer: 0
   m_Name: NextSentence
   m_TagString: Untagged
@@ -448,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.1858809, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -483,6 +500,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6550348352225106378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539050327166030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.02, y: 0.02}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1676849215850948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TextToAnimate: {fileID: 5013167277535814767}
   increment: 0.05
+  m_PlayOnEnable: 0
 --- !u!1 &4137223359664879515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,6 +1446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TextToAnimate: {fileID: 114547606291523434}
   increment: 0.05
+  m_PlayOnEnable: 0
 --- !u!1 &4953760504929943630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,6 +1459,7 @@ GameObject:
   - component: {fileID: 6927590343183885580}
   - component: {fileID: 8458664208003688399}
   - component: {fileID: 9040201630303021915}
+  - component: {fileID: 1305107940186916751}
   m_Layer: 0
   m_Name: SecondButton
   m_TagString: Untagged
@@ -1472,7 +1507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18431373, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1542,6 +1577,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1305107940186916751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4953760504929943630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.02, y: -0.02}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5744682988795266538
 GameObject:
   m_ObjectHideFlags: 0
