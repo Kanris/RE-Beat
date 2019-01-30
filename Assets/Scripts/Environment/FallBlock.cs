@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class FallBlock : MonoBehaviour {
@@ -13,11 +14,19 @@ public class FallBlock : MonoBehaviour {
     [SerializeField] private float FallTime = 2f; //block fall time
     [SerializeField, Range(-40f, 40f)] private float m_YPosition = -10f;
 
+    [Header("Effects")]
+    [SerializeField] private PlayerInTrigger m_CamShakeArea;
+    [SerializeField] private Audio m_HitAudio;
+    [SerializeField] private GameObject m_HitGroundParticles;
+    [SerializeField] private Transform m_ParticlePosition;
+
     #endregion
 
     private Rigidbody2D m_Rigidbody; //block rigidbody
     private float m_UpdateTime; //change state time
     private bool m_IsIdle; //is block idling
+
+    private bool m_IsPlayerInCamShakeArea;
 
     #endregion
 
@@ -28,6 +37,7 @@ public class FallBlock : MonoBehaviour {
     private void Start()
     {
         InitializeRigidbody();
+        m_CamShakeArea.OnPlayerInTrigger += SetIsPlayerInCamShakeArea;
     }
 
     private void InitializeRigidbody()
@@ -47,6 +57,7 @@ public class FallBlock : MonoBehaviour {
 
             if (m_IsIdle) //is idle state
             {
+                CreateHitGroundEffect(); //play hit ground effect
                 m_UpdateTime += IdleTime; //add idle time
             }
             else
@@ -58,11 +69,43 @@ public class FallBlock : MonoBehaviour {
         }
     }
 
+    private void CreateHitGroundEffect()
+    {
+        //if player near fall block
+        if (m_IsPlayerInCamShakeArea)
+        {
+            //if block is hit ground
+            if (m_YPosition > 0 && m_IsIdle)
+            {   
+                //create particles effect
+                var hitGroundEffect = Instantiate(m_HitGroundParticles);
+                hitGroundEffect.transform.position = m_ParticlePosition.position;
+
+                Destroy(hitGroundEffect, 1.6f);
+
+                //shake camera
+                Camera.main.GetComponent<Camera2DFollow>().Shake(.08f, .08f);
+
+                //play hit ground sound
+                AudioManager.Instance.Play(m_HitAudio);
+            }
+        }
+
+        //if block hit ground
+        if (m_YPosition > 0 && m_IsIdle)
+        {
+
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & !m_IsIdle) //if player in block's trigger
+        if (collision.CompareTag("Player") && !m_IsIdle) //if player in block's trigger
         {
-            collision.GetComponent<Player>().playerStats.ReturnPlayerOnReturnPoint(); //kill player
+            var playerStats = collision.GetComponent<Player>().playerStats;
+
+            playerStats.TakeDamage(1, 0, 0); //take damage
+            playerStats.ReturnPlayerOnReturnPoint(); //return player on return point
         }
     }
 
@@ -77,6 +120,11 @@ public class FallBlock : MonoBehaviour {
         }
 
         m_Rigidbody.velocity = moveVector; //move block
+    }
+
+    private void SetIsPlayerInCamShakeArea(bool value, Transform target)
+    {
+        m_IsPlayerInCamShakeArea = value;
     }
 
     #endregion
