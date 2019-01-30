@@ -77,15 +77,16 @@ public class DialogueManager : MonoBehaviour {
         {
             if (InputControlManager.Instance.IsJumpPressed() && InputControlManager.IsCanUseSubmitButton()) //if jump button pressed to skip sentence
             {
-                if (m_IsSentenceTyping) //if sentence is still typing
+                if (m_IsSentenceTyping && !m_Buttons.activeSelf) //if sentence is still typing and player doesn't see answer buttons
                 {
                     m_IsSentenceTyping = false; //stop typying sentence and display it all
                 }
-                else if (!m_AnwswerChoose & !m_DisplayingSingleSentence) //if player dont have to choose the answer and sentence is display
+                else if (!m_AnwswerChoose && !m_DisplayingSingleSentence) //if player dont have to choose the answer and sentence is display
                 {
                     DisplayNextSentence(); //show next sentece
 
-                } else if (m_DisplayingSingleSentence) //if displaying sign text
+                }
+                else if (m_DisplayingSingleSentence) //if displaying sign text
                 {
                     m_DisplayingSingleSentence = false; //dialogue is not displaying sign text
 
@@ -202,8 +203,7 @@ public class DialogueManager : MonoBehaviour {
             MobileButtonsManager.Instance.HideOnlyNeedButtons();
 #endif
 
-        if (OnDialogueInProgressChange != null)
-            OnDialogueInProgressChange(value);
+        OnDialogueInProgressChange?.Invoke(value);
 
         Time.timeScale = value ? 0f : 1f;
     }
@@ -325,6 +325,13 @@ public class DialogueManager : MonoBehaviour {
     //get player answer
     public void GetAnswer(bool isFirst)
     {
+        StartCoroutine(DelayBeforeHideButton(isFirst));
+    }
+
+    private IEnumerator DelayBeforeHideButton(bool isFirst)
+    {
+        yield return new WaitForEndOfFrame();
+
         PlayClickSound(); //play button click sound
 
         var sentenceToStart = isFirst ? m_CurrentSentence.firstSentence : m_CurrentSentence.secondSentence; //if player pressed first button return firstSentence array; if player pressed second button return secondSentence array
