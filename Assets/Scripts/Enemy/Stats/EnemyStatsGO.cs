@@ -387,9 +387,12 @@ public class EnemyStatsGO : MonoBehaviour {
 
     private void HideHealthUI()
     {
-        if (m_HealthUI.activeSelf) //hide health ui
+        if (m_HealthUI != null)
         {
-            m_HealthUI.SetActive(false);
+            if (m_HealthUI.activeSelf) //hide health ui
+            {
+                m_HealthUI.SetActive(false);
+            }
         }
     }
 

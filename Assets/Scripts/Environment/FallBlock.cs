@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,13 +10,13 @@ public class FallBlock : MonoBehaviour {
 
     [SerializeField] private float IdleTime = 4f; //block idle time
     [SerializeField] private float FallTime = 2f; //block fall time
-    [SerializeField, Range(-40f, 40f)] private float m_YPosition = -10f;
+    [SerializeField, Range(-40f, 40f)] private float m_YPosition = -10f; //force to move fallblock
 
     [Header("Effects")]
-    [SerializeField] private PlayerInTrigger m_CamShakeArea;
-    [SerializeField] private Audio m_HitAudio;
-    [SerializeField] private GameObject m_HitGroundParticles;
-    [SerializeField] private Transform m_ParticlePosition;
+    [SerializeField] private PlayerInTrigger m_CamShakeArea; //trigger to check is player near fallblock
+    [SerializeField] private Audio m_HitAudio; //ground hit audio effect
+    [SerializeField] private GameObject m_HitGroundParticles; //ground hit particles effect
+    [SerializeField] private Transform m_ParticlePosition; //position where to create particle effect
 
     #endregion
 
@@ -26,7 +24,7 @@ public class FallBlock : MonoBehaviour {
     private float m_UpdateTime; //change state time
     private bool m_IsIdle; //is block idling
 
-    private bool m_IsPlayerInCamShakeArea;
+    private bool m_IsPlayerInCamShakeArea; //indicates is player around fall block
 
     #endregion
 
@@ -36,17 +34,13 @@ public class FallBlock : MonoBehaviour {
 
     private void Start()
     {
-        InitializeRigidbody();
-        m_CamShakeArea.OnPlayerInTrigger += SetIsPlayerInCamShakeArea;
-    }
-
-    private void InitializeRigidbody()
-    {
-        m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_Rigidbody = GetComponent<Rigidbody2D>(); //get rigidbody component
+        m_CamShakeArea.OnPlayerInTrigger += SetIsPlayerInCamShakeArea; //subscribe to the player in trigger
     }
 
     #endregion
 
+    //move block by timer
     private void FixedUpdate()
     {
         if (m_UpdateTime <= Time.time) //if need to change state
@@ -69,6 +63,7 @@ public class FallBlock : MonoBehaviour {
         }
     }
 
+    //play hit ground sound, particles and cam shake if player near fallblock
     private void CreateHitGroundEffect()
     {
         //if player near fall block
@@ -80,7 +75,6 @@ public class FallBlock : MonoBehaviour {
                 //create particles effect
                 var hitGroundEffect = Instantiate(m_HitGroundParticles);
                 hitGroundEffect.transform.position = m_ParticlePosition.position;
-
                 Destroy(hitGroundEffect, 1.6f);
 
                 //shake camera
@@ -90,12 +84,6 @@ public class FallBlock : MonoBehaviour {
                 AudioManager.Instance.Play(m_HitAudio);
             }
         }
-
-        //if block hit ground
-        if (m_YPosition > 0 && m_IsIdle)
-        {
-
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -104,11 +92,12 @@ public class FallBlock : MonoBehaviour {
         {
             var playerStats = collision.GetComponent<Player>().playerStats;
 
-            playerStats.TakeDamage(1, 0, 0); //take damage
+            playerStats.TakeDamage(1, 0, 0); //player take damage
             playerStats.ReturnPlayerOnReturnPoint(); //return player on return point
         }
     }
 
+    //move block up/down base on m_YPosition
     private void MoveBlock()
     {
         var moveVector = Vector2.zero; //stop block's moving
@@ -122,6 +111,7 @@ public class FallBlock : MonoBehaviour {
         m_Rigidbody.velocity = moveVector; //move block
     }
 
+    //set field that indicates if player near fallblock
     private void SetIsPlayerInCamShakeArea(bool value, Transform target)
     {
         m_IsPlayerInCamShakeArea = value;
