@@ -163,7 +163,7 @@ public class PlayerStats : Stats
     public void ReturnPlayerOnReturnPoint() //kill player even if he invincible
     {
         //player take's 1 damage and does not receive invincible
-        TakeDamage(0, 0, 0);
+        TakeDamage(-1, 0, 0);
 
         //if player still alive
         if (CurrentPlayerHealth > 0)
