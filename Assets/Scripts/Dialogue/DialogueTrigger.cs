@@ -7,7 +7,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     public Dialogue dialogue; //npc dialogue
 
-    [SerializeField] private GameObject m_NPCUI;
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     #endregion
 
@@ -22,6 +22,7 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void Start()
     {
+        m_InteractionUIButton.PressInteractionButton = StartDialogue;
         DisplayUI(false); //hide npc ui
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeDialogueInProcess; //watch if dialogue is started or finished
@@ -39,29 +40,36 @@ public class DialogueTrigger : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (m_Player != null & InputControlManager.IsCanUseSubmitButton()) //if player is near
+        if (m_Player != null && InputControlManager.IsCanUseSubmitButton()) //if player is near
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
-                if (InputControlManager.IsUpperButtonsPressed()) //if player want to start dialogue
-                {
-                    DisplayUI(false); //disable npc ui
-                    EnableUserControl(false);
-
-                    DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
-
-                    if (!dialogue.IsDialogueFinished) //if dialogue is not saved
-                        GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
-                }
-                else if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump)
+                 if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump)
                 {
                     EnableUserControl(true);
                 }
             }
         }
-        else if (m_NPCUI.activeSelf)
+        else if (m_InteractionUIButton.ActiveSelf())
         {
-            m_NPCUI.SetActive(false);
+            DisplayUI(false);
+        }
+    }
+
+    private void StartDialogue()
+    {
+        if (m_Player != null)
+        {
+            if (!m_IsDialogueInProgress)
+            {
+                DisplayUI(false); //disable npc ui
+                EnableUserControl(false);
+
+                DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
+
+                if (!dialogue.IsDialogueFinished) //if dialogue is not saved
+                    GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
+            }
         }
     }
 
@@ -77,7 +85,7 @@ public class DialogueTrigger : MonoBehaviour {
         m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = active;
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
 
-        m_NPCUI.SetActive(active); //hide sign ui
+        DisplayUI(active);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -104,7 +112,7 @@ public class DialogueTrigger : MonoBehaviour {
     //show or hide npc ui
     private void DisplayUI(bool isActive)
     {
-        m_NPCUI.SetActive(isActive); //show or hide npc ui
+        m_InteractionUIButton.SetActive(isActive); //show or hide npc ui
     }
 
     //change state of the m_IsDialogueInProgress value

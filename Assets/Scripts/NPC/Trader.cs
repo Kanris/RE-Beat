@@ -6,8 +6,7 @@ using UnityEngine.UI;
 using UnityStandardAssets._2D;
 
 public class Trader : MonoBehaviour {
-
-    [SerializeField] private GameObject m_InteractionUI; //ui that npc show to player when he get closer
+    
     [SerializeField] private GameObject m_StoreUI; //items that this vendor sells
     [SerializeField] private GameObject m_InventoryUI; //trader's store UI
 
@@ -19,6 +18,9 @@ public class Trader : MonoBehaviour {
     [SerializeField] private RectTransform m_Content; //traders store inventory
     [SerializeField] private GameObject m_ArrowUP; //arrow up image
     [SerializeField] private GameObject m_ArrowDown; //arrow down image
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     private float m_DefaultYContentPosition; //default y position for trader's inventory
 
@@ -34,6 +36,8 @@ public class Trader : MonoBehaviour {
     private void Awake()
     {
         m_DefaultYContentPosition = m_Content.localPosition.y; //get default position y position for trader's inventory
+
+        m_InteractionUIButton.PressInteractionButton = HideUIWithDelay;
     }
 
     // Update is called once per frame
@@ -47,7 +51,7 @@ public class Trader : MonoBehaviour {
                 if (m_StoreUI.activeSelf)
                 {
                     StartCoroutine(HideUI()); //hide npc ui
-                    m_InteractionUI.SetActive(true);
+                    m_InteractionUIButton.SetActive(true);
                 }
             }
 
@@ -58,24 +62,9 @@ public class Trader : MonoBehaviour {
                 EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
             }
 
-            //if player can press submit button
-            if (InputControlManager.IsCanUseSubmitButton())
+            if (m_StoreUI.activeSelf) //if ui is open
             {
-                if (InputControlManager.IsUpperButtonsPressed() && !m_StoreUI.activeSelf) //if player press submit button and store ui isn't open
-                {
-                    PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
-
-                    m_StoreUI.SetActive(true); //show store ui
-                    m_InteractionUI.SetActive(false); //hide interaction elements
-
-                    Time.timeScale = 0f; //stop time
-
-                    EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
-                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
-
-                    GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = false;
-                }
-                else if (InputControlManager.Instance.IsSubmitReleased() && m_CurrentSelectedItem != null)
+                if (InputControlManager.Instance.IsSubmitReleased() && m_CurrentSelectedItem != null)
                 {
                     m_CurrentSelectedItemGO.GetComponent<TraderItem>().m_BuyingImage.fillAmount = 0f;
                     m_IsBoughtItem = false;
@@ -99,9 +88,9 @@ public class Trader : MonoBehaviour {
                 }
             }
         }
-        else if (m_InteractionUI.activeSelf || m_StoreUI.activeSelf)
+        else if (m_InteractionUIButton.ActiveSelf() || m_StoreUI.activeSelf) //if interaction button or store ui active (when player is not near)
         {
-            StartCoroutine(HideUI()); //hide npc ui
+            StartCoroutine( HideUI() ); //hide ui
         }
 
     }
@@ -112,7 +101,7 @@ public class Trader : MonoBehaviour {
         {
             m_IsPlayerNear = true; //indicates that plyear is near
 
-            m_InteractionUI.SetActive(true); //show interaction elements
+            m_InteractionUIButton.SetActive(true); //show interaction elements
         }
     }
 
@@ -126,8 +115,26 @@ public class Trader : MonoBehaviour {
         }
     }
 
+    private void HideUIWithDelay()
+    {
+        if (!m_StoreUI.activeSelf && m_IsPlayerNear)
+        {
+            PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+            m_StoreUI.SetActive(true); //show store ui
+            m_InteractionUIButton.SetActive(false); //hide interaction elements
+
+            Time.timeScale = 0f; //stop time
+
+            EventSystem.current.SetSelectedGameObject(null); //remove selected gameobject to select first item in the list
+            EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
+
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = false;
+        }
+    }
+
     //hide all trader's ui elemetnts
-    public IEnumerator HideUI()
+    private IEnumerator HideUI()
     {
         Time.timeScale = 1f; //return time back to normal
 
@@ -138,7 +145,7 @@ public class Trader : MonoBehaviour {
             m_IsBoughtItem = false;
         }
 
-        m_InteractionUI?.SetActive(false); //hide interaction UI
+        m_InteractionUIButton?.SetActive(false); //hide interaction UI
 
         m_StoreUI?.SetActive(false); //hide store UI
 

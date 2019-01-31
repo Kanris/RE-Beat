@@ -7,7 +7,9 @@ public class ObjectResetPosition : MonoBehaviour {
     [SerializeField] private MagneticBox m_ObjectToReset;
 
     [Header("UI")]
-    [SerializeField] private GameObject m_InteractionUI;
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
+
+    [Header("Timer")]
     [SerializeField] private GameObject m_TimerUI;
     [SerializeField] private TextMeshProUGUI m_TimerText;
 
@@ -17,30 +19,25 @@ public class ObjectResetPosition : MonoBehaviour {
     private void Start()
     {
         SetActiveUI(false);
-
         m_TimerUI.SetActive(false);
 
+        m_InteractionUIButton.PressInteractionButton = ActivateStation;
         m_ObjectToReset.OnBoxDestroy += ChangeBoxToObserve;
     }
 
-    // Update is called once per frame
-    void Update () {
-		
+    private void ActivateStation()
+    {
         if (m_IsPlayerNear)
         {
             if (m_IsCanReset)
             {
-                if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton())
-                {
-                    m_IsCanReset = false;
-                    m_ObjectToReset.ResetPosition();
+                m_IsCanReset = false;
+                m_ObjectToReset.ResetPosition();
 
-                    StartCoroutine(ShowTimer());
-                }
+                StartCoroutine(ShowTimer());
             }
         }
-
-	}
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -62,7 +59,7 @@ public class ObjectResetPosition : MonoBehaviour {
 
     private void SetActiveUI(bool value)
     {
-        m_InteractionUI.SetActive(value);
+        m_InteractionUIButton.SetActive(value);
     }
 
     private IEnumerator ShowTimer()

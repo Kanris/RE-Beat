@@ -17,8 +17,8 @@ public class DoorSwitch : MonoBehaviour {
 
     [SerializeField] private Door DoorToOpen; //door to open when switch is pressed
 
-    [Header("Effects")]
-    [SerializeField] private GameObject m_UI;
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     #endregion
 
@@ -34,7 +34,8 @@ public class DoorSwitch : MonoBehaviour {
 
         m_Animator = GetComponent<Animator>(); //get animator component
 
-        m_UI.SetActive(false); //initialize switch ui
+        m_InteractionUIButton.PressInteractionButton = OpenTheDoor;
+        m_InteractionUIButton.SetActive(false); //initialize switch ui
 
         ChangeIsQuitting(false); //notify that application is not closing
 
@@ -52,26 +53,11 @@ public class DoorSwitch : MonoBehaviour {
 
     #endregion
 
-    // Update is called once per frame
-    private void Update () {
-		
-        if (m_UI.activeSelf) //if switch ui is active
-        {
-            if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
-            {
-                m_UI.SetActive(false); //hide switch ui
-
-                OpenTheDoor(); //open attached door
-            }
-        }
-
-	}
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) //if player is near the switch
         {
-            m_UI.SetActive(true); //show switch ui
+            m_InteractionUIButton.SetActive(true); //show switch ui
         }
     }
 
@@ -79,29 +65,33 @@ public class DoorSwitch : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leaving the switch
         {
-            m_UI.SetActive(false); //hide switch ui
+            m_InteractionUIButton.SetActive(false); //hide switch ui
         }
     }
 
     private void OpenTheDoor()
     {
-        if (DoorToOpen != null) //if door to open is attached
+        if (m_InteractionUIButton.ActiveSelf()) //if switch ui is active
         {
-            m_Animator.SetTrigger("Triggering"); //play switch trigerring animation
+            m_InteractionUIButton.SetActive(false); //hide switch ui
 
-            DoorToOpen.PlayOpenDoorAnimation(); //open the door
+            if (DoorToOpen != null) //if door to open is attached
+            {
+                m_Animator.SetTrigger("Triggering"); //play switch trigerring animation
 
-            GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
-            GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
+                DoorToOpen.PlayOpenDoorAnimation(); //open the door
 
-            Destroy(DoorToOpen.gameObject); //destroy door gameobject
-            Destroy(gameObject); //destroy switch
+                GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
+                GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
+
+                Destroy(DoorToOpen.gameObject); //destroy door gameobject
+                Destroy(gameObject); //destroy switch
+            }
+            else
+            {
+                Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
+            }
         }
-        else
-        {
-            Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
-        }
-
     }
 
     private void OnApplicationQuit()

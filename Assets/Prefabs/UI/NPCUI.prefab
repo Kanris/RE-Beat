@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 223785041684166984}
   - component: {fileID: 114143009560790490}
   - component: {fileID: 114839786589553740}
+  - component: {fileID: 8338950872277019024}
   m_Layer: 0
   m_Name: NPCUI
   m_TagString: Untagged
@@ -100,6 +101,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8338950872277019024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224415610681330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f142ce24ffe2644b42159e63308349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionType: 0
+  m_InteractionUI: {fileID: 1224415610681330}
 --- !u!1 &1252179420106344
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,9 @@ public class Teleport : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private Audio TeleportAudio;
-    [SerializeField] private GameObject m_InteractionUI;
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     private GameObject m_Player; //player reference
 
@@ -23,20 +25,18 @@ public class Teleport : MonoBehaviour {
 
     private void Start()
     {
+        m_InteractionUIButton.PressInteractionButton = TeleportTo;
         SetActiveInteractionButton(false); //hide teleport ui
     }
 
     #endregion
 
-    private void Update()
+    private void TeleportTo()
     {
-        if (m_Player != null & InputControlManager.IsCanUseSubmitButton()) //if player is near teleport
+        if (m_Player != null && !m_IsTeleporting)
         {
-            if (InputControlManager.IsUpperButtonsPressed() & !m_IsTeleporting) //if player is pressed submit button
-            {
-                m_IsTeleporting = true;
-                StartCoroutine(TeleportPlayer()); //start teleport
-            }
+            m_IsTeleporting = true;
+            StartCoroutine(TeleportPlayer()); //start teleport
         }
     }
 
@@ -86,9 +86,9 @@ public class Teleport : MonoBehaviour {
 
     private void SetActiveInteractionButton(bool isActive)
     {
-        if (m_InteractionUI != null)
+        if (m_InteractionUIButton != null)
         {
-            m_InteractionUI.SetActive(isActive);
+            m_InteractionUIButton.SetActive(isActive);
         }
     }
 

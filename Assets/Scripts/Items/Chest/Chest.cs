@@ -19,12 +19,14 @@ public class Chest : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private GameObject m_ChestUI; //chest inventory
     [SerializeField] private GameObject m_InventoryUI; //chest inventory
-    [SerializeField] private GameObject m_InstantInteractionButton; //chest ui
 
     [Header("Effects")]
     [SerializeField] private GameObject m_ChestContainItems; //particles that indicate is there any items in the chest
     [SerializeField] private Sprite m_OpenChestSprite; //sprite to swap when chest is empty
     [SerializeField] private Audio ChestOpenAudio; //sound that plays when chest is open/close
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     private GameObject m_InstantChestContainItems; //instantiated chest contain items particles
     private Player m_Player; //indicates is player near or not
@@ -41,8 +43,9 @@ public class Chest : MonoBehaviour {
 
         m_InstantChestContainItems = Instantiate(m_ChestContainItems, transform); //instantiate chest particles
 
-        SetActiveInteractionButton(false); //hide interactive ui
+        m_InteractionUIButton.PressInteractionButton = OpenChest;
 
+        SetActiveInteractionButton(false); //hide interactive ui
         SetActiveInventory(false); //hide inventory ui
 
         if (chestType == ChestType.Destroyable)
@@ -60,12 +63,16 @@ public class Chest : MonoBehaviour {
 
     private void SetActiveInteractionButton(bool value)
     {
-        m_InstantInteractionButton.SetActive(value);
+        m_InteractionUIButton.SetActive(value);
     }
 
     private void SetActiveInventory(bool value)
     {
-        if (m_Player != null) m_Player.TriggerPlayerBussy(value); //allow or dont allow player to attack when chest inventory is open
+        if (m_Player != null)
+        {
+            m_Player.TriggerPlayerBussy(value); //allow or dont allow player to attack when chest inventory is open
+            m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = !value;
+        }
 
         AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
 
@@ -80,11 +87,6 @@ public class Chest : MonoBehaviour {
         {
             if (InputControlManager.IsCanUseSubmitButton())
             {
-                if (InputControlManager.IsUpperButtonsPressed() && !m_ChestUI.activeSelf) //if player pressed submit button
-                {
-                    OpenChest(); //try to open the chest
-                }
-
                 if (m_ChestUI.activeSelf)
                 {
                     if (m_InventoryUI.transform.childCount == 0 && m_InstantChestContainItems != null) //if there is no child left
@@ -105,9 +107,9 @@ public class Chest : MonoBehaviour {
                 StartCoroutine(CloseChest());
             }
         }
-        else if (m_InstantInteractionButton.activeSelf)
+        else if (m_InteractionUIButton.ActiveSelf())
         {
-            m_InstantInteractionButton.SetActive(false);
+            m_InteractionUIButton.SetActive(false);
         }
     }
 
@@ -123,22 +125,25 @@ public class Chest : MonoBehaviour {
 
     private void OpenChest()
     {
-        if (chestType == ChestType.Destroyable & !m_IsCanBeOpen) //if chest is destroyable but still have health
+        if (!m_ChestUI.activeSelf && m_Player != null)
         {
-            var chestInfo = LocalizationManager.Instance.GetItemsLocalizedValue("chest_info");
-            UIManager.Instance.DisplayNotificationMessage(chestInfo, 
-                UIManager.Message.MessageType.Message); //display warning message
-        }
-        else //if chest can be open
-        {
-            SetActiveInventory(!m_ChestUI.activeSelf); //show or hide chest inventory
-
-            if (m_ChestUI.activeSelf)
+            if (chestType == ChestType.Destroyable & !m_IsCanBeOpen) //if chest is destroyable but still have health
             {
-                PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+                var chestInfo = LocalizationManager.Instance.GetItemsLocalizedValue("chest_info");
+                UIManager.Instance.DisplayNotificationMessage(chestInfo,
+                    UIManager.Message.MessageType.Message); //display warning message
+            }
+            else //if chest can be open
+            {
+                SetActiveInventory(!m_ChestUI.activeSelf); //show or hide chest inventory
 
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                if (m_ChestUI.activeSelf)
+                {
+                    PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
+
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                }
             }
         }
     }

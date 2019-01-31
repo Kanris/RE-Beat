@@ -24,7 +24,9 @@ public class Door : MonoBehaviour {
 
     [Header("Effects")]
     [SerializeField] private Audio DoorOpenAudio;
-    [SerializeField] private GameObject m_UI; //interaction button ui (needed only if door type is key)
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton; //interaction button ui (needed only if door type is key)
 
     #endregion
 
@@ -39,14 +41,10 @@ public class Door : MonoBehaviour {
     {
         m_Animator = GetComponent<Animator>(); //get gameobject animator
 
-        InitializeInteractionButton(); //initialize door ui
-    }
-
-    private void InitializeInteractionButton()
-    {
-        if (m_UI != null) //if door type is Key
+        if (m_InteractionUIButton != null)
         {
-            m_UI.SetActive(false); //hide door ui
+            m_InteractionUIButton.PressInteractionButton = OpenDoor;
+            m_InteractionUIButton.SetActive(false); //initialize door ui
         }
     }
 
@@ -54,34 +52,37 @@ public class Door : MonoBehaviour {
     {
         if (Type == DoorType.Key) //if door is have to open with key
         {
-            if (m_UI.activeSelf & InputControlManager.IsCanUseSubmitButton()) //if player is near door
+            if (m_InteractionUIButton.ActiveSelf()) //if player is near door
             {
-                if (InputControlManager.IsUpperButtonsPressed()) //if player pressed submit button
-                {
-                    OpenDoorWithKey(); //try to open the door
-                }
-
                 if (GameMaster.Instance.IsPlayerDead)
                 {
-                    m_UI.SetActive(false);
+                    m_InteractionUIButton.SetActive(false);
                 }
             }
         }
     }
 
+    private void OpenDoor()
+    {
+        if (m_InteractionUIButton.ActiveSelf())
+        {
+            OpenDoorWithKey(); //try to open the door
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & Type == DoorType.Key) //if player is in trigger
+        if (collision.CompareTag("Player") && Type == DoorType.Key) //if player is in trigger
         {
-            m_UI.SetActive(true); //show door ui
+            m_InteractionUIButton.SetActive(true); //show door ui
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") & Type == DoorType.Key) //if player is leaving trigger
+        if (collision.CompareTag("Player") && Type == DoorType.Key) //if player is leaving trigger
         {
-            m_UI.SetActive(false); //hide door ui
+            m_InteractionUIButton.SetActive(false); //hide door ui
         }
     }
 

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tunnel : MonoBehaviour {
-
-    [SerializeField] private GameObject m_InteractionUI;
+    
     [SerializeField] private GameObject m_TeleportToTunnel;
 
     [SerializeField] private AnimationClip m_InTunnelAnimation;
     [SerializeField] private GameObject m_FollowCompanion;
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     private Transform m_SpawnOnExit;
 
@@ -18,21 +20,23 @@ public class Tunnel : MonoBehaviour {
     {
         m_SpawnOnExit = transform.GetChild(0);
 
-        if (m_InteractionUI != null)
+        if (m_InteractionUIButton != null)
         {
-            m_InteractionUI.SetActive(false);
+            m_InteractionUIButton.PressInteractionButton = UpButtonPress;
+            m_InteractionUIButton.SetActive(false);
             GetComponent<SpriteRenderer>().color = Color.magenta;
+        }
+        else
+        {
+            transform.GetChild(1).gameObject.SetActive(false);
         }
     }
 
-    private void Update()
+    private void UpButtonPress()
     {
-        if (m_CompanionToTeleport != null & InputControlManager.IsCanUseSubmitButton())
+        if (m_CompanionToTeleport != null)
         {
-            if (InputControlManager.IsUpperButtonsPressed())
-            {
-                MoveToNextTunnel();
-            }
+            MoveToNextTunnel();
         }
     }
 
@@ -54,9 +58,9 @@ public class Tunnel : MonoBehaviour {
 
         if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
         {
-            if (m_InteractionUI != null)
+            if (m_InteractionUIButton != null)
             {
-                m_InteractionUI.SetActive(true);
+                m_InteractionUIButton.SetActive(true);
                 m_CompanionToTeleport = collision.transform;
             }
         }
@@ -82,9 +86,9 @@ public class Tunnel : MonoBehaviour {
 
         if (collision.CompareTag("Player") && GameMaster.Instance.IsPlayerDead)
         {
-            if (m_InteractionUI != null)
+            if (m_InteractionUIButton != null)
             {
-                m_InteractionUI.SetActive(false);
+                m_InteractionUIButton.SetActive(false);
                 m_CompanionToTeleport = null;
             }
         }

@@ -142,6 +142,7 @@ public class PickupBox : MonoBehaviour {
 
     private void OnPickUpPress()
     {
+        //if nothing is block box and (or is box in player's hand or InteractionUi is active)
         if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
         {
             StartCoroutine(AttachToParent()); //attach box to the player

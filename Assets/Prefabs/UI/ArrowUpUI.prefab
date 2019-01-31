@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 223056780610693662}
   - component: {fileID: 114396524246922442}
   - component: {fileID: 114031068494934016}
+  - component: {fileID: 2041452860955615253}
   m_Layer: 0
   m_Name: ArrowUpUI
   m_TagString: Untagged
@@ -99,6 +100,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2041452860955615253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801593570793218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f142ce24ffe2644b42159e63308349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionType: 0
+  m_InteractionUI: {fileID: 1951631710909948}
 --- !u!1 &1951631710909948
 GameObject:
   m_ObjectHideFlags: 0

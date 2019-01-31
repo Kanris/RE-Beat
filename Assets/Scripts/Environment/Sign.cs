@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
 public class Sign : MonoBehaviour {
@@ -12,8 +10,8 @@ public class Sign : MonoBehaviour {
     [SerializeField] private string SignName; //sign name
     [SerializeField, TextArea(2, 10)] private string SignText; //sign text to display
 
-    [Header("Effects")]
-    [SerializeField] private GameObject m_InteractionUI;
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     #endregion
     
@@ -28,7 +26,8 @@ public class Sign : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        m_InteractionUI.SetActive(false); //hide ui
+        m_InteractionUIButton.PressInteractionButton = StartDialogue;
+        m_InteractionUIButton.SetActive(false); //hide ui
 
         DialogueManager.Instance.OnDialogueInProgressChange += ChangeIsInProgress; //subscribe to dialogue in progress
 
@@ -43,24 +42,28 @@ public class Sign : MonoBehaviour {
 		
         if (m_Player != null) //if player is near the sign
         {
-            if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
+            if (!m_IsSentenceShowInProgress && !m_Player.GetComponent<Platformer2DUserControl>().IsCanJump) //if dialogue is not in progress
             {
-                if (InputControlManager.IsUpperButtonsPressed()) //if player want to read the sign
-                {
-                    EnableUserControl(false);
-                    StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName, transform)); //show sign text
-
-                } else if (!m_Player.GetComponent<Platformer2DUserControl>().IsCanJump) //if player control is disabled
-                {
-                    EnableUserControl(true);
-                }
+                EnableUserControl(true);
             }
         }
-        else if (m_InteractionUI.activeSelf)
+        else if (m_InteractionUIButton.ActiveSelf())
         {
-            m_InteractionUI.SetActive(false);
+            m_InteractionUIButton.SetActive(false);
         }
 	}
+
+    private void StartDialogue()
+    {
+        if (m_Player != null) //if player is near the sign
+        {
+            if (!m_IsSentenceShowInProgress) //if dialogue is not in progress
+            {
+                EnableUserControl(false);
+                StartCoroutine(DialogueManager.Instance.DisplaySingleSentence(SignText, SignName, transform)); //show sign text
+            }
+        }
+    }
 
     //enable or disable character control
     private void EnableUserControl(bool active)
@@ -74,7 +77,7 @@ public class Sign : MonoBehaviour {
         m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = active;
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(!active);
 
-        m_InteractionUI.SetActive(active); //hide sign ui
+        m_InteractionUIButton.SetActive(active); //hide sign ui
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -84,7 +87,7 @@ public class Sign : MonoBehaviour {
             if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground"))
             {
                 m_Player = collision.transform;
-                m_InteractionUI.SetActive(true);
+                m_InteractionUIButton.SetActive(true);
             }
         }
     }
@@ -93,7 +96,7 @@ public class Sign : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leave sign trigger
         {
-            m_InteractionUI.SetActive(false); //show or hide sign ui
+            m_InteractionUIButton.SetActive(false); //show or hide sign ui
             m_Player = null;
         }
     }

@@ -50,7 +50,7 @@ public class PlayerStats : Stats
 
     //player's abilitys
     public static bool m_IsCanDoubleJump = true;
-    public static bool m_IsCanDash = false;
+    public static bool m_IsCanDash = true;
     public static bool m_IsFallAttack = true;
     public static bool m_IsInvincibleWhileDashing = true;
     public static bool m_IsDamageEnemyWhileDashing = true;

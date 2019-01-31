@@ -4,11 +4,12 @@ using UnityStandardAssets._2D;
 
 public class CompanionCall : MonoBehaviour {
 
-    [SerializeField] private GameObject m_InteractionUI; //button interaction ui
-
     [Header("Spawn")]
     [SerializeField] private GameObject m_Player; //player's prefab
     [SerializeField] private GameObject m_Companion; //companion's prefab
+
+    [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton; //button interaction ui
 
     private SpriteRenderer m_StationImage;
     private bool m_IsPlayer; //is player triggered
@@ -18,24 +19,24 @@ public class CompanionCall : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        m_InteractionUI.SetActive(false); //hide interaction button
+        m_InteractionUIButton.PressInteractionButton = ActivateStation;
+        m_InteractionUIButton.SetActive(false); //hide interaction button
 
         m_IsPlayer = true;
 
         m_StationImage = GetComponent<SpriteRenderer>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-        if (m_InteractionUI.activeSelf) //if player is near
+
+    private void ActivateStation()
+    {
+        if (m_InteractionUIButton.ActiveSelf())
         {
-            if ((InputControlManager.IsUpperButtonsPressed()) && !m_IsChanging) //if submit button pressed and spawn is not in progress
+            if (!m_IsChanging)
             {
-                StartCoroutine( ChangeCharacter() ); //change character
+                StartCoroutine(ChangeCharacter()); //change character
             }
         }
-	}
+    }
 
     private IEnumerator ChangeCharacter()
     {
@@ -68,7 +69,7 @@ public class CompanionCall : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player near station
         {
-            m_InteractionUI.SetActive(true); //show interaction button
+            m_InteractionUIButton.SetActive(true); //show interaction button
 
             m_WhoTriggered = collision.transform.parent.gameObject;//save companion gameobject
 
@@ -79,7 +80,7 @@ public class CompanionCall : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leave station trigger
         {
-            m_InteractionUI.SetActive(false); //hide interaction button
+            m_InteractionUIButton.SetActive(false); //hide interaction button
         }
     }
 }

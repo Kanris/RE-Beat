@@ -16,24 +16,27 @@ public class InteractionUIButton : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //if current ui interaction button is ArrowUp
-        if (m_InteractionType == InteractionType.ArrowUp)
+        if (InputControlManager.IsCanUseSubmitButton())
         {
-            //if ArrowUp button pressed
-            if (InputControlManager.IsUpperButtonsPressed())
+            //if current ui interaction button is ArrowUp
+            if (m_InteractionType == InteractionType.ArrowUp)
             {
-                //call attached method
-                PressInteractionButton?.Invoke();
+                //if ArrowUp button pressed
+                if (InputControlManager.IsUpperButtonsPressed())
+                {
+                    //call attached method
+                    PressInteractionButton?.Invoke();
+                }
             }
-        }
-        //if current ui interaction button is PickUp
-        else if (m_InteractionType == InteractionType.PickUp)
-        {
-            //if PickUp button pressed
-            if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton())
+            //if current ui interaction button is PickUp
+            else if (m_InteractionType == InteractionType.PickUp)
             {
-                //call attached method
-                PressInteractionButton?.Invoke();
+                //if PickUp button pressed
+                if (InputControlManager.Instance.IsPickupPressed())
+                {
+                    //call attached method
+                    PressInteractionButton?.Invoke();
+                }
             }
         }
     }
