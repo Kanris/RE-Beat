@@ -325,7 +325,7 @@ public class DialogueManager : MonoBehaviour {
     //get player answer
     public void GetAnswer(bool isFirst)
     {
-        StartCoroutine(DelayBeforeHideButton(isFirst));
+        StartCoroutine(DelayBeforeHideButton(isFirst)); //delay answer to now register space press as skip sentence typing
     }
 
     private IEnumerator DelayBeforeHideButton(bool isFirst)
