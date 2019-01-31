@@ -41,6 +41,25 @@ public class MetalicGround : MonoBehaviour {
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player")) //if player on metalic ground
+        {
+            if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player has needed item
+            {
+                if (collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump)
+                {
+                    collision.transform.GetComponent<Platformer2DUserControl>().IsCanJump = false; //dont allow player to jump
+                    PlayAnimation("Active"); //change ground animation
+                }
+            }
+            else //if player havn't needed item
+            {
+                StartCoroutine(DisableGround(collision.gameObject.layer));
+            }
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player")) //if player leave metalic ground

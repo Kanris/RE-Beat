@@ -103,7 +103,7 @@ namespace CustomProfileExample
                     Handle = "Submit",
                     Target = InputControlType.Action2,
 					// KeyCodeComboButton requires that all KeyCode params are down simultaneously.
-					Source = KeyCodeButton( KeyCode.E )
+					Source = KeyCodeButton( KeyCode.F )
                 },
             };
 
