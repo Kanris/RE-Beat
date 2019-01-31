@@ -8,7 +8,6 @@ public class PickupBox : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticle; //box destroying particles
     [SerializeField] private Audio DestroySound; //box destroying sound
-    [SerializeField] private GameObject m_InteractionUI; //interaction button ui on box
 
     #endregion
 
@@ -16,6 +15,7 @@ public class PickupBox : MonoBehaviour {
     [SerializeField, Range(100f, -100f)] private float YRestrictions = -10f; //y fall restrictions
 
     [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
     [SerializeField] private Transform m_CeilingCheck;
     [SerializeField] private LayerMask m_WhatIsGround;
 
@@ -24,7 +24,7 @@ public class PickupBox : MonoBehaviour {
     private Vector3 m_SpawnPosition; //box spawn position
     private BoxCollider2D m_BoxCollider;
 
-    [SerializeField] private bool m_IsBoxUp; //is box in player's hand
+    private bool m_IsBoxUp; //is box in player's hand
     private bool m_IsQuitting; //is application closing
 
     private bool m_IsCantRelease; //can't release box
@@ -45,7 +45,8 @@ public class PickupBox : MonoBehaviour {
 
         SetIsQuitting(false); //application is not closing
 
-        m_InteractionUI.SetActive(false); //hide box ui
+        m_InteractionUIButton.PressInteractionButton = OnPickUpPress; //invoke this method when button pressed
+        m_InteractionUIButton.SetActive(false); //hide item's ui
     }
 
     private void SubscribeToEvents()
@@ -89,21 +90,12 @@ public class PickupBox : MonoBehaviour {
 
         #region pickup handler
 
-        if (m_InteractionUI.activeSelf && !m_IsBoxUp) //if player is near and box is not in player's hand
+        if (m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if player is holding box
         {
-            if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
-            {
-                StartCoroutine( AttachToParent(true) ); //pickup box
-            }
-
-        }
-        else if (m_IsBoxUp && !m_InteractionUI.activeSelf) //if player is holding box
-        {
-            if ((InputControlManager.Instance.IsPickupPressed() || InputControlManager.IsAttackButtonsPressed())
-                    && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit or attack button
+            if (InputControlManager.IsAttackButtonsPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed attack button
             {
                 if (!m_IsCantRelease)
-                    StartCoroutine( AttachToParent(false) ); //attach box to the player
+                    OnPickUpPress();
                 else
                     //show error message
                     UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
@@ -111,10 +103,10 @@ public class PickupBox : MonoBehaviour {
         }
 
         //if player is holding box, but interaction button is active
-        if (m_IsBoxUp && m_InteractionUI.activeSelf)
+        if (m_IsBoxUp && m_InteractionUIButton.ActiveSelf())
         {
             //hide interaction button
-            m_InteractionUI.SetActive(false);
+            m_InteractionUIButton.SetActive(false);
         }
 
         #endregion
@@ -134,7 +126,7 @@ public class PickupBox : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player is near box
         {
-            m_InteractionUI.SetActive(true); //show box ui
+            m_InteractionUIButton.SetActive(true); //show box ui
         }
     }
 
@@ -142,14 +134,24 @@ public class PickupBox : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player move away from the box
         {
-            m_InteractionUI.SetActive(false); //hide box ui
+            m_InteractionUIButton.SetActive(false); //hide box ui
         }
     }
 
     #endregion
 
-    private IEnumerator AttachToParent(bool value)
-    { 
+    private void OnPickUpPress()
+    {
+        if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
+        {
+            StartCoroutine(AttachToParent()); //attach box to the player
+        }
+    }
+
+    private IEnumerator AttachToParent()
+    {
+        var value = !m_IsBoxUp;
+
         transform.SetParent(value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null); //attach box to the parrent
 
         if (value) //if parent there is parent
@@ -190,7 +192,7 @@ public class PickupBox : MonoBehaviour {
 
 
         transform.gameObject.layer = layerId; //change layer so player can play walk or jump animation
-        m_InteractionUI.SetActive(!m_IsBoxUp); //show or hide box ui
+        m_InteractionUIButton.SetActive(!m_IsBoxUp); //show or hide box ui
     }
 
     private float? GetForceScale()

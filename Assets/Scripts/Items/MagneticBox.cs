@@ -21,15 +21,15 @@ public class MagneticBox : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private GameObject DeathParticles; //destroying particles
     [SerializeField] private Audio DestroySound; //destroying sound
-    [SerializeField] private GameObject m_InteractionButton; //box ui
 
     [Header("Additional")]
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
     [SerializeField] private Transform m_CeilingCheck;
     [SerializeField] private LayerMask m_WhatIsGround;
 
     #endregion
 
-    private bool m_IsBoxPickedUp; //is box in player hands
+    private bool m_IsBoxUp; //is box in player hands
     private bool m_IsQuitting; //is application closing
 
     private bool m_IsCantRelease; //can't release magnetic box
@@ -52,7 +52,8 @@ public class MagneticBox : MonoBehaviour {
 
         ChangeIsQuitting(false); //indicates that game is not closing is not closing
 
-        m_InteractionButton.SetActive(false); //hide box ui
+        m_InteractionUIButton.PressInteractionButton = OnPickUpPress;
+        m_InteractionUIButton.SetActive(false); //hide box ui
 
         SubscribeToEvents();
     }
@@ -118,7 +119,7 @@ public class MagneticBox : MonoBehaviour {
     private void Update()
     {
         //check is player can release magnetic box right now
-        if (m_IsBoxPickedUp)
+        if (m_IsBoxUp)
         {
             //is there ground above box
             if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
@@ -132,29 +133,13 @@ public class MagneticBox : MonoBehaviour {
             }
         }
 
-        if (m_InteractionButton.activeSelf) //if player near the box
+         if (m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if box is picked up
         {
-            if (InputControlManager.Instance.IsPickupPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
-            {
-                if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
-                {
-                    StartCoroutine( PickUpBox(true) ); //pick up box
-                }
-                else //if player haven't needed item
-                {
-                    UIManager.Instance.DisplayNotificationMessage(LocalizationManager.Instance.GetItemsLocalizedValue(
-                            NeededItem.itemDescription.Name) + " - required to pickup this box.", 
-                            UIManager.Message.MessageType.Message); //display warning message
-                }
-            }
-        }
-        else if (m_IsBoxPickedUp && InputControlManager.IsCanUseSubmitButton()) //if box is picked up
-        {
-            if (InputControlManager.Instance.IsPickupPressed() || InputControlManager.IsAttackButtonsPressed()) //if player pressed submit button
+            if (InputControlManager.IsAttackButtonsPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 //is player can release box
                 if (!m_IsCantRelease)
-                    StartCoroutine(PickUpBox(false)); //put the box
+                    OnPickUpPress();
                 //player can't release box
                 else
                     //show error message
@@ -163,15 +148,32 @@ public class MagneticBox : MonoBehaviour {
         }
 
         //if box is in player's hand but still showing interaction button
-        if (m_IsBoxPickedUp && m_InteractionButton.activeSelf)
+        if (m_IsBoxUp && m_InteractionUIButton.ActiveSelf())
         {
-            m_InteractionButton.SetActive(false); //hide interacion button
+            m_InteractionUIButton.SetActive(false); //hide interacion button
         }
     }
 
-    private IEnumerator PickUpBox(bool value)
+    private void OnPickUpPress()
     {
-        m_IsBoxPickedUp = value; //change box value
+        if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
+        {
+            if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
+            {
+                StartCoroutine(AttachToParent()); //attach box to the player
+            }
+        }
+        else //if player haven't needed item
+        {
+            UIManager.Instance.DisplayNotificationMessage(LocalizationManager.Instance.GetItemsLocalizedValue(
+                    NeededItem.itemDescription.Name) + " - required to pickup this box.",
+                    UIManager.Message.MessageType.Message); //display warning message
+        }
+    }
+
+    private IEnumerator AttachToParent()
+    {
+        var value = !m_IsBoxUp;
 
         //place box above player
         if (!value)
@@ -187,6 +189,8 @@ public class MagneticBox : MonoBehaviour {
         transform.gameObject.layer = value ? 0 : 12; //chage layer so player can play ground animation
         m_Animator.SetBool("Picked UP", value); //play inactive animation
 
+        m_IsBoxUp = value; //change box value
+
         yield return new WaitForEndOfFrame();
 
         if (!GameMaster.Instance.IsPlayerDead)
@@ -197,9 +201,9 @@ public class MagneticBox : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player") && !m_IsBoxPickedUp) //if player near box
+        if (collision.transform.CompareTag("Player") && !m_IsBoxUp) //if player near box
         {
-            m_InteractionButton.SetActive(true); //show box ui
+            m_InteractionUIButton.SetActive(true); //show box ui
         }
     }
 
@@ -207,7 +211,7 @@ public class MagneticBox : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Player")) //if player leave box
         {
-            m_InteractionButton.SetActive(false); //hide box ui
+            m_InteractionUIButton.SetActive(false); //hide box ui
         }
     }
 

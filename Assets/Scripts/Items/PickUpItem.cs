@@ -10,9 +10,9 @@ public class PickUpItem : MonoBehaviour {
 
     [Header("Additional")]
     [SerializeField] private TextMeshProUGUI m_ItemDescriptionText;
+    [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     [Header("Effects")]
-    [SerializeField] private GameObject m_InteractionButton; //item ui
     [SerializeField] private GameObject m_DescriptionUI;
 
     private PlayerStats m_PlayerStats; //player stats (for heal item type)
@@ -25,8 +25,9 @@ public class PickUpItem : MonoBehaviour {
     #region initialize
 
     private void Start()
-    { 
-        m_InteractionButton.gameObject.SetActive(false); //hide item ui
+    {
+        m_InteractionUIButton.PressInteractionButton = InteractWithItem;
+        m_InteractionUIButton.SetActive(false); //hide item ui
 
         m_ItemDescriptionText.text = GetDisplayText();
     }
@@ -44,16 +45,9 @@ public class PickUpItem : MonoBehaviour {
 
     private void Update()
     {
-        if (m_IsPlayerNearItem & InputControlManager.IsCanUseSubmitButton()) //if is player near item
+        if (!m_IsPlayerNearItem && m_InteractionUIButton.ActiveSelf())
         {
-            if (InputControlManager.Instance.IsPickupPressed()) //if player pressed submit button
-            {
-                InteractWithItem(); //add item
-            }
-        }
-        else if (m_InteractionButton.activeSelf)
-        {
-            m_InteractionButton.SetActive(false);
+            m_InteractionUIButton.SetActive(false);
         }
     }
 
@@ -83,26 +77,29 @@ public class PickUpItem : MonoBehaviour {
     }
 
     private void InteractWithItem()
-    {            
-        switch (item.itemDescription.itemType) //base on item type
+    {        
+        if (m_IsPlayerNearItem)
         {
-            case ItemDescription.ItemType.Item: //if it is item
-                AddToTheInventory(); //add to the inventory
-                break;
+            switch (item.itemDescription.itemType) //base on item type
+            {
+                case ItemDescription.ItemType.Item: //if it is item
+                    AddToTheInventory(); //add to the inventory
+                    break;
 
-            case ItemDescription.ItemType.Note: //it is is note
-                ReadNote(); //read note
-                break;
+                case ItemDescription.ItemType.Note: //it is is note
+                    ReadNote(); //read note
+                    break;
 
-            case ItemDescription.ItemType.Heal: //if it is heal
-                if (m_PlayerStats != null)
-                    m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
-                break;
+                case ItemDescription.ItemType.Heal: //if it is heal
+                    if (m_PlayerStats != null)
+                        m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
+                    break;
+            }
+
+            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
+            InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
+            Destroy(gameObject);
         }
-        
-        GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
-        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,8 +111,8 @@ public class PickUpItem : MonoBehaviour {
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
 
-            m_InteractionButton.gameObject.SetActive(true); // show item ui
-            m_DescriptionUI.SetActive(true);
+            m_InteractionUIButton.SetActive(true); // show item's ui
+            m_DescriptionUI.SetActive(true); //show item's description
         }
     }
 
@@ -128,8 +125,8 @@ public class PickUpItem : MonoBehaviour {
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = null; //remove reference to the player stats
 
-            m_InteractionButton.gameObject.SetActive(false); //hide item ui
-            m_DescriptionUI.SetActive(false);
+            m_InteractionUIButton.SetActive(false); // hide item's ui
+            m_DescriptionUI.SetActive(false); //hide item's ui
         }
     }
 

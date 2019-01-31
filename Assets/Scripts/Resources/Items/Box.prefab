@@ -127,13 +127,12 @@ MonoBehaviour:
   DeathParticle: {fileID: 1603502100481144, guid: 8e0c783f0da10489db098cad42d0a080,
     type: 3}
   DestroySound: {fileID: 11400000, guid: b1f144423dbaf4c739008795870d2616, type: 2}
-  m_InteractionUI: {fileID: 4488476435376362662}
   YRestrictions: -10
+  m_InteractionUIButton: {fileID: 3992017526937965525}
   m_CeilingCheck: {fileID: 5591146813638184487}
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 540672
-  m_IsBoxUp: 0
 --- !u!212 &212225322645907360
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -424,15 +423,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21189468a42328445b4b35b66b902e00, type: 3}
---- !u!1 &4488476435376362662 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1687591832347128, guid: 21189468a42328445b4b35b66b902e00,
-    type: 3}
-  m_PrefabInstance: {fileID: 4490013316233606494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4418532799325248548 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224743998211828090, guid: 21189468a42328445b4b35b66b902e00,
     type: 3}
   m_PrefabInstance: {fileID: 4490013316233606494}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3992017526937965525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 660276077694150283, guid: 21189468a42328445b4b35b66b902e00,
+    type: 3}
+  m_PrefabInstance: {fileID: 4490013316233606494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f142ce24ffe2644b42159e63308349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

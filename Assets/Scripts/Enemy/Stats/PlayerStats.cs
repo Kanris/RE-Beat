@@ -50,7 +50,7 @@ public class PlayerStats : Stats
 
     //player's abilitys
     public static bool m_IsCanDoubleJump = true;
-    public static bool m_IsCanDash = true;
+    public static bool m_IsCanDash = false;
     public static bool m_IsFallAttack = true;
     public static bool m_IsInvincibleWhileDashing = true;
     public static bool m_IsDamageEnemyWhileDashing = true;
@@ -264,6 +264,7 @@ public class PlayerStats : Stats
 
         #endregion
 
+        //disable fall attack ui (if player does not have fall attack chip)
         if (!m_IsFallAttack)
             UIManager.Instance?.ShowFallAttack(false);
     }
@@ -272,18 +273,22 @@ public class PlayerStats : Stats
     {
         if (!m_IsInvincible) //player is not invincible
         {
-            if (amount > 0)
+            if (amount > 0) //player should receive damage and invincible
                 m_IsInvincible = true; //player is invincible
-            else if (amount < 0)
+
+            else if (amount < 0) //player should receive damage without invincible
                 amount = 1;
 
-            amount *= DamageMultiplier;
+            amount *= DamageMultiplier; //if player have debuff multiply received damage
 
-            Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect();
+            Camera.main.GetComponent<Camera2DFollow>().PlayHitEffect(); //play camera hit effect
 
+            //receive damage and apply throwback
             base.TakeDamage(amount, throwX, throwY);
+            //remove some health in current health (for save hp when player saving or/and move between scenes)
             CurrentPlayerHealth -= amount;
 
+            //remove health in ui
             for (var index = 0; index < amount; index++)
                 UIManager.Instance.RemoveHealth(); //remove some health from health ui
         }
