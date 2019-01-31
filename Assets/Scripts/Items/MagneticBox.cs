@@ -156,18 +156,23 @@ public class MagneticBox : MonoBehaviour {
 
     private void OnPickUpPress()
     {
-        if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
+        if (m_InteractionUIButton.ActiveSelf() || m_IsBoxUp)
         {
-            if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
+            Debug.LogError("PickUpPress> " + transform.name);
+
+            if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
             {
-                StartCoroutine(AttachToParent()); //attach box to the player
+                if (!m_IsCantRelease)
+                {
+                    StartCoroutine(AttachToParent()); //attach box to the player
+                }
             }
-        }
-        else //if player haven't needed item
-        {
-            UIManager.Instance.DisplayNotificationMessage(LocalizationManager.Instance.GetItemsLocalizedValue(
-                    NeededItem.itemDescription.Name) + " - required to pickup this box.",
-                    UIManager.Message.MessageType.Message); //display warning message
+            else //if player haven't needed item
+            {
+                UIManager.Instance.DisplayNotificationMessage(LocalizationManager.Instance.GetItemsLocalizedValue(
+                        NeededItem.itemDescription.Name) + " - required to pickup this box.",
+                        UIManager.Message.MessageType.Message); //display warning message
+            }
         }
     }
 
