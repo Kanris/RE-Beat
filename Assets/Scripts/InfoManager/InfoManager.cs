@@ -57,7 +57,7 @@ public class InfoManager : MonoBehaviour
         }
     }
 
-    private int m_CurrentOpenBookmark = 1; //current open tab
+    private int m_CurrentOpenBookmark = 0; //current open tab
     private Dictionary<int, List<Button>> m_ButtonsList; //buttons list
     private static Sprite[] itemsSpriteAtlas; //atals for items
     private bool m_IsCantOpenJournal;
@@ -139,14 +139,14 @@ public class InfoManager : MonoBehaviour
 
                 if (InputControlManager.Instance.IsLeftBumperPressed()) //move to top
                 {
-                    if (m_CurrentOpenBookmark > 1)
+                    if (m_CurrentOpenBookmark > 0)
                     {
                         InfoManagement(m_CurrentOpenBookmark - 1);
                     }
                 }
                 else if (InputControlManager.Instance.IsRightBumperPressed()) //move to bottom
                 {
-                    if (m_CurrentOpenBookmark < 4)
+                    if (m_CurrentOpenBookmark < 3)
                     {
                         InfoManagement(m_CurrentOpenBookmark + 1);
                     }
@@ -232,16 +232,16 @@ public class InfoManager : MonoBehaviour
 
         switch (id)
         {
-            case 1:
+            case 0:
                 name = "CURRENT TASKS";
                 break;
-            case 2:
+            case 1:
                 name = "COMPLETED TASKS";
                 break;
-            case 3:
+            case 2:
                 name = "INVENTORY";
                 break;
-            case 4:
+            case 3:
                 name = "LOCATION - <color=#45f442>" + GameMaster.Instance.SceneName + "</color>";
                 break;
         }
@@ -265,7 +265,7 @@ public class InfoManager : MonoBehaviour
         m_NoItemsText.SetActive(false);
         m_Seperator.SetActive(false);
 
-        if (id != 4)
+        if (id != 3)
         {
             m_Map.SetActive(false);
 
