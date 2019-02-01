@@ -135,7 +135,9 @@ public class Stats {
     {
         if (m_Animator != null)
         {
-            m_Animator.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); //stop player movement (prepare to throw back)
+            if (m_Animator.GetComponent<Rigidbody2D>() != null)
+                m_Animator.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0); //stop player movement (prepare to throw back)
+
             m_Animator.SetBool("Hit", value); //play hit animation
         }
     }
