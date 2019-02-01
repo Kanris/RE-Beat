@@ -50,7 +50,7 @@ public class Actions : MonoBehaviour {
         {
             if (m_IsPlayerNear)
             {
-                if (InputControlManager.Instance.IsPickupPressed())
+                if (InputControlManager.IsUpperButtonsPressed())
                 {
                     ChangeObjectState();
                 }
@@ -66,7 +66,7 @@ public class Actions : MonoBehaviour {
 
     private void OnDestroy()
     {
-        if (!m_IsQuitting & playerAction == PlayerAction.OnDestroy) //on destroy
+        if (!m_IsQuitting && playerAction == PlayerAction.OnDestroy) //on destroy
         {
             ChangeObjectState();
         }

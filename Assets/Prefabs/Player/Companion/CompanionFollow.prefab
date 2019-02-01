@@ -478,7 +478,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -639,7 +639,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -800,7 +800,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -961,7 +961,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -1344,7 +1344,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -3182,6 +3182,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4835077461577520}
     m_Modifications:
+    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
+      propertyPath: m_Name
+      value: ArrowUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224890356984837506, guid: 4098b22d05daa42328a4823806232466,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3286,14 +3294,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
-      propertyPath: m_Name
-      value: ArrowUpUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1951631710909948, guid: 4098b22d05daa42328a4823806232466, type: 3}
       propertyPath: m_IsActive
