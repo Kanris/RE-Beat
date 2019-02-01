@@ -17,6 +17,7 @@ public class PickupBox : MonoBehaviour {
     [Header("Additional")]
     [SerializeField] private InteractionUIButton m_InteractionUIButton;
     [SerializeField] private Transform m_CeilingCheck;
+    [SerializeField] private Transform m_GroundCheck;
     [SerializeField] private LayerMask m_WhatIsGround;
 
     #region private fields
@@ -28,6 +29,7 @@ public class PickupBox : MonoBehaviour {
     private bool m_IsQuitting; //is application closing
 
     private bool m_IsCantRelease; //can't release box
+    private bool m_IsNeedToSave; //indicate is box saved it's position
 
     #endregion
 
@@ -118,9 +120,27 @@ public class PickupBox : MonoBehaviour {
                 Destroy(gameObject); //destroy box to respawn new
             }
         }
+
+        //save box position on scene
+        SaveBoxPosition();
     }
 
     #region ontrigger
+
+    private void SaveBoxPosition()
+    {
+        if (!m_IsBoxUp && m_IsNeedToSave)
+        {
+            var isGrounded = Physics2D.OverlapCircle(m_GroundCheck.position, .2f, m_WhatIsGround);
+
+            if (isGrounded != null)
+            {
+                m_IsNeedToSave = false;
+                //save current box position
+                GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -145,6 +165,9 @@ public class PickupBox : MonoBehaviour {
         //if nothing is block box and (or is box in player's hand or InteractionUi is active)
         if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
         {
+            if (m_IsBoxUp)
+                m_IsNeedToSave = true;
+
             StartCoroutine(AttachToParent()); //attach box to the player
         }
     }
@@ -187,8 +210,6 @@ public class PickupBox : MonoBehaviour {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
             GetComponent<Rigidbody2D>().AddForce(new Vector2(100f * GameMaster.Instance.m_Player.transform.GetChild(0).localScale.x, 200f));
-            //save current box position
-            GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
         }
 
 
