@@ -88,7 +88,7 @@ public class Door : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) //if player is in collision
+        if (collision.gameObject.CompareTag("Player") && Type != DoorType.Key) //if player is in collision
         {
             var displayMessage = LocalizationManager.Instance.GetItemsLocalizedValue(DisplayMessage);
 
