@@ -77,12 +77,9 @@ public class InputControlManager : MonoBehaviour {
     //get horizontal value from stick or dpad
     public float GetHorizontalValue()
     {
-        var horizontalValue = Mathf.Abs(m_Gamepad.LeftStickX) > .3f
-                                    ? m_Gamepad.LeftStickX : 0f;
-
         //if left stick isn't pressed try to get value from dpad
-        if (horizontalValue == 0)
-            horizontalValue = m_Gamepad.DPadX;
+        var horizontalValue = Mathf.Abs(m_Gamepad.LeftStickX.Value) > .3f
+                                    ? m_Gamepad.LeftStickX.Value : m_Gamepad.DPadX;
 
         return horizontalValue;
     }
@@ -90,11 +87,9 @@ public class InputControlManager : MonoBehaviour {
     //get vertical value from stick or dpad
     public float GetVerticalValue()
     {
-        var verticalValue = m_Gamepad.LeftStickY.Value;
-
-        if (verticalValue == 0)
-            verticalValue = Instance.m_Gamepad.DPadDown;
-
+        var verticalValue = Mathf.Abs(m_Gamepad.LeftStickY.Value) > .3f
+                                   ? m_Gamepad.LeftStickY.Value : Instance.m_Gamepad.DPadDown;
+            
         return verticalValue;
     }
 
