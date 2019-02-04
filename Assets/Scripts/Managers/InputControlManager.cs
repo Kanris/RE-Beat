@@ -224,6 +224,7 @@ public class InputControlManager : MonoBehaviour {
 
     public void StartGamepadVibration(float intensity, float time)
     {
+        /*
         if (m_IsRumble)
         {
             StopGamepadVibration();
@@ -232,7 +233,7 @@ public class InputControlManager : MonoBehaviour {
         m_Gamepad.Vibrate(intensity);
         m_IsRumble = true;
 
-        StartCoroutine(GamepadVibrate(time));
+        StartCoroutine(GamepadVibrate(time));*/
     }
 
     private IEnumerator GamepadVibrate(float time)
