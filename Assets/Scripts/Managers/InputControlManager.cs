@@ -203,10 +203,9 @@ public class InputControlManager : MonoBehaviour {
     //calculate is up button pressed or not
     public static bool IsUpperButtonsPressed()
     {
-        var leftStickValue = Instance.m_Gamepad.LeftStickY.Value > 0 ?
-            Mathf.Abs(Instance.m_Gamepad.LeftStickY.Value - 1f) < 0.01f : false;
+        var leftStickValue = Instance.m_Gamepad.LeftStickY.Value > 0 && Mathf.Abs(Instance.m_Gamepad.LeftStickY.Value - 1f) < 0.01f;
 
-        return (leftStickValue & Instance.m_Gamepad.LeftStickY.WasPressed) || Instance.m_Gamepad.DPadUp.WasPressed;
+        return (leftStickValue && Instance.m_Gamepad.LeftStickY.WasPressed) || Instance.m_Gamepad.DPadUp.WasPressed;
     }
 
     //if player shooting or attacking

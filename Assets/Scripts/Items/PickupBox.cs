@@ -131,22 +131,33 @@ public class PickupBox : MonoBehaviour {
     {
         if (!m_IsBoxUp && m_IsNeedToSave)
         {
-            var isGrounded = Physics2D.OverlapCircle(m_GroundCheck.position, .2f, m_WhatIsGround);
+            var colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, .01f, m_WhatIsGround);
+            var isGrounded = false;
 
-            if (isGrounded != null)
+            foreach (var ground in colliders)
+            {
+                if (ground.gameObject != gameObject)
+                {
+                    isGrounded = true;
+                    break;
+                }
+            }
+
+            if (isGrounded)
             {
                 m_IsNeedToSave = false;
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 //save current box position
                 GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is near box
+        if (collision.CompareTag("Player") && !m_IsNeedToSave && !m_InteractionUIButton.ActiveSelf())
         {
-            m_InteractionUIButton.SetActive(true); //show box ui
+            m_InteractionUIButton.SetActive(true);
         }
     }
 
@@ -204,6 +215,7 @@ public class PickupBox : MonoBehaviour {
         if (m_IsBoxUp)
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
         else
         {
