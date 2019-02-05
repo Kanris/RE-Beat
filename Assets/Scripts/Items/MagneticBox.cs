@@ -132,10 +132,6 @@ public class MagneticBox : MonoBehaviour {
                 //is player can release box
                 if (!m_IsCantRelease)
                     OnPickUpPress();
-                //player can't release box
-                else
-                    //show error message
-                    UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
             }
         }
 
@@ -162,7 +158,8 @@ public class MagneticBox : MonoBehaviour {
             //is there ground above box
             if (Physics2D.OverlapBox(m_CeilingCheck.position, new Vector2(.45f, .45f), 0, m_WhatIsGround))
             {
-                m_IsCantRelease = true;
+                m_IsCantRelease = true; //player can't release box
+                UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
             }
             //there is no ground above box
             else

@@ -91,9 +91,6 @@ public class PickupBox : MonoBehaviour {
                 {
                     if (!m_IsCantRelease)
                         OnPickUpPress();
-                    else
-                        //show error message
-                        UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
                 }
             }
             else if(m_InteractionUIButton.ActiveSelf()) //if player is holding box, but interaction button is active
@@ -119,7 +116,12 @@ public class PickupBox : MonoBehaviour {
     //check is there is ground above box
     private bool IsCantReleaseBox()
     {
-        return Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround) != null;
+        var result = Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround) != null;
+
+        if (result) //show error message
+            UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
+
+        return result;
     }
 
     private void CheckIsOnGround()
@@ -218,7 +220,7 @@ public class PickupBox : MonoBehaviour {
 
         transform.SetParent(value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null); //attach box to the parrent
 
-        if (value) //if parent there is parent
+        if (value) //if there is parent
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
 

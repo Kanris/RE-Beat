@@ -132,7 +132,6 @@ public class Trader : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = false;
-
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(true);
         }
     }
