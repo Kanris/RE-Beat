@@ -120,6 +120,11 @@ public class MagneticBox : MonoBehaviour {
     {
          if (m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if box is picked up
         {
+            //if box is in player's hands and interaction button thought it's not
+            if (!m_InteractionUIButton.m_IsPlayerNear)
+                //set is player near true
+                m_InteractionUIButton.SetIsPlayerNear(true);
+
             if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed submit button
             {
                 CheckGroundAbove();
