@@ -83,14 +83,12 @@ public class PickupBox : MonoBehaviour {
                 //set is player near true
                 m_InteractionUIButton.SetIsPlayerNear(true);
 
-            m_IsCantRelease = IsCantReleaseBox();
 
             if (!m_InteractionUIButton.ActiveSelf()) //if player is holding box
             {
                 if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed attack button
                 {
-                    if (!m_IsCantRelease)
-                        OnPickUpPress();
+                    OnPickUpPress();
                 }
             }
             else if(m_InteractionUIButton.ActiveSelf()) //if player is holding box, but interaction button is active
@@ -148,9 +146,6 @@ public class PickupBox : MonoBehaviour {
         Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.4f, .05f));
     }
 
-    //GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
-    //var colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, .05f, m_WhatIsGround);
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (GetComponent<Rigidbody2D>().constraints != RigidbodyConstraints2D.FreezeAll && !m_IsBoxUp)
@@ -202,6 +197,9 @@ public class PickupBox : MonoBehaviour {
 
     private void OnPickUpPress()
     {
+        if (m_IsBoxUp)
+            m_IsCantRelease = IsCantReleaseBox();
+
         //if nothing is block box and (or is box in player's hand or InteractionUi is active)
         if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
         {

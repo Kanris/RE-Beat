@@ -125,13 +125,9 @@ public class MagneticBox : MonoBehaviour {
                 //set is player near true
                 m_InteractionUIButton.SetIsPlayerNear(true);
 
-            if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed submit button
+            if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed attack button
             {
-                CheckGroundAbove();
-
-                //is player can release box
-                if (!m_IsCantRelease)
-                    OnPickUpPress();
+                OnPickUpPress();
             }
         }
 
@@ -179,7 +175,7 @@ public class MagneticBox : MonoBehaviour {
         {
             if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
             {
-                CheckGroundAbove();
+                CheckGroundAbove(); //check is there is ground above the box (only if box is picked up)
 
                 if (!m_IsCantRelease)
                 {
