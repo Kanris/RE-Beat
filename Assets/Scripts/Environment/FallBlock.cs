@@ -49,8 +49,6 @@ public class FallBlock : MonoBehaviour {
         if (m_UpdateTime <= Time.time) //if need to change state
         {
             m_IsIdle = false; //change state
-
-            m_SizeFromCenterToEdge *= -1;
         }
 
         if (!m_IsIdle)
@@ -70,12 +68,16 @@ public class FallBlock : MonoBehaviour {
         }
     }
 
+    //get next destination point
     private void GetNextDestination()
     {
+        //get next index
         m_CurrentIndex++;
 
+        //if index is greater or equal than transforms in m_Points
         if (m_CurrentIndex >= m_Points.childCount)
         {
+            //back to first point
             m_CurrentIndex = 0;
         }
     }
@@ -101,7 +103,7 @@ public class FallBlock : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!m_IsIdle) //if fall block is not in idle
+        if (!m_IsIdle && m_CurrentIndex == 1) //if fall block is not in idle
         {
             //if player in block's trigger
             if (collision.CompareTag("Player"))

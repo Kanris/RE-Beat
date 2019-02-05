@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4968637631936196}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: FallBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4413441124146230741}
   - component: {fileID: 8833322466156184907}
   - component: {fileID: 1273129332337939818}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FallBlockBody
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdleTime: 1
-  m_Speed: 3
+  m_Speed: 6
   m_Points: {fileID: 2617358772976712133}
   m_CurrentIndex: 0
   m_CamShakeArea: {fileID: 8524908748347501437}
