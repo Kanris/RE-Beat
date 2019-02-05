@@ -318,7 +318,7 @@ public class PlayerStats : Stats
         m_IsInvincible = false; //player is not invincible
     }
 
-    protected override void KillObject()
+    public override void KillObject()
     {
         GameMaster.Instance.StartPlayerRespawn(true, false); //respawn new player on respawn point
         PlayDeathParticles(); //show death particles
