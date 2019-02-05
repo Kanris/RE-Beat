@@ -107,6 +107,10 @@ public class FlyingPlatform : MonoBehaviour {
         {
             collision.transform.parent.SetParent(transform); //attach player to the platform so he will be moved with platform
         }
+        else if (collision.transform.CompareTag("Item"))
+        {
+            collision.transform.SetParent(transform); //attach item to the platform so he will be moved with platform
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)

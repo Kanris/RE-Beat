@@ -78,16 +78,12 @@ public class PickupBox : MonoBehaviour {
         //check is player can release box right now
         if (m_IsBoxUp)
         {
-            //is there ground above box
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
-            {
-                m_IsCantRelease = true;
-            }
-            //there is no ground above box
-            else
-            {
-                m_IsCantRelease = false;
-            }
+            //if box is in player's hands and interaction button thought it's not
+            if (!m_InteractionUIButton.m_IsPlayerNear)
+                //set is player near true
+                m_InteractionUIButton.SetIsPlayerNear(true);
+
+            m_IsCantRelease = IsCantReleaseBox();
         }
 
         #region pickup handler
@@ -120,44 +116,60 @@ public class PickupBox : MonoBehaviour {
                 Destroy(gameObject); //destroy box to respawn new
             }
         }
-
-        //save box position on scene
-        SaveBoxPosition();
     }
 
     #region ontrigger
 
-    private void SaveBoxPosition()
+    //check is there is ground above box
+    private bool IsCantReleaseBox()
     {
-        if (!m_IsBoxUp && m_IsNeedToSave)
+        return Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround) != null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.4f, .05f));
+    }
+
+    //GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+    //var colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, .05f, m_WhatIsGround);
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (GetComponent<Rigidbody2D>().constraints != RigidbodyConstraints2D.FreezeAll && !m_IsBoxUp)
         {
-            var colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, .01f, m_WhatIsGround);
-            var isGrounded = false;
-
-            foreach (var ground in colliders)
+            if (m_WhatIsGround == (m_WhatIsGround | (1 << collision.gameObject.layer)))
             {
-                if (ground.gameObject != gameObject)
+                if (collision.contacts.Length > 0)
                 {
-                    isGrounded = true;
-                    break;
-                }
-            }
+                    foreach (var contact in collision.contacts)
+                    {
+                        //colide from below
+                        if (Vector2.Dot(contact.normal, Vector2.up) > .9f)
+                        {
+                            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
-            if (isGrounded)
-            {
-                m_IsNeedToSave = false;
-                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-                //save current box position
-                GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+                            if (m_IsNeedToSave)
+                            {
+                                m_IsNeedToSave = false;
+                                GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+                            }
+
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !m_IsNeedToSave && !m_InteractionUIButton.ActiveSelf())
+        if (!m_InteractionUIButton.ActiveSelf() && collision.CompareTag("Player") && !m_IsNeedToSave)
         {
             m_InteractionUIButton.SetActive(true);
+            m_InteractionUIButton.SetIsPlayerNear(true);
         }
     }
 
@@ -166,6 +178,7 @@ public class PickupBox : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player move away from the box
         {
             m_InteractionUIButton.SetActive(false); //hide box ui
+            m_InteractionUIButton.SetIsPlayerNear(false);
         }
     }
 
@@ -178,6 +191,11 @@ public class PickupBox : MonoBehaviour {
         {
             if (m_IsBoxUp)
                 m_IsNeedToSave = true;
+            else
+            {
+                Debug.LogError("Detach from parent");
+                transform.SetParent(null);
+            }
 
             StartCoroutine(AttachToParent()); //attach box to the player
         }
