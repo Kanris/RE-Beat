@@ -14,7 +14,7 @@ public class FlyingPlatform : MonoBehaviour {
 
     [Header("Destination")]
     [SerializeField] private Transform m_Points;
-    [SerializeField] private int m_CurrentIndex = 0;
+    [SerializeField, Range(0, 1)] private int m_CurrentIndex = 0;
     #endregion
 
     private Vector3 m_MoveVector; //platform move vectore
@@ -24,21 +24,6 @@ public class FlyingPlatform : MonoBehaviour {
     #endregion
 
     #region private methods
-
-    #region initialize
-
-    // Use this for initialization
-    private void Start () {
-
-        if (m_CurrentIndex >= m_Points.childCount)
-        {
-            Debug.LogError(transform.name + " current index can't be greater than points in MovePoints");
-            m_CurrentIndex = 0;
-        }
-
-    }
-
-    #endregion
 
     // Update is called once per frame
     private void Update () {
@@ -50,7 +35,7 @@ public class FlyingPlatform : MonoBehaviour {
 
         if (!m_Idle) //if platform is moving
         {
-            transform.position = Vector2.MoveTowards(transform.position, m_Points.GetChild(m_CurrentIndex).position, Time.fixedDeltaTime * m_Speed);
+            transform.position = Vector2.MoveTowards(transform.position, m_Points.GetChild(m_CurrentIndex).position, Time.deltaTime * m_Speed);
 
             if (transform.position == m_Points.GetChild(m_CurrentIndex).position)
             {

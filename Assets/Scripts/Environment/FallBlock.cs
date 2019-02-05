@@ -55,7 +55,7 @@ public class FallBlock : MonoBehaviour {
 
         if (!m_IsIdle)
         {
-            transform.position = Vector2.MoveTowards(transform.position, m_Points.GetChild(m_CurrentIndex).position, Time.fixedDeltaTime * m_Speed);
+            transform.position = Vector2.MoveTowards(transform.position, m_Points.GetChild(m_CurrentIndex).position, Time.deltaTime * m_Speed);
 
             if (Vector2.Distance(transform.position, m_Points.GetChild(m_CurrentIndex).position) <= m_SizeFromCenterToEdge)
             {

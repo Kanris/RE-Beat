@@ -152,7 +152,8 @@ public class Trader : MonoBehaviour {
 
         m_StoreUI?.SetActive(false); //hide store UI
 
-        GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(false);
+        if (GameMaster.Instance.m_Player != null)
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(false);
 
         //remove item's selection
         m_CurrentSelectedItemIndex = 0;
