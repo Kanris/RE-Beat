@@ -392,7 +392,7 @@ public class Player : MonoBehaviour {
             #endregion
 
         }
-        else if (GameMaster.Instance.IsPlayerDead) //companion's abilities
+        else if (GameMaster.Instance.IsPlayerDead && !m_IsPlayerBusy) //companion's abilities
         {
             if (m_InvisibleAbilityCooldown < Time.time) //if can use invisible ability
             {

@@ -230,7 +230,7 @@ public class PickupBox : MonoBehaviour {
 
         yield return new WaitForEndOfFrame(); //wait before give player control
 
-        if (!GameMaster.Instance.IsPlayerDead)
+        if (GameMaster.Instance.m_Player != null)
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(value); //trigger player bussy
 
         InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
