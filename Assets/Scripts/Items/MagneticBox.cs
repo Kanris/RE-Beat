@@ -141,7 +141,7 @@ public class MagneticBox : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(m_CeilingCheck.position, new Vector3(.45f, .45f));
+        Gizmos.DrawWireCube(m_CeilingCheck.position, new Vector3(.4f, .4f));
     }
 
     private void CheckGroundAbove()
@@ -152,7 +152,7 @@ public class MagneticBox : MonoBehaviour {
                 m_InteractionUIButton.SetIsPlayerNear(true);
 
             //is there ground above box
-            if (Physics2D.OverlapBox(m_CeilingCheck.position, new Vector2(.45f, .45f), 0, m_WhatIsGround))
+            if (Physics2D.OverlapBox(m_CeilingCheck.position, new Vector2(.4f, .4f), 0, m_WhatIsGround))
             {
                 m_IsCantRelease = true; //player can't release box
                 UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
@@ -221,7 +221,7 @@ public class MagneticBox : MonoBehaviour {
         InputControlManager.Instance.StartGamepadVibration(1f, 0.05f); //vibrate gamepad
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player") && !m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if player near box
         {
@@ -230,9 +230,9 @@ public class MagneticBox : MonoBehaviour {
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player")) //if player leave box
+        if (collision.CompareTag("Player")) //if player leave box
         {
             m_InteractionUIButton.SetActive(false); //hide box ui
             m_InteractionUIButton.SetIsPlayerNear(false);
