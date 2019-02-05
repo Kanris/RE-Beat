@@ -39,6 +39,17 @@ public class FallBlock : MonoBehaviour {
     {
         m_CamShakeArea.OnPlayerInTrigger += SetIsPlayerInCamShakeArea; //subscribe to the player in trigger
         m_SizeFromCenterToEdge = GetComponent<BoxCollider2D>().size.y; //get size
+
+        RemoveXPointsPosition(); //remove x position, fall block can move only on Y axis
+    }
+
+    //remove x position, fall block can move only on Y axis
+    private void RemoveXPointsPosition()
+    {
+        for (var index = 0; index < m_Points.childCount; index++)
+        {
+            m_Points.GetChild(index).localPosition = m_Points.GetChild(index).localPosition.With(x: 0f);
+        }
     }
 
     #endregion
@@ -51,18 +62,25 @@ public class FallBlock : MonoBehaviour {
             m_IsIdle = false; //change state
         }
 
+        //if block is not idle
         if (!m_IsIdle)
         {
+            //move block to the current point
             transform.position = Vector2.MoveTowards(transform.position, m_Points.GetChild(m_CurrentIndex).position, Time.deltaTime * m_Speed);
 
+            //if block is near current point
             if (Vector2.Distance(transform.position, m_Points.GetChild(m_CurrentIndex).position) <= m_SizeFromCenterToEdge)
             {
+                //indicate that block is idle
                 m_IsIdle = true;
-                m_UpdateTime = IdleTime + Time.time;
+                m_UpdateTime = IdleTime + Time.time; //set idle time
 
+                //if current point is bottom
                 if (m_CurrentIndex == 1)
+                    //create effects
                     CreateHitGroundEffect();
 
+                //get next point
                 GetNextDestination();
             }
         }
