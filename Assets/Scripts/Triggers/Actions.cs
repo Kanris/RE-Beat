@@ -50,7 +50,7 @@ public class Actions : MonoBehaviour {
         {
             if (m_IsPlayerNear)
             {
-                if (InputControlManager.IsUpperButtonsPressed())
+                if (InputControlManager.Instance.IsUpperButtonsPressed())
                 {
                     ChangeObjectState();
                 }

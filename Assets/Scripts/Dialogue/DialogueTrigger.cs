@@ -40,7 +40,7 @@ public class DialogueTrigger : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if (m_Player != null && InputControlManager.IsCanUseSubmitButton()) //if player is near
+        if (m_Player != null && InputControlManager.Instance.IsCanUseSubmitButton()) //if player is near
         {
             if (!m_IsDialogueInProgress) //if dialogue is not in progress
             {
@@ -58,18 +58,15 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void StartDialogue()
     {
-        if (m_Player != null)
+        if (!m_IsDialogueInProgress)
         {
-            if (!m_IsDialogueInProgress)
-            {
-                DisplayUI(false); //disable npc ui
-                EnableUserControl(false);
+            DisplayUI(false); //disable npc ui
+            EnableUserControl(false);
 
-                DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
+            DialogueManager.Instance.StartDialogue(transform.name, dialogue, transform, m_Player.gameObject.transform); //start dialogue
 
-                if (!dialogue.IsDialogueFinished) //if dialogue is not saved
-                    GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
-            }
+            if (!dialogue.IsDialogueFinished) //if dialogue is not saved
+                GameMaster.Instance.SaveState<int>(gameObject.name, 0, GameMaster.RecreateType.Dialogue); //save dialogue state
         }
     }
 
@@ -90,13 +87,11 @@ public class DialogueTrigger : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (m_Player == null)
+        if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground")
+                && !m_IsDialogueInProgress && !m_InteractionUIButton.ActiveSelf()) //if player is near npc
         {
-            if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground")) //if player is near npc
-            {
-                m_Player = collision.transform; //get character control script
-                DisplayUI(true); //show npc ui
-            }
+            m_Player = collision.transform; //get character control script
+            DisplayUI(true); //show npc ui
         }
     }
 
@@ -112,6 +107,7 @@ public class DialogueTrigger : MonoBehaviour {
     //show or hide npc ui
     private void DisplayUI(bool isActive)
     {
+        m_InteractionUIButton.SetIsPlayerNear(isActive);
         m_InteractionUIButton.SetActive(isActive); //show or hide npc ui
     }
 

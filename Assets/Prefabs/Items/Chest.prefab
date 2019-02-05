@@ -256,7 +256,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f2e79e185d09d4659a101373c71ad815, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -439,6 +439,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4761898687651382}
     m_Modifications:
+    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
+      propertyPath: m_Name
+      value: ArrowUpUI
+      objectReference: {fileID: 0}
     - target: {fileID: 224890356984837506, guid: 4098b22d05daa42328a4823806232466,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -543,10 +547,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
-      propertyPath: m_Name
-      value: ArrowUpUI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4098b22d05daa42328a4823806232466, type: 3}

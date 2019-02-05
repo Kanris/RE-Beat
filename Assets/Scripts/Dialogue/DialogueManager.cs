@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (m_IsDialogueInProgress) //if is dialogue in progress
         {
-            if (InputControlManager.Instance.IsJumpPressed() && InputControlManager.IsCanUseSubmitButton()) //if jump button pressed to skip sentence
+            if (InputControlManager.Instance.IsJumpPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if jump button pressed to skip sentence
             {
                 if (m_IsSentenceTyping && !m_Buttons.activeSelf) //if sentence is still typing and player doesn't see answer buttons
                 {

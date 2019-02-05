@@ -88,7 +88,7 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) //if player is near the chest
         {
-            if (InputControlManager.IsCanUseSubmitButton())
+            if (InputControlManager.Instance.IsCanUseSubmitButton())
             {
                 if (m_ChestUI.activeSelf)
                 {

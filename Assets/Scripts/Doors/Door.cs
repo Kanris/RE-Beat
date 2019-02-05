@@ -43,7 +43,7 @@ public class Door : MonoBehaviour {
 
         if (m_InteractionUIButton != null)
         {
-            m_InteractionUIButton.PressInteractionButton = OpenDoor;
+            m_InteractionUIButton.PressInteractionButton = OpenDoorWithKey;
             m_InteractionUIButton.SetActive(false); //initialize door ui
         }
     }
@@ -62,18 +62,11 @@ public class Door : MonoBehaviour {
         }
     }
 
-    private void OpenDoor()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (m_InteractionUIButton.ActiveSelf())
+        if (collision.CompareTag("Player") && Type == DoorType.Key && !m_InteractionUIButton.ActiveSelf()) //if player is in trigger
         {
-            OpenDoorWithKey(); //try to open the door
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && Type == DoorType.Key) //if player is in trigger
-        {
+            m_InteractionUIButton.SetIsPlayerNear(true);
             m_InteractionUIButton.SetActive(true); //show door ui
         }
     }
@@ -82,6 +75,7 @@ public class Door : MonoBehaviour {
     {
         if (collision.CompareTag("Player") && Type == DoorType.Key) //if player is leaving trigger
         {
+            m_InteractionUIButton.SetIsPlayerNear(false);
             m_InteractionUIButton.SetActive(false); //hide door ui
         }
     }

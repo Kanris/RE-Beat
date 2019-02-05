@@ -33,7 +33,7 @@ public class Teleport : MonoBehaviour {
 
     private void TeleportTo()
     {
-        if (m_Player != null && !m_IsTeleporting)
+        if (!m_IsTeleporting)
         {
             m_IsTeleporting = true;
             StartCoroutine(TeleportPlayer()); //start teleport
@@ -84,11 +84,12 @@ public class Teleport : MonoBehaviour {
         }
     }
 
-    private void SetActiveInteractionButton(bool isActive)
+    private void SetActiveInteractionButton(bool value)
     {
         if (m_InteractionUIButton != null)
         {
-            m_InteractionUIButton.SetActive(isActive);
+            m_InteractionUIButton.SetActive(value);
+            m_InteractionUIButton.SetIsPlayerNear(value);
         }
     }
 

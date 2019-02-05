@@ -69,8 +69,6 @@ public class Fireball : MonoBehaviour {
             && ((GameMaster.Instance.m_Player?.name.Contains("Player") ?? false)
             || (GameMaster.Instance.m_Player?.name.Contains("Companion") ?? false));
 
-        Debug.LogError(isPlayerOnScene);
-
         //if fireball life time is over or player is not on scene and fireball is not destroying
         if ((Time.time >= DestroyTime || !isPlayerOnScene) && !isDestroying)
             DestroyFireball(); //destroy fireball

@@ -53,10 +53,11 @@ public class DoorSwitch : MonoBehaviour {
 
     #endregion
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is near the switch
+        if (collision.CompareTag("Player") && !m_InteractionUIButton.ActiveSelf()) //if player is near the switch
         {
+            m_InteractionUIButton.SetIsPlayerNear(true);
             m_InteractionUIButton.SetActive(true); //show switch ui
         }
     }
@@ -65,6 +66,7 @@ public class DoorSwitch : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leaving the switch
         {
+            m_InteractionUIButton.SetIsPlayerNear(false);
             m_InteractionUIButton.SetActive(false); //hide switch ui
         }
     }

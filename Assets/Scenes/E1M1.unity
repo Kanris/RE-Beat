@@ -1355,7 +1355,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1420229268}
+      objectReference: {fileID: 1609197055}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 3}
       propertyPath: m_PlayerToRespawn
@@ -5796,11 +5796,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224964791487379210, guid: 027009091b3d0254e9b7d11cd360d4eb,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
       propertyPath: m_fontAsset
@@ -5841,6 +5836,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224964791487379210, guid: 027009091b3d0254e9b7d11cd360d4eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 224566592948164972, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
@@ -32749,11 +32749,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224964791487379210, guid: 027009091b3d0254e9b7d11cd360d4eb,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 114845769914973222, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
       propertyPath: m_fontAsset
@@ -32809,6 +32804,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.spaceCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224964791487379210, guid: 027009091b3d0254e9b7d11cd360d4eb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 224566592948164972, guid: 027009091b3d0254e9b7d11cd360d4eb,
         type: 3}
@@ -33249,7 +33249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1386157485
 Transform:
   m_ObjectHideFlags: 0
@@ -36638,11 +36638,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.2
+      value: 40.53
       objectReference: {fileID: 0}
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.22
+      value: -3.21
       objectReference: {fileID: 0}
     - target: {fileID: 4168570275813738, guid: 74393718dd00ee1439233ebe530cb04c, type: 3}
       propertyPath: m_LocalPosition.z

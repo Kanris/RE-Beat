@@ -55,7 +55,7 @@ public class InputControlManager : MonoBehaviour {
     }
 
     //indicates if player can use submit button
-    public static bool IsCanUseSubmitButton()
+    public bool IsCanUseSubmitButton()
     {
         //if pause menu is not open
         if (!PauseMenuManager.IsPauseOpen)
@@ -201,7 +201,7 @@ public class InputControlManager : MonoBehaviour {
     #endregion
 
     //calculate is up button pressed or not
-    public static bool IsUpperButtonsPressed()
+    public bool IsUpperButtonsPressed()
     {
         var leftStickValue = Instance.m_Gamepad.LeftStickY.Value > 0 && Mathf.Abs(Instance.m_Gamepad.LeftStickY.Value - 1f) < 0.01f;
 
@@ -209,7 +209,7 @@ public class InputControlManager : MonoBehaviour {
     }
 
     //if player shooting or attacking
-    public static bool IsAttackButtonsPressed()
+    public bool IsAttackButtonsPressed()
     {
         return Instance.IsAttackPressed() || Instance.IsShootPressed();
     }
