@@ -39,16 +39,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4890274745066842}
+  - component: {fileID: 114126048342006236}
+  - component: {fileID: 114995371267503516}
   - component: {fileID: 212672268288831874}
   - component: {fileID: 50165198865163298}
   - component: {fileID: 95686711767765298}
-  - component: {fileID: 114126048342006236}
-  - component: {fileID: 114995371267503516}
   - component: {fileID: 1360794418}
   m_Layer: 13
   m_Name: Gloo
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -68,6 +68,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114126048342006236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825073258671120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyType: 0
+  m_GameObjectToDestroy: {fileID: 1825073258671120}
+  EnemyStats:
+    DeathParticle: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
+      type: 3}
+    HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
+    DeathSound: {fileID: 0}
+    MaxHealth: 50
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
+    DamageAmount: 1
+    Speed: 1.8
+    AttackSpeed: 2
+    DropScrap: 3
+    m_IsBigMonster: 0
+    DontResurect: 0
+    m_ShieldInfo:
+      IsHasShield: 0
+      ShieldType: 0
+  DeathDetonationTimer: 2
+  m_DestroyOnCollision: 0
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_HealthUI: {fileID: 1586970307098704517}
+  m_CurrentHealthImage: {fileID: 2059000269715463900}
+  GroundHitParticles: {fileID: 0}
+  m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
+    type: 3}
+  m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
+  m_IsDestroying: 0
+--- !u!114 &114995371267503516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825073258671120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a792c8203fad94438b48c5d41115d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GroundCheck: {fileID: 4775839029967382}
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 2637824
+  m_IsSimpleMovement: 1
+  IdleTime: 0
+  m_Direction: -1
 --- !u!212 &212672268288831874
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -156,68 +218,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114126048342006236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825073258671120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnemyType: 0
-  m_GameObjectToDestroy: {fileID: 1825073258671120}
-  EnemyStats:
-    DeathParticle: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
-      type: 3}
-    HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
-    DeathSound: {fileID: 0}
-    MaxHealth: 50
-    m_ThrowX: 3
-    m_ThrowY: 0.5
-    DamageAmount: 1
-    Speed: 1.8
-    AttackSpeed: 2
-    DropScrap: 3
-    m_IsBigMonster: 0
-    DontResurect: 0
-    m_ShieldInfo:
-      IsHasShield: 0
-      ShieldType: 0
-  DeathDetonationTimer: 2
-  m_DestroyOnCollision: 0
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  m_HealthUI: {fileID: 1586970307098704517}
-  m_CurrentHealthImage: {fileID: 2059000269715463900}
-  GroundHitParticles: {fileID: 0}
-  m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
-    type: 3}
-  m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
-  m_IsDestroying: 0
---- !u!114 &114995371267503516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825073258671120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a792c8203fad94438b48c5d41115d77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_GroundCheck: {fileID: 4775839029967382}
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 2637824
-  m_IsSimpleMovement: 1
-  m_Direction: -1
-  IdleTime: 0
 --- !u!58 &1360794418
 CircleCollider2D:
   m_ObjectHideFlags: 0

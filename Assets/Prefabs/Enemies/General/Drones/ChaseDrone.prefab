@@ -9,18 +9,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4038221759106074}
+  - component: {fileID: 114167720117086878}
+  - component: {fileID: 114405769845900754}
+  - component: {fileID: 114198472172694852}
   - component: {fileID: 212417843038634052}
   - component: {fileID: 50652668238388356}
   - component: {fileID: 58982265312612044}
   - component: {fileID: 95617266228179234}
-  - component: {fileID: 114198472172694852}
-  - component: {fileID: 114167720117086878}
-  - component: {fileID: 114405769845900754}
   - component: {fileID: 96789338371640460}
   m_Layer: 13
   m_Name: ChaseDrone
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -40,6 +40,91 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114167720117086878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267201355872330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyType: 1
+  m_GameObjectToDestroy: {fileID: 1267201355872330}
+  EnemyStats:
+    DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
+      type: 3}
+    HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
+    DeathSound: {fileID: 11400000, guid: fca0dfe2b0c743f4f8da27a09a9fbd64, type: 2}
+    MaxHealth: 2
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
+    DamageAmount: 1
+    Speed: 1
+    AttackSpeed: 2
+    DropScrap: 5
+    m_IsBigMonster: 0
+    DontResurect: 1
+    m_ShieldInfo:
+      IsHasShield: 0
+      ShieldType: 0
+  DeathDetonationTimer: 1
+  m_DestroyOnCollision: 0
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 2105600
+  m_HealthUI: {fileID: 2867584559969737439}
+  m_CurrentHealthImage: {fileID: 3269244128965377670}
+  GroundHitParticles: {fileID: 0}
+  m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
+    type: 3}
+  m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
+  m_IsDestroying: 0
+--- !u!114 &114405769845900754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267201355872330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7800ff978254811ae5f563ffd818d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ChaseRange: {fileID: 114223070407608740}
+  UpdateRate: 5
+  Speed: 150
+--- !u!114 &114198472172694852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267201355872330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask: -1
 --- !u!212 &212417843038634052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -144,91 +229,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114198472172694852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267201355872330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask: -1
---- !u!114 &114167720117086878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267201355872330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d51d578366d4bd4beb7d3e54f53a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnemyType: 1
-  m_GameObjectToDestroy: {fileID: 1267201355872330}
-  EnemyStats:
-    DeathParticle: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
-      type: 3}
-    HitSound: {fileID: 11400000, guid: c98af45a03b2a32419daa864e442b055, type: 2}
-    DeathSound: {fileID: 11400000, guid: fca0dfe2b0c743f4f8da27a09a9fbd64, type: 2}
-    MaxHealth: 2
-    m_ThrowBackX: 0
-    m_ThrowBackY: 0
-    DamageAmount: 1
-    Speed: 1
-    AttackSpeed: 2
-    DropScrap: 5
-    m_IsBigMonster: 0
-    DontResurect: 1
-    m_ShieldInfo:
-      IsHasShield: 0
-      ShieldType: 0
-  DeathDetonationTimer: 1
-  m_DestroyOnCollision: 0
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 2105600
-  m_HealthUI: {fileID: 2867584559969737439}
-  m_CurrentHealthImage: {fileID: 3269244128965377670}
-  GroundHitParticles: {fileID: 0}
-  m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
-    type: 3}
-  m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
-  m_IsDestroying: 0
---- !u!114 &114405769845900754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267201355872330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a7800ff978254811ae5f563ffd818d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ChaseRange: {fileID: 114223070407608740}
-  UpdateRate: 5
-  Speed: 150
 --- !u!96 &96789338371640460
 TrailRenderer:
   serializedVersion: 2
