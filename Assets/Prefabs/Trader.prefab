@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 0
   m_Name: Trader
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -296,11 +296,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoreUI
       objectReference: {fileID: 0}
-    - target: {fileID: 1575008682169062553, guid: 75b95b064d4494e9cb33026f3547fc44,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 231839484660281508, guid: 75b95b064d4494e9cb33026f3547fc44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -406,10 +401,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7039066595226728357, guid: 75b95b064d4494e9cb33026f3547fc44,
+    - target: {fileID: 1575008682169062553, guid: 75b95b064d4494e9cb33026f3547fc44,
         type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
+      propertyPath: m_isInputParsingRequired
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5598354575995125740, guid: 75b95b064d4494e9cb33026f3547fc44,
         type: 3}
@@ -420,6 +415,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039066595226728357, guid: 75b95b064d4494e9cb33026f3547fc44,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75b95b064d4494e9cb33026f3547fc44, type: 3}
