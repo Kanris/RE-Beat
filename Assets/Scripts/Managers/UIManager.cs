@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
 
 public class UIManager : MonoBehaviour {
 
@@ -72,6 +71,11 @@ public class UIManager : MonoBehaviour {
                 return this.message.CompareTo(compareItem.message) == 0;
             }
         }
+
+        public override int GetHashCode()
+        {
+            return message.GetHashCode();
+        }
     }
 
     #endregion
@@ -90,7 +94,7 @@ public class UIManager : MonoBehaviour {
         }
         else
         {
-            m_MessagePipeline = new List<Message>(); //initialize pipeline
+            m_MessagePipeline = new Queue<Message>(); //initialize pipeline
 
             Instance = this;
             DontDestroyOnLoad(this);
@@ -129,7 +133,7 @@ public class UIManager : MonoBehaviour {
     private int m_CurrentActiveHPIndex = 0;
 
     //notification fields
-    private List<Message> m_MessagePipeline; //display message pipeline
+    private Queue<Message> m_MessagePipeline; //display message pipeline
     private bool m_isShowingPipeline = false; //is currently showing pipeline
 
     #endregion
@@ -162,7 +166,7 @@ public class UIManager : MonoBehaviour {
         if (!m_NotificationUI.activeSelf) //play appear animation
             yield return SetActiveNotificationUI(true);
 
-        var itemToDisplay = m_MessagePipeline[0]; //get firs item in Queue
+        var itemToDisplay = m_MessagePipeline.Peek(); //get firs item in Queue (peek instead of Dequeue(), to left this message in pipeline so contains method will work properly)
 
         itemToDisplay.PlayNotificationSound(); //play notification sound
 
@@ -171,7 +175,7 @@ public class UIManager : MonoBehaviour {
 
         yield return new WaitForSecondsRealtime(itemToDisplay.duration); //display need amount time
 
-        m_MessagePipeline.RemoveAt(0); //remove displayed item from queue
+        m_MessagePipeline.Dequeue();
 
         if (m_MessagePipeline.Count != 0) //if there is items in queue
         {
@@ -209,7 +213,7 @@ public class UIManager : MonoBehaviour {
 
         if (!m_MessagePipeline.Contains( message ))
         {
-            m_MessagePipeline.Add(message);
+            m_MessagePipeline.Enqueue(message);
 
             if (!m_isShowingPipeline)
             {
