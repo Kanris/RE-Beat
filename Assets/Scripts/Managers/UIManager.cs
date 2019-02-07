@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class UIManager : MonoBehaviour {
 
@@ -55,6 +56,21 @@ public class UIManager : MonoBehaviour {
         public void PlayNotificationSound()
         {
             AudioManager.Instance.Play("Noti" + this.messageType);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null))
+                return false;
+
+            var compareItem = obj as Message;
+
+            if (ReferenceEquals(compareItem, null))
+                return false;
+            else
+            {
+                return this.message.CompareTo(compareItem.message) == 0;
+            }
         }
     }
 
@@ -172,7 +188,7 @@ public class UIManager : MonoBehaviour {
 
     private IEnumerator SetActiveNotificationUI(bool active)
     {
-        if (!active)
+        if (!active && !m_isShowingPipeline)
         {
             m_Text.gameObject.SetActive(false);
 
@@ -191,12 +207,15 @@ public class UIManager : MonoBehaviour {
     {
         var message = new Message(messageText, messageType, duration);
 
-        m_MessagePipeline.Add(message);
-
-        if (!m_isShowingPipeline)
+        if (!m_MessagePipeline.Contains( message ))
         {
-            m_isShowingPipeline = true;
-            StartCoroutine(DisplayMessage());
+            m_MessagePipeline.Add(message);
+
+            if (!m_isShowingPipeline)
+            {
+                m_isShowingPipeline = true;
+                StartCoroutine(DisplayMessage());
+            }
         }
     }
 
