@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(BoxCollider2D))]
+[RequireComponent(typeof(Animator))]
 public class DisappearPlatform : MonoBehaviour {
 
     #region enum
@@ -17,6 +17,7 @@ public class DisappearPlatform : MonoBehaviour {
     [SerializeField, Range(0.5f, 10f)] private float m_DisappearTime; //how long platform is "transparent"
     [SerializeField, Range(0.5f, 10f)] private float m_IdleTime; //how long is platform in transparent or in solid state
 
+    [Header("Next platform")]
     [SerializeField] private GameObject m_NextPlatform;
     [SerializeField] private bool m_IsNextPlatform;
 
@@ -41,6 +42,9 @@ public class DisappearPlatform : MonoBehaviour {
     {
         m_Animator = GetComponent<Animator>();
         m_BoxCollider = GetComponent<Collider2D>();
+
+        if (m_IsNextPlatform)
+            gameObject.SetActive(false);
     }
 
     #endregion
