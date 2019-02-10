@@ -389,7 +389,7 @@ MonoBehaviour:
     m_ThrowBackX: 0
     m_ThrowBackY: 0
     DamageAmount: 1
-    Speed: 350
+    Speed: 100
     AttackSpeed: 1
     DropScrap: 50
     m_IsBigMonster: 1
@@ -1048,15 +1048,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d25443e0f38c44be19db7c78ca2cba62, type: 3}
---- !u!224 &3419933689093153601 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8847198021667468305, guid: d25443e0f38c44be19db7c78ca2cba62,
-    type: 3}
-  m_PrefabInstance: {fileID: 6174861888595089232}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2335554903634710663 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8491549073896064983, guid: d25443e0f38c44be19db7c78ca2cba62,
+    type: 3}
+  m_PrefabInstance: {fileID: 6174861888595089232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &3419933689093153601 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8847198021667468305, guid: d25443e0f38c44be19db7c78ca2cba62,
     type: 3}
   m_PrefabInstance: {fileID: 6174861888595089232}
   m_PrefabAsset: {fileID: 0}

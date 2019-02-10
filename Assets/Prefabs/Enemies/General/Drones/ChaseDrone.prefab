@@ -63,7 +63,7 @@ MonoBehaviour:
     m_ThrowBackX: 0
     m_ThrowBackY: 0
     DamageAmount: 1
-    Speed: 1
+    Speed: 150
     AttackSpeed: 2
     DropScrap: 5
     m_IsBigMonster: 0
@@ -97,7 +97,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ChaseRange: {fileID: 114223070407608740}
   UpdateRate: 5
-  Speed: 150
 --- !u!114 &114198472172694852
 MonoBehaviour:
   m_ObjectHideFlags: 0

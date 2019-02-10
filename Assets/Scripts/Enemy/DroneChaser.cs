@@ -8,7 +8,6 @@ public class DroneChaser : MonoBehaviour {
 
     [SerializeField] private PlayerInTrigger m_ChaseRange;
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 2f; //next point update rate
-    [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
     private Rigidbody2D m_Rigidbody;
     private Seeker m_Seeker;
@@ -81,7 +80,7 @@ public class DroneChaser : MonoBehaviour {
                 m_PathIsEnded = false;
 
                 var direction = (m_Path.vectorPath[m_CurrentWaypoint] - transform.position).normalized
-                    * Speed * Time.fixedDeltaTime;
+                    * m_Stats.EnemyStats.Speed * Time.fixedDeltaTime;
 
                 //m_Rigidbody.AddForce(direction, ForceMode2D.Force);
                 m_Rigidbody.velocity = direction;
@@ -122,6 +121,6 @@ public class DroneChaser : MonoBehaviour {
         m_IsDestroying = value;
 
         if (m_IsDestroying)
-            Speed /= 2;
+            m_Stats.EnemyStats.Speed /= 2;
     }
 }
