@@ -21,6 +21,9 @@ public class DisappearPlatform : MonoBehaviour {
     [SerializeField] private GameObject m_NextPlatform;
     [SerializeField] private bool m_IsNextPlatform;
 
+    [Header("Activate")]
+    [SerializeField] private bool m_IsActivateByCompanion = false;
+
     #endregion
 
     #region private fields
@@ -40,11 +43,19 @@ public class DisappearPlatform : MonoBehaviour {
 
     private void Awake()
     {
+        //get components on this gameobject
         m_Animator = GetComponent<Animator>();
         m_BoxCollider = GetComponent<Collider2D>();
 
+        //if current platform must be actviate by another platform (hide this platform)
         if (m_IsNextPlatform)
             gameObject.SetActive(false);
+
+        //if platform has to be active by companion
+        if (m_IsActivateByCompanion)
+        {
+            IdleAnimation(); //"hide" platform (remove collider and change alpha)
+        }
     }
 
     #endregion
@@ -52,22 +63,25 @@ public class DisappearPlatform : MonoBehaviour {
     // Update is called once per frame
     private void Update () {
 		
-        if ((PlatformType == DisappearPlatformType.OnTimer | m_IsPlayerNear) & !m_IsNextPlatform) //if platform has timer or player is on platform (Trigger platform type)
+        if (!m_IsActivateByCompanion) //is companion do not have to activate platform
         {
-            if (m_UpdateTime <= Time.time) //platform need to change state
+            if ((PlatformType == DisappearPlatformType.OnTimer || m_IsPlayerNear) && !m_IsNextPlatform) //if platform has timer or player is on platform (Trigger platform type)
             {
-                m_IsIdle = !m_IsIdle; //change state
-                m_UpdateTime = Time.time;
+                if (m_UpdateTime <= Time.time) //platform need to change state
+                {
+                    m_IsIdle = !m_IsIdle; //change state
+                    m_UpdateTime = Time.time;
 
-                if (m_IsIdle) //if platform need to wait 
-                {
-                    m_UpdateTime += m_IdleTime; //add idle time
-                    IdleAnimation(); //play idle animation
-                }
-                else //is platform is disappearing
-                {
-                    m_UpdateTime += m_DisappearTime; //add disappearing time
-                    SetAnimator("Disappearing"); //play disappearing animation
+                    if (m_IsIdle) //if platform need to wait 
+                    {
+                        m_UpdateTime += m_IdleTime; //add idle time
+                        IdleAnimation(); //play idle animation
+                    }
+                    else //is platform is disappearing
+                    {
+                        m_UpdateTime += m_DisappearTime; //add disappearing time
+                        SetAnimator("Disappearing"); //play disappearing animation
+                    }
                 }
             }
         }
@@ -139,4 +153,15 @@ public class DisappearPlatform : MonoBehaviour {
     }
 
     #endregion
+
+    public void SetActivateByCompanion(bool value)
+    {
+        m_IsActivateByCompanion = value;
+
+        if (!value)
+        {
+            SetAnimator("Idle"); //play idle animation
+            SetCollider(true); //enable platform collider
+        }
+    }
 }
