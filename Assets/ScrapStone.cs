@@ -13,10 +13,12 @@ public class ScrapStone : MonoBehaviour
     [SerializeField] private GameObject m_ScrapEffect; //scrap gameobject
 
     private Camera2DFollow m_Camera;
+    private Animator m_Animator;
 
     private void Start()
     {
         m_Camera = Camera.main.GetComponent<Camera2DFollow>(); //get main camera script
+        m_Animator = GetComponent<Animator>(); //get animator on gameobject
         var enemyStats = GetComponent<EnemyStatsGO>(); //get enemy stats on gameobject
 
         enemyStats.EnemyStats.OnEnemyTakeDamageValue += AddSmallScrapsAmount; //on hit give small amount of scraps
@@ -39,6 +41,7 @@ public class ScrapStone : MonoBehaviour
 
     private void CreateScrapEffect(int scrapAmount)
     {
+        m_Animator.SetTrigger("Hit");
         m_Camera.Shake(.05f, .05f); //shake camera
         var instantScrapEffect = Instantiate(m_ScrapEffect); //create scraps effect on scene
         instantScrapEffect.transform.position = transform.position; //place created scraps effect on this gameobject
