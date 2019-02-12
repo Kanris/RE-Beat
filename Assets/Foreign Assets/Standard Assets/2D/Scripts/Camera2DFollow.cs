@@ -91,7 +91,7 @@ namespace UnityStandardAssets._2D
             }
         }
 
-        public IEnumerator SetTarget(Transform player)
+        public IEnumerator SetTarget(Transform player, float dampingValue = 0f)
         {
             target = player;
             m_LastTargetPosition = target.position;
@@ -99,7 +99,7 @@ namespace UnityStandardAssets._2D
 
             Camera.main.orthographicSize = m_DefaultCamSize;
 
-            damping = 0f; //move fast camera to the player
+            damping = dampingValue; //move fast camera to the player
 
             yield return null;
 

@@ -50,7 +50,7 @@ public class ActivationSwitch : MonoBehaviour
     {
         if (m_PlatformToActivate != null)
         {
-            StartCoroutine(m_Camera.SetTarget(m_PlatformToActivate.gameObject.transform)); //show change state
+            StartCoroutine(m_Camera.SetTarget(m_PlatformToActivate.gameObject.transform, 1f)); //show change state
 
             m_PlatformToActivate.SetActivateByCompanion(false);
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = false; //do not allow player to move
@@ -58,7 +58,7 @@ public class ActivationSwitch : MonoBehaviour
             yield return new WaitForSeconds(m_ShowTime); //time before return camera on player
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
-            StartCoroutine(m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0).transform)); //show change state
+            StartCoroutine(m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0).transform, 1f)); //show change state
 
             yield return new WaitForSeconds(0.001f); //delay to apply damping
 
