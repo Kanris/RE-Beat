@@ -408,6 +408,7 @@ MonoBehaviour:
   m_HitParticles: {fileID: 1913395364000030, guid: 647b24d7d67c2734094b615943d696e3,
     type: 3}
   m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
+  m_IsNotHitOnCollision: 0
   m_IsDestroying: 0
 --- !u!114 &114189616276374168
 MonoBehaviour:
@@ -425,7 +426,6 @@ MonoBehaviour:
   m_ChaseRange: {fileID: 114907073482014258}
   m_ScanRange: {fileID: 2672003639052520934}
   UpdateRate: 5
-  Speed: 100
   m_PatrolPoints:
   - {fileID: 4481481314149496}
   - {fileID: 4284218238293116}
@@ -777,7 +777,7 @@ GameObject:
   m_Layer: 0
   m_Name: Patrol Point 1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -807,7 +807,7 @@ GameObject:
   m_Layer: 0
   m_Name: Patrol Point 2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
