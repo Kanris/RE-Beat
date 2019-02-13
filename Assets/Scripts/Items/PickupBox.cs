@@ -157,7 +157,7 @@ public class PickupBox : MonoBehaviour {
                     foreach (var contact in collision.contacts)
                     {
                         //colide from below
-                        if (Vector2.Dot(contact.normal, Vector2.up) > .9f)
+                        if (Vector2.Dot(contact.normal, Vector2.up) > .8f)
                         {
                             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
