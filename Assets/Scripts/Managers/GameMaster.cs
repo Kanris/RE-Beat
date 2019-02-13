@@ -8,7 +8,7 @@ public class GameMaster : MonoBehaviour {
 
     #region fields
 
-    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
+    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task, Camera } //types of object state recriation
 
     public string SceneName; //current scene name
 
@@ -168,6 +168,8 @@ public class GameMaster : MonoBehaviour {
 
             Recreate(searchResult.DialogueIsComplete, RecreateType.Dialogue);
             Recreate(searchResult.ChestItems, RecreateType.ChestItem);
+
+            Recreate(searchResult.Camera, RecreateType.Camera);
         }
     }
 
@@ -228,6 +230,10 @@ public class GameMaster : MonoBehaviour {
 
                 case RecreateType.ChestItem:
                     searchGameObjectResult.GetComponent<Chest>().RemoveFromChest((string)(object)value);
+                    break;
+
+                case RecreateType.Camera:
+                    searchGameObjectResult.GetComponent<DoorButton>().SetCameraState(false);
                     break;
             }
         }
@@ -299,6 +305,10 @@ public class GameMaster : MonoBehaviour {
                     state.ObjectsPosition[name] = (ObjectPosition)(object)value;
                 }
 
+                break;
+
+            case RecreateType.Camera:
+                state.Camera.Add(name);
                 break;
         }
     }

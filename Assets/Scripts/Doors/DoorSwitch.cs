@@ -110,12 +110,14 @@ public class DoorSwitch : MonoBehaviour {
         //show changes to player with camera (if m_ShowWithCam attached to the script)
         if (m_ShowWithCam != null)
         {
+            Time.timeScale = 0f;
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = false; //do not allow player to move
             StartCoroutine(m_Camera.SetTarget(m_ShowWithCam, 1f)); //show door that open
-            yield return new WaitForSeconds(m_CamShowTime);
+            yield return new WaitForSecondsRealtime(m_CamShowTime);
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
             yield return m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0), 1f); //show door that open
+            Time.timeScale = 1f;
         }
     }
 

@@ -50,19 +50,20 @@ public class ActivationSwitch : MonoBehaviour
     {
         if (m_PlatformToActivate != null)
         {
+            Time.timeScale = 0f;
+
             StartCoroutine(m_Camera.SetTarget(m_PlatformToActivate.gameObject.transform, 1f)); //show change state
 
             m_PlatformToActivate.SetActivateByCompanion(false);
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = false; //do not allow player to move
 
-            yield return new WaitForSeconds(m_ShowTime); //time before return camera on player
+            yield return new WaitForSecondsRealtime(m_ShowTime); //time before return camera on player
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
-            StartCoroutine(m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0).transform, 1f)); //show change state
-
-            yield return new WaitForSeconds(0.001f); //delay to apply damping
+            yield return m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0).transform, 1f); //delay to apply damping
 
             GameMaster.Instance.SaveState(transform.name, 0, GameMaster.RecreateType.Object); //save gameObject state
+            Time.timeScale = 1f;
         }
         else
         {

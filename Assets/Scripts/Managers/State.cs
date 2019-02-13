@@ -14,6 +14,7 @@ public class State {
     public List<string> DialogueIsComplete; //indicates that dialogue is complete
     public Dictionary<string, string> ChestItems; //items to remove from ches
     public List<string> Tasks; //task that have been add/update/complete on scene
+    public List<string> Camera; //have player look to open door already
 
     #endregion
 
@@ -31,6 +32,8 @@ public class State {
         ChestItems = new Dictionary<string, string>();
 
         Tasks = new List<string>();
+
+        Camera = new List<string>();
 
         if (ScenesState == null)
             ScenesState = new List<State>();

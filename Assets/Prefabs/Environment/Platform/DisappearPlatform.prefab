@@ -51,6 +51,7 @@ MonoBehaviour:
   m_IdleTime: 3
   m_NextPlatform: {fileID: 0}
   m_IsNextPlatform: 0
+  m_IsActivateByCompanion: 0
 --- !u!212 &5293283562883165041
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -111,7 +112,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5f67c039fe1f4f04ea60474347111e5e, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

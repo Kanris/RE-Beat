@@ -149,7 +149,7 @@ public class DisappearPlatform : MonoBehaviour {
 
     private void SetAnimator(string name)
     {
-        m_Animator.SetTrigger(name);
+        m_Animator?.SetTrigger(name);
     }
 
     #endregion

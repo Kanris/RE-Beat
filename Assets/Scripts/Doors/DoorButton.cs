@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class DoorButton : MonoBehaviour {
@@ -7,14 +9,44 @@ public class DoorButton : MonoBehaviour {
 
     [SerializeField] private Door DoorToOpen; //door to open when button is pressed
 
+    [Header("Camera")]
+    [SerializeField] Transform m_DoorToShow; //door that camera will show
+    [SerializeField, Range(1f, 6f)] private float m_ShowDuration = 2f; //how much time opened door will be shown
+
     private Animator m_Animator; //button animator
+
+    private Camera2DFollow m_Camera; //main camera
+    private bool m_IsPlayerNear; //indicates is player near
+    private bool m_IsShowOncamera = true; //indicates is player saw opened door
+
 
     #endregion
 
     private void Start()
     {
+        m_Camera = Camera.main.GetComponent<Camera2DFollow>(); //get main camera on scene
         m_Animator = GetComponent<Animator>(); //get button animator
     }
+
+    #region player detection
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            SetIsPlayearNear(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            SetIsPlayearNear(false);
+        }
+    }
+
+    #endregion
 
     #region box detection
 
@@ -56,6 +88,8 @@ public class DoorButton : MonoBehaviour {
                 DoorToOpen.PlayOpenDoorAnimation(); //play open door animation
             }
 
+            StartCoroutine(ShowOpenedDoor()); //show opened door with camera
+
             m_Animator.SetBool("Pressed", value); //set button to pressed animation 
 
             InputControlManager.Instance.StartGamepadVibration(5, .1f); //vibrate gamepad
@@ -66,5 +100,40 @@ public class DoorButton : MonoBehaviour {
         {
             Debug.LogError("DoorButton.OpenDoor: Door to open is not assigned!");
         }
+    }
+
+    private IEnumerator ShowOpenedDoor()
+    {
+        if (m_IsPlayerNear && m_DoorToShow != null && m_IsShowOncamera)
+        {
+            m_IsShowOncamera = false;
+            Time.timeScale = 0f;
+
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = false; //do not allow player to move
+            StartCoroutine( m_Camera.SetTarget(m_DoorToShow, 1f) );
+            yield return new WaitForSecondsRealtime(m_ShowDuration);
+
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
+            yield return m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0).transform, 1f);
+            Time.timeScale = 1f;
+
+            GameMaster.Instance.SaveState(transform.name, 0, GameMaster.RecreateType.Camera);
+        }
+
+    }
+
+    private void OnValidate()
+    {
+        transform.name = transform.parent.name;
+    }
+
+    public void SetCameraState(bool value)
+    {
+        m_IsShowOncamera = value;
+    }
+
+    private void SetIsPlayearNear(bool value)
+    {
+        m_IsPlayerNear = value;
     }
 }

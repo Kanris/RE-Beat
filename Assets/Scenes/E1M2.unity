@@ -6588,6 +6588,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.61
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3128162ca3d9621469eb1b21f7e72c44, type: 3}
 --- !u!4 &938987768 stripped
@@ -7041,6 +7056,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1757624767799075117, guid: a4178d273b4f31049a330fcee9fd87f0,
     type: 3}
   m_PrefabInstance: {fileID: 1757624766399753184}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1026318997 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4228782259836140515, guid: 759cd657d6416324a8040299d55f6d78,
+    type: 3}
+  m_PrefabInstance: {fileID: 1845077146}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1031899289 stripped
 Transform:
@@ -8625,6 +8646,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 887437707}
     m_Modifications:
+    - target: {fileID: 1216416398861100, guid: 759cd657d6416324a8040299d55f6d78, type: 3}
+      propertyPath: m_Name
+      value: DoorNearChest
+      objectReference: {fileID: 0}
     - target: {fileID: 4349516195416460, guid: 759cd657d6416324a8040299d55f6d78, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.73
@@ -8662,11 +8687,21 @@ PrefabInstance:
       propertyPath: DoorToOpen
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7334961054832873489, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorNearChest
+      objectReference: {fileID: 0}
     - target: {fileID: 6671259758405787802, guid: 759cd657d6416324a8040299d55f6d78,
         type: 3}
       propertyPath: DoorToOpen
       value: 
       objectReference: {fileID: 1149026999}
+    - target: {fileID: 6671259758405787802, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_DoorToShow
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4228782259836140515, guid: 759cd657d6416324a8040299d55f6d78,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9868,6 +9903,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.61
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3128162ca3d9621469eb1b21f7e72c44, type: 3}
 --- !u!1001 &1442279066
@@ -10229,6 +10279,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.61
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3128162ca3d9621469eb1b21f7e72c44, type: 3}
 --- !u!1001 &1529889662
@@ -10754,6 +10819,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 50549b10cb0438f489908fac3d2baaa1, type: 2}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0.39999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184713070614061801, guid: 3128162ca3d9621469eb1b21f7e72c44,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0.61
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3128162ca3d9621469eb1b21f7e72c44, type: 3}
 --- !u!1 &1576775955
@@ -10895,7 +10975,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -13844,6 +13924,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1692339960}
     m_Modifications:
+    - target: {fileID: 1216416398861100, guid: 759cd657d6416324a8040299d55f6d78, type: 3}
+      propertyPath: m_Name
+      value: ButtonNearTrader
+      objectReference: {fileID: 0}
     - target: {fileID: 4349516195416460, guid: 759cd657d6416324a8040299d55f6d78, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.3137674
@@ -13880,6 +13964,26 @@ PrefabInstance:
         type: 3}
       propertyPath: DoorToOpen
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334961054832873489, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_Name
+      value: ButtonNearTrader
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671259758405787802, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_ShowOnOpen
+      value: 
+      objectReference: {fileID: 1026318997}
+    - target: {fileID: 6671259758405787802, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_DoorToShow
+      value: 
+      objectReference: {fileID: 1026318997}
+    - target: {fileID: 6671259758405787802, guid: 759cd657d6416324a8040299d55f6d78,
+        type: 3}
+      propertyPath: m_ShowDuration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4228782259836140515, guid: 759cd657d6416324a8040299d55f6d78,
         type: 3}
@@ -18871,7 +18975,7 @@ PrefabInstance:
     - target: {fileID: 1757624767799075113, guid: a4178d273b4f31049a330fcee9fd87f0,
         type: 3}
       propertyPath: m_ShowTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4178d273b4f31049a330fcee9fd87f0, type: 3}
