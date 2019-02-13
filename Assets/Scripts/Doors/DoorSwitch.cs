@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 [RequireComponent(typeof(Animator))]
 public class DoorSwitch : MonoBehaviour {
@@ -15,14 +16,19 @@ public class DoorSwitch : MonoBehaviour {
 
     #region serialize fields
 
-    [SerializeField] private Door DoorToOpen; //door to open when switch is pressed
+    [SerializeField] private Door m_DoorToOpen; //door to open when switch is pressed
+
+    [Header("Camera")]
+    [SerializeField] private Transform m_ShowWithCam; //when door is open camera will show this position
+    [SerializeField, Range(1f, 6f)] private float m_CamShowTime = 2f; //time before return control to player
 
     [Header("Additional")]
     [SerializeField] private InteractionUIButton m_InteractionUIButton;
 
     #endregion
 
-    private Animator m_Animator; //switch animator
+    private Camera2DFollow m_Camera; //to show changes
+    private bool m_IsOpening; //is door opening
     private bool m_IsQuitting; //if game is closing
 
     #endregion
@@ -32,26 +38,21 @@ public class DoorSwitch : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-        m_Animator = GetComponent<Animator>(); //get animator component
-
         m_InteractionUIButton.PressInteractionButton = OpenTheDoor;
         m_InteractionUIButton.SetActive(false); //initialize switch ui
 
         ChangeIsQuitting(false); //notify that application is not closing
 
+        m_Camera = Camera.main.GetComponent<Camera2DFollow>();
+
         SubscribeToEvents(); //subscribe to events
     }
-
-    #region Initialize
 
     private void SubscribeToEvents()
     {
         PauseMenuManager.Instance.OnReturnToStartSceen += ChangeIsQuitting; //if player is moving to the main screen
         MoveToNextScene.IsMoveToNextScene += ChangeIsQuitting; //if is player moving to another scene
     }
-
-
-    #endregion
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -71,28 +72,51 @@ public class DoorSwitch : MonoBehaviour {
         }
     }
 
+    //open door when interaction button pressed
     private void OpenTheDoor()
     {
         if (m_InteractionUIButton.ActiveSelf()) //if switch ui is active
         {
-            m_InteractionUIButton.SetActive(false); //hide switch ui
+            StartCoroutine(PerfromOpenDoor());
+        }
+    }
 
-            if (DoorToOpen != null) //if door to open is attached
-            {
-                m_Animator.SetTrigger("Triggering"); //play switch trigerring animation
+    private IEnumerator PerfromOpenDoor()
+    {
+        m_InteractionUIButton.SetActive(false); //hide switch ui
 
-                DoorToOpen.PlayOpenDoorAnimation(); //open the door
+        if (m_DoorToOpen != null) //if door to open is attached
+        {
+            m_IsOpening = true;
 
-                GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
-                GameMaster.Instance.SaveState(DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
+            GameMaster.Instance.SaveState(gameObject.name, 0, GameMaster.RecreateType.Object); //save switch state
+            GameMaster.Instance.SaveState(m_DoorToOpen.name, 0, GameMaster.RecreateType.Object); //save door state
+                        
+            m_DoorToOpen.gameObject.SetActive(false); //hide door from scene
 
-                Destroy(DoorToOpen.gameObject); //destroy door gameobject
-                Destroy(gameObject); //destroy switch
-            }
-            else
-            {
-                Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
-            }
+            yield return ShowChangesWithCam(); //show changes
+
+            Destroy(m_DoorToOpen.gameObject); //destroy door gameobject
+            Destroy(gameObject); //destroy switch
+        }
+        else
+        {
+            Debug.LogError("DoorSwitch.OpenTheDoor: Door to open is not assigned.");
+        }
+    }
+
+    private IEnumerator ShowChangesWithCam()
+    {
+        //show changes to player with camera (if m_ShowWithCam attached to the script)
+        if (m_ShowWithCam != null)
+        {
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = false; //do not allow player to move
+            StartCoroutine(m_Camera.SetTarget(m_ShowWithCam, 1f)); //show door that open
+            yield return new WaitForSeconds(m_CamShowTime);
+
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
+            StartCoroutine(m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0), 1f)); //show door that open
+            yield return new WaitForSeconds(0.001f);
         }
     }
 
@@ -109,6 +133,7 @@ public class DoorSwitch : MonoBehaviour {
         }
     }
 
+    //change quit state
     private void ChangeIsQuitting(bool value)
     {
         m_IsQuitting = value;
