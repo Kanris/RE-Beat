@@ -138,7 +138,9 @@ public class Door : MonoBehaviour {
 
     public void PlayOpenDoorAnimation()
     {
-        AudioManager.Instance.Play(DoorOpenAudio);
+        if (DoorOpenAudio != null)
+            AudioManager.Instance.Play(DoorOpenAudio);
+
         PlayAnimation("Open");
     }
 

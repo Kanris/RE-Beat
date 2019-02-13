@@ -103,6 +103,7 @@ Transform:
   m_Children:
   - {fileID: 8465089102261623443}
   - {fileID: 8531208743748275931}
+  - {fileID: 8257819510163840288}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,7 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc94ef7c7f2136f44bd7777ba656af37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DoorToOpen: {fileID: 0}
+  m_DoorToOpen: {fileID: 8257819510163840290}
+  m_ShowWithCam: {fileID: 0}
+  m_CamShowTime: 2
   m_InteractionUIButton: {fileID: 7579201106335079244}
 --- !u!212 &8465089103102936475
 SpriteRenderer:
@@ -230,6 +233,93 @@ MonoBehaviour:
   BlinkAfter: 3
   IntensivityIteration: 20
   Iterations: 4
+--- !u!1001 &180399671906714985
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8465089103102936474}
+    m_Modifications:
+    - target: {fileID: 8077561744010238024, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8262e0231cda04c449c3f3b0256d26c9, type: 3}
+--- !u!4 &8257819510163840288 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8077561744010238025, guid: 8262e0231cda04c449c3f3b0256d26c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 180399671906714985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8257819510163840290 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8077561744010238027, guid: 8262e0231cda04c449c3f3b0256d26c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 180399671906714985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b985eac783ec03a4bb279f7611f9900c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8465089102770830169
 PrefabInstance:
   m_ObjectHideFlags: 0

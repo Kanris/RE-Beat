@@ -41,7 +41,7 @@ public class DoorButton : MonoBehaviour {
         if (collision.transform.CompareTag("Item") && DoorToOpen.gameObject.activeSelf) //if item is on the button
         {
             if ( Mathf.Abs(collision.contacts[0].normal.x) < 0.3f )
-                OpenDoor(true); //open attached door
+                OpenDoor(value); //open attached door
         }
     }
 
