@@ -11,14 +11,12 @@ public class DoorButton : MonoBehaviour {
 
     #endregion
 
-    #region private methods
-
     private void Start()
     {
         m_Animator = GetComponent<Animator>(); //get button animator
     }
 
-    #region collision
+    #region box detection
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -69,6 +67,4 @@ public class DoorButton : MonoBehaviour {
             Debug.LogError("DoorButton.OpenDoor: Door to open is not assigned!");
         }
     }
-
-    #endregion
 }

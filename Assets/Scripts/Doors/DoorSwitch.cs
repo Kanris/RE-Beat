@@ -56,7 +56,7 @@ public class DoorSwitch : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !m_InteractionUIButton.ActiveSelf()) //if player is near the switch
+        if (collision.CompareTag("Player") && !m_InteractionUIButton.ActiveSelf() && !m_IsOpening) //if player is near the switch
         {
             m_InteractionUIButton.SetIsPlayerNear(true);
             m_InteractionUIButton.SetActive(true); //show switch ui
@@ -115,8 +115,7 @@ public class DoorSwitch : MonoBehaviour {
             yield return new WaitForSeconds(m_CamShowTime);
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<PlatformerCharacter2D>().enabled = true; //return player's control
-            StartCoroutine(m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0), 1f)); //show door that open
-            yield return new WaitForSeconds(0.001f);
+            yield return m_Camera.SetTarget(GameMaster.Instance.m_Player.transform.GetChild(0), 1f); //show door that open
         }
     }
 
