@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 484370599950222504}
   - component: {fileID: 6195225956267930513}
   m_Layer: 0
-  m_Name: Image
+  m_Name: ArrowUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,10 +257,10 @@ RectTransform:
   m_Father: {fileID: 1670988631471951825}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.251}
-  m_SizeDelta: {x: 0, y: 0.502}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.1, y: -0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &222968477113413990
 CanvasRenderer:
@@ -423,8 +423,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.7443}
-  m_SizeDelta: {x: 0, y: -1.4886}
+  m_AnchoredPosition: {x: 0, y: 0.656}
+  m_SizeDelta: {x: 0, y: -1.3121}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7332244134801481090
 CanvasRenderer:

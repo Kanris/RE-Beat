@@ -53,7 +53,7 @@ public class ScreenFaderManager : MonoBehaviour {
         while (m_IsFading)
             yield return null;
 
-        if (trigger == "FadeOut")
+        if (trigger == "FadeOut" && !m_IsFading)
             m_UI.SetActive(false);
     }
 

@@ -346,7 +346,7 @@ public class GameMaster : MonoBehaviour {
 
     public void RespawnPlayerOnReturnPoint(GameObject player)
     {
-        if (m_ReturnPoint != null & !m_IsPlayerReturning)
+        if ((m_ReturnPoint != null || m_RespawnPoint != null) && !m_IsPlayerReturning)
         {
             m_IsPlayerReturning = true;
 
@@ -360,15 +360,15 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        player.transform.position = m_ReturnPoint.transform.position;
+        var whereToReturn = m_ReturnPoint != null ? m_ReturnPoint.transform.position : m_RespawnPoint.transform.position;
+        player.transform.position = whereToReturn;
 
         yield return new WaitForSeconds(0.5f);
 
         player.SetActive(true);
+        m_IsPlayerReturning = false;
 
         yield return ScreenFaderManager.Instance.FadeToClear();
-
-        m_IsPlayerReturning = false;
     }
 
     public IEnumerator RevivePlayer()
