@@ -16,7 +16,6 @@ public class DoorButton : MonoBehaviour {
     private Animator m_Animator; //button animator
 
     private Camera2DFollow m_Camera; //main camera
-    private bool m_IsPlayerNear; //indicates is player near
     private bool m_IsShowOncamera = true; //indicates is player saw opened door
 
 
@@ -27,26 +26,6 @@ public class DoorButton : MonoBehaviour {
         m_Camera = Camera.main.GetComponent<Camera2DFollow>(); //get main camera on scene
         m_Animator = GetComponent<Animator>(); //get button animator
     }
-
-    #region player detection
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            SetIsPlayearNear(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            SetIsPlayearNear(false);
-        }
-    }
-
-    #endregion
 
     #region box detection
 
@@ -104,7 +83,7 @@ public class DoorButton : MonoBehaviour {
 
     private IEnumerator ShowOpenedDoor()
     {
-        if (m_IsPlayerNear && m_DoorToShow != null && m_IsShowOncamera)
+        if (m_DoorToShow != null && m_IsShowOncamera)
         {
             m_IsShowOncamera = false;
             Time.timeScale = 0f;
@@ -119,7 +98,6 @@ public class DoorButton : MonoBehaviour {
 
             GameMaster.Instance.SaveState(transform.name, 0, GameMaster.RecreateType.Camera);
         }
-
     }
 
     private void OnValidate()
@@ -130,10 +108,5 @@ public class DoorButton : MonoBehaviour {
     public void SetCameraState(bool value)
     {
         m_IsShowOncamera = value;
-    }
-
-    private void SetIsPlayearNear(bool value)
-    {
-        m_IsPlayerNear = value;
     }
 }

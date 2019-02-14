@@ -3182,6 +3182,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4835077461577520}
     m_Modifications:
+    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
+      propertyPath: m_Name
+      value: ArrowUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224890356984837506, guid: 4098b22d05daa42328a4823806232466,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3287,14 +3295,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
-      propertyPath: m_Name
-      value: ArrowUpUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1801593570793218, guid: 4098b22d05daa42328a4823806232466, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1951631710909948, guid: 4098b22d05daa42328a4823806232466, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3326,6 +3326,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4941923440222476}
     m_Modifications:
+    - target: {fileID: 4425307036703228071, guid: 75b95b064d4494e9cb33026f3547fc44,
+        type: 3}
+      propertyPath: m_Name
+      value: StoreUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425307036703228071, guid: 75b95b064d4494e9cb33026f3547fc44,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 231839484660281508, guid: 75b95b064d4494e9cb33026f3547fc44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3430,16 +3440,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425307036703228071, guid: 75b95b064d4494e9cb33026f3547fc44,
-        type: 3}
-      propertyPath: m_Name
-      value: StoreUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4425307036703228071, guid: 75b95b064d4494e9cb33026f3547fc44,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7039066595226728357, guid: 75b95b064d4494e9cb33026f3547fc44,
         type: 3}
