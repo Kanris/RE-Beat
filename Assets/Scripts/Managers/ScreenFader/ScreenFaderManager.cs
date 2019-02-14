@@ -38,11 +38,6 @@ public class ScreenFaderManager : MonoBehaviour {
 
     #region private methods
 
-    private void Start()
-    {
-        m_UI.SetActive(false); //hide ui
-    }
-
     private IEnumerator FadeTo(string trigger)
     {
         m_IsFading = true; //notify that fading starts
@@ -52,9 +47,6 @@ public class ScreenFaderManager : MonoBehaviour {
 
         while (m_IsFading)
             yield return null;
-
-        if (trigger == "FadeOut" && !m_IsFading)
-            m_UI.SetActive(false);
     }
 
     #endregion

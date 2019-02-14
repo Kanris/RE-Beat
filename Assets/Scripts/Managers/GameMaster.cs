@@ -349,7 +349,7 @@ public class GameMaster : MonoBehaviour {
         if ((m_ReturnPoint != null || m_RespawnPoint != null) && !m_IsPlayerReturning)
         {
             m_IsPlayerReturning = true;
-
+            
             StartCoroutine(PlayerOnReturnPoint(player));
         }
     }
@@ -360,7 +360,7 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        var whereToReturn = m_ReturnPoint != null ? m_ReturnPoint.transform.position : m_RespawnPoint.transform.position;
+        var whereToReturn = m_ReturnPoint != null ? m_ReturnPoint.transform.position : m_RespawnPoint.transform.position; //if return point available return it but if return point is not available get respawn point position
         player.transform.position = whereToReturn;
 
         yield return new WaitForSeconds(0.5f);
