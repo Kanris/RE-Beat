@@ -173,6 +173,7 @@ GameObject:
   - component: {fileID: 222461861483502990}
   - component: {fileID: 114592514077112314}
   - component: {fileID: 95301605173330604}
+  - component: {fileID: 8999367380109508043}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -255,6 +256,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8999367380109508043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259521837274216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1270809895231228
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +283,7 @@ GameObject:
   - component: {fileID: 222269463282131472}
   - component: {fileID: 114006575810643708}
   - component: {fileID: 95713154865341138}
+  - component: {fileID: 5966726630805811887}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -349,6 +366,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5966726630805811887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270809895231228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1284682724649228
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +393,7 @@ GameObject:
   - component: {fileID: 222944648148432982}
   - component: {fileID: 114897351482783902}
   - component: {fileID: 95391903126747140}
+  - component: {fileID: 3349787520683249171}
   m_Layer: 0
   m_Name: Revive
   m_TagString: Untagged
@@ -443,6 +476,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3349787520683249171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284682724649228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -4, y: 4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1301643626899038
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,6 +564,7 @@ GameObject:
   - component: {fileID: 224754828496140192}
   - component: {fileID: 222541974261995478}
   - component: {fileID: 114701374418247382}
+  - component: {fileID: 2695853353902982422}
   m_Layer: 0
   m_Name: BulletBackground
   m_TagString: Untagged
@@ -580,6 +629,21 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
+--- !u!114 &2695853353902982422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442990587693854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1458688985293646
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +656,7 @@ GameObject:
   - component: {fileID: 222120815439684406}
   - component: {fileID: 114033754352744392}
   - component: {fileID: 95323992888169746}
+  - component: {fileID: 3631842280018750713}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -674,6 +739,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3631842280018750713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458688985293646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1570587939267402
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +915,7 @@ GameObject:
   - component: {fileID: 222297608529680382}
   - component: {fileID: 114542181473348736}
   - component: {fileID: 95209549912899104}
+  - component: {fileID: 1093372442898149769}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -917,6 +998,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1093372442898149769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617756938779748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1661422440315986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1218,7 @@ GameObject:
   - component: {fileID: 222710714887191720}
   - component: {fileID: 114913916055761806}
   - component: {fileID: 95238228219926956}
+  - component: {fileID: 1263968040018264945}
   m_Layer: 0
   m_Name: Revive
   m_TagString: Untagged
@@ -1204,6 +1301,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1263968040018264945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764160682947648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1772048818713962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1390,7 @@ GameObject:
   - component: {fileID: 222387068499589860}
   - component: {fileID: 114891395601919044}
   - component: {fileID: 95914405176970276}
+  - component: {fileID: 1857870666358503502}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -1360,6 +1473,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1857870666358503502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815907489623256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1890020760096884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,6 +1798,7 @@ GameObject:
   - component: {fileID: 222564769435599090}
   - component: {fileID: 114814652750802288}
   - component: {fileID: 95381386376055824}
+  - component: {fileID: 107572509140168959}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -1752,6 +1881,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &107572509140168959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964251881121906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1984954625572098
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,6 +2179,7 @@ GameObject:
   - component: {fileID: 3461162166230739492}
   - component: {fileID: 742956768420919718}
   - component: {fileID: 7920410704062501185}
+  - component: {fileID: 5753467714139169820}
   m_Layer: 0
   m_Name: FallAttackBackground
   m_TagString: Untagged
@@ -2099,6 +2244,21 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
+--- !u!114 &5753467714139169820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5338597819299998805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 6, y: -6}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5510421702540287287
 GameObject:
   m_ObjectHideFlags: 0
