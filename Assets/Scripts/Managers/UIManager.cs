@@ -118,6 +118,8 @@ public class UIManager : MonoBehaviour {
     [Header("Scrap")]
     [SerializeField] private TextMeshProUGUI m_AmountText; //current coins amount
     [SerializeField] private TextMeshProUGUI m_AddScrapText; //coins to add
+    [SerializeField] private TextMeshProUGUI m_AmountTextShadow; //amount text shadow
+    [SerializeField] private TextMeshProUGUI m_AddScrapTextShadow; //add scrap tex shadow
 
     [Header("Notification")]
     [SerializeField] private GameObject m_NotificationUI; //notification ui
@@ -146,7 +148,7 @@ public class UIManager : MonoBehaviour {
 
         PlayerStats.OnScrapAmountChange += ChangeScrapAmount; //subscribe on coins amount change
 
-        m_AmountText.text = PlayerStats.Scrap.ToString(); //display current scrap amount
+        m_AmountText.text = m_AmountTextShadow.text = PlayerStats.Scrap.ToString(); //display current scrap amount
 
         if (PlayerStats.m_IsFallAttack)
             SetFallAttackImageActive();
@@ -241,8 +243,8 @@ public class UIManager : MonoBehaviour {
 
         value = Mathf.Abs(value);
 
-        m_AddScrapText.gameObject.SetActive(true); //display add amount text
-        m_AddScrapText.text = sign + value.ToString(); //display amount that will be added
+        m_AddScrapTextShadow.gameObject.SetActive(true); //display add amount text
+        m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString(); //display amount that will be added
 
         yield return new WaitForSecondsRealtime(.5f); //time before start add amount
 
@@ -250,18 +252,18 @@ public class UIManager : MonoBehaviour {
         for (; value > 0; value--)
         {
             currentCoinsCount += addValue;
-            m_AmountText.text = currentCoinsCount.ToString();
+            m_AmountText.text = m_AmountTextShadow.text = currentCoinsCount.ToString();
 
-            m_AddScrapText.text = sign + value.ToString();
+            m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString();
 
             yield return new WaitForSecondsRealtime(.005f);
         }
 
-        m_AddScrapText.text = sign + value.ToString(); //show zero add value at the end
+        m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString(); //show zero add value at the end
 
         yield return new WaitForSecondsRealtime(.5f); //wait before hide add text
 
-        m_AddScrapText.gameObject.SetActive(false);
+        m_AddScrapTextShadow.gameObject.SetActive(false);
     }
 
     #endregion
@@ -408,7 +410,8 @@ public class UIManager : MonoBehaviour {
     {
         m_BulletImage.transform.parent.gameObject.SetActive(true);
         m_AmountText.gameObject.SetActive(true);
-        m_AddScrapText.gameObject.SetActive(true);
+        m_AmountTextShadow.gameObject.SetActive(true);
+        m_AddScrapTextShadow.gameObject.SetActive(true);
 
         m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
 
@@ -418,7 +421,8 @@ public class UIManager : MonoBehaviour {
     public void EnableCompanionUI()
     {
         m_AmountText.gameObject.SetActive(false);
-        m_AddScrapText.gameObject.SetActive(false);
+        m_AmountTextShadow.gameObject.SetActive(false);
+        m_AddScrapTextShadow.gameObject.SetActive(false);
 
         m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
 
