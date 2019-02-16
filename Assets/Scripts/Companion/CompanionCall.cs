@@ -65,11 +65,12 @@ public class CompanionCall : MonoBehaviour {
         m_IsPlayer = !m_IsPlayer;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player near station
+        if (collision.CompareTag("Player") && !m_InteractionUIButton.ActiveSelf()) //if player near station
         {
             m_InteractionUIButton.SetActive(true); //show interaction button
+            m_InteractionUIButton.SetIsPlayerNear(true);
 
             m_WhoTriggered = collision.transform.parent.gameObject;//save companion gameobject
 
@@ -81,6 +82,7 @@ public class CompanionCall : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player leave station trigger
         {
             m_InteractionUIButton.SetActive(false); //hide interaction button
+            m_InteractionUIButton.SetIsPlayerNear(false);
         }
     }
 }

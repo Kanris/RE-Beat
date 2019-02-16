@@ -64,15 +64,18 @@ public class Chest : MonoBehaviour {
     private void SetActiveInteractionButton(bool value)
     {
         m_InteractionUIButton.SetActive(value);
+        m_InteractionUIButton.SetIsPlayerNear(value);
     }
 
     private void SetActiveInventory(bool value)
     {
         if (m_Player != null)
         {
-            m_Player.TriggerPlayerBussy(value); //allow or dont allow player to attack when chest inventory is open
             m_Player.GetComponent<Platformer2DUserControl>().IsCanJump = !value;
+            m_Player.TriggerPlayerBussy(value); //allow or dont allow player to attack when chest inventory is open
         }
+
+        Time.timeScale = value ? 0f : 1f; //return time back to normal
 
         AudioManager.Instance.Play(ChestOpenAudio); //play chest open sound
 
@@ -85,7 +88,7 @@ public class Chest : MonoBehaviour {
     {
         if (m_Player != null) //if player is near the chest
         {
-            if (InputControlManager.IsCanUseSubmitButton())
+            if (InputControlManager.Instance.IsCanUseSubmitButton())
             {
                 if (m_ChestUI.activeSelf)
                 {
@@ -116,16 +119,18 @@ public class Chest : MonoBehaviour {
     private IEnumerator CloseChest()
     {
         yield return null;
-
+        
         SetActiveInteractionButton(true); //disable chest ui
         if (m_ChestUI.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
+
+        m_Player = null; //remove player reference
 
         PauseMenuManager.Instance.SetIsCantOpenPauseMenu(false); //can open pause menu
     }
 
     private void OpenChest()
     {
-        if (!m_ChestUI.activeSelf && m_Player != null)
+        if (!m_ChestUI.activeSelf)
         {
             if (chestType == ChestType.Destroyable & !m_IsCanBeOpen) //if chest is destroyable but still have health
             {
@@ -136,21 +141,25 @@ public class Chest : MonoBehaviour {
             else //if chest can be open
             {
                 SetActiveInventory(!m_ChestUI.activeSelf); //show or hide chest inventory
+                SetActiveInteractionButton(false);
 
                 if (m_ChestUI.activeSelf)
                 {
                     PauseMenuManager.Instance.SetIsCantOpenPauseMenu(true); //don't allow to open pause menu
 
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                    if (m_InventoryUI.transform.childCount > 0)
+                    {
+                        EventSystem.current.SetSelectedGameObject(null);
+                        EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(0).gameObject);
+                    }
                 }
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is near chest
+        if (collision.CompareTag("Player") && !m_InteractionUIButton.ActiveSelf() && !m_ChestUI.activeSelf) //if player is near chest
         {
             m_Player = collision.GetComponent<Player>(); //get player reference
             SetActiveInteractionButton(true); //show chest ui
@@ -159,12 +168,10 @@ public class Chest : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) //if player is leave chest
+        if (collision.CompareTag("Player") && m_InteractionUIButton.ActiveSelf())
         {
-            SetActiveInteractionButton(false); //disable chest ui
-            if (m_ChestUI.activeSelf) SetActiveInventory(false); //if chest inventory is open - close it
-
-            m_Player = null; //remove player reference
+            m_Player = null;
+            SetActiveInteractionButton(false);
         }
     }
 

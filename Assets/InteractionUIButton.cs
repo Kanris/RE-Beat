@@ -13,16 +13,18 @@ public class InteractionUIButton : MonoBehaviour
     [Header("Additional")]
     [SerializeField] private GameObject m_InteractionUI; //parent canvas
 
+    public bool m_IsPlayerNear { get; private set; }
+
     // Update is called once per frame
     private void Update()
     {
-        if (InputControlManager.IsCanUseSubmitButton())
+        if (m_IsPlayerNear && InputControlManager.Instance.IsCanUseSubmitButton())
         {
             //if current ui interaction button is ArrowUp
             if (m_InteractionType == InteractionType.ArrowUp)
             {
                 //if ArrowUp button pressed
-                if (InputControlManager.IsUpperButtonsPressed())
+                if (InputControlManager.Instance.IsUpperButtonsPressed())
                 {
                     //call attached method
                     PressInteractionButton?.Invoke();
@@ -39,6 +41,11 @@ public class InteractionUIButton : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetIsPlayerNear(bool value)
+    {
+        m_IsPlayerNear = value;
     }
 
     public void SetActive(bool value)

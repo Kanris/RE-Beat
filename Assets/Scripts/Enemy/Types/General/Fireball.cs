@@ -2,17 +2,17 @@
 
 public class Fireball : MonoBehaviour {
 
-    [HideInInspector] public Vector3 Direction;
-    [HideInInspector] public float DestroyTime;
+    [HideInInspector] public Vector3 Direction; //where is fireball moving
+    [HideInInspector] public float DestroyTime; //after what amount of time fireball will be destroyed
 
-    [SerializeField] private int DamageAmount = 2;
-    [SerializeField] private float Speed = 2.5f;
-    [SerializeField] private bool isNeedRotation = true;
-    [SerializeField] private float DestroyDelay = 0.2f;
-    [SerializeField] private LayerMask m_LayerMask;
+    [SerializeField] private int DamageAmount = 2; //fireball damage amount
+    [SerializeField] private float Speed = 2.5f; //fireball movement speed
+    [SerializeField] private bool isNeedRotation = true; 
+    [SerializeField] private float DestroyDelay = 0.2f; //delay to play destroy animation
+    [SerializeField] private LayerMask m_LayerMask; //what to damage
 
-    private Animator m_Animator;
-    private bool isDestroying = false;
+    private Animator m_Animator; //fireball animation
+    private bool isDestroying = false; //is fireball destroying
 
 	// Use this for initialization
 	void Start () {
@@ -53,7 +53,7 @@ public class Fireball : MonoBehaviour {
 
     private void InitializeAnimator()
     {
-        m_Animator = GetComponent<Animator>();
+        m_Animator = GetComponent<Animator>(); //get fireball animator
 
         if (m_Animator == null)
         {
@@ -63,8 +63,15 @@ public class Fireball : MonoBehaviour {
 
     private void Update()
     {
-        if (Time.time >= DestroyTime & !isDestroying)
-            DestroyFireball();
+        //is player not on scene and he is not returning on return point
+        var isPlayerOnScene =
+            (GameMaster.Instance.m_Player?.transform.GetChild(0).gameObject.activeSelf ?? false)
+            && ((GameMaster.Instance.m_Player?.name.Contains("Player") ?? false)
+            || (GameMaster.Instance.m_Player?.name.Contains("Companion") ?? false));
+
+        //if fireball life time is over or player is not on scene and fireball is not destroying
+        if ((Time.time >= DestroyTime || !isPlayerOnScene) && !isDestroying)
+            DestroyFireball(); //destroy fireball
     }
 
     // Update is called once per frame

@@ -78,40 +78,25 @@ public class PickupBox : MonoBehaviour {
         //check is player can release box right now
         if (m_IsBoxUp)
         {
-            //is there ground above box
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
-            {
-                m_IsCantRelease = true;
-            }
-            //there is no ground above box
-            else
-            {
-                m_IsCantRelease = false;
-            }
-        }
+            //if box is in player's hands and interaction button thought it's not
+            if (!m_InteractionUIButton.m_IsPlayerNear)
+                //set is player near true
+                m_InteractionUIButton.SetIsPlayerNear(true);
 
-        #region pickup handler
 
-        if (m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if player is holding box
-        {
-            if (InputControlManager.IsAttackButtonsPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed attack button
+            if (!m_InteractionUIButton.ActiveSelf()) //if player is holding box
             {
-                if (!m_IsCantRelease)
+                if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed attack button
+                {
                     OnPickUpPress();
-                else
-                    //show error message
-                    UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
+                }
+            }
+            else if(m_InteractionUIButton.ActiveSelf()) //if player is holding box, but interaction button is active
+            {
+                //hide interaction button
+                m_InteractionUIButton.SetActive(false);
             }
         }
-
-        //if player is holding box, but interaction button is active
-        if (m_IsBoxUp && m_InteractionUIButton.ActiveSelf())
-        {
-            //hide interaction button
-            m_InteractionUIButton.SetActive(false);
-        }
-
-        #endregion
 
         if (!m_IsQuitting) //if application is not closing
         {
@@ -121,32 +106,81 @@ public class PickupBox : MonoBehaviour {
             }
         }
 
-        //save box position on scene
-        SaveBoxPosition();
+        CheckIsOnGround();
     }
 
     #region ontrigger
 
-    private void SaveBoxPosition()
+    //check is there is ground above box
+    private bool IsCantReleaseBox()
     {
-        if (!m_IsBoxUp && m_IsNeedToSave)
-        {
-            var isGrounded = Physics2D.OverlapCircle(m_GroundCheck.position, .2f, m_WhatIsGround);
+        var result = Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround) != null;
 
-            if (isGrounded != null)
+        if (result) //show error message
+            UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
+
+        return result;
+    }
+
+    private void CheckIsOnGround()
+    {
+        //if is box is not in player's hands
+        if (!m_IsBoxUp)
+        {
+            //get grounds
+            var grounds = Physics2D.OverlapCircleAll(m_GroundCheck.position, .2f, m_WhatIsGround);
+
+            //2 is reference to this box and 3 is other grounds
+            if (grounds.Length < 3)
             {
-                m_IsNeedToSave = false;
-                //save current box position
-                GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+                //remove constraints
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.CompareTag("Player")) //if player is near box
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.4f, .05f));
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (GetComponent<Rigidbody2D>().constraints != RigidbodyConstraints2D.FreezeAll && !m_IsBoxUp)
         {
-            m_InteractionUIButton.SetActive(true); //show box ui
+            if (m_WhatIsGround == (m_WhatIsGround | (1 << collision.gameObject.layer)))
+            {
+                if (collision.contacts.Length > 0)
+                {
+                    foreach (var contact in collision.contacts)
+                    {
+                        //colide from below
+                        if (Vector2.Dot(contact.normal, Vector2.up) > .9f)
+                        {
+                            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+
+                            if (m_IsNeedToSave)
+                            {
+                                m_IsNeedToSave = false;
+                                GameMaster.Instance.SaveState(gameObject.name, new ObjectPosition(transform.position), GameMaster.RecreateType.Position);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!m_InteractionUIButton.ActiveSelf() && collision.CompareTag("Player") && !m_IsNeedToSave)
+        {
+            m_InteractionUIButton.SetActive(true);
+            m_InteractionUIButton.SetIsPlayerNear(true);
         }
     }
 
@@ -155,6 +189,7 @@ public class PickupBox : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player move away from the box
         {
             m_InteractionUIButton.SetActive(false); //hide box ui
+            m_InteractionUIButton.SetIsPlayerNear(false);
         }
     }
 
@@ -162,11 +197,16 @@ public class PickupBox : MonoBehaviour {
 
     private void OnPickUpPress()
     {
+        if (m_IsBoxUp)
+            m_IsCantRelease = IsCantReleaseBox();
+
         //if nothing is block box and (or is box in player's hand or InteractionUi is active)
         if (!m_IsCantRelease && (m_IsBoxUp || m_InteractionUIButton.ActiveSelf()))
         {
             if (m_IsBoxUp)
                 m_IsNeedToSave = true;
+            else
+                transform.SetParent(null);
 
             StartCoroutine(AttachToParent()); //attach box to the player
         }
@@ -178,7 +218,7 @@ public class PickupBox : MonoBehaviour {
 
         transform.SetParent(value ? GameMaster.Instance.m_Player.transform.GetChild(0) : null); //attach box to the parrent
 
-        if (value) //if parent there is parent
+        if (value) //if there is parent
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero; //stop box velocity
 
@@ -190,7 +230,7 @@ public class PickupBox : MonoBehaviour {
 
         yield return new WaitForEndOfFrame(); //wait before give player control
 
-        if (!GameMaster.Instance.IsPlayerDead)
+        if (GameMaster.Instance.m_Player != null)
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(value); //trigger player bussy
 
         InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
@@ -204,11 +244,11 @@ public class PickupBox : MonoBehaviour {
         if (m_IsBoxUp)
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
         else
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-
             GetComponent<Rigidbody2D>().AddForce(new Vector2(100f * GameMaster.Instance.m_Player.transform.GetChild(0).localScale.x, 200f));
         }
 

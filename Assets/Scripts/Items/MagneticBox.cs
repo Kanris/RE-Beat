@@ -118,32 +118,16 @@ public class MagneticBox : MonoBehaviour {
 
     private void Update()
     {
-        //check is player can release magnetic box right now
-        if (m_IsBoxUp)
-        {
-            //is there ground above box
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, .2f, m_WhatIsGround))
-            {
-                m_IsCantRelease = true;
-            }
-            //there is no ground above box
-            else
-            {
-                m_IsCantRelease = false;
-            }
-        }
-
          if (m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if box is picked up
         {
-            if (InputControlManager.IsAttackButtonsPressed() && InputControlManager.IsCanUseSubmitButton()) //if player pressed submit button
+            //if box is in player's hands and interaction button thought it's not
+            if (!m_InteractionUIButton.m_IsPlayerNear)
+                //set is player near true
+                m_InteractionUIButton.SetIsPlayerNear(true);
+
+            if (InputControlManager.Instance.IsAttackButtonsPressed() && InputControlManager.Instance.IsCanUseSubmitButton()) //if player pressed attack button
             {
-                //is player can release box
-                if (!m_IsCantRelease)
-                    OnPickUpPress();
-                //player can't release box
-                else
-                    //show error message
-                    UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
+                OnPickUpPress();
             }
         }
 
@@ -154,14 +138,45 @@ public class MagneticBox : MonoBehaviour {
         }
     }
 
-    private void OnPickUpPress()
+    private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(m_CeilingCheck.position, new Vector3(.4f, .4f));
+    }
+
+    private void CheckGroundAbove()
+    {
+        if (m_IsBoxUp)
+        {
+            if (!m_InteractionUIButton.m_IsPlayerNear)
+                m_InteractionUIButton.SetIsPlayerNear(true);
+
+            //is there ground above box
+            if (Physics2D.OverlapBox(m_CeilingCheck.position, new Vector2(.4f, .4f), 0, m_WhatIsGround))
+            {
+                m_IsCantRelease = true; //player can't release box
+                UIManager.Instance.DisplayNotificationMessage("There is no space above box!", UIManager.Message.MessageType.Message, 3f);
+            }
+            //there is no ground above box
+            else
+            {
+                m_IsCantRelease = false;
+            }
+        }
+        else
+        {
+            m_IsCantRelease = false;
+        }
+    }
+
+    private void OnPickUpPress()
+    {   
         if (m_InteractionUIButton.ActiveSelf() || m_IsBoxUp)
         {
-            Debug.LogError("PickUpPress> " + transform.name);
-
             if (PlayerStats.PlayerInventory.IsInBag(NeededItem.itemDescription.Name)) //if player have needed item
             {
+                CheckGroundAbove(); //check is there is ground above the box (only if box is picked up)
+
                 if (!m_IsCantRelease)
                 {
                     StartCoroutine(AttachToParent()); //attach box to the player
@@ -179,6 +194,8 @@ public class MagneticBox : MonoBehaviour {
     private IEnumerator AttachToParent()
     {
         var value = !m_IsBoxUp;
+        
+        GetComponent<BoxCollider2D>().enabled = m_IsBoxUp; //disable box collider
 
         //place box above player
         if (!value)
@@ -204,19 +221,21 @@ public class MagneticBox : MonoBehaviour {
         InputControlManager.Instance.StartGamepadVibration(1f, 0.05f); //vibrate gamepad
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player") && !m_IsBoxUp) //if player near box
+        if (collision.transform.CompareTag("Player") && !m_IsBoxUp && !m_InteractionUIButton.ActiveSelf()) //if player near box
         {
             m_InteractionUIButton.SetActive(true); //show box ui
+            m_InteractionUIButton.SetIsPlayerNear(true);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player")) //if player leave box
+        if (collision.CompareTag("Player")) //if player leave box
         {
             m_InteractionUIButton.SetActive(false); //hide box ui
+            m_InteractionUIButton.SetIsPlayerNear(false);
         }
     }
 

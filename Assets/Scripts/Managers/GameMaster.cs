@@ -8,7 +8,7 @@ public class GameMaster : MonoBehaviour {
 
     #region fields
 
-    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task } //types of object state recriation
+    public enum RecreateType { Object, Position, Dialogue, ChestItem, Task, Camera } //types of object state recriation
 
     public string SceneName; //current scene name
 
@@ -168,6 +168,8 @@ public class GameMaster : MonoBehaviour {
 
             Recreate(searchResult.DialogueIsComplete, RecreateType.Dialogue);
             Recreate(searchResult.ChestItems, RecreateType.ChestItem);
+
+            Recreate(searchResult.Camera, RecreateType.Camera);
         }
     }
 
@@ -228,6 +230,10 @@ public class GameMaster : MonoBehaviour {
 
                 case RecreateType.ChestItem:
                     searchGameObjectResult.GetComponent<Chest>().RemoveFromChest((string)(object)value);
+                    break;
+
+                case RecreateType.Camera:
+                    searchGameObjectResult.GetComponent<DoorButton>().SetCameraState(false);
                     break;
             }
         }
@@ -300,6 +306,10 @@ public class GameMaster : MonoBehaviour {
                 }
 
                 break;
+
+            case RecreateType.Camera:
+                state.Camera.Add(name);
+                break;
         }
     }
 
@@ -336,10 +346,10 @@ public class GameMaster : MonoBehaviour {
 
     public void RespawnPlayerOnReturnPoint(GameObject player)
     {
-        if (m_ReturnPoint != null & !m_IsPlayerReturning)
+        if ((m_ReturnPoint != null || m_RespawnPoint != null) && !m_IsPlayerReturning)
         {
             m_IsPlayerReturning = true;
-
+            
             StartCoroutine(PlayerOnReturnPoint(player));
         }
     }
@@ -350,15 +360,15 @@ public class GameMaster : MonoBehaviour {
 
         yield return ScreenFaderManager.Instance.FadeToBlack();
 
-        player.transform.position = m_ReturnPoint.transform.position;
+        var whereToReturn = m_ReturnPoint != null ? m_ReturnPoint.transform.position : m_RespawnPoint.transform.position; //if return point available return it but if return point is not available get respawn point position
+        player.transform.position = whereToReturn;
 
         yield return new WaitForSeconds(0.5f);
 
         player.SetActive(true);
+        m_IsPlayerReturning = false;
 
         yield return ScreenFaderManager.Instance.FadeToClear();
-
-        m_IsPlayerReturning = false;
     }
 
     public IEnumerator RevivePlayer()

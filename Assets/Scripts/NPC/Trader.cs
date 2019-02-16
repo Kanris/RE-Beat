@@ -37,7 +37,7 @@ public class Trader : MonoBehaviour {
     {
         m_DefaultYContentPosition = m_Content.localPosition.y; //get default position y position for trader's inventory
 
-        m_InteractionUIButton.PressInteractionButton = HideUIWithDelay;
+        m_InteractionUIButton.PressInteractionButton = ShowUI;
     }
 
     // Update is called once per frame
@@ -101,6 +101,7 @@ public class Trader : MonoBehaviour {
         {
             m_IsPlayerNear = true; //indicates that plyear is near
 
+            m_InteractionUIButton.SetIsPlayerNear(true);
             m_InteractionUIButton.SetActive(true); //show interaction elements
         }
     }
@@ -111,11 +112,12 @@ public class Trader : MonoBehaviour {
         {
             m_IsPlayerNear = false; //indicate that player is not near trader
 
+            m_InteractionUIButton.SetIsPlayerNear(false);
             StartCoroutine( HideUI() ); //hide npc ui
         }
     }
 
-    private void HideUIWithDelay()
+    private void ShowUI()
     {
         if (!m_StoreUI.activeSelf && m_IsPlayerNear)
         {
@@ -130,6 +132,7 @@ public class Trader : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(m_InventoryUI.transform.GetChild(m_CurrentSelectedItemIndex).gameObject);
 
             GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Platformer2DUserControl>().IsCanJump = false;
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(true);
         }
     }
 
@@ -148,6 +151,9 @@ public class Trader : MonoBehaviour {
         m_InteractionUIButton?.SetActive(false); //hide interaction UI
 
         m_StoreUI?.SetActive(false); //hide store UI
+
+        if (GameMaster.Instance.m_Player != null)
+            GameMaster.Instance.m_Player.transform.GetChild(0).GetComponent<Player>().TriggerPlayerBussy(false);
 
         //remove item's selection
         m_CurrentSelectedItemIndex = 0;

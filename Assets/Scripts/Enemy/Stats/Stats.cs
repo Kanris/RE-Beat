@@ -108,7 +108,7 @@ public class Stats {
         PlayHitAnimation(false); //stop hit animation
     }
 
-    protected virtual void KillObject()
+    public virtual void KillObject()
     {
         PlayDeathParticles(); //show death particles
         GameMaster.Destroy(m_GameObject); //destroy gameobject

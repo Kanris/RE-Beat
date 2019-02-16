@@ -47,9 +47,9 @@ public class ExplosionObject : MonoBehaviour {
         {
             Detonate();
         }
-        else if (collision.gameObject.layer == 14) //if hit ground - detonate
+        else if (collision.gameObject.layer == 14 || collision.gameObject.layer == 18) //if hit ground or bullet 
         {
-            Detonate();
+            Detonate(); //destroy this gameobject
         }
     }
 

@@ -77,29 +77,26 @@ public class PickUpItem : MonoBehaviour {
     }
 
     private void InteractWithItem()
-    {        
-        if (m_IsPlayerNearItem)
+    {
+        switch (item.itemDescription.itemType) //base on item type
         {
-            switch (item.itemDescription.itemType) //base on item type
-            {
-                case ItemDescription.ItemType.Item: //if it is item
-                    AddToTheInventory(); //add to the inventory
-                    break;
+            case ItemDescription.ItemType.Item: //if it is item
+                AddToTheInventory(); //add to the inventory
+                break;
 
-                case ItemDescription.ItemType.Note: //it is is note
-                    ReadNote(); //read note
-                    break;
+            case ItemDescription.ItemType.Note: //it is is note
+                ReadNote(); //read note
+                break;
 
-                case ItemDescription.ItemType.Heal: //if it is heal
-                    if (m_PlayerStats != null)
-                        m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
-                    break;
-            }
-
-            GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
-            InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
-            Destroy(gameObject);
+            case ItemDescription.ItemType.Heal: //if it is heal
+                if (m_PlayerStats != null)
+                    m_PlayerStats.HealPlayer(item.itemDescription.HealAmount); //heal player
+                break;
         }
+
+        GameMaster.Instance.SaveState(name, 0, GameMaster.RecreateType.Object); //save object state
+        InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,6 +104,7 @@ public class PickUpItem : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player is near item
         {
             m_IsPlayerNearItem = true; //player is near item
+            m_InteractionUIButton.SetIsPlayerNear(true);
 
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = collision.GetComponent<Player>().playerStats; //save reference to the player stats
@@ -121,6 +119,7 @@ public class PickUpItem : MonoBehaviour {
         if (collision.CompareTag("Player")) //if player move away from the item
         {
             m_IsPlayerNearItem = false; //player is not near the door
+            m_InteractionUIButton.SetIsPlayerNear(false);
 
             if (item.itemDescription.itemType == ItemDescription.ItemType.Heal) //if item type is heal
                 m_PlayerStats = null; //remove reference to the player stats

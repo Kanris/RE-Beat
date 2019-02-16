@@ -17,7 +17,7 @@ GameObject:
   m_Layer: 13
   m_Name: SignalDisruptor
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6754301409364814867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.97, y: 9.49, z: 5.216238}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1678464156647627860}
@@ -149,8 +149,8 @@ MonoBehaviour:
     HitSound: {fileID: 11400000, guid: 07ab6369b724b474ca78db672987e82e, type: 2}
     DeathSound: {fileID: 11400000, guid: fca0dfe2b0c743f4f8da27a09a9fbd64, type: 2}
     MaxHealth: 10
-    m_ThrowX: 2
-    m_ThrowY: 0.5
+    m_ThrowBackX: 0
+    m_ThrowBackY: 0
     DamageAmount: 1
     Speed: 1
     AttackSpeed: 2
@@ -165,12 +165,13 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 0
-  m_UI: {fileID: 0}
-  m_HealthImage: {fileID: 0}
+  m_HealthUI: {fileID: 0}
+  m_CurrentHealthImage: {fileID: 0}
   GroundHitParticles: {fileID: 0}
   m_HitParticles: {fileID: 1574765248609948, guid: 8d201db35edbd0a40a03f13e559e6dab,
     type: 3}
   m_Scraps: {fileID: 1731073877109422, guid: 13344e8cb38afd4488d3ff3c1b9bdd5a, type: 3}
+  m_IsNotHitOnCollision: 0
   m_IsDestroying: 0
 --- !u!114 &6754301409364814877
 MonoBehaviour:

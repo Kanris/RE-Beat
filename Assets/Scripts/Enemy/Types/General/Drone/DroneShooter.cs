@@ -82,7 +82,6 @@ public class DroneShooter : MonoBehaviour {
     [SerializeField] private PlayerInTrigger m_ScanRange; //range where player can detect player
 
     [SerializeField, Range(1f, 10f)] private float UpdateRate = 2f; //next point update rate
-    [SerializeField, Range(100f, 1000f)] private float Speed = 300f; //drone speed
 
     [Header("Movement points")]
     [SerializeField] private Transform[] m_PatrolPoints; //points between which drone moves
@@ -319,7 +318,7 @@ public class DroneShooter : MonoBehaviour {
                 m_PathIsEnded = false;
 
                 var direction = (m_Path.vectorPath[m_CurrentWaypoint] - transform.position).normalized
-                    * Speed * Time.fixedDeltaTime;
+                    * m_Stats.EnemyStats.Speed * Time.fixedDeltaTime;
 
                 m_Rigidbody.velocity = direction;
 

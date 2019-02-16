@@ -162,8 +162,10 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void StopFallAttack()
+    private IEnumerator StopFallAttack()
     {
+        m_IsFallAttack = false; //fall attack is not performing
+
         DamageEnemiesInArea(m_Center.position, 
             m_LandEffect.GetComponent<ParticleSystem>().shape.scale.x, 
             m_LandEffect.GetComponent<ParticleSystem>().shape.scale.y, 
@@ -171,6 +173,8 @@ public class Player : MonoBehaviour {
 
         //play land effect
         CreateLandParticles();
+
+        yield return new WaitForSeconds(.1f);
 
         //return player's default values and start fall attack cooldown
         ReturnPlayersDefaultValues();
@@ -373,7 +377,7 @@ public class Player : MonoBehaviour {
                 if (m_Animator.GetBool("Ground"))
                 {
                     //stop fall attack
-                    StopFallAttack();
+                    StartCoroutine(StopFallAttack());
                 }
             }
 
@@ -388,7 +392,7 @@ public class Player : MonoBehaviour {
             #endregion
 
         }
-        else if (GameMaster.Instance.IsPlayerDead) //companion's abilities
+        else if (GameMaster.Instance.IsPlayerDead && !m_IsPlayerBusy) //companion's abilities
         {
             if (m_InvisibleAbilityCooldown < Time.time) //if can use invisible ability
             {

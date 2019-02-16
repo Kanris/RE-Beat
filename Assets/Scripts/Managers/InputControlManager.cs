@@ -55,7 +55,7 @@ public class InputControlManager : MonoBehaviour {
     }
 
     //indicates if player can use submit button
-    public static bool IsCanUseSubmitButton()
+    public bool IsCanUseSubmitButton()
     {
         //if pause menu is not open
         if (!PauseMenuManager.IsPauseOpen)
@@ -77,12 +77,9 @@ public class InputControlManager : MonoBehaviour {
     //get horizontal value from stick or dpad
     public float GetHorizontalValue()
     {
-        var horizontalValue = Mathf.Abs(m_Gamepad.LeftStickX) > .3f
-                                    ? m_Gamepad.LeftStickX : 0f;
-
         //if left stick isn't pressed try to get value from dpad
-        if (horizontalValue == 0)
-            horizontalValue = m_Gamepad.DPadX;
+        var horizontalValue = Mathf.Abs(m_Gamepad.LeftStickX.Value) > .3f
+                                    ? m_Gamepad.LeftStickX.Value : m_Gamepad.DPadX;
 
         return horizontalValue;
     }
@@ -90,11 +87,9 @@ public class InputControlManager : MonoBehaviour {
     //get vertical value from stick or dpad
     public float GetVerticalValue()
     {
-        var verticalValue = m_Gamepad.LeftStickY.Value;
-
-        if (verticalValue == 0)
-            verticalValue = Instance.m_Gamepad.DPadDown;
-
+        var verticalValue = Mathf.Abs(m_Gamepad.LeftStickY.Value) > .3f
+                                   ? m_Gamepad.LeftStickY.Value : Instance.m_Gamepad.DPadDown;
+            
         return verticalValue;
     }
 
@@ -206,16 +201,15 @@ public class InputControlManager : MonoBehaviour {
     #endregion
 
     //calculate is up button pressed or not
-    public static bool IsUpperButtonsPressed()
+    public bool IsUpperButtonsPressed()
     {
-        var leftStickValue = Instance.m_Gamepad.LeftStickY.Value > 0 ?
-            Mathf.Abs(Instance.m_Gamepad.LeftStickY.Value - 1f) < 0.01f : false;
+        var leftStickValue = Instance.m_Gamepad.LeftStickY.Value > 0 && Mathf.Abs(Instance.m_Gamepad.LeftStickY.Value - 1f) < 0.01f;
 
-        return (leftStickValue & Instance.m_Gamepad.LeftStickY.WasPressed) || Instance.m_Gamepad.DPadUp.WasPressed;
+        return (leftStickValue && Instance.m_Gamepad.LeftStickY.WasPressed) || Instance.m_Gamepad.DPadUp.WasPressed;
     }
 
     //if player shooting or attacking
-    public static bool IsAttackButtonsPressed()
+    public bool IsAttackButtonsPressed()
     {
         return Instance.IsAttackPressed() || Instance.IsShootPressed();
     }
@@ -224,6 +218,7 @@ public class InputControlManager : MonoBehaviour {
 
     public void StartGamepadVibration(float intensity, float time)
     {
+        /*
         if (m_IsRumble)
         {
             StopGamepadVibration();
@@ -232,7 +227,7 @@ public class InputControlManager : MonoBehaviour {
         m_Gamepad.Vibrate(intensity);
         m_IsRumble = true;
 
-        StartCoroutine(GamepadVibrate(time));
+        StartCoroutine(GamepadVibrate(time));*/
     }
 
     private IEnumerator GamepadVibrate(float time)

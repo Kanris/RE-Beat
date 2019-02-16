@@ -318,7 +318,7 @@ public class PlayerStats : Stats
         m_IsInvincible = false; //player is not invincible
     }
 
-    protected override void KillObject()
+    public override void KillObject()
     {
         GameMaster.Instance.StartPlayerRespawn(true, false); //respawn new player on respawn point
         PlayDeathParticles(); //show death particles
@@ -379,20 +379,32 @@ public class PlayerStats : Stats
     }
 
     private IEnumerator InvincibleAnimation()
-    {
-        var invincibleTime = Time.time + Invincible - 0.2f;
-        var playerSprite = m_GameObject.GetComponent<SpriteRenderer>().material;
-        var color = playerSprite.color;
-
-        do
+    { 
+        //if player still on scene and we can get spriterenderer
+        if (m_GameObject?.GetComponent<SpriteRenderer>() != null)
         {
-            yield return ChangeAlpha(1f, playerSprite, color);
+            //set invincible animation time
+            var invincibleTime = Time.time + Invincible - 0.2f;
+            var playerSprite = m_GameObject.GetComponent<SpriteRenderer>().material; //get player's material to change alpha
+            var color = playerSprite.color; //get color from material to change alpha value
 
-            yield return ChangeAlpha(0.6f, playerSprite, color);
+            do
+            {
+                if (playerSprite != null) //if player still on scene
+                {
+                    //blink invincible animation
+                    yield return ChangeAlpha(1f, playerSprite, color);
 
-        } while (invincibleTime >= Time.time & !m_Animator.GetBool("Dash"));
+                    yield return ChangeAlpha(0.6f, playerSprite, color);
+                }
+                else //player is not on scene
+                    break;
 
-        yield return ChangeAlpha(1f, playerSprite, color, 0f);
+            } while (invincibleTime >= Time.time & !m_Animator.GetBool("Dash"));
+
+            //return sprite's alpha back to normal
+            yield return ChangeAlpha(1f, playerSprite, color, 0f);
+        }
     }
 
     private IEnumerator ChangeAlpha(float alpha, Material material, Color color, float time = 0.1f)

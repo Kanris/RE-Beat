@@ -43,7 +43,7 @@ namespace UnityStandardAssets._2D
             {
                 m_Dash = InputControlManager.Instance.IsDashPressed();
 
-                if (m_Dash) m_UpdateDashTime = Time.time + 1f;
+                if (m_Dash) m_UpdateDashTime = Time.time + .5f;
             }
         }
 

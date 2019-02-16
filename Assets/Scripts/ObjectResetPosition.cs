@@ -14,7 +14,6 @@ public class ObjectResetPosition : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI m_TimerText;
 
     private bool m_IsCanReset = true;
-    private bool m_IsPlayerNear = false;
 
     private void Start()
     {
@@ -27,15 +26,12 @@ public class ObjectResetPosition : MonoBehaviour {
 
     private void ActivateStation()
     {
-        if (m_IsPlayerNear)
+        if (m_IsCanReset)
         {
-            if (m_IsCanReset)
-            {
-                m_IsCanReset = false;
-                m_ObjectToReset.ResetPosition();
+            m_IsCanReset = false;
+            m_ObjectToReset.ResetPosition();
 
-                StartCoroutine(ShowTimer());
-            }
+            StartCoroutine(ShowTimer());
         }
     }
 
@@ -43,7 +39,7 @@ public class ObjectResetPosition : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = true;
+            m_InteractionUIButton.SetIsPlayerNear(true);
             SetActiveUI(true);
         }
     }
@@ -52,7 +48,7 @@ public class ObjectResetPosition : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
-            m_IsPlayerNear = false;
+            m_InteractionUIButton.SetIsPlayerNear(false);
             SetActiveUI(false);
         }
     }

@@ -22,21 +22,13 @@ public class Tunnel : MonoBehaviour {
 
         if (m_InteractionUIButton != null)
         {
-            m_InteractionUIButton.PressInteractionButton = UpButtonPress;
+            m_InteractionUIButton.PressInteractionButton = MoveToNextTunnel;
             m_InteractionUIButton.SetActive(false);
             GetComponent<SpriteRenderer>().color = Color.magenta;
         }
         else
         {
             transform.GetChild(1).gameObject.SetActive(false);
-        }
-    }
-
-    private void UpButtonPress()
-    {
-        if (m_CompanionToTeleport != null)
-        {
-            MoveToNextTunnel();
         }
     }
 
@@ -61,6 +53,7 @@ public class Tunnel : MonoBehaviour {
             if (m_InteractionUIButton != null)
             {
                 m_InteractionUIButton.SetActive(true);
+                m_InteractionUIButton.SetIsPlayerNear(true);
                 m_CompanionToTeleport = collision.transform;
             }
         }
@@ -88,6 +81,7 @@ public class Tunnel : MonoBehaviour {
         {
             if (m_InteractionUIButton != null)
             {
+                m_InteractionUIButton.SetIsPlayerNear(false);
                 m_InteractionUIButton.SetActive(false);
                 m_CompanionToTeleport = null;
             }

@@ -29,6 +29,9 @@ public class EnemyStatsGO : MonoBehaviour {
     [SerializeField] private GameObject m_HitParticles; //particles that creates when player hit enemy
     [SerializeField] private GameObject m_Scraps; //gameobject that creates when player destroy this enemy
 
+    [Header("Additional")]
+    [SerializeField] private bool m_IsNotHitOnCollision; //is enemy should damage player on collision
+
      
     private Rigidbody2D m_Rigidbody; //current enemy rigidbody
     private Animator m_Animator; //current enemy animator
@@ -215,10 +218,13 @@ public class EnemyStatsGO : MonoBehaviour {
     //determines what collision method need to call
     private void InvokeCollisionByType(Collision2D collision)
     {
-        if (m_EnemyType == EnemyType.Drone) //if enemy's type - drone
-            OnDroneCollision(collision); //invoke drone collision method
-        else //if enemy's type - regular
-            OnRegularCollision(collision); //invoke regular enemy collision method
+        if (!m_IsNotHitOnCollision)
+        {
+            if (m_EnemyType == EnemyType.Drone) //if enemy's type - drone
+                OnDroneCollision(collision); //invoke drone collision method
+            else //if enemy's type - regular
+                OnRegularCollision(collision); //invoke regular enemy collision method
+        }
     }
 
     private void OnRegularCollision(Collision2D collision)

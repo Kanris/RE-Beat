@@ -84,9 +84,11 @@ public class Sign : MonoBehaviour {
     {
         if (m_Player == null)
         {
-            if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground"))
+            if (collision.CompareTag("Player") && collision.GetComponent<Animator>().GetBool("Ground") && !m_IsSentenceShowInProgress)
             {
                 m_Player = collision.transform;
+
+                m_InteractionUIButton.SetIsPlayerNear(true);
                 m_InteractionUIButton.SetActive(true);
             }
         }
@@ -96,7 +98,9 @@ public class Sign : MonoBehaviour {
     {
         if (collision.CompareTag("Player")) //if player leave sign trigger
         {
+            m_InteractionUIButton.SetIsPlayerNear(false);
             m_InteractionUIButton.SetActive(false); //show or hide sign ui
+
             m_Player = null;
         }
     }

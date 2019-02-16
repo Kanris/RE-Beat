@@ -56,6 +56,26 @@ public class UIManager : MonoBehaviour {
         {
             AudioManager.Instance.Play("Noti" + this.messageType);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, null))
+                return false;
+
+            var compareItem = obj as Message;
+
+            if (ReferenceEquals(compareItem, null))
+                return false;
+            else
+            {
+                return this.message.CompareTo(compareItem.message) == 0;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return message.GetHashCode();
+        }
     }
 
     #endregion
@@ -74,7 +94,7 @@ public class UIManager : MonoBehaviour {
         }
         else
         {
-            m_MessagePipeline = new List<Message>(); //initialize pipeline
+            m_MessagePipeline = new Queue<Message>(); //initialize pipeline
 
             Instance = this;
             DontDestroyOnLoad(this);
@@ -98,6 +118,8 @@ public class UIManager : MonoBehaviour {
     [Header("Scrap")]
     [SerializeField] private TextMeshProUGUI m_AmountText; //current coins amount
     [SerializeField] private TextMeshProUGUI m_AddScrapText; //coins to add
+    [SerializeField] private TextMeshProUGUI m_AmountTextShadow; //amount text shadow
+    [SerializeField] private TextMeshProUGUI m_AddScrapTextShadow; //add scrap tex shadow
 
     [Header("Notification")]
     [SerializeField] private GameObject m_NotificationUI; //notification ui
@@ -113,7 +135,7 @@ public class UIManager : MonoBehaviour {
     private int m_CurrentActiveHPIndex = 0;
 
     //notification fields
-    private List<Message> m_MessagePipeline; //display message pipeline
+    private Queue<Message> m_MessagePipeline; //display message pipeline
     private bool m_isShowingPipeline = false; //is currently showing pipeline
 
     #endregion
@@ -126,7 +148,7 @@ public class UIManager : MonoBehaviour {
 
         PlayerStats.OnScrapAmountChange += ChangeScrapAmount; //subscribe on coins amount change
 
-        m_AmountText.text = PlayerStats.Scrap.ToString(); //display current scrap amount
+        m_AmountText.text = m_AmountTextShadow.text = PlayerStats.Scrap.ToString(); //display current scrap amount
 
         if (PlayerStats.m_IsFallAttack)
             SetFallAttackImageActive();
@@ -146,7 +168,7 @@ public class UIManager : MonoBehaviour {
         if (!m_NotificationUI.activeSelf) //play appear animation
             yield return SetActiveNotificationUI(true);
 
-        var itemToDisplay = m_MessagePipeline[0]; //get firs item in Queue
+        var itemToDisplay = m_MessagePipeline.Peek(); //get firs item in Queue (peek instead of Dequeue(), to left this message in pipeline so contains method will work properly)
 
         itemToDisplay.PlayNotificationSound(); //play notification sound
 
@@ -155,7 +177,7 @@ public class UIManager : MonoBehaviour {
 
         yield return new WaitForSecondsRealtime(itemToDisplay.duration); //display need amount time
 
-        m_MessagePipeline.RemoveAt(0); //remove displayed item from queue
+        m_MessagePipeline.Dequeue();
 
         if (m_MessagePipeline.Count != 0) //if there is items in queue
         {
@@ -172,7 +194,7 @@ public class UIManager : MonoBehaviour {
 
     private IEnumerator SetActiveNotificationUI(bool active)
     {
-        if (!active)
+        if (!active && !m_isShowingPipeline)
         {
             m_Text.gameObject.SetActive(false);
 
@@ -191,12 +213,15 @@ public class UIManager : MonoBehaviour {
     {
         var message = new Message(messageText, messageType, duration);
 
-        m_MessagePipeline.Add(message);
-
-        if (!m_isShowingPipeline)
+        if (!m_MessagePipeline.Contains( message ))
         {
-            m_isShowingPipeline = true;
-            StartCoroutine(DisplayMessage());
+            m_MessagePipeline.Enqueue(message);
+
+            if (!m_isShowingPipeline)
+            {
+                m_isShowingPipeline = true;
+                StartCoroutine(DisplayMessage());
+            }
         }
     }
 
@@ -218,8 +243,8 @@ public class UIManager : MonoBehaviour {
 
         value = Mathf.Abs(value);
 
-        m_AddScrapText.gameObject.SetActive(true); //display add amount text
-        m_AddScrapText.text = sign + value.ToString(); //display amount that will be added
+        m_AddScrapTextShadow.gameObject.SetActive(true); //display add amount text
+        m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString(); //display amount that will be added
 
         yield return new WaitForSecondsRealtime(.5f); //time before start add amount
 
@@ -227,18 +252,18 @@ public class UIManager : MonoBehaviour {
         for (; value > 0; value--)
         {
             currentCoinsCount += addValue;
-            m_AmountText.text = currentCoinsCount.ToString();
+            m_AmountText.text = m_AmountTextShadow.text = currentCoinsCount.ToString();
 
-            m_AddScrapText.text = sign + value.ToString();
+            m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString();
 
             yield return new WaitForSecondsRealtime(.005f);
         }
 
-        m_AddScrapText.text = sign + value.ToString(); //show zero add value at the end
+        m_AddScrapText.text = m_AddScrapTextShadow.text = sign + value.ToString(); //show zero add value at the end
 
         yield return new WaitForSecondsRealtime(.5f); //wait before hide add text
 
-        m_AddScrapText.gameObject.SetActive(false);
+        m_AddScrapTextShadow.gameObject.SetActive(false);
     }
 
     #endregion
@@ -385,7 +410,8 @@ public class UIManager : MonoBehaviour {
     {
         m_BulletImage.transform.parent.gameObject.SetActive(true);
         m_AmountText.gameObject.SetActive(true);
-        m_AddScrapText.gameObject.SetActive(true);
+        m_AmountTextShadow.gameObject.SetActive(true);
+        m_AddScrapTextShadow.gameObject.SetActive(true);
 
         m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
 
@@ -395,7 +421,8 @@ public class UIManager : MonoBehaviour {
     public void EnableCompanionUI()
     {
         m_AmountText.gameObject.SetActive(false);
-        m_AddScrapText.gameObject.SetActive(false);
+        m_AmountTextShadow.gameObject.SetActive(false);
+        m_AddScrapTextShadow.gameObject.SetActive(false);
 
         m_FallAttack.fillAmount = m_BulletImage.fillAmount = 1f;
 

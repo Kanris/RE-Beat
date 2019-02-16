@@ -95,6 +95,7 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                 {
                     m_Grounded = true;
+                    m_IsHaveDoubleJump = true;
                 }
             }
             m_Anim.SetBool("Ground", m_Grounded);
@@ -159,11 +160,9 @@ namespace UnityStandardAssets._2D
                     ShowDustEffect();
 
                     InputControlManager.Instance.StartGamepadVibration(1, 0.1f);
-
-                    m_IsHaveDoubleJump = true;
                 }
                 //If the player should double jump
-                else if (PlayerStats.m_IsCanDoubleJump & m_JumpPlatform != null)
+                else if (PlayerStats.m_IsCanDoubleJump && m_JumpPlatform != null)
                 {
                     //player is not on the ground and have double jump
                     if (!m_Grounded && m_IsHaveDoubleJump && jump)
