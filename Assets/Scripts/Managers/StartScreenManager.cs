@@ -38,6 +38,8 @@ public class StartScreenManager : MonoBehaviour {
     [SerializeField] private GameObject MainMenuGrid; //main menu ui
     [SerializeField] private GameObject OptionsMenuGrid; //option ui
     [SerializeField] private GameObject LoadButton; //load button ui
+    [SerializeField] private GameObject CreditsGameObject; //credits ui
+    [SerializeField] private GameObject ButtonsBackground; //block with buttons and game's name
 
     //options items
     [Header("Options UI")]
@@ -65,6 +67,7 @@ public class StartScreenManager : MonoBehaviour {
 
     private delegate void VoidDelegate();
     private VoidDelegate m_ConfirmDialogueAction;
+    private bool m_IsShowingCredits;
 
     #endregion
 
@@ -219,6 +222,10 @@ public class StartScreenManager : MonoBehaviour {
                 EventSystem.current.SetSelectedGameObject(m_MainMenuButton);
             }
 
+            else if (m_IsShowingCredits)
+            {
+                HideCredits();
+            }
         }
     }
 
@@ -355,6 +362,23 @@ public class StartScreenManager : MonoBehaviour {
     {
         PlayClickSound();
         ChangeGridsVisibility();
+    }
+
+    public void Credits()
+    {
+        m_IsShowingCredits = true;
+        CreditsGameObject.SetActive(true);
+        ButtonsBackground.SetActive(false);
+    }
+
+    public void HideCredits()
+    {
+        m_IsShowingCredits = false;
+        CreditsGameObject.SetActive(false);
+        ButtonsBackground.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null); //set credits button actitve
+        EventSystem.current.SetSelectedGameObject(MainMenuGrid.transform.GetChild(3).gameObject); //set credits button actitve
     }
 
     public void SetMasterFloat(float volume)
