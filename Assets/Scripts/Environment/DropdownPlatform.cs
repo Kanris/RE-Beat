@@ -5,21 +5,9 @@ using UnityStandardAssets._2D;
 public class DropdownPlatform : MonoBehaviour {
 
     #region private fields
-
-    private BoxCollider2D m_BoxCollider; //dropdown platform collider
+    
     private Platformer2DUserControl player; //player user controll
     private bool m_IsDropDown = false;
-    #endregion
-
-    #region initialize
-
-    // Use this for initialization
-    void Start () {
-
-        m_BoxCollider = GetComponent<BoxCollider2D>(); // InitializePlatformCollider
-
-    }
-
     #endregion
 
     #region private methods
@@ -36,7 +24,7 @@ public class DropdownPlatform : MonoBehaviour {
             if (m_IsDropDown)
             {
                 m_IsDropDown = false;
-                StartCoroutine(DropDownPlayer());
+                DropDownPlayer();
             }
         }
 
@@ -44,39 +32,34 @@ public class DropdownPlatform : MonoBehaviour {
 
     #region collision methods
 
-    private IEnumerator DropDownPlayer()
+    private void DropDownPlayer()
     {
         player.IsCanJump = false;
-
-        GetComponent<PlatformEffector2D>().rotationalOffset = 180f;
-        
-        yield return new WaitForEndOfFrame();
-
-        player.IsCanJump = true;
-
+        //player.transform.position = player.transform.position.Add(y: -0.463f);
+        gameObject.GetComponent<PlatformEffector2D>().colliderMask = gameObject.GetComponent<PlatformEffector2D>().colliderMask & ~(1 << player.gameObject.layer);
     }
 
-    private IEnumerator OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player")) //if player is on the platform
+        if (collision.transform.CompareTag("Player"))
         {
-            yield return new WaitForEndOfFrame();
-
-            gameObject.layer = 14;
-            player = collision.gameObject.GetComponent<Platformer2DUserControl>(); //get player control
+            player = collision.gameObject.GetComponent<Platformer2DUserControl>();
+            //gameObject.layer = 14;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private IEnumerator OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.transform.CompareTag("Player")) //if player is above or leave platform trigger
+        if (collision.transform.CompareTag("Player"))
         {
+            if (!player.IsCanJump)
+            {
+                yield return new WaitForSeconds(.2f);
+                player.IsCanJump = true;
+                gameObject.GetComponent<PlatformEffector2D>().colliderMask = gameObject.GetComponent<PlatformEffector2D>().colliderMask | (1 << player.gameObject.layer);
+            }
+            //gameObject.layer = 0;
             player = null;
-
-            gameObject.layer = 0;
-
-            GetComponent<PlatformEffector2D>().rotationalOffset = 0f;
-
         }
     }
 
