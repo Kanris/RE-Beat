@@ -188,7 +188,7 @@ public class Chest : MonoBehaviour {
 
     public void RemoveFromChest(string name) //remove item from chest inventory
     {
-        var grid = m_InventoryUI.transform.GetChild(0); //get inventory grid
+        var grid = m_InventoryUI.transform; //get inventory grid
 
         //search item in grid
         for (int index = 0; index < grid.childCount; index++)

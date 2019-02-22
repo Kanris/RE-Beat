@@ -42,7 +42,7 @@ public class ChestItem : MonoBehaviour {
                 UIManager.Message.MessageType.Message, 5); //display add message
         }
 
-        GameMaster.Instance.SaveState(transform.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
+        GameMaster.Instance.SaveState(transform.parent.parent.parent.parent.name, gameObject.name, GameMaster.RecreateType.ChestItem); //save chest item state
 
         InputControlManager.Instance.StartGamepadVibration(1f, 0.05f);
 
