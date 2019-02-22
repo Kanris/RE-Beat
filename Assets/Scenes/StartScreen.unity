@@ -1469,15 +1469,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 532437990}
   - {fileID: 647253231}
   m_Father: {fileID: 259260503}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1080}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 108.4}
+  m_SizeDelta: {x: -400, y: 375.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &424917472
 Animator:
@@ -1511,200 +1510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartScreenManager: {fileID: 381002769}
---- !u!1 &532437989
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 532437990}
-  - component: {fileID: 532437992}
-  - component: {fileID: 532437991}
-  m_Layer: 5
-  m_Name: Roles
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &532437990
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532437989}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 424917471}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -230, y: -378.1}
-  m_SizeDelta: {x: 459.9, y: 1836.3}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &532437991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532437989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'game designers
-
-
-
-    level designers
-
-
-
-    programmer
-
-
-    music
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    sound
-
-
-
-    special thanks'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
-  m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
-    type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontSize: 50
-  m_fontSizeBase: 50
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_textAlignment: 257
-  m_isAlignmentEnumConverted: 1
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
-  m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_firstVisibleCharacter: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_textInfo:
-    textComponent: {fileID: 532437991}
-    characterCount: 91
-    spriteCount: 0
-    spaceCount: 31
-    wordCount: 9
-    linkCount: 0
-    lineCount: 29
-    pageCount: 1
-    materialCount: 1
-  m_havePropertiesChanged: 0
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
-  m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &532437992
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532437989}
-  m_CullTransparentMesh: 0
 --- !u!1 &595948691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,12 +1831,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 424917471}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 481.53, y: -378.13}
-  m_SizeDelta: {x: 956.95, y: 1836.3}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 40.1}
+  m_SizeDelta: {x: 0, y: 80.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647253232
 MonoBehaviour:
@@ -2053,40 +1858,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: '<color=yellow>Hazar Renald</color>
-
-    <color=yellow>Hlukhov Oleksii</color>
-
-
-    <color=yellow>Hazar Renald</color>
-
-    <color=yellow>Hlukhov Oleksii</color>
-
-
-    <color=yellow>Hlukhov Oleksii</color>
-
-
-    "Sci-Fi Close" by <color=yellow>Eric Matyas</color> <color=blue><u>Soundimage.org</u></color>
-
-
-    "Creepy Sci-Fy synth loop" by <color=yellow>Bart</color> <color=blue><u>opengameart.org/users/bart</u></color>
-
-
-    "Great Dragon Appearance" by <color=yellow>Spring/Spring Enterprises</color>
-
-
-    "Action synth + Harp track" by <color=yellow>PetterTheSturgeon</color> <color=blue><u>opengameart.org/users/petterthesturgeon</u></color>
-
-
-    "On My Way" by <color=yellow>DeltaBreaker</color> <color=blue><u>opengameart.org/users/deltabreaker</u></color>
-
-
-    <color=yellow>Dmitry Novozhilov</color> - Daruma Audio
-
-
-
-    <color=yellow>opengameart.org</color> and their <color=yellow>community</color>
-    you are awesome guys!'
+  m_text: "game designers \n                 <color=yellow>Hazar Renald</color>\n
+    \                <color=yellow>Hlukhov Oleksii</color>\n\nlevel designers  \n
+    \                 <color=yellow>Hazar Renald</color>\n                  <color=yellow>Hlukhov
+    Oleksii</color>\n\nprogrammer      \n                  <color=yellow>Hlukhov Oleksii</color>\n\nmusic
+    \      \n                  \"Sci-Fi Close\" by <color=yellow>Eric Matyas</color>\n
+    \                 <color=blue><u>Soundimage.org</u></color>\n\n                  \"Creepy
+    Sci-Fy synth loop\" by <color=yellow>Bart</color>\n                  <color=blue><u>opengameart.org/users/bart</u></color>\n\n
+    \                 \"Great Dragon Appearance\" by <color=yellow>Spring/Spring Enterprises</color>\n\n
+    \                 \"Action synth + Harp track\" by <color=yellow>PetterTheSturgeon</color>
+    \n                  <color=blue><u>opengameart.org/users/petterthesturgeon</u></color>\n\n
+    \                 \"On My Way\" by <color=yellow>DeltaBreaker</color> \n                  <color=blue><u>opengameart.org/users/deltabreaker</u></color>\n\nsound
+    \ \n                  <color=yellow>Dmitry Novozhilov</color> - Daruma Audio\n\n\nspecial
+    thanks \n                  <color=yellow>opengameart.org</color> and their <color=yellow>community</color>
+    \n                  you are awesome guys!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e063836e90536344b1c56a3c1aa741a, type: 2}
   m_sharedMaterial: {fileID: 21612828168329858, guid: 3e063836e90536344b1c56a3c1aa741a,
@@ -2098,7 +1883,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -2115,10 +1900,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 50
+  m_fontSize: 37.85
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2133,7 +1918,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 457
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2156,19 +1941,19 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -1.7559814, w: 0}
   m_textInfo:
     textComponent: {fileID: 647253232}
-    characterCount: 488
+    characterCount: 883
     spriteCount: 0
-    spaceCount: 65
-    wordCount: 67
+    spaceCount: 400
+    wordCount: 76
     linkCount: 0
-    lineCount: 30
+    lineCount: 33
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
