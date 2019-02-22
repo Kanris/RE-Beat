@@ -49,9 +49,9 @@ public class DoorButton : MonoBehaviour {
 
     private void CollisionHandler(Collision2D collision, bool value)
     {
-        if (collision.transform.CompareTag("Item") && DoorToOpen.gameObject.activeSelf) //if item is on the button
+        if (collision.transform.CompareTag("Item") && DoorToOpen != null) //if item is on the button
         {
-            if ( Mathf.Abs(collision.contacts[0].normal.x) < 0.3f )
+            if (DoorToOpen.gameObject.activeSelf && Mathf.Abs(collision.contacts[0].normal.x) < 0.3f )
                 OpenDoor(value); //open attached door
         }
     }
