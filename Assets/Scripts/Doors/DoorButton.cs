@@ -36,12 +36,12 @@ public class DoorButton : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        CollisionHandler(collision, true);
+        //CollisionHandler(collision, true);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Item")) //if item is on the button
+        if (collision.CompareTag("Item")) //if item is on the button
         {
             OpenDoor(false); //open attached door
         }
@@ -65,10 +65,9 @@ public class DoorButton : MonoBehaviour {
             if (value) //if need to open the door
             {
                 DoorToOpen.PlayOpenDoorAnimation(); //play open door animation
+                StartCoroutine(ShowOpenedDoor()); //show opened door with camera
             }
-
-            StartCoroutine(ShowOpenedDoor()); //show opened door with camera
-
+            
             m_Animator.SetBool("Pressed", value); //set button to pressed animation 
 
             InputControlManager.Instance.StartGamepadVibration(5, .1f); //vibrate gamepad
