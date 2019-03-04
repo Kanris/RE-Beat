@@ -143,7 +143,9 @@ public class PickupBox : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.4f, .05f));
+        //Physics2D.OverlapCircleAll(m_GroundCheck.position, .1f, m_WhatIsGround);
+        Gizmos.DrawWireSphere(m_GroundCheck.position, .2f);
+        //Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.4f, .05f));
     }
 
     private void OnCollisionStay2D(Collision2D collision)

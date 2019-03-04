@@ -31,6 +31,9 @@ public class DoorButton : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.transform.CompareTag("Item"))
+            collision.transform.SetParent(transform);
+
         CollisionHandler(collision, true);
     }
 
