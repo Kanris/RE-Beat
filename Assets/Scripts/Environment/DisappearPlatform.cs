@@ -149,7 +149,8 @@ public class DisappearPlatform : MonoBehaviour {
 
     private void SetAnimator(string name)
     {
-        m_Animator?.SetTrigger(name);
+        if (gameObject?.activeSelf ?? false)
+            m_Animator?.SetTrigger(name);
     }
 
     #endregion

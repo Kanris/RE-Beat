@@ -274,7 +274,9 @@ public class UIManager : MonoBehaviour {
     {
         for (var index = 0; index < m_LifePanel.transform.childCount; index++)
         {
-            m_HealthInPanel.Add(m_LifePanel.transform.GetChild(index).gameObject);
+            var lifeGameObject = m_LifePanel.transform.GetChild(index).gameObject;
+            lifeGameObject.GetComponent<Animator>().SetFloat("AppearTime", UnityEngine.Random.Range(.6f, 1.6f));
+            m_HealthInPanel.Add(lifeGameObject);
         }
 
         m_CurrentActiveHPIndex = m_HealthInPanel.Count - 1;
