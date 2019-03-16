@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Unity;
+using System.Linq;
 
 namespace UnityStandardAssets._2D
 {
@@ -13,6 +14,7 @@ namespace UnityStandardAssets._2D
         [Header("Support gameobjects")]
         [SerializeField] private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         [SerializeField] private Transform m_CeilingCheck;   // A position marking where to check for ceilings
+        [SerializeField] private Transform m_WallCheck;      // A position marking where to check for wall
 
         [Header("Movement stats")]
         public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
@@ -41,6 +43,7 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private GameObject m_JumpPlatform;
         private bool m_IsOnJumpBox; //indicates is player on jump box and can perform jump
+        private bool m_IsOnWall;
 
         private void Awake()
         {
@@ -79,7 +82,8 @@ namespace UnityStandardAssets._2D
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.3f, .1f, 1));
+            Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.3f, .1f, 1)); //x = .3f to disable wall jump
+            Gizmos.DrawWireCube(m_WallCheck.position, new Vector3(.5f, .5f, 1));
         }
 
         private void FixedUpdate()
@@ -100,6 +104,19 @@ namespace UnityStandardAssets._2D
                 }
             }
             m_Anim.SetBool("Ground", m_Grounded);
+
+            if (!m_Grounded && !m_IsOnWall && !m_IsOnJumpBox)
+            {
+                var m_WallColliders = Physics2D.OverlapBoxAll(m_WallCheck.position, new Vector2(2f, .5f), 0, m_WhatIsGround)
+                                               .Where(x => x != gameObject)
+                                               .Count();
+
+                if (m_WallColliders > 0)
+                    m_IsOnWall = true;
+
+            }
+            else if (m_Grounded && m_IsOnWall)
+                m_IsOnWall = false;
 
             // Set the vertical animation
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, Mathf.Clamp(m_Rigidbody2D.velocity.y, -30, 15));
@@ -150,7 +167,7 @@ namespace UnityStandardAssets._2D
             if (!m_Anim.GetBool("FallAttack")) //player is not performe fall attack
             {
                 // If the player should jump...
-                if (m_Grounded && jump)
+                if ((m_Grounded || m_IsOnWall) && jump)
                 {
                     // Add a vertical force to the player.
                     m_Grounded = false;
