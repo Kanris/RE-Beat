@@ -1595,7 +1595,7 @@ Transform:
 --- !u!199 &409878297
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -6641,7 +6641,7 @@ Transform:
 --- !u!199 &582603513
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -17740,7 +17740,7 @@ Transform:
 --- !u!199 &794849488
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 199932825822604026, guid: c9c72d8bce2eb74429a60237aebbb7d5,
     type: 3}
   m_PrefabInstance: {fileID: 0}
@@ -23078,6 +23078,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1859725932341948, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
+      propertyPath: m_Name
+      value: Drone hive
+      objectReference: {fileID: 0}
     - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.68
@@ -23109,6 +23113,18 @@ PrefabInstance:
     - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429504279284486, guid: 724559b7004e140408cb6d3a90c85200, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114645961574704884, guid: 724559b7004e140408cb6d3a90c85200,
         type: 3}
@@ -28704,7 +28720,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RespawnPoint
       value: 
-      objectReference: {fileID: 1160207096}
+      objectReference: {fileID: 1207373864}
     - target: {fileID: 114880720034293954, guid: 574c3997f9c52428bb16fa7c603670bb,
         type: 3}
       propertyPath: m_PlayerToRespawn
@@ -29103,7 +29119,7 @@ Transform:
 --- !u!199 &1634165813
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 199932825822604026, guid: c9c72d8bce2eb74429a60237aebbb7d5,
     type: 3}
   m_PrefabInstance: {fileID: 0}

@@ -10,6 +10,9 @@ public class DroneHive : MonoBehaviour
     #region SerializeField
     [SerializeField] private Image m_Health;
 
+    [Header("Teleport")]
+    [SerializeField] private GameObject m_ThrowBackAbility;
+
     [Header("Teleport Points")]
     [SerializeField] private GameObject LeftTeleport;
     [SerializeField] private GameObject CenterTeleport;
@@ -284,6 +287,11 @@ public class DroneHive : MonoBehaviour
 
     private IEnumerator TeleportSequence(Vector3 destination)
     {
+
+        CreateThrowback();
+
+        yield return new WaitForSeconds(.1f);
+
         TeleportAnimation(true);
 
         TeleportSound();
@@ -310,6 +318,14 @@ public class DroneHive : MonoBehaviour
         }
 
         m_IsCanSpawn = true;
+    }
+
+    private void CreateThrowback()
+    {
+        //throw back player
+        Physics2D.OverlapCircle(transform.position, 4f, 1 << LayerMask.NameToLayer("Player"))?.gameObject.GetComponent<Player>().playerStats.HitPlayer(0);
+        //destroy throwback effect
+        Destroy(Instantiate(m_ThrowBackAbility, transform), .6f);
     }
 
     private void TeleportSound()
