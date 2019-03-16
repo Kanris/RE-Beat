@@ -40,6 +40,7 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private GameObject m_JumpPlatform;
+        private bool m_IsOnJumpBox; //indicates is player on jump box and can perform jump
 
         private void Awake()
         {
@@ -165,7 +166,7 @@ namespace UnityStandardAssets._2D
                 else if (PlayerStats.m_IsCanDoubleJump && m_JumpPlatform != null)
                 {
                     //player is not on the ground and have double jump
-                    if (!m_Grounded && m_IsHaveDoubleJump && jump)
+                    if (!m_Grounded && m_IsHaveDoubleJump && jump && !m_IsOnJumpBox)
                     {
                         m_IsHaveDoubleJump = false;
 
@@ -197,6 +198,11 @@ namespace UnityStandardAssets._2D
                 }
             }
 
+        }
+
+        public void SetPlayerOnJumpBox(bool value)
+        {
+            m_IsOnJumpBox = value;
         }
 
         public void Flip()
