@@ -59,9 +59,15 @@ public class DialogueManager : MonoBehaviour {
     [SerializeField] private GameObject m_SecondButtonGO;
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI m_FirstButton; //first answer ui text 
+    [SerializeField] private TextMeshProUGUI m_FirstButtonShadow; //shadow first answer ui text 
     [SerializeField] private TextMeshProUGUI m_SecondButton; //second answer ui text
+    [SerializeField] private TextMeshProUGUI m_SecondButtonShadow; //shadow second answer ui text
+
     [SerializeField] private TextMeshProUGUI m_Text; //text to display sentences
+    [SerializeField] private TextMeshProUGUI m_ShadowText; //shadow text to display sentences
+
     [SerializeField] private TextMeshProUGUI m_NameText; //text to display npc name
+    [SerializeField] private TextMeshProUGUI m_NameTextShadow; //shadow text to display npc name
     [SerializeField] private GameObject m_NextImage; //image that notify player that sentence is over
 
     #endregion
@@ -109,7 +115,7 @@ public class DialogueManager : MonoBehaviour {
 
     private IEnumerator TypeSentence(string sentence)
     {
-        m_Text.text = string.Empty; //clear main dialogue text
+        m_Text.text = m_ShadowText.text = string.Empty; //clear main dialogue text
         m_NextImage.SetActive(false); //hide next image
 
         m_IsSentenceTyping = true; //notify that sentence is typing
@@ -136,7 +142,7 @@ public class DialogueManager : MonoBehaviour {
             else if (letter == '>')
                 isTagFound = false;
 
-            m_Text.text += letter; //type letter
+            m_Text.text = m_ShadowText.text += letter; //type letter
         }
 
         AudioManager.Instance.Stop(PrintTextAudio);
@@ -171,10 +177,11 @@ public class DialogueManager : MonoBehaviour {
     //set up answers
     private void ShowAnswerButtons(string firstButtonText, string secondButtonText)
     {
-        m_FirstButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(firstButtonText);
-        m_SecondButton.text = LocalizationManager.Instance.GetDialogueLocalizedValue(secondButtonText);
+        m_FirstButton.text = m_FirstButtonShadow.text = LocalizationManager.Instance.GetDialogueLocalizedValue(firstButtonText);
+        m_SecondButton.text = m_SecondButtonShadow.text = LocalizationManager.Instance.GetDialogueLocalizedValue(secondButtonText);
 
         m_FirstButton.color = m_SecondButton.color = m_SecondButton.color.ChangeColor(a: 0f);
+        m_FirstButtonShadow.color = m_SecondButtonShadow.color = m_SecondButtonShadow.color.ChangeColor(a: 0f);
 
         m_Buttons.SetActive(true);
 
@@ -250,13 +257,14 @@ public class DialogueManager : MonoBehaviour {
             MobileButtonsManager.Instance.ShowOnlyNeedButtons(jump: true);
 #endif
             m_Text.gameObject.SetActive(true);
+            m_ShadowText.gameObject.SetActive(true);
 
             transform.position = parentTransform.position.Add(y: 2.2f);
             m_Buttons.transform.position = playerTransform.position.Add(x: 1.8f, y: 0f);
 
             ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
             m_Dialogue = dialogue; //save dialogue reference
-            m_NameText.text = "C:\\Users\\<color=yellow>" + npcName + "</color>:"; //display npc name
+            m_NameText.text = m_NameTextShadow.text = "C:\\Users\\<color=yellow>" + npcName + "</color>:"; //display npc name
 
             m_Sentences.Clear(); //clear sentences queue
 
@@ -286,13 +294,14 @@ public class DialogueManager : MonoBehaviour {
 #endif
 
         m_Text.gameObject.SetActive(true);
+        m_ShadowText.gameObject.SetActive(true);
 
         transform.position = parentTransform.position.Add(y: 2.2f);
 
         m_DialogueUI.SetActive(true); //show dialogue ui
         ChangeIsDialogueInProgress(true); //notify that dialogue is in progress
         m_DisplayingSingleSentence = true; //notify update that single sentence is displaying
-        m_NameText.text = "C:\\Users\\<color=yellow>" + name + "</color>:"; //show sign text
+        m_NameText.text = m_NameTextShadow.text = "C:\\Users\\<color=yellow>" + name + "</color>:"; //show sign text
 
         yield return TypeSentence(sentence); //start typing sentece
     }
@@ -312,6 +321,7 @@ public class DialogueManager : MonoBehaviour {
 
         m_NextImage.SetActive(false);
         m_Text.gameObject.SetActive(false);
+        m_ShadowText.gameObject.SetActive(false);
 
         yield return new WaitForEndOfFrame(); //apply disappear animation
 
