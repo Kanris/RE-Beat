@@ -26,6 +26,7 @@ namespace UnityStandardAssets._2D
         [Header("Visual Effects")]
         [SerializeField] private GameObject JumpPlatformPrefab;
         [SerializeField] private GameObject m_LandEffect;
+        [SerializeField] private GameObject m_WallDustEffect;
         [SerializeField] private GameObject m_DashEffect;
 
         [Header("Audio")]
@@ -43,7 +44,8 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
         private GameObject m_JumpPlatform;
         private bool m_IsOnJumpBox; //indicates is player on jump box and can perform jump
-        private bool m_IsOnWall;
+        private bool m_IsOnWall; //indicates is player jump near wall
+        private Vector2 m_PositionForWallDust; //position to spawn dust
 
         private void Awake()
         {
@@ -83,7 +85,7 @@ namespace UnityStandardAssets._2D
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.3f, .1f, 1)); //x = .3f to disable wall jump
-            Gizmos.DrawWireCube(m_WallCheck.position, new Vector3(.5f, .5f, 1));
+            Gizmos.DrawWireCube(m_WallCheck.position, new Vector3(.35f, .5f, 1));
         }
 
         private void FixedUpdate()
@@ -101,13 +103,15 @@ namespace UnityStandardAssets._2D
                 {
                     m_Grounded = true;
                     m_IsHaveDoubleJump = true;
+
+                    break;
                 }
             }
             m_Anim.SetBool("Ground", m_Grounded);
 
             if (!m_Grounded && !m_IsOnWall && !m_IsOnJumpBox)
             {
-                var m_WallColliders = Physics2D.OverlapBoxAll(m_WallCheck.position, new Vector2(2f, .5f), 0, m_WhatIsGround)
+                var m_WallColliders = Physics2D.OverlapBoxAll(m_WallCheck.position, new Vector2(.35f, .5f), 0, m_WhatIsGround)
                                                .Where(x => x != gameObject)
                                                .Count();
 
@@ -239,7 +243,10 @@ namespace UnityStandardAssets._2D
         {
             AudioManager.Instance.Play(m_LandAudio); //play dust effect
 
-            Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 2f); //destroy particle gameobject after 3sec
+            if (!m_IsOnWall)
+                Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 2f); //destroy particle gameobject after 3sec
+            else
+                Destroy(Instantiate(m_WallDustEffect, m_PositionForWallDust.Subtract(y: -0.05f), Quaternion.identity), 2f);
         }
 
         public void OnLandEffect()
@@ -315,6 +322,14 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.velocity = Vector2.zero;
 
                 Camera.main.GetComponent<Camera2DFollow>().StopShake();
+            }
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (m_IsOnWall && ((m_WhatIsGround & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer))
+            {
+                m_PositionForWallDust = collision.contacts[0].point;
             }
         }
     }
