@@ -34,6 +34,7 @@ public class DistruptionSignal : MonoBehaviour
         if (m_IsPlayerNear)
         {
             m_Camera.StopLowHealthEffect();
+            ChangePlayerStats(true);
 
             UIManager.Instance.DisplayNotificationMessage
                 ("Distruption signal is disappear", UIManager.Message.MessageType.Message);
@@ -45,6 +46,7 @@ public class DistruptionSignal : MonoBehaviour
         StopAllCoroutines();
 
         m_IsPlayerNear = value;
+        ChangePlayerStats(!m_IsPlayerNear);
 
         if (m_IsPlayerNear)
         {
@@ -71,5 +73,11 @@ public class DistruptionSignal : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         m_Camera.StopLowHealthEffect();
+    }
+
+    private void ChangePlayerStats(bool value)
+    {
+        if (!GameMaster.Instance.IsPlayerDead)
+            GameMaster.Instance.m_Player?.transform.GetChild(0).GetComponent<Player>().playerStats.SetChipsAvailability(value);
     }
 }

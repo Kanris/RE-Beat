@@ -64,6 +64,8 @@ public class PlayerStats : Stats
     private static float DefaultMeleeAttackSpeed = 0.2f; //default attack speed
     private static float DefaultMovementSpeed = 4f; //defaul movement speed
 
+    private bool m_IsCanControlDoubleJump = false;
+    private bool m_IsCanControlDash = false;
     #endregion
 
     #region properties
@@ -173,6 +175,16 @@ public class PlayerStats : Stats
         }
     }
 
+    //Enable/Disable some of player's abilities
+    public void SetChipsAvailability(bool value)
+    {
+        if (m_IsCanControlDash)
+            m_IsCanDash = value;
+
+        if (m_IsCanControlDoubleJump)
+            m_IsCanDoubleJump = value;
+    }
+
     #region debuff
 
     public void DebuffPlayer(DebuffPanel.DebuffTypes debuffType, float duration)
@@ -267,6 +279,17 @@ public class PlayerStats : Stats
         //disable fall attack ui (if player does not have fall attack chip)
         if (!m_IsFallAttack)
             UIManager.Instance?.ShowFallAttack(false);
+
+        InitializeControlFields();
+    }
+
+    private void InitializeControlFields()
+    {
+        if (m_IsCanDoubleJump)
+            m_IsCanControlDoubleJump = true;
+
+        if (m_IsCanDash)
+            m_IsCanControlDash = true;
     }
 
     public override void TakeDamage(int amount, float throwX, float throwY)
@@ -320,6 +343,8 @@ public class PlayerStats : Stats
 
     public override void KillObject()
     {
+        SetChipsAvailability(true);
+
         GameMaster.Instance.StartPlayerRespawn(true, false); //respawn new player on respawn point
         PlayDeathParticles(); //show death particles
 

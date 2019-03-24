@@ -109,7 +109,7 @@ namespace UnityStandardAssets._2D
             }
             m_Anim.SetBool("Ground", m_Grounded);
 
-            if (!m_Grounded && !m_IsOnWall && !m_IsOnJumpBox)
+            if (!m_Grounded && !m_IsOnWall && !m_IsOnJumpBox && m_WallCheck != null)
             {
                 var m_WallColliders = Physics2D.OverlapBoxAll(m_WallCheck.position, new Vector2(.35f, .5f), 0, m_WhatIsGround)
                                                .Where(x => x != gameObject)
@@ -200,7 +200,7 @@ namespace UnityStandardAssets._2D
                     }
                 }
 
-                if (PlayerStats.m_IsCanDash & m_DashEffect != null)
+                if (PlayerStats.m_IsCanDash && m_DashEffect != null)
                 {
                     if (dash && m_Anim.GetFloat("Speed") > 0.01f)
                     {
