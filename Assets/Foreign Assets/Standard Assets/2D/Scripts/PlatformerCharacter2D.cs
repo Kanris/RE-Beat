@@ -14,7 +14,8 @@ namespace UnityStandardAssets._2D
         [Header("Support gameobjects")]
         [SerializeField] private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         [SerializeField] private Transform m_CeilingCheck;   // A position marking where to check for ceilings
-        [SerializeField] private Transform m_WallCheck;      // A position marking where to check for wall
+        [SerializeField] private Transform m_FrontWallCheck; // A position marking where to check for wall in front of wall
+        [SerializeField] private Transform m_BackWallCheck;  // A position marking where to check for wall behind the player
 
         [Header("Movement stats")]
         public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
@@ -45,8 +46,9 @@ namespace UnityStandardAssets._2D
         private GameObject m_JumpPlatform;
         private bool m_IsOnJumpBox; //indicates is player on jump box and can perform jump
         private bool m_IsOnWall; //indicates is player jump near wall
+        private int m_IsWallBehind; //indicates is wall behind the player (0 is haven't use jump from back; 1 - jump from back can be used; 2 - is waiting to refresh (can't use jump from wall))
         private Vector2 m_PositionForWallDust; //position to spawn dust
-
+        
         private void Awake()
         {
             // Setting up references.
@@ -85,42 +87,55 @@ namespace UnityStandardAssets._2D
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireCube(m_GroundCheck.position, new Vector3(.3f, .1f, 1)); //x = .3f to disable wall jump
-            Gizmos.DrawWireCube(m_WallCheck.position, new Vector3(.35f, .5f, 1));
+            Gizmos.DrawWireCube(m_FrontWallCheck.position, new Vector3(.1f, .5f, 1));
+            Gizmos.DrawWireCube(m_BackWallCheck.position, new Vector3(.1f, .5f, 1));
         }
 
         private void FixedUpdate()
         {
             m_Grounded = false;
+            m_IsOnWall = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             //Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(m_GroundCheck.position, new Vector2(.3f, .1f), 0, m_WhatIsGround);
+            var colliders = Physics2D.OverlapBoxAll(m_GroundCheck.position, new Vector2(.3f, .1f), 0, m_WhatIsGround)
+                                     .Where(x => x != gameObject)
+                                     .Count();
 
-            for (int i = 0; i < colliders.Length; i++)
+            if (colliders > 0)
             {
-                if (colliders[i].gameObject != gameObject)
-                {
-                    m_Grounded = true;
-                    m_IsHaveDoubleJump = true;
-
-                    break;
-                }
+                m_Grounded = true;
+                m_IsHaveDoubleJump = true;
             }
-            m_Anim.SetBool("Ground", m_Grounded);
 
-            if (!m_Grounded && !m_IsOnWall && !m_IsOnJumpBox && m_WallCheck != null)
+            m_Anim.SetBool("Ground", m_Grounded); //play ground animation
+
+            if (!m_Grounded && !m_IsOnJumpBox)
             {
-                var m_WallColliders = Physics2D.OverlapBoxAll(m_WallCheck.position, new Vector2(.35f, .5f), 0, m_WhatIsGround)
+                var m_WallColliders = Physics2D.OverlapBoxAll(m_FrontWallCheck.position, new Vector2(.1f, .5f), 0, m_WhatIsGround)
                                                .Where(x => x != gameObject)
                                                .Count();
 
                 if (m_WallColliders > 0)
+                {
                     m_IsOnWall = true;
+                    m_IsWallBehind = 0;
+                }
+                else if (m_IsWallBehind == 0)
+                {
+                    var m_WallBackColliders = Physics2D.OverlapBoxAll(m_BackWallCheck.position, new Vector2(.1f, .5f), 0, m_WhatIsGround)
+                                                       .Where(x => x != gameObject)
+                                                       .Count();
 
+                    if (m_WallBackColliders > 0)
+                    {
+                        m_IsWallBehind = 1;
+                    }
+                }
             }
-            else if (m_Grounded && m_IsOnWall)
-                m_IsOnWall = false;
+            //else if (m_Grounded && m_IsWallBehind)
+            //    m_IsWallBehind = false;
 
             // Set the vertical animation
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, Mathf.Clamp(m_Rigidbody2D.velocity.y, -30, 15));
@@ -171,17 +186,20 @@ namespace UnityStandardAssets._2D
             if (!m_Anim.GetBool("FallAttack")) //player is not performe fall attack
             {
                 // If the player should jump...
-                if ((m_Grounded || m_IsOnWall) && jump)
+                if ((m_Grounded || m_IsOnWall || m_IsWallBehind == 1) && jump)
                 {
+                    ShowDustEffect();
+                    InputControlManager.Instance.StartGamepadVibration(1, 0.1f);
+
+                    //check is user used jump when wall was behind him
+                    if (m_IsWallBehind == 1)
+                        m_IsWallBehind = 2; //do not allow to use jump from wall (when it's behind) 
+
                     // Add a vertical force to the player.
                     m_Grounded = false;
                     m_Anim.SetBool("Ground", false);
                     m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0f);
                     m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-
-                    ShowDustEffect();
-
-                    InputControlManager.Instance.StartGamepadVibration(1, 0.1f);
                 }
                 //If the player should double jump
                 else if (PlayerStats.m_IsCanDoubleJump && m_JumpPlatform != null)
@@ -243,10 +261,11 @@ namespace UnityStandardAssets._2D
         {
             AudioManager.Instance.Play(m_LandAudio); //play dust effect
 
-            if (!m_IsOnWall)
-                Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 2f); //destroy particle gameobject after 3sec
-            else
+            if (m_IsOnWall || m_IsWallBehind == 1)
                 Destroy(Instantiate(m_WallDustEffect, m_PositionForWallDust.Subtract(y: -0.05f), Quaternion.identity), 2f);
+            else
+                Destroy(Instantiate(m_LandEffect, m_GroundCheck.position, Quaternion.identity), 2f); //destroy particle gameobject after 3sec
+                
         }
 
         public void OnLandEffect()
