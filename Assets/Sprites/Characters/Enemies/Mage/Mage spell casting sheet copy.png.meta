@@ -1,37 +1,93 @@
 fileFormatVersion: 2
 guid: 353e9118d76fc7847a5fe4efd7dd8d65
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Mage spell casting sheet copy_0
-    21300002: Mage spell casting sheet copy_1
-    21300004: Mage spell casting sheet copy_2
-    21300006: Mage spell casting sheet copy_3
-    21300008: Mage spell casting sheet copy_4
-    21300010: Mage spell casting sheet copy_5
-    21300012: Mage spell casting sheet copy_6
-    21300014: Mage spell casting sheet copy_7
-    21300016: Mage spell casting sheet copy_8
-    21300018: Mage spell casting sheet copy_9
-    21300020: Mage spell casting sheet copy_10
-    21300022: Mage spell casting sheet copy_11
-    21300024: Mage spell casting sheet copy_12
-    21300026: Mage spell casting sheet copy_13
-    21300028: Mage spell casting sheet copy_14
-    21300030: Mage spell casting sheet copy_15
-    21300032: Mage spell casting sheet copy_16
-    21300034: Mage spell casting sheet copy_17
-    21300036: Mage spell casting sheet copy_18
-    21300038: Mage spell casting sheet copy_19
-    21300040: Mage spell casting sheet copy_20
-    21300042: Mage spell casting sheet copy_21
-    21300044: Mage spell casting sheet copy_22
-    21300046: Mage spell casting sheet copy_23
-    21300048: Mage spell casting sheet copy_24
-    21300050: Mage spell casting sheet copy_25
-    21300052: Mage spell casting sheet copy_26
-    21300054: Mage spell casting sheet copy_27
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Mage spell casting sheet copy_0
+  - first:
+      213: 21300002
+    second: Mage spell casting sheet copy_1
+  - first:
+      213: 21300004
+    second: Mage spell casting sheet copy_2
+  - first:
+      213: 21300006
+    second: Mage spell casting sheet copy_3
+  - first:
+      213: 21300008
+    second: Mage spell casting sheet copy_4
+  - first:
+      213: 21300010
+    second: Mage spell casting sheet copy_5
+  - first:
+      213: 21300012
+    second: Mage spell casting sheet copy_6
+  - first:
+      213: 21300014
+    second: Mage spell casting sheet copy_7
+  - first:
+      213: 21300016
+    second: Mage spell casting sheet copy_8
+  - first:
+      213: 21300018
+    second: Mage spell casting sheet copy_9
+  - first:
+      213: 21300020
+    second: Mage spell casting sheet copy_10
+  - first:
+      213: 21300022
+    second: Mage spell casting sheet copy_11
+  - first:
+      213: 21300024
+    second: Mage spell casting sheet copy_12
+  - first:
+      213: 21300026
+    second: Mage spell casting sheet copy_13
+  - first:
+      213: 21300028
+    second: Mage spell casting sheet copy_14
+  - first:
+      213: 21300030
+    second: Mage spell casting sheet copy_15
+  - first:
+      213: 21300032
+    second: Mage spell casting sheet copy_16
+  - first:
+      213: 21300034
+    second: Mage spell casting sheet copy_17
+  - first:
+      213: 21300036
+    second: Mage spell casting sheet copy_18
+  - first:
+      213: 21300038
+    second: Mage spell casting sheet copy_19
+  - first:
+      213: 21300040
+    second: Mage spell casting sheet copy_20
+  - first:
+      213: 21300042
+    second: Mage spell casting sheet copy_21
+  - first:
+      213: 21300044
+    second: Mage spell casting sheet copy_22
+  - first:
+      213: 21300046
+    second: Mage spell casting sheet copy_23
+  - first:
+      213: 21300048
+    second: Mage spell casting sheet copy_24
+  - first:
+      213: 21300050
+    second: Mage spell casting sheet copy_25
+  - first:
+      213: 21300052
+    second: Mage spell casting sheet copy_26
+  - first:
+      213: 21300054
+    second: Mage spell casting sheet copy_27
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -49,6 +105,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -59,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: -1
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -83,8 +141,9 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -95,7 +154,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -106,7 +166,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -117,7 +178,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -128,7 +190,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -139,6 +202,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -158,6 +222,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0aa45615ebd513a4a8ebafeaa5724be3
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -178,6 +243,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 36569fecb376c0f4686ffc8128d88993
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -198,6 +264,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c44580097dc326d49b2ea72b5d9329ee
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -218,6 +285,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6733e6e6cd486154ea5c36273c4d6d67
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -238,6 +306,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8a08cb77b55a05d4c89f88c1442a3107
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -258,6 +327,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 29f9766dd6d761543a3c27bf0dafbbe4
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -278,6 +348,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a30812a4a8eb300408128beacefe46cd
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -298,6 +369,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 78f4112bc49fb8e4ea98fda7b0db8cb8
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -318,6 +390,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 81da25cfd488dd84c9b805db7cd7fe3d
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -338,6 +411,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e3ea70089de89d74e9ede7c754179018
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -358,6 +432,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c689f8f81fe017e4f8f9e2a12ed98c67
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -378,6 +453,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 146f70a5bc9afeb4f875791193b360c4
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -398,6 +474,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ed59afc2bd47a7343b19abca2e7f1e5b
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -418,6 +495,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6a28aa5e4448f02429150b3dc1818d85
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -438,6 +516,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1b150a0092823a34a9b3d6b4fb99042f
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -458,6 +537,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 10456193270219f49a339bade15c5a5a
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -478,6 +558,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 173ebde7e12a03e4b81924bdd3f621f7
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -498,6 +579,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0012beb89f0e9924e858c85a32c19d6f
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -518,6 +600,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b53dbfe5363deb140b0e68b31850c46f
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -538,6 +621,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: aa7ad66a25db35c40b4c1c44f4e9a60e
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -558,6 +642,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c95d7b17acb85e14794b4aab6a063f07
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -578,6 +663,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 95012c3d08dd334438d8c1626741ec29
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -598,6 +684,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6a9fe4bf1e39c0c4fb0aef92b2b9af99
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -618,6 +705,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0744ecbf7bd200f4b8982ae0ad89c815
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -638,6 +726,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 062300a075a4de34e8a298a161712f0a
+      internalID: 21300048
       vertices: []
       indices: 
       edges: []
@@ -658,6 +747,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e2f6ee8febee33f4fa2c210593ea30e5
+      internalID: 21300050
       vertices: []
       indices: 
       edges: []
@@ -678,6 +768,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: caf57cf9e95ff4647bef22dd52131e7d
+      internalID: 21300052
       vertices: []
       indices: 
       edges: []
@@ -698,6 +789,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bbab4726fc82a99458c4c6fb654fd4c7
+      internalID: 21300054
       vertices: []
       indices: 
       edges: []
@@ -706,11 +798,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 35a0c91561607b64fb9a2d641806f89c
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
